@@ -1,5 +1,6 @@
 package NexonJuniors.Maching.controller;
 
+import NexonJuniors.Maching.model.CharacterInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,9 +40,11 @@ public class CharacterSearchController {
             }
 
             String characterUrl = "https://open.api.nexon.com/maplestory/v1/character/basic?ocid=" + ocid;
-            String characterInfo = getCharacterInfo(characterUrl, API_KEY); // 캐릭터 basic api호출, date default
+            String characterInfoJson = getCharacterInfo(characterUrl, API_KEY); // 캐릭터 basic api호출, date default
 
+            CharacterInfo characterInfo = objectMapper.readValue(characterInfoJson, CharacterInfo.class); //model에 chracerInfo객체로 생성
             model.addAttribute("characterInfo", characterInfo);
+
             return "character"; // character.html에서 노출
         } catch (Exception e) {
             model.addAttribute("error", "Error fetching data: " + e.getMessage());

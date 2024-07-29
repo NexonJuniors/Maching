@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Character Information</title>
+    <title>Character Info</title>
 </head>
 <body>
 <h1>Character Information</h1>
-<a href="/" th:href="@{/}">Back to Search</a>
-
-<div>
-    <h2>Character Details:</h2>
-    <pre th:utext="${characterInfo}"></pre>
-</div>
+<p>Character Name: <span th:text="${characterInfo.characterName}"></span></p>
+<p>World Name: <span th:text="${characterInfo.worldName}"></span></p>
+<p>Level: <span th:text="${characterInfo.characterLevel}"></span></p>
+<img th:src="${characterInfo.characterImage}" alt="Character Image"/>
 </body>
 </html>
