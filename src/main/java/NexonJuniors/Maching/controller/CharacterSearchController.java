@@ -39,10 +39,10 @@ public class CharacterSearchController {
             }
 
             String characterUrl = "https://open.api.nexon.com/maplestory/v1/character/basic?ocid=" + ocid;
-            String characterInfo = getCharacterInfo(characterUrl, API_KEY); // 캐릭터 basic api호출, 날짜 default
+            String characterInfo = getCharacterInfo(characterUrl, API_KEY); // 캐릭터 basic api호출, date default
 
-            model.addAttribute("apiResponse", characterInfo);
-            return "home";
+            model.addAttribute("characterInfo", characterInfo);
+            return "character"; // character.html에서 노출
         } catch (Exception e) {
             model.addAttribute("error", "Error fetching data: " + e.getMessage());
             return "home";

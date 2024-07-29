@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Character Information</title>
+</head>
+<body>
+<h1>Character Information</h1>
+<a href="/" th:href="@{/}">Back to Search</a>
+
+<div>
+    <h2>Character Details:</h2>
+    <pre th:utext="${characterInfo}"></pre>
+</div>
+</body>
+</html>
