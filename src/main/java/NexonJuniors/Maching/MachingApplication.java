@@ -1,10 +1,10 @@
 package NexonJuniors.Maching;
 
-
-import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import io.github.cdimascio.dotenv.Dotenv;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class MachingApplication {
@@ -16,6 +16,11 @@ public class MachingApplication {
 		System.setProperty("DB_PASSWORD", dotenv.get("DB_PASSWORD"));
 
 		SpringApplication.run(MachingApplication.class, args);
+	}
+
+	@Bean
+	public Dotenv dotenv() {
+		return Dotenv.configure().load();
 	}
 
 }
