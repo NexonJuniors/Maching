@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.Bean;
 import io.github.cdimascio.dotenv.Dotenv;
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@SpringBootApplication
 public class MachingApplication {
 	public static void main(String[] args) {
 
@@ -22,5 +22,4 @@ public class MachingApplication {
 	public Dotenv dotenv() {
 		return Dotenv.configure().load();
 	}
-
 }

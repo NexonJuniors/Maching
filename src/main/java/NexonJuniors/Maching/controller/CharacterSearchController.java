@@ -22,7 +22,6 @@ public class CharacterSearchController {
 
     @Autowired
     private Dotenv dotenv;
-
     @Autowired
     private ObjectMapper objectMapper;
 

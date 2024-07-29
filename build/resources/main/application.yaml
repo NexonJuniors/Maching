@@ -17,11 +17,7 @@ spring:
         show_sql: true
         format_sql: true
 
-    devtools:
-      livereload:
-        enabled: true
-      restart:
-        enabled: true
-
-    thymeleaf:
-      cache: false
+  devtools:
+    # Live Reload
+    livereload:
+      enabled: true
