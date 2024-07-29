@@ -1,35 +1,45 @@
-package NexonJuniors.Maching.controller;
+package NexonJuniors.Maching.utils;
+
 
 import NexonJuniors.Maching.model.CharacterInfo;
-import NexonJuniors.Maching.utils.ApiUtil;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.beans.factory.annotation.Autowired;
-import io.github.cdimascio.dotenv.Dotenv;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.web.bind.annotation.RestController;
+import io.github.cdimascio.dotenv.Dotenv;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-@RestController
-public class CharacterSearchController {
-
+@Component
+public class ApiUtil {
     @Autowired
     private Dotenv dotenv;
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Autowired
-    private ApiUtil apiUtil;
+    public CharacterInfo getCharacter(String characterName) {
+        try{
+            String API_KEY = dotenv.get("API_KEY");
+            String encodedName = URLEncoder.encode(characterName, StandardCharsets.UTF_8);
+            String ocidUrl = "https://open.api.nexon.com/maplestory/v1/id?character_name=" + encodedName;
+            String ocid = getOcid(ocidUrl, API_KEY); // ocid를 제일 먼저 가져오기
 
-    @GetMapping("/character")
-    public CharacterInfo getCharacter(@RequestParam("characterName") String characterName) {
-        return apiUtil.getCharacter(characterName);
+            String characterUrl = "https://open.api.nexon.com/maplestory/v1/character/basic?ocid=" + ocid;
+            String characterInfoJson = getCharacterInfo(characterUrl, API_KEY); // 캐릭터 basic api호출, date default
+
+            CharacterInfo characterInfo = objectMapper.readValue(characterInfoJson, CharacterInfo.class); //model에 chracerInfo객체로 생성
+
+            return characterInfo;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private String getOcid(String urlString, String apiKey) throws Exception {
@@ -82,4 +92,5 @@ public class CharacterSearchController {
 
         return response.toString();
     }
+
 }
