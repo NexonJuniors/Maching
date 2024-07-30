@@ -1,3 +1,31 @@
-body {
-    background-color: #a3cca2;
+@font-face {
+    font-family: 'MaplestoryFont';
+    src: url('/fonts/MaplestoryBold.ttf') format('truetype'),
+         url('/fonts/MaplestoryLight.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*body {
+    font-family: 'MaplestoryFont', sans-serif;
+    background-color: #CAC4D0; *//* 배경색 *//*
+}*/
+
+vr1 {
+    display: block;
+    width:2px;
+    background-color:#CAC4D0;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:20%;
+}
+vr2 {
+    display: block;
+    width:2px;
+    background-color:#CAC4D0;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:80%;
 }
