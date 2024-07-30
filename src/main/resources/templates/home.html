@@ -1,19 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
-    <title>MapleStory Character Info</title>
+    <meta charset="UTF-8">
+    <title>메칭</title>
+    <link rel="stylesheet" type="text/css" href="/css/home.css">
 </head>
 <body>
-<h1>MapleStory Character Info</h1>
-<form action="/character" method="get">
-    <label for="characterName">Character Name:</label>
-    <input type="text" id="characterName" name="characterName" required>
-    <button type="submit">Search</button>
-</form>
-
-<div th:if="${error}">
-    <h2>Error:</h2>
-    <p th:text="${error}"></p>
+<header>
+    <div class="logo">메칭</div>
+    <nav>
+        <a href="#">사이트 가이드</a>
+        <a href="#">보스 매칭</a>
+        <a href="#">채팅방</a>
+        <a href="#">공지사항</a>
+    </nav>
+</header>
+<div class="container">
+    <div class="search-section">
+        <p><b>내 캐릭터의 실시간 전투력으로 함께할 파티에 참여하세요!</b></p>
+        <form action="/character" method="get">
+            <input type="text" id="characterName" name="characterName"placeholder="캐릭터명 또는 캐릭터 URL을 입력해주세요" required >
+            <input type="submit" value="검색">
+        </form>
+    </div>
+    <div class="vertical-line"></div>
+    <div class="boss-section">
+        <!-- 보스 카드 예제 -->
+        <div class="boss-card">
+            <img src="boss1.jpg" alt="보스 1">
+            <p>보스 이름 1</p>
+        </div>
+        <div class="boss-card">
+            <img src="boss2.jpg" alt="보스 2">
+            <p>보스 이름 2</p>
+        </div>
+        <!-- 필요한 만큼 보스 카드를 추가 -->
+    </div>
 </div>
+<footer>
+    <p>Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. MapleMatching is not associated with NEXON Korea.</p>
+</footer>
 </body>
 </html>
