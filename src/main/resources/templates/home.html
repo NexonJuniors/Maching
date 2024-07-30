@@ -1,45 +1,52 @@
 <!DOCTYPE html>
-<html lang="ko">
-<vr1></vr1>
-<vr2></vr2>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>메칭</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/home.css">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
 </head>
 <body>
-<header>
-    <div class="logo">메칭</div>
-    <nav>
-        <a href="#">사이트 가이드</a>
-        <a href="#">보스 매칭</a>
-        <a href="#">채팅방</a>
-        <a href="#">공지사항</a>
-    </nav>
-</header>
-<div class="container">
-    <div class="search-section">
-        <p><b>내 캐릭터의 실시간 전투력으로 함께할 파티에 참여하세요!</b></p>
-        <input type="text" id="characterName" name="characterName" required>
-        <button id = "btnSearch">Search</button>
-    </div>
-    <div class="vertical-line"></div>
-    <div class="boss-section">
-        <!-- 보스 카드 예제 -->
-        <div class="boss-card">
-            <img src="boss1.jpg" alt="보스 1">
-            <p>보스 이름 1</p>
+<div class = "container">
+    <div class = "left"></div>
+
+    <div class = "center">
+        <header>
+            <div class = "partners">파트너스</div>
+            <div class = "logo" style = "height: 33.3%;">메칭</div>
+            <nav class = "nav-bar">
+                <a href="#">사이트 가이드</a>
+                <a href="#">보스 매칭</a>
+                <a href="#">채팅방</a>
+                <a href="#">공지사항</a>
+            </nav>
+        </header>
+
+        <div style = "width: 100%; height: 10%; background-color: lightgray;"></div>
+        <div style = "width: 100%; height: 50%;">
+            <div class="search-section">
+                <p><b>내 캐릭터의 실시간 전투력으로 함께할 파티에 참여하세요!</b></p>
+                <input type="text" id="characterName" name="characterName" required>
+                <button id = "btnSearch">Search</button>
+            </div>
+            <div class="boss-section">
+                <!-- 보스 카드 예제 -->
+                <div class="boss-card">
+                    <img src="boss1.jpg" alt="보스 1">
+                    <p>보스 이름 1</p>
+                </div>
+                <div class="boss-card">
+                    <img src="boss2.jpg" alt="보스 2">
+                    <p>보스 이름 2</p>
+                </div>
+                <!-- 필요한 만큼 보스 카드를 추가 -->
+            </div>
         </div>
-        <div class="boss-card">
-            <img src="boss2.jpg" alt="보스 2">
-            <p>보스 이름 2</p>
-        </div>
-        <!-- 필요한 만큼 보스 카드를 추가 -->
+        <footer><p>Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. MapleMatching is not associated with NEXON Korea.</p></footer>
     </div>
+
+    <div class = "right"></div>
 </div>
+
 <script src = "../static/home.js"></script>
 </body>
-<footer>
-    <p>Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. MapleMatching is not associated with NEXON Korea.</p>
-</footer>
 </html>
