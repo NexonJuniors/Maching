@@ -1,118 +1,149 @@
-/*@font-face {
-    font-family: 'MaplestoryFont';
-    src: url('/fonts/MaplestoryBold.ttf') format('truetype'),
-         url('/fonts/MaplestoryLight.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}*/
-
-/*body {
-    font-family: 'MaplestoryFont', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}*/
-
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #CAC4D0;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-header, footer {
-    background-color: #2f2f2f;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    left:25%;
-}
-header .logo {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-header nav a, footer p {
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
-}
-.container {
-    background-color: white;
-    margin: 20px auto;
-    padding: 20px;
-    max-width: 1200px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.vertical-line {
+body{
+    height: 100vh;
     width: 100%;
-    height: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.container{
+    display: flex;
+    height: 100%;
+    max-width: 100%;
+}
+
+.left{
+    width: 15%;
+    max-width: 310px;
+    height: 100%;
+    border-right: 2px solid #CAC4D0; /* 왼쪽 벽에만 테두리 설정 */
+}
+.center{
+    width: 70%;
+    height: 100%;
+    border: none;
+}
+.right{
+    width: 15%;
+    max-width: 310px;
+    height: 100%;
+    border-left: 2px solid #CAC4D0; /* 왼쪽 벽에만 테두리 설정 */
+}
+
+/*헤더부분 시작*/
+.container header{
+    height: 20%;
     background-color: #CAC4D0;
 }
-.search-section, .boss-section {
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-}
-.search-section {
+.partners{
+    height: 20%;
+    background-color: #04001B;
+    color: white;
     text-align: center;
 }
-.search-section input[type="text"] {
-    width: 300px;
-    padding: 10px;
-    margin-right: 10px;
+.logo {
+    background-color: #ADA2B8;
+    font-size: 2.5em;
+    font-weight: 900;
 }
+.navbar {
+    display: flex;
+    align-items: center; /* 요소들을 수직으로 가운데 정렬 */
+    height: 33.4%;
+    background-color: #1f2937; /*네비바 색상*/
+}
+.nav-item {
+    color: white;
+    font-weight: 700;
+    padding: 0 15px; /* 좌우 여백 설정 */
+}
+/*헤더부분 끝*/
+
+/*바디 부분 시작*/
 .search-section input[type="submit"] {
     padding: 10px 20px;
 }
+
 .boss-section {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-.boss-card {
-    width: 100px;
-    text-align: center;
-    margin: 10px;
-    font-size: 0.9em;
+
+.search-card {
+    margin-top: -90px; /* 원하는 margin-top 값으로 변경 */
+    margin-bottom: 20px; /* 원하는 margin-bottom 값으로 변경 */
+    max-width: 1200px; /* 원하는 너비 값으로 변경 */
+    height: 230px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 2em;
 }
+
+.boss-card {
+    margin-bottom: 100px; /* 원하는 margin-bottom 값으로 변경 */
+    max-width: 1200px; /* 원하는 너비 값으로 변경 */
+    max-height: 350px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 2em;
+    height: 300px; /*변경 ㄱ*/
+}
+
+.card-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    padding: 1.25rem;
+    height: 260px
+}
+
 .boss-card img {
     max-width: 100%;
     height: auto;
 }
 
-.search-card {
-/*  width: 595px;
-  height: 350px;*/
-  border-radius: 25px;
-  border: 1px solid rgb(0, 0, 0);
-  position: relative;
-  box-shadow: 5px 5px 20px;
-  transition: all 0.5s;
-  transition-delay: 0.4s;
-  margin: auto;
+.text-section {
+    flex: 1;
+    margin-right: 20px;
 }
 
-vr1 {
-    display: block;
-    width:2px;
-    background-color:#CAC4D0;
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:25%;
+.search-section {
+    display: flex;
+    flex-direction: column; /* 세로 정렬로 변경 */
+    align-items: center;
 }
-vr2 {
-    display: block;
-    width:2px;
-    background-color:#CAC4D0;
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:75%;
+.search-section input {
+    width: 400px; /* 원하는 너비 값으로 변경 */
+    height: 50px;
+}
+.search-section button {
+    margin-top: 20px; /* 입력과 간격 조절 */
+    width: 400px; /* 원하는 버튼 너비 값으로 변경 */
+    height: 60px;
+}
+/*바디부분끝*/
+
+/*푸터 시작*/
+.container footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* 맨 아래로 정렬 */
+    height: 255px;
+    background-color: #CAC4D0;
+}
+
+.container footer-content {
+    flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
+    padding: 10px;
+}
+/*푸터끝*/
+
+/*꾸미기*/
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    /*글자 그냥 대충 만들어본거임.*/
+    margin-bottom: .5rem;
+    font-weight: 900;
+    line-height: 1.2;
+    font-size: 1.5rem;
 }
