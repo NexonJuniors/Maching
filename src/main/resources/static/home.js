@@ -5,16 +5,22 @@ document.getElementById("btnSearch").onclick = function(){
 
 // 닉네임으로 자신의 캐릭터를 검색하는 함수
 function characterSearch(characterName){
-    fetch(`/character?characterName=${characterName}`)
-    .then(function(response){
-        return response.json()
-    })
-    .then(function(json){
-        localStorage.setItem("info", JSON.stringify(json));
-        location.href = "/info"
-    })
-    .catch(function(error){
-        alert("닉네임을 다시 입력해주세요")
-        console.log(error)
-    })
+    if(characterName == null || characterName == ""){
+        alert("닉네임을 입력해주세요")
+    }
+    else{
+        fetch(`/character?characterName=${characterName}`)
+            .then(function(response){
+            if(!response.ok) throw new Error('존재하지 않는 유저입니다')
+
+            return response.json()
+            })
+            .then(function(json){
+                localStorage.setItem("info", JSON.stringify(json))
+                location.href = "/info"
+            })
+            .catch(function(error){
+                alert(error.message)
+            })
+    }
 }

@@ -25,16 +25,29 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'mysql:mysql-connector-java:8.0.32'
-	implementation 'io.github.cdimascio:dotenv-java:2.2.4'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	annotationProcessor 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	//ThymeLeaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	// MYSQL
+	implementation 'mysql:mysql-connector-java:8.0.32'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// dotenv ( 환경변수 )
+	implementation 'io.github.cdimascio:dotenv-java:2.2.4'
+
+	// DevTools
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// 외부 API 호출 위한 HTTP 클라이언트 ( WebClient 인터페이스 ) 사용 목적
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
 tasks.named('test') {
