@@ -1,7 +1,9 @@
 package NexonJuniors.Maching.utils;
 
 
+import NexonJuniors.Maching.model.BasicInfo;
 import NexonJuniors.Maching.model.CharacterInfo;
+import NexonJuniors.Maching.model.StatInfo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -29,10 +31,22 @@ public class ApiUtil {
             String ocidUrl = "https://open.api.nexon.com/maplestory/v1/id?character_name=" + encodedName;
             String ocid = getOcid(ocidUrl, API_KEY); // ocid를 제일 먼저 가져오기
 
-            String characterUrl = "https://open.api.nexon.com/maplestory/v1/character/basic?ocid=" + ocid;
-            String characterInfoJson = getCharacterInfo(characterUrl, API_KEY); // 캐릭터 basic api호출, date default
+            // 기본 정보
+            String basicUrl = "https://open.api.nexon.com/maplestory/v1/character/basic?ocid=" + ocid;
+            String basicInfoJson = getCharacterInfo(basicUrl, API_KEY); // 캐릭터 basic api호출, date default
 
-            CharacterInfo characterInfo = objectMapper.readValue(characterInfoJson, CharacterInfo.class); //model에 chracerInfo객체로 생성
+            // 종합 능력치
+            String statUrl = "https://open.api.nexon.com/maplestory/v1/character/stat?ocid=" + ocid;
+            String statInfoJson = getCharacterInfo(statUrl, API_KEY);
+
+            // JSON을 객체로 변환
+            BasicInfo basicInfo = objectMapper.readValue(basicInfoJson, BasicInfo.class);
+            StatInfo statInfo = objectMapper.readValue(statInfoJson, StatInfo.class);
+
+            // CharacterInfo 객체 생성 및 데이터 설정
+            CharacterInfo characterInfo = new CharacterInfo();
+            characterInfo.setBasicInfo(basicInfo);
+            characterInfo.setStatInfo(statInfo);
 
             return characterInfo;
         }
