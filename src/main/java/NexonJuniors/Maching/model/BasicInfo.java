@@ -46,6 +46,15 @@ public class BasicInfo {
     @JsonProperty("liberation_quest_clear_flag")
     private String liberationQuestClearFlag;
 
+
+    @Override
+    public String toString() {
+        return "BasicInfo{" +
+                " characterName='" + characterName +
+                '}';
+    }
+
+
     // Getters and Setters
 
     public String getDate() {

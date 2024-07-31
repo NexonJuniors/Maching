@@ -41,22 +41,24 @@ public class ApiUtil {
         String basicInfoJson = getCharacterInfo(ocid,"/character/basic"); // 캐릭터 basic api호출, date default
         String statInfoJson = getCharacterInfo(ocid,"/character/stat"); // 스텟창 api 호출, dete default
 
+        CharacterInfo characterInfo = new CharacterInfo();
         try{
             // JSON을 객체로 변환
             BasicInfo basicInfo = objectMapper.readValue(basicInfoJson, BasicInfo.class);
             StatInfo statInfo = objectMapper.readValue(statInfoJson, StatInfo.class);
 
             // CharacterInfo 객체 생성 및 데이터 설정
-            CharacterInfo characterInfo = new CharacterInfo();
             characterInfo.setBasicInfo(basicInfo);
             characterInfo.setStatInfo(statInfo);
 
+            // 콘솔 로그 출력
+            System.out.println("API request: " + characterInfo);
+            return characterInfo;
         }
         catch (Exception e){
             log.error(e.getMessage());
             throw new ApiException(ApiExceptionCode.DATA_PARSING_ERROR);
         }
-        return characterInfo;
     }
 
     private String getOcid(String characterName) {

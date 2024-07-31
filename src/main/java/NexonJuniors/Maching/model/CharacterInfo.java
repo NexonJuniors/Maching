@@ -5,6 +5,16 @@ public class CharacterInfo {
     private BasicInfo basicInfo;
     private StatInfo statInfo;
 
+
+    @Override
+    public String toString() {
+        return "CharacterInfo{" +
+                "basicInfo=" + basicInfo +
+                ", statInfo=" + statInfo +
+                '}';
+    }
+
+
     // Getter 및 Setter
 
     public BasicInfo getBasicInfo() {
