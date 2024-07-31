@@ -1,8 +1,11 @@
 package NexonJuniors.Maching.utils;
 
+
+import NexonJuniors.Maching.model.BasicInfo;
+import NexonJuniors.Maching.model.CharacterInfo;
+import NexonJuniors.Maching.model.StatInfo;
 import NexonJuniors.Maching.excption.api.ApiException;
 import NexonJuniors.Maching.excption.api.ApiExceptionCode;
-import NexonJuniors.Maching.model.CharacterInfo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -35,19 +38,27 @@ public class ApiUtil {
 
     public CharacterInfo getCharacter(String characterName) {
         String ocid = getOcid(characterName); // ocid를 제일 먼저 가져오기
-        String characterInfoJson = getCharacterInfo(ocid); // 캐릭터 basic api호출, date default
+        String basicInfoJson = getCharacterInfo(ocid,"/character/basic"); // 캐릭터 basic api호출, date default
+        String statInfoJson = getCharacterInfo(ocid,"/character/stat"); // 스텟창 api 호출, dete default
 
-        CharacterInfo characterInfo;
-
+        CharacterInfo characterInfo = new CharacterInfo();
         try{
-            characterInfo = objectMapper.readValue(characterInfoJson, CharacterInfo.class); //model에 chracerInfo객체로 생성
+            // JSON을 객체로 변환
+            BasicInfo basicInfo = objectMapper.readValue(basicInfoJson, BasicInfo.class);
+            StatInfo statInfo = objectMapper.readValue(statInfoJson, StatInfo.class);
+
+            // CharacterInfo 객체 생성 및 데이터 설정
+            characterInfo.setBasicInfo(basicInfo);
+            characterInfo.setStatInfo(statInfo);
+
+            // 콘솔 로그 출력
+            System.out.println("API request: " + characterInfo);
+            return characterInfo;
         }
         catch (Exception e){
             log.error(e.getMessage());
             throw new ApiException(ApiExceptionCode.DATA_PARSING_ERROR);
         }
-
-        return characterInfo;
     }
 
     private String getOcid(String characterName) {
@@ -75,12 +86,12 @@ public class ApiUtil {
         return json.get("ocid").asText();
     }
 
-    private String getCharacterInfo(String ocid) {
+    private String getCharacterInfo(String ocid, String path) {
         String response;
 
         response = webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/character/basic")
+                        .path(path)
                         .queryParam("ocid", ocid)
                         .build())
                 .retrieve()
