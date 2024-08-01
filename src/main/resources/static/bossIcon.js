@@ -41,9 +41,10 @@ function isCharacterSearched() {
 
 // bossContainer 요소 가져오기
 const bossContainer = document.getElementById("bossContainer");
+
 // 이미지를 동적으로 추가하는 함수
 function addBossImages() {
-    const characterSearched = isCharacterSearched();
+    const characterSearched = isCharacterSearched(); // 현재 내 캐릭터
     bossImages.forEach((imageName, index) => {
         const bossDiv = document.createElement("div");
         bossDiv.classList.add("col-md-3", "text-center", "mb-4");
@@ -71,42 +72,50 @@ function addBossImages() {
         bossDiv.appendChild(matchInfo);
         bossContainer.appendChild(bossDiv);
 
-        // 난이도와 보스 이름 추출
-        const difficultyKey = imageName[1]; // 두번째 문자 (난이도)
-        const bossNameKey = imageName[2]; // 세번째문자 (보스이름)
-        const difficulty = difficultyMapping[difficultyKey] || "Unknown";
-        const bossName = bossNameMapping[bossNameKey] || "Unknown Boss";
+        if (characterSearched) {
+            // 난이도와 보스 이름 추출
+            const difficultyKey = imageName[1]; // 두번째 문자 (난이도)
+            const bossNameKey = imageName[2]; // 세번째 문자 (보스 이름)
+            const difficulty = difficultyMapping[difficultyKey] || "Unknown";
+            const bossName = bossNameMapping[bossNameKey] || "Unknown Boss";
 
-        // 모달 추가
-        const modal = document.createElement("div");
-        modal.classList.add("modal", "fade");
-        modal.id = `bossModal${index}`;
-        modal.setAttribute("tabindex", "-1");
-        modal.setAttribute("role", "dialog");
+            // 모달 생성
+            createModal(index, imageName, difficulty, bossName);
+        }
+    });
+}
 
-        modal.innerHTML = `
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <img src="${imgFolderPath}${imageName}" alt="Boss ${index + 1} Icon" class="img-fluid">
-                        <h5 class="modal-title">${difficulty} ${bossName}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>매칭인원 / 파티수</p>
-                    </div>
-                    <div class="modal-footer">
-                        <span><button type="button" id="btnGo" class="btn btn-dark">파티 참여</button></span>
-                        <span><button type="button" id="btnMake" class="btn btn-dark">파티 생성</button></span>
-                    </div>
+// 모달을 동적으로 생성하는 함수
+function createModal(index, imageName, difficulty, bossName) {
+    const modal = document.createElement("div");
+    modal.classList.add("modal", "fade");
+    modal.id = `bossModal${index}`;
+    modal.setAttribute("tabindex", "-1");
+    modal.setAttribute("role", "dialog");
+
+    modal.innerHTML = `
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="${imgFolderPath}${imageName}" alt="Boss ${index + 1} Icon" class="img-fluid">
+                    <h5 class="modal-title">${difficulty} ${bossName}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>매칭인원 / 파티수</p>
+                    <div id="characterInfo"></div> <!-- 캐릭터 정보 표시할 div -->
+                </div>
+                <div class="modal-footer">
+                    <span><button type="button" id="btnGo" class="btn btn-dark">파티 참여</button></span>
+                    <span><button type="button" id="btnMake" class="btn btn-dark">파티 생성</button></span>
                 </div>
             </div>
-        `;
+        </div>
+    `;
 
-        document.body.appendChild(modal);
-    });
+    document.body.appendChild(modal);
 }
 
 addBossImages();
