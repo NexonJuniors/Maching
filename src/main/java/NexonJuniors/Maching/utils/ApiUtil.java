@@ -18,6 +18,9 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -105,5 +108,14 @@ public class ApiUtil {
                 .block();
 
         return response;
+    }
+
+    public void setCharacterClassDetails(CharacterInfo characterInfo) {
+        String characterClass = characterInfo.getStatInfo().getCharacterClass();
+        Map<String, List<String>> mapping = CharacterClassMapping.getCharacterClassMapping();
+        List<String> displayInfo = mapping.getOrDefault(characterClass, Collections.singletonList("Unknown"));
+
+        characterInfo.setCharacterClassInfo(characterClass); // 백앤드에서 직업 저장
+        characterInfo.setMinutesCharacterClassInfo(String.join(", ", displayInfo)); // 주기 저장
     }
 }
