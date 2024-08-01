@@ -1,60 +1,8 @@
-const characterClassMapping = {
-    "은월": ["1분", "시너지"],
-    "비숍": ["2분", "3분", "시너지"],
-    "플레임위자드": ["2분", "3분", "시너지"],
-    "와일드헌터": ["2분", "시너지"],
-
-    "팔라딘": ["3분", "시너지"],
-    "배틀메이지": ["3분", "시너지"],
-    "메카닉": ["3분", "시너지"],
-    "소울마스터": ["3분", "시너지"],
-    "메르세데스": ["3분", "시너지"],
-
-    "캐논슈터": ["2분", "3분"],
-    "아크메이지(불,독)": ["2분", "3분"],
-
-    "히어로": ["2분"],
-    "아크메이지(썬,콜)": ["2분"],
-    "보우마스터": ["2분"],
-    "신궁": ["2분"],
-    "패스파인더": ["2분"],
-    "윈드브레이커": ["2분"],
-    "스트라이커": ["2분"],
-    "블래스터": ["2분"],
-    "데몬슬레이어": ["2분"],
-    "데몬어벤져": ["2분"],
-    "카이저": ["2분"],
-    "엔젤릭버스터": ["2분"],
-    "제로": ["2분"],
-    "아크": ["2분"],
-
-    "다크나이트": ["3분"],
-    "나이트로드": ["3분"],
-    "섀도어": ["3분"],
-    "듀얼블레이드": ["3분"],
-    "바이퍼": ["3분"],
-    "캡틴": ["3분"],
-    "미하일": ["3분"],
-    "나이트워커": ["3분"],
-    "에반": ["3분"],
-    "아란": ["3분"],
-    "루미너스": ["3분"],
-    "팬텀": ["3분"],
-    "제논": ["3분"],
-    "카데나": ["3분"],
-    "카인": ["3분"],
-    "아델": ["3분"],
-    "일리움": ["3분"],
-    "칼리": ["3분"],
-    "라라": ["3분"],
-    "호영": ["3분"],
-    "키네시스": ["3분"]
-};
-
 const info = JSON.parse(localStorage.getItem("info"))
 
 const basicInfo = info.basicInfo;
 const statInfo = info.statInfo;
+const minutes = info.minutesCharacterClassInfo;
 
 // 0인값들은 뒤에 글자랑같이 안나오게 해야함, 이후 업데이트
 updateStat("보스 몬스터 데미지", "bossDamage");
@@ -66,7 +14,7 @@ updateStat("재사용 대기시간 감소 (초)", "cooldownNum");
 updateStat("재사용 대기시간 감소 (%)", "cooldownPer");
 updateStat("재사용 대기시간 미적용", "cooldownNow");
 updateStat("소환수 지속시간 증가", "minions");
-
+document.getElementById("minutes").innerText = minutes // 직업주기
 
 // 로컬 스토리지에 저장된 정보를 HTML 요소 값으로 저장
 document.getElementById("characterImage").setAttribute("src", basicInfo.character_image)
@@ -114,12 +62,18 @@ function formatNumber(number) {
     return result;
 }
 
-// 직업 주기를 보여주는 함수
-function updateCharacterClass() {
-    const characterClass = basicInfo.character_class;
-    const displayInfo = characterClassMapping[characterClass] || ["Unknown"]; // 기본값 설정
-    const classInfo = displayInfo ? `${characterClass}: ${displayInfo.join(", ")}` : `${characterClass}: Unknown`;
+/*
+// api요청해서 직업 주기 받아오기인데 필요없음
+async function fetchCharacterInfo(characterName) {
+    try {
+        const response = await fetch(`/character?characterName=${characterName}`);
+        const characterInfo = await response.json();
 
-    // 배열을 문자열로 변환하여 표시
-    document.getElementById("characterClass").innerText = classInfo;
+        document.getElementById("characterName").innerText = characterInfo.basicInfo.characterName;
+        document.getElementById("characterClass").innerText = characterInfo.displayClassInfo;
+    } catch (error) {
+        console.error("Failed to fetch character info", error);
+    }
 }
+
+fetchCharacterInfo("ExampleCharacterName");*/
