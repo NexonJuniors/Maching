@@ -5,12 +5,6 @@
     font-weight: normal;
     font-style: normal;
 }
-.logo {
-    font-family: 'MaplestoryFont', sans-serif;
-    background-color: #ADA2B8;
-    font-size: 2.5em;
-    font-weight: 900;
-}
 .boss {
     display: flex;
     flex-direction: column;
@@ -78,13 +72,21 @@ body{
     color: white;
     text-align: center;
 }
+.logo {
+    font-family: 'MaplestoryFont', sans-serif;
+    background-color: #ADA2B8;
+    font-size: 2.5em;
+    font-weight: 900;
+}
 .navbar {
+    font-family: 'MaplestoryFont', sans-serif;
     display: flex;
     align-items: center; /* 요소들을 수직으로 가운데 정렬 */
     height: 33.4%;
     background-color: #1f2937; /*네비바 색상*/
 }
 .nav-item {
+    font-family: 'MaplestoryFont', sans-serif;
     color: white;
     font-weight: 700;
     padding: 0 15px; /* 좌우 여백 설정 */
@@ -126,6 +128,7 @@ body{
 
 /*푸터 시작*/
 .container footer{
+    font-family: 'MaplestoryFont', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* 맨 아래로 정렬 */
@@ -134,6 +137,7 @@ body{
 }
 
 .container footer-content {
+    font-family: 'MaplestoryFont', sans-serif;
     flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
     padding: 10px;
 }
