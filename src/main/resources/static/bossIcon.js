@@ -11,33 +11,21 @@ const bossContainer = document.getElementById("bossContainer");
 
 // 이미지를 동적으로 추가하는 함수
 function addBossImages() {
-    // 5개씩 그룹화하여 처리
-    for (let i = 0; i < bossImages.length; i += 5) {
-        // row div 요소 생성
-        const rowDiv = document.createElement("div");
-        rowDiv.classList.add("row");
+    bossImages.forEach((imageName, index) => {
+        const bossDiv = document.createElement("div");
+        bossDiv.classList.add("boss");
 
-        // 각 그룹의 이미지를 생성하여 rowDiv에 추가
-        for (let j = i; j < i + 5 && j < bossImages.length; j++) {
-            const bossDiv = document.createElement("div");
-            bossDiv.classList.add("boss");
+        const img = document.createElement("img");
+        img.src = `${imgFolderPath}${imageName}`;
+        img.alt = `Boss ${index + 1} Icon`;
 
-            const img = document.createElement("img");
-            img.src = `${imgFolderPath}${bossImages[j]}`;
-            img.alt = `Boss ${j + 1} Icon`;
+        const matchInfo = document.createElement("p");
+        matchInfo.innerText = "매칭인원/파티수";
 
-            const matchInfo = document.createElement("p");
-            matchInfo.innerText = "매칭인원/파티수";
-
-            bossDiv.appendChild(img);
-            bossDiv.appendChild(matchInfo);
-            rowDiv.appendChild(bossDiv);
-        }
-
-        // rowDiv를 bossContainer에 추가
-        bossContainer.appendChild(rowDiv);
-    }
+        bossDiv.appendChild(img);
+        bossDiv.appendChild(matchInfo);
+        bossContainer.appendChild(bossDiv);
+    });
 }
 
-// 페이지 로드 시 이미지 추가 함수 호출
-document.addEventListener("DOMContentLoaded", addBossImages);
+addBossImages();

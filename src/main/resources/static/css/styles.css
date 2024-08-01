@@ -5,16 +5,24 @@
     font-weight: normal;
     font-style: normal;
 }
-.boss {
+#bossContainer {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around; /* 공간을 균등하게 배분 */
+}
+
+#bossContainer .boss {
+    flex: 1 1 18%; /* 각 자식 요소의 너비를 설정하여 부모 요소의 크기에 맞게 배치되도록 설정 */
+    box-sizing: border-box;
+    text-align: center;
     margin: 10px;
 }
-.boss img {
-    width: 80px; /* 원하는 크기로 설정 */
-    height: 80px; /* 원하는 크기로 설정 */
-    margin-bottom: 5px; /* 텍스트와 이미지 사이의 간격 조정 */
+
+#bossContainer .boss img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 .row {
     display: flex;
@@ -123,6 +131,15 @@ body{
     margin-top: 20px; /* 입력과 간격 조절 */
     width: 400px; /* 원하는 버튼 너비 값으로 변경 */
     height: 60px;
+}
+.search-card {
+    margin-top: -90px; *//* 원하는 margin-top 값으로 변경 *//*
+    margin-bottom: 20px; *//* 원하는 margin-bottom 값으로 변경 *//*
+    max-width: 1200px; *//* 원하는 너비 값으로 변경 *//*
+    height: 230px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 2em;
 }
 /*바디부분끝*/
 
