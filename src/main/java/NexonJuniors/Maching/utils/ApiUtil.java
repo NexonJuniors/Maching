@@ -6,6 +6,7 @@ import NexonJuniors.Maching.model.CharacterInfo;
 import NexonJuniors.Maching.model.StatInfo;
 import NexonJuniors.Maching.excption.api.ApiException;
 import NexonJuniors.Maching.excption.api.ApiExceptionCode;
+import NexonJuniors.Maching.model.UnionInfo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -40,16 +41,19 @@ public class ApiUtil {
         String ocid = getOcid(characterName); // ocid를 제일 먼저 가져오기
         String basicInfoJson = getCharacterInfo(ocid,"/character/basic"); // 캐릭터 basic api호출, date default
         String statInfoJson = getCharacterInfo(ocid,"/character/stat"); // 스텟창 api 호출, dete default
+        String unionInfoJson = getCharacterInfo(ocid,"/user/union"); // 유니온 api 호출, dete default
 
         CharacterInfo characterInfo = new CharacterInfo();
         try{
             // JSON을 객체로 변환
             BasicInfo basicInfo = objectMapper.readValue(basicInfoJson, BasicInfo.class);
             StatInfo statInfo = objectMapper.readValue(statInfoJson, StatInfo.class);
+            UnionInfo unionInfo = objectMapper.readValue(unionInfoJson, UnionInfo.class);
 
             // CharacterInfo 객체 생성 및 데이터 설정
             characterInfo.setBasicInfo(basicInfo);
             characterInfo.setStatInfo(statInfo);
+            characterInfo.setUnionInfo(unionInfo);
 
             // 콘솔 로그 출력
             System.out.println("API request: " + characterInfo);

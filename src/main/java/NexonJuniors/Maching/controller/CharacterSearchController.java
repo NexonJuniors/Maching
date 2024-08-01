@@ -22,13 +22,13 @@ public class CharacterSearchController {
     public CharacterInfo getCharacter(@RequestParam("characterName") String characterName) {
         CharacterInfo characterInfo = apiUtil.getCharacter(characterName);
 
-        // 캐릭터 클래스 정보를 가져오고 주기와 시너지 정보를 추가
+        // 직업 정보 가져오고 주기/시너지 정보 추가
         String characterClass = characterInfo.getStatInfo().getCharacterClass();
         Map<String, List<String>> mapping = CharacterClassMapping.getCharacterClassMapping();
         List<String> displayInfo = mapping.getOrDefault(characterClass, Collections.singletonList("Unknown"));
 
         characterInfo.setCharacterClassInfo(characterClass); // 백앤드에서 직업저장
-        characterInfo.setMinutesCharacterClassInfo(String.join(", ", displayInfo)); // 주기 저장
+        characterInfo.setMinutesCharacterClassInfo(String.join(", ", displayInfo)); // 주기저장
 
         return characterInfo;
     }
