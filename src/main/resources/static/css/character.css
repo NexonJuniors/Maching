@@ -59,25 +59,6 @@ body{
 /*헤더부분 끝*/
 
 /*바디 부분 시작*/
-.search-section input[type="submit"] {
-    padding: 10px 20px;
-}
-
-.boss-section {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.search-card {
-    margin-top: -90px; /* 원하는 margin-top 값으로 변경 */
-    margin-bottom: 20px; /* 원하는 margin-bottom 값으로 변경 */
-    max-width: 1200px; /* 원하는 너비 값으로 변경 */
-    height: auto;
-    margin-left: 50px;
-    margin-right: 50px;
-    border-radius: 2em;
-}
 
 .flex-container {
     display: flex;
@@ -90,33 +71,8 @@ body{
     flex-grow: 1; /* 컨텐츠 크기에 맞게 요소 크기 조정 */
 }
 
-.boss-card {
-    margin-bottom: 100px; /* 원하는 margin-bottom 값으로 변경 */
-    max-width: 1200px; /* 원하는 너비 값으로 변경 */
-    max-height: 350px;
-    margin-left: 50px;
-    margin-right: 50px;
-    border-radius: 2em;
-    height: 300px; /*변경 ㄱ*/
-}
-
-.card-body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-grow: 1;
-    padding: 1.25rem;
-    height: 260px
-}
-
-.boss-card img {
-    max-width: 100%;
-    height: auto;
-}
-
-.text-section {
-    flex: 1;
-    margin-right: 20px;
+.search-section input[type="submit"] {
+    padding: 10px 20px;
 }
 
 .search-section {

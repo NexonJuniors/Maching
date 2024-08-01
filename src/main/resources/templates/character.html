@@ -7,6 +7,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/css/character.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
 </head>
 <body>
 <div class = "container">
@@ -56,13 +57,8 @@
             </div>
             <div class="boss-card card">
                 <div class="card-body">
-                    <h5 class="card-title">보스 매칭 현황</h5>
-                    <div>
-                        <p>보스 이름 1</p>
-                    </div>
-                    <div>
-                        <p>보스 이름 2</p>
-                    </div>
+                    <h5 >보스 매칭 현황</h5><br />
+                    <div id="bossContainer"></div> <!--보스 보여주는 컨테이너-->
                 </div>
             </div>
         </div>
@@ -77,6 +73,7 @@
     <div class = "right"></div>
 </div>
 <script src = "../static/character.js"></script>
+<script src="../static/bossIcon.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
