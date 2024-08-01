@@ -37,9 +37,10 @@
                         <!--캐릭터 정보는 평균 15분 내외의 딜레이가 있습니다.
                         <br />23.12.21 이후 접속한 계정의 캐릭터만 확인이 가능합니다.<br />-->
                         <div class="flex-item">
-                            <img id="characterImage" src="" alt="Character Image" />
-                            <br /><span>파티 참여</span>
-                            <br /><span>파티 생성</span>
+                            <img id="characterImage" src="" alt="Character Image" /><br />
+                            <span><button type="button" id="btnMake" class="btn btn-dark" data-toggle="modal" data-target="#makeModal">파티 생성</button></span><br />
+                            <span><button type="button" id="btnGo" class="btn btn-dark" data-toggle="modal" data-target="#goModal">파티 참여</button></span><br />
+
                         </div>
                         <div class="flex-item">
                             <span id="worldName"></span> <span id="characterGuildName"></span> 유니온<span id="unionLevel"></span>
@@ -61,7 +62,7 @@
             <div class="boss-card card">
                 <div class="card-body">
                     <h5 >보스 매칭 현황</h5><br />
-                    <div id="bossContainer"></div> <!--보스 보여주는 컨테이너-->
+                    <div id="bossContainer"></div> <!--보스 매칭 현황 컨테이너-->
                 </div>
             </div>
         </div>
@@ -75,10 +76,64 @@
     </div>
     <div class = "right"></div>
 </div>
+
+<!-- 파티 생성 모달 -->
+<div class="modal fade" id="makeModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 모달 헤더 -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 모달 바디 -->
+            <div class="modal-body">
+                Modal body..
+            </div>
+
+            <!-- 모달 푸터 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- 파티 찾기 모달 -->
+<div class="modal fade" id="goModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- 모달 헤더 -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- 모달 바디 -->
+            <div class="modal-body">
+                Modal body..
+            </div>
+
+            <!-- 모달 푸터 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script src = "../static/character.js"></script>
 <script src="../static/bossIcon.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
