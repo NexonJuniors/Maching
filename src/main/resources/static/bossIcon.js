@@ -1,30 +1,111 @@
 // 이미지 파일 이름 배열
 const bossImages = [
-    "1하데미.png", "1하스우.png", "1하루시.png", "1하윌.png", "2노진.png","2카더.png","2카엔슬.png","3노세.png","3하듄.png","3하진.png","4검마.png","4이칼.png","4하세.png","5노칼.png","5이카.png","6노림보.png","6노카.png","6익스우.png","6카칼.png","7익검.png","7익세.png","7하림보.png","7하카.png","8익카.png","8익칼.png",
+    "1하데미.png", "1하스우.png", "1하루시.png", "1하윌.png", "2노진.png", "2카더.png", "2카엔슬.png", "3노세.png", "3하듄.png", "3하진.png", "4하검마.png", "4이칼.png", "4하세.png", "5노칼.png", "5이카.png", "6노림보.png", "6노카.png", "6익스우.png", "6카칼.png", "7익검.png", "7익세.png", "7하림보.png", "7하카.png", "8익카.png", "8익칼.png"
 ];
 
 // 이미지 폴더 경로
 const imgFolderPath = "../static/bossIcon/";
 
+// 난이도 맵핑
+const difficultyMapping = {
+    "이": "이지",
+    "노": "노말",
+    "하": "하드",
+    "카": "카오스",
+    "익": "익스트림"
+};
+
+// 보스 이름 맵핑
+const bossNameMapping = {
+    "데": "데미안",
+    "스": "스우",
+    "루": "루시드",
+    "윌": "윌",
+    "진": "진 힐라",
+    "더": "더스크",
+    "엔": "가디언 엔젤 슬라임",
+    "듄": "듄켈",
+    "검": "검은 마법사",
+    "세": "선택받은 세렌",
+    "칼": "감시자 칼로스",
+    "카": "카링",
+    "림": "림보",
+    // 필요한 보스 이름들을 추가
+};
+
+// 검색된 캐릭터 정보가 있는지 확인하는 함수
+function isCharacterSearched() {
+    const info = JSON.parse(localStorage.getItem("info"));
+    return info && info.basicInfo && info.basicInfo.character_name;
+}
+
 // bossContainer 요소 가져오기
 const bossContainer = document.getElementById("bossContainer");
-
 // 이미지를 동적으로 추가하는 함수
 function addBossImages() {
+    const characterSearched = isCharacterSearched();
     bossImages.forEach((imageName, index) => {
         const bossDiv = document.createElement("div");
-        bossDiv.classList.add("boss");
+        bossDiv.classList.add("col-md-3", "text-center", "mb-4");
+
+        const button = document.createElement("button");
+        button.classList.add("btn", "btn-link");
+
+        if (characterSearched) {
+            button.setAttribute("data-toggle", "modal");
+            button.setAttribute("data-target", `#bossModal${index}`);
+        } else {
+            button.disabled = true; // 검색된 캐릭터가 없을 때 버튼 비활성화
+        }
 
         const img = document.createElement("img");
         img.src = `${imgFolderPath}${imageName}`;
         img.alt = `Boss ${index + 1} Icon`;
+        img.classList.add("img-fluid");
 
         const matchInfo = document.createElement("p");
         matchInfo.innerText = "매칭인원/파티수";
 
-        bossDiv.appendChild(img);
+        button.appendChild(img);
+        bossDiv.appendChild(button);
         bossDiv.appendChild(matchInfo);
         bossContainer.appendChild(bossDiv);
+
+        // 난이도와 보스 이름 추출
+        const difficultyKey = imageName[1]; // 두번째 문자 (난이도)
+        const bossNameKey = imageName[2]; // 세번째문자 (보스이름)
+        const difficulty = difficultyMapping[difficultyKey] || "Unknown";
+        const bossName = bossNameMapping[bossNameKey] || "Unknown Boss";
+
+        // 모달 추가
+        const modal = document.createElement("div");
+        modal.classList.add("modal", "fade");
+        modal.id = `bossModal${index}`;
+        modal.setAttribute("tabindex", "-1");
+        modal.setAttribute("role", "dialog");
+
+        modal.innerHTML = `
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <img src="${imgFolderPath}${imageName}" alt="Boss ${index + 1} Icon" class="img-fluid">
+                        <h5 class="modal-title">${difficulty} ${bossName}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>매칭인원 / 파티수</p>
+                    </div>
+                    <div class="modal-footer">
+                        <span><button type="button" id="btnGo" class="btn btn-dark">파티 참여</button></span>
+                        <span><button type="button" id="btnMake" class="btn btn-dark">파티 생성</button></span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
     });
 }
 

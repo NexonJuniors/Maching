@@ -38,9 +38,7 @@
                         <br />23.12.21 이후 접속한 계정의 캐릭터만 확인이 가능합니다.<br />-->
                         <div class="flex-item">
                             <img id="characterImage" src="" alt="Character Image" /><br />
-                            <span><button type="button" id="btnMake" class="btn btn-dark" data-toggle="modal" data-target="#makeModal">파티 생성</button></span><br />
-                            <span><button type="button" id="btnGo" class="btn btn-dark" data-toggle="modal" data-target="#goModal">파티 참여</button></span><br />
-
+                            정보 추가
                         </div>
                         <div class="flex-item">
                             <span id="worldName"></span> <span id="characterGuildName"></span> 유니온<span id="unionLevel"></span>
@@ -53,15 +51,12 @@
                             <br />  쿨감 | <span id="cooldownNum"></span>초,<span id="cooldownPer"></span>%,(미적용<span id="cooldownNow"></span>%)
                             <br />  포스 |아케인:<span id="arcaneForce"></span>,어센틱:<span id="authenticForce"></span>
                         </div>
-                        <div class="flex-item">
-                            세번째칸
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="boss-card card">
                 <div class="card-body">
-                    <h5 >보스 매칭 현황</h5><br />
+                    <h5 >보스 매칭 참가</h5><br />
                     <div id="bossContainer"></div> <!--보스 매칭 현황 컨테이너-->
                 </div>
             </div>
@@ -75,56 +70,6 @@
         </footer>
     </div>
     <div class = "right"></div>
-</div>
-
-<!-- 파티 생성 모달 -->
-<div class="modal fade" id="makeModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- 모달 헤더 -->
-            <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- 모달 바디 -->
-            <div class="modal-body">
-                Modal body..
-            </div>
-
-            <!-- 모달 푸터 -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!-- 파티 찾기 모달 -->
-<div class="modal fade" id="goModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <!-- 모달 헤더 -->
-            <div class="modal-header">
-                <h4 class="modal-title">Modal Heading</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- 모달 바디 -->
-            <div class="modal-body">
-                Modal body..
-            </div>
-
-            <!-- 모달 푸터 -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
-
-        </div>
-    </div>
 </div>
 
 <script src = "../static/character.js"></script>
