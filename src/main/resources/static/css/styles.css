@@ -5,6 +5,18 @@
     font-weight: normal;
     font-style: normal;
 }
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap; /* 요소가 줄바꿈되도록 설정 */
+}
+.flex-item {
+    margin: 10px; /* 요소 간의 간격 조정 */
+    padding: 10px; /* 내부 여백 */
+    /*border: 1px solid #ccc; *//* 테두리인데 이거 켜야지 잘보일거임 */
+    flex-grow: 1; /* 컨텐츠 크기에 맞게 요소 크기 조정 */
+}
+
 #bossContainer {
     display: flex;
     flex-wrap: wrap;
@@ -102,17 +114,6 @@ body{
 /*헤더부분 끝*/
 
 /*바디 부분 시작*/
-
-.flex-container {
-    display: flex;
-    flex-wrap: wrap; /* 요소가 줄바꿈되도록 설정 */
-}
-.flex-item {
-    margin: 10px; /* 요소 간의 간격 조정 */
-    padding: 10px; /* 내부 여백 */
-    border: 1px solid #ccc; /* 테두리 */
-    flex-grow: 1; /* 컨텐츠 크기에 맞게 요소 크기 조정 */
-}
 
 .search-section input[type="submit"] {
     padding: 10px 20px;
