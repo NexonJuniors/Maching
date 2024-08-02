@@ -6,3 +6,10 @@
     line-height: 1.2;
     font-size: 1.5rem;
 }
+
+/* 버튼 비활성화 상태에서 흐려지지 않도록 */
+.btn-link.disabled, .btn-link[disabled], .btn.disabled , .btn[disabled] {
+    opacity: 1 !important; /* 버튼의 투명도를 1로 설정하여 흐려지지 않게 함 */
+    pointer-events: none !important; /* 클릭 이벤트를 막음 */
+    cursor: not-allowed !important; /* 마우스 커서를 금지 아이콘으로 변경 */
+}

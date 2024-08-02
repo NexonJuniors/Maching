@@ -42,21 +42,27 @@ function isCharacterSearched() {
 // bossContainer 요소 가져오기
 const bossContainer = document.getElementById("bossContainer");
 
-// 이미지를 동적으로 추가하는 함수
+// 매칭 가능 보스 이미지를 동적으로 추가하는 함수
 function addBossImages() {
     const characterSearched = isCharacterSearched(); // 현재 내 캐릭터
     bossImages.forEach((imageName, index) => {
         const bossDiv = document.createElement("div");
         bossDiv.classList.add("col-md-3", "text-center", "mb-4");
-
         const button = document.createElement("button");
         button.classList.add("btn", "btn-link");
 
-        if (characterSearched) {
-            button.setAttribute("data-toggle", "modal");
-            button.setAttribute("data-target", `#bossModal${index}`);
+        if (window.location.href.includes('/info')) {
+            if (characterSearched) {
+                button.setAttribute("data-toggle", "modal");
+                button.setAttribute("data-target", "#bossModal");
+                button.addEventListener("click", () => updateModalContent(imageName));
+            } else {
+                button.classList.add("disabled"); // CSS 클래스 추가
+                button.disabled = true; // 검색된 캐릭터가 없을 때 버튼 비활성화
+            }
         } else {
-            button.disabled = true; // 검색된 캐릭터가 없을 때 버튼 비활성화
+            button.classList.add("disabled"); // CSS 클래스 추가
+            button.disabled = true; // URL에 '/info'가 없을 때 버튼 비활성화
         }
 
         const img = document.createElement("img");
@@ -71,51 +77,45 @@ function addBossImages() {
         bossDiv.appendChild(button);
         bossDiv.appendChild(matchInfo);
         bossContainer.appendChild(bossDiv);
-
-        if (characterSearched) {
-            // 난이도와 보스 이름 추출
-            const difficultyKey = imageName[1]; // 두번째 문자 (난이도)
-            const bossNameKey = imageName[2]; // 세번째 문자 (보스 이름)
-            const difficulty = difficultyMapping[difficultyKey] || "Unknown";
-            const bossName = bossNameMapping[bossNameKey] || "Unknown Boss";
-
-            // 모달 생성
-            createModal(index, imageName, difficulty, bossName);
-        }
     });
 }
 
-// 모달을 동적으로 생성하는 함수
-function createModal(index, imageName, difficulty, bossName) {
-    const modal = document.createElement("div");
-    modal.classList.add("modal", "fade");
-    modal.id = `bossModal${index}`;
-    modal.setAttribute("tabindex", "-1");
-    modal.setAttribute("role", "dialog");
+// 보스 이미지와 이름 모달에 추가하는 함수
+function updateModalContent(imageName) {
+    const difficultyKey = imageName[1]; // 두번째 문자 (난이도)
+    const bossNameKey = imageName[2]; // 세번째 문자 (보스 이름)
+    const difficulty = difficultyMapping[difficultyKey] || "Unknown";
+    const bossName = bossNameMapping[bossNameKey] || "Unknown Boss";
 
-    modal.innerHTML = `
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <img src="${imgFolderPath}${imageName}" alt="Boss ${index + 1} Icon" class="img-fluid">
-                    <h5 class="modal-title">${difficulty} ${bossName}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>매칭인원 / 파티수</p>
-                    <div id="characterInfo"></div> <!-- 캐릭터 정보 표시할 div -->
-                </div>
-                <div class="modal-footer">
-                    <span><button type="button" id="btnGo" class="btn btn-dark">파티 참여</button></span>
-                    <span><button type="button" id="btnMake" class="btn btn-dark">파티 생성</button></span>
-                </div>
-            </div>
-        </div>
-    `;
+    // 모달 내용 업데이트
+    document.getElementById("modalBossImage").src = `${imgFolderPath}${imageName}`;
+    document.getElementById("modalBossTitle").innerText = `${difficulty} ${bossName}`;
 
-    document.body.appendChild(modal);
+    // flex-container의 내용을 모달에 복사
+    copyFlexContainerToModal();
 }
 
+// flex-container(캐릭터정보)의 내용을 모달에 복사하는 함수
+function copyFlexContainerToModal() {
+    const flexContainer = document.querySelector(".flex-container");
+    const modalFlexContainer = document.getElementById("modalFlexContainer");
+
+    if (flexContainer && modalFlexContainer) {
+        // 기존의 내용을 제거
+        modalFlexContainer.innerHTML = "";
+
+        // flex-container의 내용을 모달에 복사
+        modalFlexContainer.innerHTML = flexContainer.innerHTML;
+    }
+}
+
+// 버튼 클릭 시 모달 내용 업데이트
+document.querySelectorAll(".btn-link").forEach(button => {
+    button.addEventListener("click", () => {
+        const imageName = button.querySelector("img").src.split('/').pop();
+        updateModalContent(imageName);
+    });
+});
+
+// 페이지 로드 시 이미지 추가
 addBossImages();
