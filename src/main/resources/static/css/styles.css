@@ -1,31 +1,162 @@
 @font-face {
     font-family: 'MaplestoryFont';
-    src: url('/fonts/MaplestoryBold.ttf') format('truetype'),
-         url('/fonts/MaplestoryLight.ttf') format('truetype');
+    src: url('../../static/fonts/MaplestoryLight.ttf') format('truetype'),
+         /*url('/fonts/MaplestoryLight.ttf') format('truetype');*/
     font-weight: normal;
     font-style: normal;
 }
 
-/*body {
-    font-family: 'MaplestoryFont', sans-serif;
-    background-color: #CAC4D0; *//* 배경색 *//*
-}*/
+.flex-container {
+    display: flex;
+    flex-wrap: wrap; /* 요소가 줄바꿈되도록 설정 */
+}
+.flex-item {
+    margin: 10px; /* 요소 간의 간격 조정 */
+    padding: 10px; /* 내부 여백 */
+    /*border: 1px solid #ccc; *//* 테두리인데 이거 켜야지 잘보일거임 */
+    flex-grow: 1; /* 컨텐츠 크기에 맞게 요소 크기 조정 */
+}
 
-vr1 {
-    display: block;
-    width:2px;
-    background-color:#CAC4D0;
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:20%;
+#bossContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* 공간을 균등하게 배분 */
 }
-vr2 {
-    display: block;
-    width:2px;
-    background-color:#CAC4D0;
-    position:absolute;
-    top:0;
-    bottom:0;
-    left:80%;
+
+#bossContainer .boss {
+    flex: 1 1 18%; /* 각 자식 요소의 너비를 설정하여 부모 요소의 크기에 맞게 배치되도록 설정 */
+    box-sizing: border-box;
+    text-align: center;
+    margin: 10px;
 }
+
+#bossContainer .boss img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+.row {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px;
+}
+.card-body {
+    padding: 10px;
+}
+body{
+    height: 100vh;
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.container{
+    display: flex;
+    height: 100%;
+    max-width: 100%;
+}
+
+.left{
+    width: 15%;
+    max-width: 310px;
+    height: 100%;
+    border-right: 2px solid #CAC4D0; /* 왼쪽 벽에만 테두리 설정 */
+}
+.center{
+    width: 70%;
+    height: 100%;
+    border: none;
+}
+.right{
+    width: 15%;
+    max-width: 310px;
+    height: 100%;
+    border-left: 2px solid #CAC4D0; /* 왼쪽 벽에만 테두리 설정 */
+}
+
+/*헤더부분 시작*/
+.container header{
+    height: 20%;
+    background-color: #CAC4D0;
+}
+.partners{
+    height: 20%;
+    background-color: #04001B;
+    color: white;
+    text-align: center;
+}
+.logo {
+    font-family: 'MaplestoryFont', sans-serif;
+    background-color: #ADA2B8;
+    font-size: 2.5em;
+    font-weight: 900;
+}
+.navbar {
+    font-family: 'MaplestoryFont', sans-serif;
+    display: flex;
+    align-items: center; /* 요소들을 수직으로 가운데 정렬 */
+    height: 33.4%;
+    background-color: #1f2937; /*네비바 색상*/
+}
+.nav-item {
+    font-family: 'MaplestoryFont', sans-serif;
+    color: white;
+    font-weight: 700;
+    padding: 0 15px; /* 좌우 여백 설정 */
+}
+/*헤더부분 끝*/
+
+/*바디 부분 시작*/
+
+.search-section input[type="submit"] {
+    padding: 10px 20px;
+}
+
+.search-section {
+    display: flex;
+    flex-direction: column; /* 세로 정렬로 변경 */
+    align-items: center;
+}
+.search-section input {
+    width: 400px; /* 원하는 너비 값으로 변경 */
+    height: 50px;
+}
+.search-section button {
+    margin-top: 20px; /* 입력과 간격 조절 */
+    width: 400px; /* 원하는 버튼 너비 값으로 변경 */
+    height: 60px;
+}
+.search-card {
+    margin-top: -90px; *//* 원하는 margin-top 값으로 변경 *//*
+    margin-bottom: 20px; *//* 원하는 margin-bottom 값으로 변경 *//*
+    max-width: 1200px; *//* 원하는 너비 값으로 변경 *//*
+    height: 230px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-radius: 2em;
+}
+/*바디부분끝*/
+
+/*푸터 시작*/
+.container footer{
+    font-family: 'MaplestoryFont', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* 맨 아래로 정렬 */
+    height: 255px;
+    background-color: #CAC4D0;
+}
+
+.container footer-content {
+    font-family: 'MaplestoryFont', sans-serif;
+    flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
+    padding: 10px;
+}
+/*푸터끝*/

@@ -4,16 +4,9 @@ public class CharacterInfo {
 
     private BasicInfo basicInfo;
     private StatInfo statInfo;
-
-
-    @Override
-    public String toString() {
-        return "CharacterInfo{" +
-                "basicInfo=" + basicInfo +
-                ", statInfo=" + statInfo +
-                '}';
-    }
-
+    private UnionInfo unionInfo;
+    private String characterClassInfo; // 직업 정보 (비숍)
+    private String minutesCharacterClassInfo; // 직업 주기 및 시너지 정보 (2분, 시너지)
 
     // Getter 및 Setter
 
@@ -32,4 +25,37 @@ public class CharacterInfo {
     public void setStatInfo(StatInfo statInfo) {
         this.statInfo = statInfo;
     }
+
+    public String getCharacterClassInfo() {
+        return characterClassInfo;
+    }
+
+    public void setCharacterClassInfo(String characterClassInfo) {
+        this.characterClassInfo = characterClassInfo;
+    }
+
+    public String getMinutesCharacterClassInfo() {
+        return minutesCharacterClassInfo;
+    }
+
+    public void setMinutesCharacterClassInfo(String minutesCharacterClassInfo) {
+        this.minutesCharacterClassInfo = minutesCharacterClassInfo;
+    }
+
+    public UnionInfo getUnionInfo() {
+        return unionInfo;
+    }
+
+    public void setUnionInfo(UnionInfo unionInfo) {
+        this.unionInfo = unionInfo;
+    }
+
+    @Override
+    public String toString() {
+        return "CharacterInfo{" +
+                "basicInfo=" + basicInfo +
+                ", statInfo=" + statInfo +
+                '}';
+    }
 }
+
