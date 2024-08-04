@@ -1,3 +1,5 @@
+// 보스 아이콘에 관련된 스크립트
+
 // 이미지 파일 이름 배열
 const bossImages = [
     "1하데미.png", "1하스우.png", "1하루시.png", "1하윌.png", "2노진.png", "2카더.png", "2카엔슬.png", "3노세.png", "3하듄.png", "3하진.png", "4하검마.png", "4이칼.png", "4하세.png", "5노칼.png", "5이카.png", "6노림보.png", "6노카.png", "6익스우.png", "6카칼.png", "7익검.png", "7익세.png", "7하림보.png", "7하카.png", "8익카.png", "8익칼.png"
@@ -109,6 +111,14 @@ function copyFlexContainerToModal() {
         modalFlexContainer.innerHTML = flexContainer.innerHTML;
     }
 }
+
+// 버튼 클릭 시 모달 내용 업데이트
+document.querySelectorAll(".btn-link").forEach(button => {
+    button.addEventListener("click", () => {
+        const imageName = button.querySelector("img").src.split('/').pop();
+        updateModalContent(imageName);
+    });
+});
 
 // 페이지 로드 시 이미지 추가
 addBossImages();

@@ -93,8 +93,18 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <span><button type="button" id="btnGo" class="btn btn-dark">파티 참여</button></span>
-                <span><button type="button" id="btnMake" class="btn btn-dark">파티 생성</button></span>
+                <div class="container-btn">
+                        <span><button type="button" id="btnGo" class="btn btn-dark">파티 참여</button></span>
+                        <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                </div>
+                <div class="container-btn">
+                    <span><button type="button" id="btnMake" class="btn btn-dark">파티 생성</button></span>
+                    <div id="loadingSpinnerBtnMake" class="spinner-border text-primary" role="status" style="display: none;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

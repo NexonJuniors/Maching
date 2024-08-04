@@ -1,3 +1,5 @@
+// 캐릭터 검색 API 내용들
+
 const info = JSON.parse(localStorage.getItem("info"))
 
 const basicInfo = info.basicInfo;

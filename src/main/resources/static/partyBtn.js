@@ -1,6 +1,7 @@
+// 파티 매칭 버튼 스크립트 (POST)
+
 // 파티 생성 버튼 클릭 시 데이터 전송 함수
 function createParty() {
-    // 파티 생성시 필요한 데이터들
     const characterImageSrc = document.getElementById("characterImage").src;
     const characterName = document.getElementById("characterName").innerText;
     const characterClass = document.getElementById("characterClass").innerText;
@@ -17,6 +18,13 @@ function createParty() {
         bossTitle
     };
 
+    const btnMake = document.getElementById('btnMake');
+    const loadingSpinner = document.getElementById('loadingSpinnerBtnMake');
+
+    // 버튼 비활성화 및 로딩 스피너 표시
+    btnMake.disabled = true;
+    loadingSpinner.style.display = 'inline-block';
+
     // 백엔드로 POST 요청
     fetch('/api/create-party', {
         method: 'POST',
@@ -32,16 +40,14 @@ function createParty() {
     })
     .catch((error) => {
         console.error('Error:', error);
+    })
+    .finally(() => {
+        // 요청 완료 후 버튼 활성화 및 로딩 스피너 숨기기
+        console.log("로딩스피너 종료")
+        btnMake.disabled = false;
+        loadingSpinner.style.display = 'none';
     });
 }
 
 
 document.getElementById('btnMake').addEventListener('click', createParty);
-
-// 버튼 클릭 시 모달 내용 업데이트
-document.querySelectorAll(".btn-link").forEach(button => {
-    button.addEventListener("click", () => {
-        const imageName = button.querySelector("img").src.split('/').pop();
-        updateModalContent(imageName);
-    });
-});
