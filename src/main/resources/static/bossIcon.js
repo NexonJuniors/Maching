@@ -90,6 +90,7 @@ function updateModalContent(imageName) {
     // 모달 내용 업데이트
     document.getElementById("modalBossImage").src = `${imgFolderPath}${imageName}`;
     document.getElementById("modalBossTitle").innerText = `${difficulty} ${bossName}`;
+    console.log("보스 제목"+modalBossTitle);
 
     // flex-container의 내용을 모달에 복사
     copyFlexContainerToModal();
@@ -107,54 +108,6 @@ function copyFlexContainerToModal() {
         // flex-container의 내용을 모달에 복사
         modalFlexContainer.innerHTML = flexContainer.innerHTML;
     }
-
-    // 파티 생성 버튼에 이벤트 리스너 추가
-    document.getElementById('btnMake').addEventListener('click', createParty);
-
-    // 버튼 클릭 시 모달 내용 업데이트
-    document.querySelectorAll(".btn-link").forEach(button => {
-        button.addEventListener("click", () => {
-            const imageName = button.querySelector("img").src.split('/').pop();
-            updateModalContent(imageName);
-        });
-    });
-}
-
-// 파티 생성 버튼 클릭 시 데이터 전송 함수
-function createParty() {
-    // 파티 생성시 필요한 데이터들
-    const characterImageSrc = document.getElementById("characterImage").src;
-    const characterName = document.getElementById("characterName").innerText;
-    const characterClass = document.getElementById("characterClass").innerText;
-    const minutes = document.getElementById("minutes").innerText;
-    const power = document.getElementById("power").innerText;
-    const bossTitle = document.getElementById("modalBossTitle").innerText;
-
-    const data = {
-        characterImageSrc,
-        characterName,
-        characterClass,
-        minutes,
-        power,
-        bossTitle
-    };
-
-    // 백엔드로 POST 요청
-    fetch('/api/create-party', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-        // 파티 생성 성공 시 추가 작업
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
 }
 
 // 페이지 로드 시 이미지 추가
