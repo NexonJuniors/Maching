@@ -8,6 +8,15 @@ public class PartyData {
     private String power;
     private String bossTitle;
 
+    @Override
+    public String toString() {
+        return "PartyData{" +
+                "bossTitle=" + bossTitle +
+                ", characterName=" + characterName +
+                ", minutes=" + minutes +
+                '}';
+    }
+
     public String getCharacterImageSrc() {
         return characterImageSrc;
     }
