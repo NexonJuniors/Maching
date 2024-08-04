@@ -13,7 +13,8 @@ public class PartyData {
         return "PartyData{" +
                 "bossTitle=" + bossTitle +
                 ", characterName=" + characterName +
-                ", minutes=" + minutes +
+                ", characterClass=" + characterClass +
+                ", power=" + power +
                 '}';
     }
 

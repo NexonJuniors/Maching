@@ -107,6 +107,17 @@ function copyFlexContainerToModal() {
         // flex-container의 내용을 모달에 복사
         modalFlexContainer.innerHTML = flexContainer.innerHTML;
     }
+
+    // 파티 생성 버튼에 이벤트 리스너 추가
+    document.getElementById('btnMake').addEventListener('click', createParty);
+
+    // 버튼 클릭 시 모달 내용 업데이트
+    document.querySelectorAll(".btn-link").forEach(button => {
+        button.addEventListener("click", () => {
+            const imageName = button.querySelector("img").src.split('/').pop();
+            updateModalContent(imageName);
+        });
+    });
 }
 
 // 파티 생성 버튼 클릭 시 데이터 전송 함수
@@ -145,17 +156,6 @@ function createParty() {
         console.error('Error:', error);
     });
 }
-
-// 파티 생성 버튼에 이벤트 리스너 추가
-document.getElementById('btnMake').addEventListener('click', createParty);
-
-// 버튼 클릭 시 모달 내용 업데이트
-document.querySelectorAll(".btn-link").forEach(button => {
-    button.addEventListener("click", () => {
-        const imageName = button.querySelector("img").src.split('/').pop();
-        updateModalContent(imageName);
-    });
-});
 
 // 페이지 로드 시 이미지 추가
 addBossImages();
