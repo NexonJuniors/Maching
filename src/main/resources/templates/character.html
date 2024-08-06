@@ -48,7 +48,7 @@
                             <br />[전투력 <span id="power"></span>]
                             <br />보공<span id="bossDamage"></span>%, 방무<span id="bangMoo"></span>%
                             <br />지속시간|버프:<span id="buffDuration"></span>%, 소환수:<span id="minions"></span>%
-                            <br />  쿨감 | <span id="cooldownNum"></span>초,<span id="cooldownPer"></span>%,(미적용<span id="cooldownNow"></span>%)
+                            <br />  쿨감 | <span id="cooldownNum"></span>초,<span id="cooldownPer"></span>%(미적용<span id="cooldownNow"></span>%)
                             <br />  포스 |아케인:<span id="arcaneForce"></span>,어센틱:<span id="authenticForce"></span>
                         </div>
                     </div>
@@ -72,6 +72,44 @@
     <div class = "right"></div>
 </div>
 
+<div class="modal fade" id="bossModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img id="modalBossImage" src="" alt="Boss Icon" class="img-fluid">
+                <div>
+                    <h5 id="modalBossTitle" class="modal-title"></h5>
+                    매칭인원 / 파티수
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="characterInfo"></div> <!-- 캐릭터 정보 표시할 div -->
+                <!-- 모달에 추가될 flex-container -->
+                <div id="modalFlexContainer" class="flex-container">
+                    <!-- 여기 내용은 JavaScript로 동적으로 추가됨 -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="container-btn">
+                        <span><button type="button" id="btnGo" class="btn btn-dark">파티 참여</button></span>
+                        <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                </div>
+                <div class="container-btn">
+                    <span><button type="button" id="btnMake" class="btn btn-dark">파티 생성</button></span>
+                    <div id="loadingSpinnerBtnMake" class="spinner-border text-primary" role="status" style="display: none;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../static/partyBtn.js"></script>
 <script src = "../static/character.js"></script>
 <script src="../static/bossIcon.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

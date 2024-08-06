@@ -1,3 +1,5 @@
+// 캐릭터 검색 API 내용들
+
 const info = JSON.parse(localStorage.getItem("info"))
 
 const basicInfo = info.basicInfo;
@@ -63,19 +65,3 @@ function formatNumber(number) {
     }
     return result;
 }
-
-/*
-// api요청해서 직업 주기 받아오기인데 필요없음
-async function fetchCharacterInfo(characterName) {
-    try {
-        const response = await fetch(`/character?characterName=${characterName}`);
-        const characterInfo = await response.json();
-
-        document.getElementById("characterName").innerText = characterInfo.basicInfo.characterName;
-        document.getElementById("characterClass").innerText = characterInfo.displayClassInfo;
-    } catch (error) {
-        console.error("Failed to fetch character info", error);
-    }
-}
-
-fetchCharacterInfo("ExampleCharacterName");*/
