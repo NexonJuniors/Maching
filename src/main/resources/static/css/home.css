@@ -13,3 +13,21 @@
     pointer-events: none !important; /* 클릭 이벤트를 막음 */
     cursor: not-allowed !important; /* 마우스 커서를 금지 아이콘으로 변경 */
 }
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    padding: 10px;
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+
+input[type="text"] {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    outline: none;
+    background-color: var(--foreground);
+    color: var(--primary);
+}

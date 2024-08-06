@@ -171,11 +171,11 @@ body{
     align-items: center;
 }
 .search-section input {
-    width: 400px; /* 원하는 너비 값으로 변경 */
+    width: 250px; /* 원하는 너비 값으로 변경 */
     height: 50px;
 }
 .search-section button {
-    width: 400px; /* 원하는 버튼 너비 값으로 변경 */
+    width: 250px; /* 원하는 버튼 너비 값으로 변경 */
     height: 60px;
 }
 .search-card {
