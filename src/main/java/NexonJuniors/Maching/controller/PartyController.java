@@ -23,7 +23,7 @@ public class PartyController {
         response.put("message", "Party created successfully!");
 
         return ResponseEntity.ok(response.toString());
-        // return ResponseEntity.ok(response); //이게 맞을텐데 왜 toString 해야함?
+        // return ResponseEntity.ok(response); //이게 맞을텐데 왜 toString 해야함? -> toString안하면 지금은 시작에서 에러남
         // return new RedirectView("/chatroom"); //일단 클라이언트에서 처리
     }
 }
