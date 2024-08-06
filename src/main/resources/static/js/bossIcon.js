@@ -73,7 +73,19 @@ function addBossImages() {
         img.classList.add("img-fluid");
 
         const matchInfo = document.createElement("p");
-        matchInfo.innerText = "매칭인원/파티수";
+
+        // 변수 선언
+        const matchCount = 0;
+        const partyCount = 0;
+
+/*        // matchInfo 요소를 선택
+        const matchNow = document.getElementById('matchNow');*/
+
+        // innerHTML을 사용하여 HTML과 변수 값 삽입
+        matchInfo.innerHTML = `
+            ${partyCount}개 파티<br />
+            ${matchCount}명 매칭중!
+        `;
 
         button.appendChild(img);
         bossDiv.appendChild(button);

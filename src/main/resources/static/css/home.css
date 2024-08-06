@@ -1,5 +1,5 @@
 /*꾸미기*/
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+.card-title {
     /*글자 그냥 대충 만들어본거임.*/
     margin-bottom: .5rem;
     font-weight: 900;
