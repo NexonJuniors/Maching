@@ -40,6 +40,7 @@ function createParty() {
     })
     .catch((error) => {
         console.error('Error:', error);
+        window.location.href = '/chatroom'; // 일단은 실패해도 보내줄게
     })
     .finally(() => {
         // 요청 완료 후 버튼 활성화 및 로딩 스피너 숨기기

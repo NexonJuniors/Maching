@@ -5,17 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatting</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/chatting.css">
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/chatting.css">
 </head>
 <body>
 <div class="bg-background text-foreground px-4">
     <div class="max-w-screen-lg mx-auto px-8">
         <header class="flex items-center justify-between p-4 bg-zinc-800 text-white">
-            <div class="flex items-center">
-                <!--<img aria-hidden="true" alt="icon" src="https://openui.fly.dev/openui/24x24.svg?text=👕" class="mr-2" />-->
+            <!--            <div class = "partners">
+                            메칭 파트너스 응원
+                        </div>-->
+            <div class="flex items-center logo">
+                <!--메인아이콘<img aria-hidden="true" alt="icon" src="https://openui.fly.dev/openui/24x24.svg?text=👕" class="mr-2" />-->
                 <a href="/" style="text-decoration: none; color: inherit;">&nbsp;&nbsp;메칭</a>
             </div>
             <div class="flex items-center space-x-4">
@@ -25,16 +28,24 @@
             </div>
         </header>
 
-        <nav class="bg-zinc-700 text-white p-4">
+        <nav class="bg-zinc-700 text-white p-4 navbar">
             <ul class="flex space-x-4">
-                <li><a href="#" class="hover:underline">사이트가이드</a></li>
-                <li><a href="#" class="hover:underline">공지사항</a></li>
-                <!--<li><a href="#" class="hover:underline">목록</a></li>-->
+                <li><a href="#" class="hover:underline nav-item">사이트가이드</a></li>
+                <li><a href="#" class="hover:underline nav-item">공지사항</a></li>
+                <li><a href="info" class="hover:underline nav-item">dev캐릭터정보</a></li>
+                <li><a href="chatroom" class="hover:underline nav-item">dev채팅방</a></li>
             </ul>
         </nav>
         <main class="p-4">
-            여기에 다시 디자인 할거임.
+            채팅방 디자인 필요
         </main>
+        <footer>
+            <div class="footer-content">
+                <p style="font-size:12px; text-align: center;">
+                    Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. MapleMatching is not associated with NEXON Korea.
+                </p>
+            </div>
+        </footer>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

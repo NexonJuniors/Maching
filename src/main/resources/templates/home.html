@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메칭 메인</title>
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../static/css/home.css">
-    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/home.css">
 </head>
 <body>
 <div class="bg-background text-foreground px-4">
@@ -33,7 +32,8 @@
             <ul class="flex space-x-4">
                 <li><a href="#" class="hover:underline nav-item">사이트가이드</a></li>
                 <li><a href="#" class="hover:underline nav-item">공지사항</a></li>
-                <!--<li><a href="#" class="hover:underline">목록</a></li>-->
+                <li><a href="info" class="hover:underline nav-item">dev캐릭터정보</a></li>
+                <li><a href="chatroom" class="hover:underline nav-item">dev채팅방</a></li>
             </ul>
         </nav>
         <main class="p-4">
@@ -68,6 +68,13 @@
                 </div>
             </div>
         </main>
+        <footer>
+            <div class="footer-content">
+                <p style="font-size:12px; text-align: center;">
+                    Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. MapleMatching is not associated with NEXON Korea.
+                </p>
+            </div>
+        </footer>
     </div>
 </div>
 <script src="../static/home.js"></script>
