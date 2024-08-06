@@ -3,32 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatting</title>
+    <title>채팅방</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
     <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
     <link rel="stylesheet" type="text/css" href="../static/css/chatting.css">
 </head>
-<body>
+<body class="dark-mode">
 <div class="bg-background text-foreground px-4">
     <div class="max-w-screen-lg mx-auto px-8">
-        <header class="flex items-center justify-between p-4 bg-zinc-800 text-white">
-            <!--            <div class = "partners">
-                            메칭 파트너스 응원
-                        </div>-->
+        <div class="partners">
+            메칭 파트너스 응원
+        </div>
+        <header class="header flex items-center justify-between p-4">
             <div class="flex items-center logo">
                 <!--메인아이콘<img aria-hidden="true" alt="icon" src="https://openui.fly.dev/openui/24x24.svg?text=👕" class="mr-2" />-->
                 <a href="/" style="text-decoration: none; color: inherit;">&nbsp;&nbsp;메칭</a>
             </div>
             <div class="flex items-center space-x-4">
-                <button class="p-2 rounded hover:bg-zinc-700">📊</button>
-                <button class="p-2 rounded hover:bg-zinc-700">🔍</button>
-                <button class="p-2 rounded hover:bg-zinc-700">💰</button>
+                <button id="btnLightMode" class="p-2 rounded hover:bg-blue-600">🔆</button>
+                <button id="btnDarkMode" class="p-2 rounded hover:bg-blue-600">🌙</button>
+                <button class="p-2 rounded hover:bg-blue-600">📒</button>
+                <button class="p-2 rounded hover:bg-blue-600">💰</button>
             </div>
         </header>
 
-        <nav class="bg-zinc-700 text-white p-4 navbar">
+        <nav class="text-white p-4 navbar">
             <ul class="flex space-x-4">
                 <li><a href="#" class="hover:underline nav-item">사이트가이드</a></li>
                 <li><a href="#" class="hover:underline nav-item">공지사항</a></li>
@@ -41,13 +42,15 @@
         </main>
         <footer>
             <div class="footer-content">
-                <p style="font-size:12px; text-align: center;">
-                    Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. MapleMatching is not associated with NEXON Korea.
-                </p>
+                <div style="font-size:12px; text-align: center;">
+                    Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. MapleMatching is not associated with NEXON
+                    Korea.
+                </div>
             </div>
         </footer>
     </div>
 </div>
+<script src="../static/darkmode.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

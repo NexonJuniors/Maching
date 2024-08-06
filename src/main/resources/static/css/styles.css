@@ -21,32 +21,16 @@
     --radius: 0.5rem;
 }
 
-.dark {
-    --background: hsl(240, 10%, 3.9%);
-    --foreground: hsl(0, 0%, 98%);
-    --card: hsl(240, 10%, 3.9%);
-    --card-foreground: hsl(0, 0%, 98%);
-    --popover: hsl(240, 10%, 3.9%);
-    --popover-foreground: hsl(0, 0%, 98%);
-    --primary: hsl(0, 0%, 98%);
-    --primary-foreground: hsl(240, 5.9%, 10%);
-    --secondary: hsl(240, 3.7%, 15.9%);
-    --secondary-foreground: hsl(0, 0%, 98%);
-    --muted: hsl(240, 3.7%, 15.9%);
-    --muted-foreground: hsl(240, 5%, 64.9%);
-    --accent: hsl(240, 3.7%, 15.9%);
-    --accent-foreground: hsl(0, 0%, 98%);
-    --destructive: hsl(0, 62.8%, 30.6%);
-    --destructive-foreground: hsl(0, 0%, 98%);
-    --border: hsl(240, 3.7%, 15.9%);
-    --input: hsl(240, 3.7%, 15.9%);
-    --ring: hsl(240, 4.9%, 83.9%);
+@font-face {
+    font-family: 'MaplestoryFontBold';
+    src: url('../../static/fonts/MaplestoryBold.ttf') format('truetype'),
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
-    font-family: 'MaplestoryFont';
+    font-family: 'MaplestoryFontLight';
     src: url('../../static/fonts/MaplestoryLight.ttf') format('truetype'),
-         /*url('/fonts/MaplestoryLight.ttf') format('truetype');*/
     font-weight: normal;
     font-style: normal;
 }
@@ -66,6 +50,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around; /* 공간을 균등하게 배분 */
+    background-color: var(--foreground);
+    color: var(--primary);
 }
 
 #bossContainer .boss {
@@ -73,6 +59,8 @@
     box-sizing: border-box;
     text-align: center;
     margin: 10px;
+    background-color: var(--foreground);
+    color: var(--primary);
 }
 
 #bossContainer .boss img {
@@ -87,12 +75,14 @@
     margin-bottom: 20px;
 }
 .card {
-    border: 1px solid #ccc;
+    background-color: var(--foreground);
+    color: var(--primary);
     border-radius: 5px;
     padding: 20px;
     margin: 20px;
 }
 .card-body {
+    background-color: var(--foreground);
     padding: 10px;
 }
 body{
@@ -108,34 +98,41 @@ body{
     max-width: 100%;
 }
 
+.bg-background {
+    background-color: var(--background);
+}
+
 /*헤더부분 시작*/
-.container header{
-    height: 20%;
-    background-color: #CAC4D0;
+.header{
+    background-color: var(--primary-foreground);
 }
-.partners{
-    height: 20%;
-    background-color: #04001B;
-    color: white;
-    text-align: center;
-}
+
 .logo {
-    font-family: 'MaplestoryFont', sans-serif;
+    font-family: 'MaplestoryFontBold', sans-serif;
     font-size: 2.5em;
     font-weight: 900;
+    color:white;
 }
 .navbar {
-    font-family: 'MaplestoryFont', sans-serif;
+    font-family: 'MaplestoryFontLight', sans-serif;
     display: flex;
     align-items: center; /* 요소들을 수직으로 가운데 정렬 */
     height: 33.4%;
-/*    background-color: #1f2937; *//*네비바 색상*/
+    background-color: #114488; /*페페다크블루*/
 }
 .nav-item {
-    font-family: 'MaplestoryFont', sans-serif;
+    font-family: 'MaplestoryFontLight', sans-serif;
     color: white;
     font-weight: 700;
     padding: 0 15px; /* 좌우 여백 설정 */
+}
+
+.partners{
+    font-family: 'MaplestoryFontLight', sans-serif;
+    background-color: #FF9933;
+    color: white;
+    text-align: center;
+    border:1px;
 }
 /*헤더부분 끝*/
 
@@ -158,24 +155,29 @@ body{
     height: 60px;
 }
 .search-card {
+    background-color: var(--foreground);
+    color: var(--primary);
     /*margin-top: -90px; *//* 원하는 margin-top 값으로 변경 */
 }
 /*바디부분끝*/
 
 /*푸터 시작*/
-.container footer{
-    font-family: 'MaplestoryFont', sans-serif;
+.footer{
+    font-family: 'MaplestoryFontBold', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* 맨 아래로 정렬 */
     height: 255px;
-    background-color: #CAC4D0;
+    background-color: var(--primary-foreground);
+    color: var(--primary);
 }
 
-.container footer-content {
-    font-family: 'MaplestoryFont', sans-serif;
+.footer-content {
+    font-family: 'MaplestoryFontBold', sans-serif;
     flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
     padding: 10px;
+    background-color: var(--primary-foreground);
+    color: var(--primary);
 }
 /*푸터끝*/
 
@@ -184,4 +186,42 @@ body{
     opacity: 1 !important; /* 버튼의 투명도를 1로 설정하여 흐려지지 않게 함 */
     pointer-events: none !important; /* 클릭 이벤트를 막음 */
     cursor: not-allowed !important; /* 마우스 커서를 금지 아이콘으로 변경 */
+}
+
+yeti color {
+    /*
+    페페 라이트 블루 : #5588DD
+    페페 다크 블루 :  #114488
+    페페 오렌지 :  #FF9933
+    예티 화이트 :  #FFFFFF
+    예티 그레이 :  #DDDDDD
+    예티와페페브라운 :  #997733
+    예티와페페다크브라운 :  #443322
+    견장 : #CCDDDD
+    */
+}
+
+.btn-custom {
+    background-color: #114488; /* 원하는 배경색상 */
+    color: #ffffff; /* 텍스트 색상 */
+    border: none; /* 경계선 없애기 */
+}
+
+.btn-custom:hover {
+    background-color: #5588DD; /* 호버 시 배경색상 */
+    color: #ffffff; /* 호버 시 텍스트 색상 */
+}
+
+body.light-mode {
+    --background: #DDDDDD; /*에티라이트그래이*/
+    --foreground: #FFFFFF; /*에티화이트*/
+    --primary: #000000; /*글자색*/
+    --primary-foreground: #5588DD;
+}
+
+body.dark-mode {
+    --background: #1E1E1E; /*그냥 그레이*/
+    --foreground: #333737; /*에티그레이*/
+    --primary: #FFFFFF; /*글자색*/
+    --primary-foreground: #223355;
 }
