@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.chatroom-container {
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "left chatroom right"
+        "left chatroom right"
+        "left chatroom right";
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+    gap: 10px;
+    padding: 10px;
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.header {
+    color: var(--primary);
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.title, .condition {
+    color: var(--primary);
+    flex: 1;
+    text-align: center;
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+    margin: 0 5px;
+    padding: 10px;
+}
+
+.sidebar {
+    color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.left {
+    grid-area: left;
+}
+
+.right {
+    grid-area: right;
+}
+
+.user {
+    color: var(--primary);
+    flex: 1;
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+}
+
+.chatroom {
+    color: var(--primary);
+    grid-area: chatroom;
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+}

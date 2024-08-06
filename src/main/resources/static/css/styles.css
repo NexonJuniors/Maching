@@ -21,6 +21,20 @@
     --radius: 0.5rem;
 }
 
+body.light-mode {
+    --background: #DDDDDD; /*에티라이트그래이*/
+    --foreground: #FFFFFF; /*에티화이트*/
+    --primary: #000000; /*글자색*/
+    --primary-foreground: #5588DD;
+}
+
+body.dark-mode {
+    --background: #1E1E1E; /*그냥 그레이*/
+    --foreground: #333737; /*에티그레이*/
+    --primary: #FFFFFF; /*글자색*/
+    --primary-foreground: #223355;
+}
+
 @font-face {
     font-family: 'MaplestoryFontBold';
     src: url('../../static/fonts/MaplestoryBold.ttf') format('truetype'),
@@ -75,9 +89,11 @@
     margin-bottom: 20px;
 }
 .card {
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
     background-color: var(--foreground);
     color: var(--primary);
-    border-radius: 5px;
     padding: 20px;
     margin: 20px;
 }
@@ -105,6 +121,9 @@ body{
 /*헤더부분 시작*/
 .header{
     background-color: var(--primary-foreground);
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
 }
 
 .logo {
@@ -119,6 +138,9 @@ body{
     align-items: center; /* 요소들을 수직으로 가운데 정렬 */
     height: 33.4%;
     background-color: #114488; /*페페다크블루*/
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
 }
 .nav-item {
     font-family: 'MaplestoryFontLight', sans-serif;
@@ -132,7 +154,9 @@ body{
     background-color: #FF9933;
     color: white;
     text-align: center;
-    border:1px;
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 5px;
 }
 /*헤더부분 끝*/
 
@@ -170,6 +194,9 @@ body{
     height: 255px;
     background-color: var(--primary-foreground);
     color: var(--primary);
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
 }
 
 .footer-content {
@@ -178,6 +205,9 @@ body{
     padding: 10px;
     background-color: var(--primary-foreground);
     color: var(--primary);
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
 }
 /*푸터끝*/
 
@@ -204,24 +234,14 @@ yeti color {
 .btn-custom {
     background-color: #114488; /* 원하는 배경색상 */
     color: #ffffff; /* 텍스트 색상 */
-    border: none; /* 경계선 없애기 */
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
 }
 
 .btn-custom:hover {
     background-color: #5588DD; /* 호버 시 배경색상 */
-    color: #ffffff; /* 호버 시 텍스트 색상 */
-}
-
-body.light-mode {
-    --background: #DDDDDD; /*에티라이트그래이*/
-    --foreground: #FFFFFF; /*에티화이트*/
-    --primary: #000000; /*글자색*/
-    --primary-foreground: #5588DD;
-}
-
-body.dark-mode {
-    --background: #1E1E1E; /*그냥 그레이*/
-    --foreground: #333737; /*에티그레이*/
-    --primary: #FFFFFF; /*글자색*/
-    --primary-foreground: #223355;
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
 }
