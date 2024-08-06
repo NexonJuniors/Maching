@@ -3,34 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MapleStory Character Info</title>
-    <!-- Bootstrap CSS -->
+    <title>캐릭터 검색</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../static/css/character.css">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
     <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/character.css">
 </head>
 <body>
-<div class = "container">
-    <div class = "left"></div>
-
-    <div class = "center">
-        <header>
-            <div class = "partners">
-                메칭 파트너스 응원
-            </div>
-            <div class = "logo" style = "height: 35%; color: white;">
+<div class="bg-background text-foreground px-4">
+    <div class="max-w-screen-lg mx-auto px-8">
+        <header class="flex items-center justify-between p-4 bg-zinc-800 text-white">
+            <!--            <div class = "partners">
+                            메칭 파트너스 응원
+                        </div>-->
+            <div class="flex items-center logo">
+                <!--메인아이콘<img aria-hidden="true" alt="icon" src="https://openui.fly.dev/openui/24x24.svg?text=👕" class="mr-2" />-->
                 <a href="/" style="text-decoration: none; color: inherit;">&nbsp;&nbsp;메칭</a>
             </div>
-
-            <nav class = "navbar" style=" color=white;">
-                <div class="nav-item">
-                    사이트 가이드
-                </div>
-            </nav>
+            <div class="flex items-center space-x-4">
+                <button class="p-2 rounded hover:bg-zinc-700">📊</button>
+                <button class="p-2 rounded hover:bg-zinc-700">🔍</button>
+                <button class="p-2 rounded hover:bg-zinc-700">💰</button>
+            </div>
         </header>
 
-        <div style = "width: 100%; height: 10%; background-color: #CAC4D0;"></div>
-        <div style = "width: 100%; height: 52%;">
+        <nav class="bg-zinc-700 text-white p-4 navbar">
+            <ul class="flex space-x-4">
+                <li><a href="#" class="hover:underline nav-item">사이트가이드</a></li>
+                <li><a href="#" class="hover:underline nav-item">공지사항</a></li>
+                <li><a href="info" class="hover:underline nav-item">dev캐릭터정보</a></li>
+                <li><a href="chatroom" class="hover:underline nav-item">dev채팅방</a></li>
+            </ul>
+        </nav>
+        <main class="p-4">
             <div class="search-card card">
                 <div class="container">
                     <div class="flex-container">
@@ -44,7 +50,7 @@
                             <span id="worldName"></span> <span id="characterGuildName"></span> 유니온<span id="unionLevel"></span>
                             <br />Lv.<span id="characterLevel"></span>(<span id="characterExp"></span>%)
                             <span id="characterName"></span>
-                             <span id="characterClass"></span>(<span id="minutes"></span>)
+                            <span id="characterClass"></span>(<span id="minutes"></span>)
                             <br />[전투력 <span id="power"></span>]
                             <br />보공<span id="bossDamage"></span>%, 방무<span id="bangMoo"></span>%
                             <br />지속시간|버프:<span id="buffDuration"></span>%, 소환수:<span id="minions"></span>%
@@ -60,7 +66,7 @@
                     <div id="bossContainer"></div> <!--보스 매칭 현황 컨테이너-->
                 </div>
             </div>
-        </div>
+        </main>
         <footer>
             <div class="footer-content">
                 <p style="font-size:12px; text-align: center;">
@@ -69,9 +75,7 @@
             </div>
         </footer>
     </div>
-    <div class = "right"></div>
 </div>
-
 <div class="modal fade" id="bossModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -94,10 +98,10 @@
             </div>
             <div class="modal-footer">
                 <div class="container-btn">
-                        <span><button type="button" id="btnGo" class="btn btn-dark">파티 참여</button></span>
-                        <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
-                            <span class="sr-only">Loading...</span>
-                        </div>
+                    <span><button type="button" id="btnGo" class="btn btn-dark">매칭 참여</button></span>
+                    <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
                 <div class="container-btn">
                     <span><button type="button" id="btnMake" class="btn btn-dark">파티 생성</button></span>

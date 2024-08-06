@@ -36,10 +36,11 @@ function createParty() {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        // 파티 생성 성공 시 추가 작업
+        window.location.href = '/chatroom'; // 요청 성공 시 리다이렉션
     })
     .catch((error) => {
         console.error('Error:', error);
+        window.location.href = '/chatroom'; // 일단은 실패해도 보내줄게
     })
     .finally(() => {
         // 요청 완료 후 버튼 활성화 및 로딩 스피너 숨기기

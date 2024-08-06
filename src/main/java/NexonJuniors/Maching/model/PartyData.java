@@ -15,6 +15,7 @@ public class PartyData {
                 ", characterName=" + characterName +
                 ", characterClass=" + characterClass +
                 ", power=" + power +
+                ", minutes=" + minutes +
                 '}';
     }
 
