@@ -4,6 +4,9 @@ import NexonJuniors.Maching.model.PartyData;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
 public class PartyController {
@@ -14,6 +17,12 @@ public class PartyController {
         // createParty 메소드 구현 요망
         // 파티 데이터를 처리하는 로직은 utils에서 하나? 아무튼 만들면될듯
 
-        return ResponseEntity.ok("Party created success!"); // 응답 뭘로 나가야하나
+        // 파티 데이터를 처리하는 로직을 추가
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Party created successfully!");
+
+        return ResponseEntity.ok(response);
+        // return new RedirectView("/chatroom"); //일단 클라이언트에서 처리
     }
 }

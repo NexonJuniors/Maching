@@ -15,4 +15,7 @@ public class HomeController {
 
     @GetMapping("/info")
     public String info(){ return "character";}
+
+    @GetMapping("/chatroom")
+    public String chatroom(){ return "chatting";}
 }

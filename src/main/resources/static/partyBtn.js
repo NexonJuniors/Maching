@@ -36,7 +36,7 @@ function createParty() {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        // 파티 생성 성공 시 추가 작업
+        window.location.href = '/chatroom'; // 요청 성공 시 리다이렉션
     })
     .catch((error) => {
         console.error('Error:', error);
