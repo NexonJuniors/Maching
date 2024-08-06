@@ -22,7 +22,8 @@ public class PartyController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Party created successfully!");
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(response.toString());
+        // return ResponseEntity.ok(response); //이게 맞을텐데 왜 toString 해야함?
         // return new RedirectView("/chatroom"); //일단 클라이언트에서 처리
     }
 }
