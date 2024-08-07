@@ -49,45 +49,6 @@ body.dark-mode {
     font-style: normal;
 }
 
-.flex-container {
-    display: flex;
-    flex-wrap: wrap; /* 요소가 줄바꿈되도록 설정 */
-    justify-content: space-evenly; /* 아이템 사이에 균등한 간격을 설정 */
-    align-items: center; /* 아이템들이 수직으로 중앙 정렬되도록 설정 */
-    width: 100%; /* 컨테이너의 너비를 100%로 설정 */
-}
-
-.flex-item {
-    flex: 1 1 200px; /* 요소가 최소 200px 너비를 가지도록 설정 */
-    margin: 10px; /* 요소 간의 간격 조정 */
-    padding: 10px; /* 내부 여백 */
-    box-sizing: border-box; /* 패딩과 테두리를 포함하여 너비 계산 */
-    text-align: center; /* 텍스트 중앙 정렬 */
-}
-
-#bossContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around; /* 공간을 균등하게 배분 */
-    background-color: var(--foreground);
-    color: var(--primary);
-}
-
-#bossContainer .boss {
-    flex: 1 1 18%; /* 각 자식 요소의 너비를 설정하여 부모 요소의 크기에 맞게 배치되도록 설정 */
-    box-sizing: border-box;
-    text-align: center;
-    margin: 10px;
-    background-color: var(--foreground);
-    color: var(--primary);
-}
-
-#bossContainer .boss img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}
 .row {
     display: flex;
     justify-content: space-around;
@@ -187,6 +148,46 @@ body{
     overflow: hidden; /* 카드 안의 내용이 넘치지 않도록 설정 */
     /*margin-top: -90px; *//* 원하는 margin-top 값으로 변경 */
 }
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap; /* 요소가 줄바꿈되도록 설정 */
+    justify-content: space-evenly; /* 아이템 사이에 균등한 간격을 설정 */
+    align-items: center; /* 아이템들이 수직으로 중앙 정렬되도록 설정 */
+    width: 100%; /* 컨테이너의 너비를 100%로 설정 */
+}
+
+.flex-item {
+    flex: 1 1 200px; /* 요소가 최소 200px 너비를 가지도록 설정 */
+    margin: 10px; /* 요소 간의 간격 조정 */
+    padding: 10px; /* 내부 여백 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함하여 너비 계산 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+#bossContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* 공간을 균등하게 배분 */
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+
+#bossContainer .boss {
+    flex: 1 1 18%; /* 각 자식 요소의 너비를 설정하여 부모 요소의 크기에 맞게 배치되도록 설정 */
+    box-sizing: border-box;
+    text-align: center;
+    margin: 10px;
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+
+#bossContainer .boss img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
 /*바디부분끝*/
 
 /*푸터 시작*/
@@ -236,7 +237,7 @@ yeti color {
 }
 
 .btn-custom {
-    background-color: #114488; /* 원하는 배경색상 */
+    background-color: #FF9933; /* 원하는 배경색상 */
     color: #ffffff; /* 텍스트 색상 */
     border-color: #282828;
     border-width: 1px;
@@ -245,7 +246,23 @@ yeti color {
 
 .btn-custom:hover {
     background-color: #5588DD; /* 호버 시 배경색상 */
+    color: #ffffff; /* 텍스트 색상 */
     border-color: #282828;
     border-width: 1px;
     border-radius: 10px;
 }
+
+.highlighted-text {
+    color: transparent; /* 텍스트를 투명하게 설정 */
+    background-clip: text; /* 배경 클립을 텍스트로 설정 */
+    background-image: linear-gradient(to right, #4477DD, #FF9933); /* 그라데이션 색상 설정 */
+    -webkit-background-clip: text; /* 웹킷 브라우저용 배경 클립 설정 */
+}
+
+.highlighted-text2 {
+    font-weight: 700;
+    color: transparent; /* 텍스트를 투명하게 설정 */
+    background-clip: text; /* 배경 클립을 텍스트로 설정 */
+    background-image: linear-gradient(to right, #42A5F5, #FFCA28); /* 그라데이션 색상 설정 */
+    -webkit-background-clip: text; /* 웹킷 브라우저용 배경 클립 설정 */
+}s
