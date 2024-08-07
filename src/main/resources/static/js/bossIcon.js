@@ -6,7 +6,7 @@ const bossImages = [
 ];
 
 // 이미지 폴더 경로
-const imgFolderPath = "../static/bossIcon/";
+const imgFolderPath = "../static/image/bossIcon/";
 
 // 난이도 맵핑
 const difficultyMapping = {
@@ -84,7 +84,7 @@ function addBossImages() {
         // innerHTML을 사용하여 HTML과 변수 값 삽입
         matchInfo.innerHTML = `
            ${partyCount} <span class="highlighted-text2">개 파티</span><br />
-            ${matchCount} <span class="highlighted-text2">명 매칭중!</span>
+            ${matchCount} <span class="highlighted-text2">명 매칭중</span>
         `;
 
         button.appendChild(img);

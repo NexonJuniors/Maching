@@ -11,3 +11,84 @@
     pointer-events: none !important; /* 클릭 이벤트를 막음 */
     cursor: not-allowed !important; /* 마우스 커서를 금지 아이콘으로 변경 */
 }
+
+.characterImageContainer {
+    display: flex;
+    justify-content: center;  /* 가로로 가운데 정렬 */
+    align-items: center;  /* 세로로 가운데 정렬 */
+    width: 200px; /* 컨테이너 너비 설정 */
+    height: 200px; /* 컨테이너 높이 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative; /* 필요 시 절대 위치 요소들을 포함할 수 있도록 설정 */
+}
+
+.characterImage {
+    width: 200px;  /* 원하는 너비로 조정 */
+    height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
+    display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
+    margin: 0 auto;  /* 가운데 정렬 */
+    object-fit: cover;
+    border-radius: 80%; /* 이미지 자체를 둥글게 만듦 */
+}
+.flex-container {
+    align-items: stretch; /* 자식 요소들의 높이를 동일하게 맞춥니다 */
+}
+
+.flex-item {
+    flex: 1;
+    border-radius: 10px;
+/*    border-color: #BEBEBE;*/
+/*    border-width: 1px;*/
+}
+
+.serverGuildUnion {
+    display: flex; /* Flexbox 레이아웃을 사용 */
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.8em;
+}
+
+.serverGuildUnion img {
+    display: flex; /* Flexbox 레이아웃을 사용 */
+    text-align: center;
+    width: 16px; /* 이미지 크기를 조정 */
+    height: 16px; /* 이미지 크기를 조정 */
+}
+
+.nameLevel{
+    font-size: 1.1em;
+    font-weight: 900;
+}
+
+.class {
+    font-size: 1.1em;
+    font-weight: 900;
+}
+
+.power{
+    font-weight: 700;
+    font-size: 1.3em;
+/*    color: transparent; *//* 텍스트를 투명하게 설정 *//*
+    background-clip: text; *//* 배경 클립을 텍스트로 설정 *//*
+    background-image: linear-gradient(to right, #8000FF, #00FF80, #FF9900); *//* 그라데이션 색상 설정 *//*
+    -webkit-background-clip: text; *//* 웹킷 브라우저용 배경 클립 설정 */
+}
+
+.textSpac {
+    font-size: 1em;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    text-align: left; /* 텍스트 정렬을 왼쪽으로 설정 */
+}
+
+.hexaSkill {
+    font-size: 1em;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    text-align: left; /* 텍스트 정렬을 왼쪽으로 설정 */
+}

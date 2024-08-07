@@ -14,12 +14,12 @@
 <div class="bg-background text-foreground px-4">
     <div class="max-w-screen-lg mx-auto px-8">
         <div class="partners">
-            메칭 파트너스 응원
+            <a href="https://partners.maplestory.nexon.com/developers">메칭 파트너스 응원</a>
         </div>
         <header class="header flex items-center justify-between p-4">
             <div class="flex items-center logo">
-                <!--메인아이콘<img aria-hidden="true" alt="icon" src="https://openui.fly.dev/openui/24x24.svg?text=👕" class="mr-2" />-->
-                <a href="/" style="text-decoration: none; color: inherit;">&nbsp;&nbsp;메칭</a>
+                <img aria-hidden="true" alt="icon" src="../static/fonts/icon.png" class="icon mr-2" />
+                <a href="/" style="text-decoration: none; color: inherit;">&nbsp;메칭</a>
             </div>
             <div class="flex items-center space-x-4">
                 <button id="btnLightMode" class="p-2 rounded hover:bg-blue-600">🔆</button>
@@ -39,31 +39,68 @@
         </nav>
         <main class="p-4">
             <div class="search-card card">
+                <div class="text-white p-3 navbar card-title">
+                    내 캐릭터 스펙 확인
+                    <div class="instructions">
+                        - 캐릭터 정보는 평균 15분 내외의 딜레이가 있습니다.<br />
+                        - 23.12.21 이후 접속한 계정의 캐릭터만 확인이 가능합니다.
+                    </div>
+                </div>
                 <div class="container">
                     <div class="flex-container">
-                        <!--캐릭터 정보는 평균 15분 내외의 딜레이가 있습니다.
-                        <br />23.12.21 이후 접속한 계정의 캐릭터만 확인이 가능합니다.<br />-->
                         <div class="flex-item">
-                            <img id="characterImage" src="" alt="Character Image" /><br />
-                            정보 추가
+                            <div class="serverGuildUnion">
+                                <img id="serverIcon" src="" alt="Server Icon" />
+                                <span id="worldName"></span>
+                                <span id="characterGuildName"></span>
+                                유니온<span id="unionLevel"></span><br />
+                            </div>
+                            <div class="nameLevel">
+                                <span id="characterName"></span>
+                                Lv.<span id="characterLevel"></span>
+                                (<span id="characterExp"></span>%)
+                            </div>
+                            <div id="characterImageContainer">
+                                <img id="characterImage" alt="Character Image" class="characterImage"/>
+                            </div>
+                            <div class="class">
+                                <span id="characterClass"></span>
+                                (<span id="minutes"></span>)
+                            </div>
+                            <div class="power">
+                                전투력 <span id="power"></span>
+                            </div>
                         </div>
                         <div class="flex-item">
-                            <span id="worldName"></span> <span id="characterGuildName"></span> 유니온<span id="unionLevel"></span>
-                            <br />Lv.<span id="characterLevel"></span>(<span id="characterExp"></span>%)
-                            <span id="characterName"></span>
-                            <span id="characterClass"></span>(<span id="minutes"></span>)
-                            <br />[전투력 <span id="power"></span>]
-                            <br />보공<span id="bossDamage"></span>%, 방무<span id="bangMoo"></span>%
-                            <br />지속시간|버프:<span id="buffDuration"></span>%, 소환수:<span id="minions"></span>%
-                            <br />  쿨감 | <span id="cooldownNum"></span>초,<span id="cooldownPer"></span>%(미적용<span id="cooldownNow"></span>%)
-                            <br />  포스 |아케인:<span id="arcaneForce"></span>,어센틱:<span id="authenticForce"></span>
+                            <div class="textSpac">
+                                보공<span id="bossDamage"></span>%,
+                                방무<span id="bangMoo"></span>%<br />
+                                지속시간|버프:<span id="buffDuration"></span>%,
+                                소환수:<span id="minions"></span>%<br />
+                                쿨감 | <span id="cooldownNum"></span>초,
+                                <span id="cooldownPer"></span>%
+                                (미적용<span id="cooldownNow"></span>%)<br />
+                                포스 |아케인:<span id="arcaneForce"></span>,
+                                어센틱:<span id="authenticForce"></span>
+                            </div>
+                            <br />
+                            <div class="hexaSkill">
+                                <div id="hexaCoreContainer"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="boss-card card">
                 <div class="card-body">
-                    <div class="text-white p-4 navbar card-title">보스매칭 참가</div>
+                    <div class="text-white p-3 navbar card-title">
+                        보스매칭 참가
+                        <div class="instructions">
+                            - 보스 아이콘을 클릭해 매칭에 참가하거나 필요한 파티원을 구해보세요! <br />
+                            - 반드시 인게임 내에서 대화를 통해 해당 파티원 본인이 맞는지 확인하세요  <br />
+                            - 타인의 캐릭터를 사칭할 경우 이에 따른 모든 법적 책임과 피해 책임은 사칭한 본인에게 있습니다.
+                        </div>
+                    </div>
                     <div id="bossContainer"></div> <!--보스 매칭 현황 컨테이너-->
                 </div>
             </div>
@@ -71,8 +108,12 @@
         <footer>
             <div class="footer-content">
                 <div style="font-size:12px; text-align: center;">
-                    Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. MapleMatching is not associated with NEXON
-                    Korea.
+                    Data based on NEXON Open API.<br />
+                    Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. This service is not associated with NEXON
+                    Korea.<br /><br />
+                    본 사이트 내에서 발생하는 이용자 간의 모든 분쟁 및 문제에 대해 사이트 개발자는 어떠한 책임도 지지 않습니다.<br />
+                    이용자 간의 모든 행위와 관련된 책임은 해당 이용자들에게 있으며, 본 사이트는 이에 대한 법적 책임을 지지 않습니다.<br />
+                    이 페이지에는 메이플스토리가 제공한 메이플스토리 서체가 적용되어 있습니다.
                 </div>
             </div>
         </footer>

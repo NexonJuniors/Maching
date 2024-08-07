@@ -146,7 +146,7 @@ body{
     background-color: var(--foreground);
     color: var(--primary);
     overflow: hidden; /* 카드 안의 내용이 넘치지 않도록 설정 */
-    /*margin-top: -90px; *//* 원하는 margin-top 값으로 변경 */
+    margin-top: -10px; /* 원하는 margin-top 값으로 변경 */
 }
 
 .flex-container {
@@ -261,8 +261,19 @@ yeti color {
 
 .highlighted-text2 {
     font-weight: 700;
-    color: transparent; /* 텍스트를 투명하게 설정 */
-    background-clip: text; /* 배경 클립을 텍스트로 설정 */
-    background-image: linear-gradient(to right, #42A5F5, #FFCA28); /* 그라데이션 색상 설정 */
-    -webkit-background-clip: text; /* 웹킷 브라우저용 배경 클립 설정 */
-}s
+/*    color: transparent; *//* 텍스트를 투명하게 설정 *//*
+    background-clip: text; *//* 배경 클립을 텍스트로 설정 *//*
+    background-image: linear-gradient(to right, #42A5F5, #FFCA28); *//* 그라데이션 색상 설정 *//*
+    -webkit-background-clip: text; *//* 웹킷 브라우저용 배경 클립 설정 */
+}
+
+.icon {
+    width: 50px;  /* 원하는 너비로 조정 */
+    height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
+    display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
+}
+
+.instructions{
+    font-size:10px;
+    font-weight:200;
+}
