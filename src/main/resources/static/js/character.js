@@ -1,5 +1,4 @@
 // 캐릭터 검색 API 내용들
-
 const info = JSON.parse(localStorage.getItem("info"))
 
 const basicInfo = info.basicInfo;
@@ -16,6 +15,15 @@ document.getElementById("worldName").innerText = basicInfo.world_name
 document.getElementById("characterLevel").innerText = basicInfo.character_level
 document.getElementById("characterExp").innerText = basicInfo.character_exp_rate
 document.getElementById("characterGuildName").innerText = basicInfo.character_guild_name
+
+const worldNameElement = document.getElementById('worldName');
+const worldName = worldNameElement.innerText.trim(); // 앞뒤 공백 제거
+// 이미지 파일 경로를 구성합니다
+const  serverImgFolderPath = "../static/image/serverIcon/";
+const imgFileName = worldName + ".png"; // 파일 확장자는 필요에 따라 조정하세요
+const imgSrc = serverImgFolderPath + imgFileName;
+const serverIcon = document.getElementById('serverIcon');
+serverIcon.src = imgSrc;
 
 // statInfo
 // statInfo에서 특정 stat_name을 찾아서 해당 값을 지정된 elementId에 설정하는 함수
