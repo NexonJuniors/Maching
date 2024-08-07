@@ -265,4 +265,10 @@ yeti color {
     background-clip: text; /* 배경 클립을 텍스트로 설정 */
     background-image: linear-gradient(to right, #42A5F5, #FFCA28); /* 그라데이션 색상 설정 */
     -webkit-background-clip: text; /* 웹킷 브라우저용 배경 클립 설정 */
-}s
+}
+
+.icon {
+    width: 50px;  /* 원하는 너비로 조정 */
+    height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
+    display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
+}
