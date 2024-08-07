@@ -1,12 +1,9 @@
 package NexonJuniors.Maching.utils;
 
 
-import NexonJuniors.Maching.model.BasicInfo;
-import NexonJuniors.Maching.model.CharacterInfo;
-import NexonJuniors.Maching.model.StatInfo;
+import NexonJuniors.Maching.model.*;
 import NexonJuniors.Maching.excption.api.ApiException;
 import NexonJuniors.Maching.excption.api.ApiExceptionCode;
-import NexonJuniors.Maching.model.UnionInfo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -45,6 +42,7 @@ public class ApiUtil {
         String basicInfoJson = getCharacterInfo(ocid,"/character/basic"); // 캐릭터 basic api호출, date default
         String statInfoJson = getCharacterInfo(ocid,"/character/stat"); // 스텟창 api 호출, dete default
         String unionInfoJson = getCharacterInfo(ocid,"/user/union"); // 유니온 api 호출, dete default
+        String hexaSkillInfoJson = getCharacterInfo(ocid,"/character/hexamatrix"); // 헥사스킬 api 호출, dete default
 
         CharacterInfo characterInfo = new CharacterInfo();
         try{
@@ -52,11 +50,13 @@ public class ApiUtil {
             BasicInfo basicInfo = objectMapper.readValue(basicInfoJson, BasicInfo.class);
             StatInfo statInfo = objectMapper.readValue(statInfoJson, StatInfo.class);
             UnionInfo unionInfo = objectMapper.readValue(unionInfoJson, UnionInfo.class);
+            HexaSkillInfo hexaSkillInfo = objectMapper.readValue(hexaSkillInfoJson, HexaSkillInfo.class);
 
             // CharacterInfo 객체 생성 및 데이터 설정
             characterInfo.setBasicInfo(basicInfo);
             characterInfo.setStatInfo(statInfo);
             characterInfo.setUnionInfo(unionInfo);
+            characterInfo.setHexaSkillInfo(hexaSkillInfo);
 
             // 콘솔 로그 출력
             System.out.println("API request: " + characterInfo);
