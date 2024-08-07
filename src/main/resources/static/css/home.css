@@ -1,10 +1,9 @@
 /*꾸미기*/
-.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+.card-title {
     /*글자 그냥 대충 만들어본거임.*/
-    margin-bottom: .5rem;
-    font-weight: 900;
+    font-weight: 800;
     line-height: 1.2;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
 }
 
 /* 버튼 비활성화 상태에서 흐려지지 않도록 */
@@ -12,4 +11,22 @@
     opacity: 1 !important; /* 버튼의 투명도를 1로 설정하여 흐려지지 않게 함 */
     pointer-events: none !important; /* 클릭 이벤트를 막음 */
     cursor: not-allowed !important; /* 마우스 커서를 금지 아이콘으로 변경 */
+}
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    padding: 10px;
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+
+input[type="text"] {
+    border-color: #007BFF;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    outline: none;
+    background-color: var(--foreground);
+    color: var(--primary);
 }
