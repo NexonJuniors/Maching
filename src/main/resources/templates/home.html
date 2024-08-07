@@ -14,11 +14,11 @@
 <div class="bg-background text-foreground px-4">
     <div class="max-w-screen-lg mx-auto px-8">
         <div class="partners">
-            메칭 파트너스 응원
+            <a href="https://partners.maplestory.nexon.com/developers">메칭 파트너스 응원</a>
         </div>
         <header class="header flex items-center justify-between p-4">
             <div class="flex items-center logo">
-                <img aria-hidden="true" alt="icon" src="../static/fonts/icon.png" class="icon mr-2" />
+                <img aria-hidden="true" alt="icon" src="../static/fonts/icon2.png" class="icon mr-2" />
                 <a href="/" style="text-decoration: none; color: inherit;">&nbsp;메칭</a>
             </div>
             <div class="flex items-center space-x-4">
@@ -62,6 +62,9 @@
                                 <div>
                                     <button id="btnSearch" type="submit" class="btn btn-custom">캐릭터 검색</button>
                                 </div>
+                                <div class="instructions">
+                                    - OPEN API 서버 점검 시 점검 종료 후 시도해 주세요.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -69,7 +72,12 @@
             </div>
             <div class="boss-card card">
                 <div class="card-body">
-                    <div class="text-white p-4 navbar card-title">보스매칭 현황</div>
+                    <div class="text-white p-4 navbar card-title">
+                        보스매칭 현황
+                        <div class="instructions">
+                            - 실제 반영까지 시간이 소요 될 수 있습니다.
+                        </div>
+                    </div>
                     <div id="bossContainer"></div> <!--보스 매칭 현황 컨테이너-->
                 </div>
             </div>

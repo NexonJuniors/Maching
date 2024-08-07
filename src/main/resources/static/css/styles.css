@@ -272,3 +272,8 @@ yeti color {
     height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
     display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
 }
+
+.instructions{
+    font-size:10px;
+    font-weight:200;
+}
