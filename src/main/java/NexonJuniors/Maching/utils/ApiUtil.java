@@ -116,6 +116,6 @@ public class ApiUtil {
         List<String> displayInfo = mapping.getOrDefault(characterClass, Collections.singletonList("Unknown"));
 
         characterInfo.setCharacterClassInfo(characterClass); // 백앤드에서 직업 저장
-        characterInfo.setMinutesCharacterClassInfo(String.join(", ", displayInfo)); // 주기 저장
+        characterInfo.setMinutesCharacterClassInfo(String.join(", ", displayInfo)); // 주기와 주스탯 저장
     }
 }

@@ -164,3 +164,23 @@
 .stat-item span:last-child {
 
 }
+
+.badges {
+    width: 40px;  /* 원하는 너비로 조정 */
+    height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
+    display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+    object-fit: cover;
+    border-radius: 80%; /* 이미지 자체를 둥글게 만듦 */
+}
+
+/* 컨테이너 스타일링 */
+.badge-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 요소들을 가로 방향으로 가운데 정렬 */
+    gap: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    /* border: 2px solid #BEBEBE; *//* border 속성 추가 */
+}
