@@ -67,14 +67,6 @@
     -webkit-background-clip: text; *//* 웹킷 브라우저용 배경 클립 설정 */
 }
 
-.textSpac {
-    font-size: 1em;
-    font-weight: 700;
-    margin: 0;
-    padding: 0;
-    text-align: left; /* 텍스트 정렬을 왼쪽으로 설정 */
-}
-
 .hexaSkill {
     font-size: 1em;
     font-weight: 700;
@@ -145,4 +137,30 @@
   border: 1px solid #000; /* 보더 추가 */
   padding: 5px; /* 보더와 내용 간격 조정 */
   border-radius: 5px; /* 보더 모서리 둥글게 */
+}
+
+.stats-container {
+    border: 1px solid #e0e0e0; /* Border 색상 */
+    padding: 10px; /* 내부 여백 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    font-size: 14px; /* 글씨 크기 */
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between; /* 좌우로 퍼지게 */
+    padding: 5px 0; /* 아이템 간의 여백 */
+    border-bottom: 1px solid #e0e0e0; /* 아래쪽 border */
+}
+
+.stat-item:last-child {
+    border-bottom: none; /* 마지막 항목은 아래쪽 border 제거 */
+}
+
+.stat-item span:first-child {
+    font-weight: bold; /* 왼쪽 항목의 글씨를 볼드 처리 */
+}
+
+.stat-item span:last-child {
+
 }

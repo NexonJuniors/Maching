@@ -72,23 +72,36 @@
                             </div>
                         </div>
                         <div class="flex-item">
-                            <div class="textSpac mb-2 mt-2">
-                                <div class="ml-2">
-                                    보스 공격력 : <span id="bossDamage"></span>%<br />
-                                    방어력 무시 : <span id="bangMoo"></span>%<br />
-                                    <small>버프 지속시간</small><br />
-                                    버프:<span id="buffDuration"></span>%,
-                                    소환수:<span id="minions"></span>%<br />
-                                    <small>쿨타임 감소</small><br />
-                                    <span id="cooldownNum"></span>초 /
+                            <div class="stats-container">
+                                <div class="stat-item">
+                                    <span>보스 몬스터 데미지</span><span id="bossDamage"></span>%
+                                </div>
+                                <div class="stat-item">
+                                    <span>방어율 무시</span><span id="bangMoo"></span>%
+                                </div>
+                                <div class="stat-item">
+                                    <span>버프 지속시간</span><span id="buffDuration"></span>%
+                                </div>
+                                <div class="stat-item">
+                                    <span>소환수 지속시간</span><span id="minions"></span>%
+                                </div>
+                                <div class="stat-item">
+                                    <span>쿨타임 감소</span>
+                                    <span id="cooldownNum"></span>초
                                     <span id="cooldownPer"></span>%
-                                    (미적용<span id="cooldownNow"></span>%)<br />
-                                    아케인포스<span id="arcaneForce"></span> /
-                                    어센틱포스<span id="authenticForce"></span>
+                                    (미적용<span id="cooldownNow"></span>%)
+                                </div>
+                                <div class="stat-item">
+                                    <span>아케인포스</span><span id="arcaneForce"></span>
+                                </div>
+                                <div class="stat-item">
+                                    <span>어센틱포스</span><span id="authenticForce"></span></span>
                                 </div>
                             </div>
-                            <div class="hexaSkill">
-                                <div id="hexaCoreContainer"></div>
+                            <div class="stats-container">
+                                <div class="hexaSkill">
+                                    <div id="hexaCoreContainer"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
