@@ -18,7 +18,7 @@
         </div>
         <header class="header flex items-center justify-between p-4">
             <div class="flex items-center logo">
-                <img aria-hidden="true" alt="icon" src="../static/fonts/icon.png" class="icon mr-2" />
+                <img aria-hidden="true" alt="icon" src="../static/image/site/icon.png" class="icon mr-2" />
                 <a href="/" style="text-decoration: none; color: inherit;">&nbsp;메칭</a>
             </div>
             <div class="flex items-center space-x-4">
@@ -49,8 +49,8 @@
                 <div class="container">
                     <div class="flex-container">
                         <div class="flex-item">
-                            <div class="serverGuildUnion">
-                                <img id="serverIcon" src="" alt="Server Icon" />
+                            <div class="nameLevel">
+                                <img id="serverIcon" src="" alt="Icon" class="nameLevel img" />
                                 <span id="worldName"></span>
                                 <span id="characterGuildName"></span>
                                 유니온<span id="unionLevel"></span><br />
@@ -72,20 +72,30 @@
                             </div>
                         </div>
                         <div class="flex-item">
-                            <div class="textSpac">
-                                보공<span id="bossDamage"></span>%,
-                                방무<span id="bangMoo"></span>%<br />
-                                지속시간|버프:<span id="buffDuration"></span>%,
-                                소환수:<span id="minions"></span>%<br />
-                                쿨감 | <span id="cooldownNum"></span>초,
-                                <span id="cooldownPer"></span>%
-                                (미적용<span id="cooldownNow"></span>%)<br />
-                                포스 |아케인:<span id="arcaneForce"></span>,
-                                어센틱:<span id="authenticForce"></span>
+                            <div class="stats-container">
+                                <div class="stat-item">
+                                    <span>보스 몬스터 데미지</span><span id="bossDamage"></span>%
+                                </div>
+                                <div class="stat-item">
+                                    <span>스탯 방어율 무시</span><span id="bangMoo"></span>%
+                                </div>
+                                <div class="stat-item">
+                                    <span>지속시간</span><span>버프</span><span id="buffDuration"></span>%<span>소환수</span><span id="minions"></span>%
+                                </div>
+                                <div class="stat-item">
+                                    <span>쿨타임 감소</span>
+                                    <span id="cooldownNum"></span>초
+                                    <span id="cooldownPer"></span>%
+                                    (미적용<span id="cooldownNow"></span>%)
+                                </div>
+                                <div class="stat-item">
+                                    <span>포스</span><span>아케인</span><span id="arcaneForce"></span><span>어센틱</span><span id="authenticForce"></span>
+                                </div>
                             </div>
-                            <br />
-                            <div class="hexaSkill">
-                                <div id="hexaCoreContainer"></div>
+                            <div class="stats-container">
+                                <div class="hexaSkill">
+                                    <div id="hexaCoreContainer"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -160,6 +170,7 @@
 <script src="../static/js/partyBtn.js"></script>
 <script src = "../static/js/character.js"></script>
 <script src="../static/js/bossIcon.js"></script>
+<script src="../static/js/hexaIcon.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
