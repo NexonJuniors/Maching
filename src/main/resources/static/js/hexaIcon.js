@@ -9,7 +9,7 @@ function convertHexaSkillInfoToArray(hexaSkillInfo) {
     skillNames: equipment.hexa_core_name.split('/').map(sanitizeSkillName),
     originalSkillName: equipment.hexa_core_name,
     level: equipment.hexa_core_level,
-    type: equipment.hexa_core_type
+    skillType: equipment.hexa_core_type
   }));
 }
 
@@ -45,6 +45,7 @@ async function displayHexaCoreInfo(array) {
     const skillNames = item.skillNames;
     const originalSkillName = item.originalSkillName;
     const skillLevel = item.level;
+    const skillType =  item.skillType;
 
     const div = document.createElement('div');
     div.className = 'hexa-core-info';
@@ -65,7 +66,8 @@ async function displayHexaCoreInfo(array) {
 
       const tooltip = document.createElement('div');
       tooltip.className = 'skill-tooltip';
-      tooltip.textContent = originalSkillName; // 말풍선에 스킬 이름 표시
+      tooltip.innerHTML = `${skillType}<br>${originalSkillName}`;
+      /*tooltip.textContent = `${skillType} ${originalSkillName}`; // 말풍선에 스킬 타입과 이름 표시*/
 
       imgContainer.appendChild(img);
       imgContainer.appendChild(tooltip);

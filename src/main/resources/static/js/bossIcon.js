@@ -50,6 +50,7 @@ function addBossImages() {
     bossImages.forEach((imageName, index) => {
         const bossDiv = document.createElement("div");
         bossDiv.classList.add("col-md-3", "text-center", "mb-4");
+
         const button = document.createElement("button");
         button.classList.add("btn", "btn-link");
 
@@ -67,27 +68,40 @@ function addBossImages() {
             button.disabled = true; // URL에 '/info'가 없을 때 버튼 비활성화
         }
 
+        const imgContainer = document.createElement("div");
+        imgContainer.classList.add("image-container");
+
         const img = document.createElement("img");
         img.src = `${imgFolderPath}${imageName}`;
         img.alt = `Boss ${index + 1} Icon`;
         img.classList.add("img-fluid");
 
-        const matchInfo = document.createElement("p");
+        const bossTooltip = document.createElement("div");
+        bossTooltip.classList.add("bossTooltip");
 
-        // 변수 선언
+        // 난이도와 이름 추출
+        const difficultyKey = imageName[1]; // 두번째 문자 (난이도)
+        const bossNameKey = imageName[2]; // 세번째 문자 (보스 이름)
+        const difficulty = difficultyMapping[difficultyKey] || "Unknown";
+        const bossName = bossNameMapping[bossNameKey] || "Unknown Boss";
+
+        // 툴팁에 난이도와 이름 설정
+        bossTooltip.innerHTML = `${difficulty}<br>${bossName}`;
+
+        imgContainer.appendChild(img);
+        imgContainer.appendChild(bossTooltip);
+
+        button.appendChild(imgContainer);
+
+        const matchInfo = document.createElement("p");
         const matchCount = 0;
         const partyCount = 0;
 
-/*        // matchInfo 요소를 선택
-        const matchNow = document.getElementById('matchNow');*/
-
-        // innerHTML을 사용하여 HTML과 변수 값 삽입
         matchInfo.innerHTML = `
            ${partyCount} <span class="highlighted-text2">개 파티</span><br />
             ${matchCount} <span class="highlighted-text2">명 매칭중</span>
         `;
 
-        button.appendChild(img);
         bossDiv.appendChild(button);
         bossDiv.appendChild(matchInfo);
         bossContainer.appendChild(bossDiv);

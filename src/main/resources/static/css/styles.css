@@ -277,3 +277,29 @@ yeti color {
     font-size:10px;
     font-weight:200;
 }
+
+.image-container {
+    position: relative; /* 툴팁을 이미지 위에 위치시키기 위해 상대 위치 설정 */
+    display: inline-block; /* 이미지와 툴팁을 같은 라인에 배치 */
+}
+
+/* 툴팁 기본 스타일 */
+.bossTooltip {
+  display: none; /* 기본적으로 숨김 */
+  position: absolute; /* 절대 위치 설정 */
+  bottom: 100%; /* 이미지 위에 위치하도록 조정 */
+  left: 50%; /* 수평 가운데 정렬 */
+  transform: translateX(-50%); /* 수평 가운데 정렬 */
+  background-color: black; /* 배경색 */
+  color: white; /* 텍스트 색상 */
+  padding: 5px; /* 패딩 */
+  border-radius: 5px; /* 모서리 둥글게 */
+  font-size: 0.8em; /* 글자 크기 */
+  white-space: nowrap; /* 텍스트 줄 바꿈 방지 */
+  z-index: 10; /* 다른 요소 위에 표시되도록 z-index 설정 */
+}
+
+/* 이미지에 마우스를 올렸을 때 툴팁 표시 */
+.image-container:hover .bossTooltip {
+  display: block;
+}
