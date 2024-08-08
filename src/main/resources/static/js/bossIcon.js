@@ -49,10 +49,12 @@ function addBossImages() {
     const characterSearched = isCharacterSearched(); // 현재 내 캐릭터
     bossImages.forEach((imageName, index) => {
         const bossDiv = document.createElement("div");
-        bossDiv.classList.add("col-md-3", "text-center", "mb-4");
+        bossDiv.classList.add("col-md-3", "text-center", "mb-1");
+        bossDiv.style.boxShadow = "2px 2px 2px 1px #BEBEBE"; // 박스 쉐도우.. 할까말까
 
         const button = document.createElement("button");
         button.classList.add("btn", "btn-link");
+        button.style.padding =" 0rem 0rem";
 
         if (window.location.href.includes('/info')) {
             if (characterSearched) {
@@ -98,8 +100,9 @@ function addBossImages() {
         const partyCount = 0;
 
         matchInfo.innerHTML = `
-           ${partyCount} <span class="highlighted-text2">개 파티</span><br />
-            ${matchCount} <span class="highlighted-text2">명 매칭중</span>
+           <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
+           ${partyCount}<span class="">파티</span>
+            ${matchCount}<span class="">명 매칭</span>
         `;
 
         bossDiv.appendChild(button);
