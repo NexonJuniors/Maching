@@ -105,10 +105,6 @@
   align-items: center;
   gap: 2px; /* 아이콘 간격 조정 */
   flex-wrap: wrap; /* 아이콘들이 여러 줄에 걸쳐 표시되도록 함 */
-  border: 1px solid #000; /* 보더 추가 */
-  padding: 5px; /* 보더와 내용 간격 조정 */
-  border-radius: 5px; /* 보더 모서리 둥글게 */
-  position: relative; /* 말풍선 위치 조정을 위한 상대 위치 */
 }
 
 /* 스킬 아이콘 이미지 스타일 */
@@ -146,7 +142,6 @@
 
 /* 스킬 레벨 스타일 */
 .skill-level {
-  width: 100%; /* 레벨 텍스트가 아이콘 아래에 표시되도록 함 */
   margin-top: 5px;
   font-weight: bold;
   text-align: center;
@@ -157,4 +152,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 1px solid #000; /* 보더 추가 */
+  padding: 5px; /* 보더와 내용 간격 조정 */
+  border-radius: 5px; /* 보더 모서리 둥글게 */
 }

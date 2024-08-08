@@ -1,4 +1,4 @@
-// hexaSkillInfo
+// 문자열에서 공백과 ':'을 제거하는 함수
 function sanitizeSkillName(skillName) {
   return skillName.replace(/[:\s]/g, ''); // `:`, 공백 제거
 }
@@ -65,7 +65,7 @@ async function displayHexaCoreInfo(array) {
 
       const tooltip = document.createElement('div');
       tooltip.className = 'skill-tooltip';
-      tooltip.textContent = skillName; // 말풍선에 스킬 이름 표시
+      tooltip.textContent = originalSkillName; // 말풍선에 스킬 이름 표시
 
       imgContainer.appendChild(img);
       imgContainer.appendChild(tooltip);
@@ -79,7 +79,7 @@ async function displayHexaCoreInfo(array) {
 
     // 이미지 컨테이너를 메인 div에 추가
     div.appendChild(skillIconsDiv);
-    div.appendChild(skillLevelText);
+    div.appendChild(skillLevelText); // 스킬 레벨을 아래에 추가
     container.appendChild(div);
   }
 }
