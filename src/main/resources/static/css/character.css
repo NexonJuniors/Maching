@@ -31,7 +31,7 @@
     display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
     margin: 0 auto;  /* 가운데 정렬 */
     object-fit: cover;
-    border-radius: 80%; /* 이미지 자체를 둥글게 만듦 */
+/*    border-radius: 80%; *//* 이미지 자체를 둥글게 만듦 */
 }
 .flex-container {
     align-items: stretch; /* 자식 요소들의 높이를 동일하게 맞춥니다 */
@@ -90,5 +90,71 @@
     font-weight: 700;
     margin: 0;
     padding: 0;
-    text-align: left; /* 텍스트 정렬을 왼쪽으로 설정 */
+}
+
+/* 컨테이너 스타일 */
+#hexaCoreContainer {
+  display: flex;
+  flex-wrap: wrap; /* 여러 줄에 걸쳐 표시되도록 함 */
+  gap: 10px; /* 스킬 카드 간격 조정 */
+}
+
+/* 스킬 아이콘 컨테이너 스타일 */
+.skill-icons {
+  display: flex;
+  align-items: center;
+  gap: 2px; /* 아이콘 간격 조정 */
+  flex-wrap: wrap; /* 아이콘들이 여러 줄에 걸쳐 표시되도록 함 */
+  border: 1px solid #000; /* 보더 추가 */
+  padding: 5px; /* 보더와 내용 간격 조정 */
+  border-radius: 5px; /* 보더 모서리 둥글게 */
+  position: relative; /* 말풍선 위치 조정을 위한 상대 위치 */
+}
+
+/* 스킬 아이콘 이미지 스타일 */
+.skill-icon-container {
+  align-items: center;
+  position: relative; /* 말풍선 위치 조정을 위한 상대 위치 */
+}
+
+.skill-icon {
+  width: 32px; /* 아이콘 크기 조정 */
+  height: 32px; /* 아이콘 크기 조정 */
+  position: relative;
+}
+
+/* 말풍선 스타일 */
+.skill-tooltip {
+  display: none; /* 기본적으로 숨김 */
+  position: absolute;
+  bottom: 40px; /* 아이콘 위에 위치하도록 조정 */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: black;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.8em;
+  white-space: nowrap;
+  z-index: 10; /* 말풍선이 위에 보이도록 z-index 설정 */
+}
+
+/* 아이콘에 마우스를 올렸을 때 말풍선 보이도록 */
+.skill-icon-container:hover .skill-tooltip {
+  display: block;
+}
+
+/* 스킬 레벨 스타일 */
+.skill-level {
+  width: 100%; /* 레벨 텍스트가 아이콘 아래에 표시되도록 함 */
+  margin-top: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* 각 스킬 카드 스타일 */
+.hexa-core-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

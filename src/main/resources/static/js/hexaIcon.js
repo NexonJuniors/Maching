@@ -1,7 +1,6 @@
 // hexaSkillInfo
-// 문자열에서 공백을 제거하는 함수
 function sanitizeSkillName(skillName) {
-  return skillName.replace(/\s/g, ''); // 공백 제거
+  return skillName.replace(/[:\s]/g, ''); // `:`, 공백 제거
 }
 
 // 스킬 정보를 배열로 변환
@@ -51,17 +50,36 @@ async function displayHexaCoreInfo(array) {
     div.className = 'hexa-core-info';
 
     // 스킬 이름에 맞는 이미지 경로 찾기 및 이미지 추가
+    const skillIconsDiv = document.createElement('div');
+    skillIconsDiv.className = 'skill-icons';
+
     for (let skillName of skillNames) {
       const skillImgPath = await findSkillImagePath(skillName);
+      const imgContainer = document.createElement('div');
+      imgContainer.className = 'skill-icon-container';
+
       const img = document.createElement('img');
       img.src = skillImgPath;
       img.alt = skillName;
       img.className = 'skill-icon';
-      div.appendChild(img);
+
+      const tooltip = document.createElement('div');
+      tooltip.className = 'skill-tooltip';
+      tooltip.textContent = skillName; // 말풍선에 스킬 이름 표시
+
+      imgContainer.appendChild(img);
+      imgContainer.appendChild(tooltip);
+      skillIconsDiv.appendChild(imgContainer);
     }
 
-    // 텍스트 추가
-    div.innerHTML += `<p>${originalSkillName} Lv.${skillLevel}</p>`;
+    // 스킬 레벨 텍스트 추가
+    const skillLevelText = document.createElement('div');
+    skillLevelText.className = 'skill-level';
+    skillLevelText.textContent = `Lv.${skillLevel}`;
+
+    // 이미지 컨테이너를 메인 div에 추가
+    div.appendChild(skillIconsDiv);
+    div.appendChild(skillLevelText);
     container.appendChild(div);
   }
 }
