@@ -8,6 +8,7 @@ function sanitizeSkillName(skillName) {
 function convertHexaSkillInfoToArray(hexaSkillInfo) {
   return hexaSkillInfo.character_hexa_core_equipment.map(equipment => ({
     skillNames: equipment.hexa_core_name.split('/').map(sanitizeSkillName),
+    originalSkillName: equipment.hexa_core_name,
     level: equipment.hexa_core_level,
     type: equipment.hexa_core_type
   }));
@@ -43,21 +44,25 @@ async function displayHexaCoreInfo(array) {
 
   for (let item of array) {
     const skillNames = item.skillNames;
+    const originalSkillName = item.originalSkillName;
     const skillLevel = item.level;
 
+    const div = document.createElement('div');
+    div.className = 'hexa-core-info';
+
+    // 스킬 이름에 맞는 이미지 경로 찾기 및 이미지 추가
     for (let skillName of skillNames) {
       const skillImgPath = await findSkillImagePath(skillName);
-      const div = document.createElement('div');
-      div.className = 'hexa-core-info';
-
-      // 이미지와 텍스트를 HTML에 추가
-      div.innerHTML = `
-        <img src="${skillImgPath}" alt="${skillName}" class="skill-icon" />
-        <p>${skillName} Lv.${skillLevel}</p>
-      `;
-
-      container.appendChild(div);
+      const img = document.createElement('img');
+      img.src = skillImgPath;
+      img.alt = skillName;
+      img.className = 'skill-icon';
+      div.appendChild(img);
     }
+
+    // 텍스트 추가
+    div.innerHTML += `<p>${originalSkillName} Lv.${skillLevel}</p>`;
+    container.appendChild(div);
   }
 }
 
