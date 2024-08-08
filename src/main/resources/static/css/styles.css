@@ -26,6 +26,7 @@ body.light-mode {
     --foreground: #FFFFFF; /*에티화이트*/
     --primary: #000000; /*글자색*/
     --primary-foreground: #5588DD;
+    --border-color: #BEBEBE;
 }
 
 body.dark-mode {
@@ -33,6 +34,7 @@ body.dark-mode {
     --foreground: #333737; /*에티그레이*/
     --primary: #FFFFFF; /*글자색*/
     --primary-foreground: #223355;
+    --border-color: #0D0D0D;
 }
 
 @font-face {

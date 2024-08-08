@@ -50,7 +50,7 @@ function addBossImages() {
     bossImages.forEach((imageName, index) => {
         const bossDiv = document.createElement("div");
         bossDiv.classList.add("col-md-3", "text-center", "mb-1");
-        bossDiv.style.boxShadow = "2px 2px 2px 1px #BEBEBE"; // 박스 쉐도우.. 할까말까
+        bossDiv.style.boxShadow = "2px 2px 2px 1px var(--border-color)"; // 박스 쉐도우.. 할까말까
 
         const button = document.createElement("button");
         button.classList.add("btn", "btn-link");

@@ -41,7 +41,7 @@
     flex: 1;
     border-radius: 10px;
     border-color: #BEBEBE;
-    box-shadow:2px 2px 5px 0px #BEBEBE;
+    box-shadow:2px 2px 5px 0px var(--border-color);
 }
 .nameLevel img {
     width: 18px; /* 이미지 크기를 조정 */
