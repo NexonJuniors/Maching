@@ -78,7 +78,7 @@ function addBossImages() {
         const imgContainer = createImageWithTooltip(
             `${imgFolderPath}${imageName}`,
             `Boss ${index + 1} Icon`,
-            `${difficulty}<br>${bossName}`,
+            `[${difficulty}]<br>${bossName}`,
             'image-container',
             'img-fluid',
             'bossTooltip'

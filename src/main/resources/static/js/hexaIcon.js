@@ -45,7 +45,7 @@ async function displayHexaCoreInfo(array) {
         const skillNames = item.skillNames;
         const originalSkillName = item.originalSkillName;
         const skillLevel = item.level;
-        const skillType = item.skillType;
+        const skillType = item.skillType.replace(/코어/g, '').trim();
 
         const div = document.createElement('div');
         div.className = 'hexa-core-info';
@@ -64,7 +64,7 @@ async function displayHexaCoreInfo(array) {
             img.className = 'skill-icon';
 
             // 툴팁 생성 및 추가
-            const skillTooltipContent = `${skillType}<br>${originalSkillName}`;
+            const skillTooltipContent = `[${skillType}]<br>${originalSkillName}`;
             const skillTooltip = createTooltip(skillTooltipContent);
 
             imgContainer.appendChild(img);
