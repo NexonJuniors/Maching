@@ -37,5 +37,4 @@ function addBadgeToContainer(badgeSrc, badgeAlt, tooltipText) {
     badgeContainerItem.appendChild(badgeImg);
     badgeContainerItem.appendChild(badgeTooltip);
     badgeContainer.appendChild(badgeContainerItem);
-    console.log(badgeContainer)
 }

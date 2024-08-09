@@ -47,38 +47,40 @@ async function displayHexaCoreInfo(array) {
         const skillLevel = item.level;
         const skillType = item.skillType.replace(/코어/g, '').trim();
 
-        const div = document.createElement('div');
-        div.className = 'hexa-core-info';
+        if (skillLevel>0){
+            const div = document.createElement('div');
+            div.className = 'hexa-core-info';
 
-        const skillIconsDiv = document.createElement('div');
-        skillIconsDiv.className = 'skill-icons';
+            const skillIconsDiv = document.createElement('div');
+            skillIconsDiv.className = 'skill-icons';
 
-        for (let skillName of skillNames) {
-            const skillImgPath = await findSkillImagePath(skillName);
-            const imgContainer = document.createElement('div');
-            imgContainer.className = 'skill-icon-container';
+            for (let skillName of skillNames) {
+                const skillImgPath = await findSkillImagePath(skillName);
+                const imgContainer = document.createElement('div');
+                imgContainer.className = 'skill-icon-container';
 
-            const img = document.createElement('img');
-            img.src = skillImgPath;
-            img.alt = skillName;
-            img.className = 'skill-icon';
+                const img = document.createElement('img');
+                img.src = skillImgPath;
+                img.alt = skillName;
+                img.className = 'skill-icon';
 
-            // 툴팁 생성 및 추가
-            const skillTooltipContent = `[${skillType}]<br>${originalSkillName}`;
-            const skillTooltip = createTooltip(skillTooltipContent);
+                // 툴팁 생성 및 추가
+                const skillTooltipContent = `[${skillType}]<br>${originalSkillName}`;
+                const skillTooltip = createTooltip(skillTooltipContent);
 
-            imgContainer.appendChild(img);
-            imgContainer.appendChild(skillTooltip);
-            skillIconsDiv.appendChild(imgContainer);
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(skillTooltip);
+                skillIconsDiv.appendChild(imgContainer);
+            }
+
+            const skillLevelText = document.createElement('div');
+            skillLevelText.className = 'skill-level';
+            skillLevelText.textContent = `Lv.${skillLevel}`;
+
+            div.appendChild(skillIconsDiv);
+            div.appendChild(skillLevelText);
+            container.appendChild(div);
         }
-
-        const skillLevelText = document.createElement('div');
-        skillLevelText.className = 'skill-level';
-        skillLevelText.textContent = `Lv.${skillLevel}`;
-
-        div.appendChild(skillIconsDiv);
-        div.appendChild(skillLevelText);
-        container.appendChild(div);
     }
 }
 
