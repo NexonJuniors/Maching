@@ -13,11 +13,13 @@ function createParty() {
     const stompClient = Stomp.over(socket);
 
     const connectHeaders ={
-        type : 0,
-        basicInfo : JSON.stringify(basicInfo),
-        hexaSkillInfo : JSON.stringify(hexaSkillInfo),
-        statInfo : JSON.stringify(statInfo),
-        unionInfo : JSON.stringify(unionInfo)
+        partyInfo :
+        JSON.stringify(
+        {
+            'bossName' : `${document.getElementById("modalBossTitle").innerText}`,
+            'currentPeople' : '0',
+            'maximumPeople' : '6'
+        }),
     }
 
     stompClient.connect({}, function(frame) {
@@ -25,14 +27,12 @@ function createParty() {
         console.log('Connected: ' + frame);
     });
 
-
-
     function onConnected(){
         stompClient.send("/app/createParty",
             connectHeaders,
             JSON.stringify({
-                'roomId': '1',
-                'sender': 'me',
+                'roomId': '-1',
+                'sender': 'Admin',
                 'message': 'hi'
             }));
     }

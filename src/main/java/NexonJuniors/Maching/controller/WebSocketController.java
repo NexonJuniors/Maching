@@ -23,12 +23,9 @@ public class WebSocketController {
 
     @MessageMapping("/createParty")
     @SendTo("/room/{roomId}")
-    public void createParty(@Header("basicInfo") String basicInfo,
-                        @Header("hexaSkillInfo") String hexaSkillInfo,
-                        @Header("statInfo") String statInfo,
-                        @Header("unionInfo") String unionInfo){
-
-        matchingUtil.createParty(basicInfo, hexaSkillInfo, statInfo, unionInfo);
+    public void createParty(@Header("partyInfo") String partyInfo)
+    {
+        matchingUtil.createParty(partyInfo);
 
         // return "파티 생성완료"
     }

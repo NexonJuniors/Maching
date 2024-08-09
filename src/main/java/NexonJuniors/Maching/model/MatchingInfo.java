@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PartyInfo {
+public class MatchingInfo {
     private String bossName;
-    private int currentPeople;
-    private int maximumPeople;
+    private CharacterInfo characterInfo;
 }
