@@ -1,8 +1,18 @@
 // 스탯 뱃지 설정
 const statImgFolderPath = "../static/image/stat/";
+const statLabels = {
+    int: 'INT',
+    str: 'STR',
+    dex: 'DEX',
+    luk: 'LUK',
+    hp: 'HP',
+    strdexluk: '올스텟',
+};
 
+// 함수 호출 시 변환된 문자열 사용
+const tooltipText = `[기본]<br />내 주스텟은 ${statLabels[mainStat] || mainStat}!`;
 const mainStatImagePath = getImagePath(statImgFolderPath, mainStat);
-addBadgeToContainer(mainStatImagePath, mainStat, `주스텟 : ${mainStat}`);
+addBadgeToContainer(mainStatImagePath, mainStat, tooltipText);
 
 // 뱃지 추가 함수
 function addBadgeToContainer(badgeSrc, badgeAlt, tooltipText) {
@@ -22,4 +32,5 @@ function addBadgeToContainer(badgeSrc, badgeAlt, tooltipText) {
     badgeContainerItem.appendChild(badgeImg);
     badgeContainerItem.appendChild(badgeTooltip);
     badgeContainer.appendChild(badgeContainerItem);
+    console.log(badgeContainer)
 }

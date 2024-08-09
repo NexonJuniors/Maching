@@ -351,3 +351,8 @@ yeti color {
 .image-container:hover .bossTooltip {
     display: block;
 }
+
+/* badgeContainer-item에 상대 위치 설정 이게 없어서 안나왔었음 */
+.badgeContainer-item {
+    position: relative; /* 툴팁을 올바르게 표시하기 위해 상대 위치 설정 */
+}
