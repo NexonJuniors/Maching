@@ -34,56 +34,52 @@ async function findSkillImagePath(skillName) {
 
 // 스킬 정보를 HTML로 표시
 async function displayHexaCoreInfo(array) {
-  const container = document.getElementById('hexaCoreContainer');
-  if (!container) {
-    console.error('Container element not found!');
-    return;
-  }
-  container.innerHTML = '';
-
-  for (let item of array) {
-    const skillNames = item.skillNames;
-    const originalSkillName = item.originalSkillName;
-    const skillLevel = item.level;
-    const skillType =  item.skillType;
-
-    const div = document.createElement('div');
-    div.className = 'hexa-core-info';
-
-    // 스킬 이름에 맞는 이미지 경로 찾기 및 이미지 추가
-    const skillIconsDiv = document.createElement('div');
-    skillIconsDiv.className = 'skill-icons';
-
-    for (let skillName of skillNames) {
-      const skillImgPath = await findSkillImagePath(skillName);
-      const imgContainer = document.createElement('div');
-      imgContainer.className = 'skill-icon-container';
-
-      const img = document.createElement('img');
-      img.src = skillImgPath;
-      img.alt = skillName;
-      img.className = 'skill-icon';
-
-      const tooltip = document.createElement('div');
-      tooltip.className = 'skill-tooltip';
-      tooltip.innerHTML = `${skillType}<br>${originalSkillName}`;
-      /*tooltip.textContent = `${skillType} ${originalSkillName}`; // 말풍선에 스킬 타입과 이름 표시*/
-
-      imgContainer.appendChild(img);
-      imgContainer.appendChild(tooltip);
-      skillIconsDiv.appendChild(imgContainer);
+    const container = document.getElementById('hexaCoreContainer');
+    if (!container) {
+        console.error('Container element not found!');
+        return;
     }
+    container.innerHTML = '';
 
-    // 스킬 레벨 텍스트 추가
-    const skillLevelText = document.createElement('div');
-    skillLevelText.className = 'skill-level';
-    skillLevelText.textContent = `Lv.${skillLevel}`;
+    for (let item of array) {
+        const skillNames = item.skillNames;
+        const originalSkillName = item.originalSkillName;
+        const skillLevel = item.level;
+        const skillType = item.skillType;
 
-    // 이미지 컨테이너를 메인 div에 추가
-    div.appendChild(skillIconsDiv);
-    div.appendChild(skillLevelText); // 스킬 레벨을 아래에 추가
-    container.appendChild(div);
-  }
+        const div = document.createElement('div');
+        div.className = 'hexa-core-info';
+
+        const skillIconsDiv = document.createElement('div');
+        skillIconsDiv.className = 'skill-icons';
+
+        for (let skillName of skillNames) {
+            const skillImgPath = await findSkillImagePath(skillName);
+            const imgContainer = document.createElement('div');
+            imgContainer.className = 'skill-icon-container';
+
+            const img = document.createElement('img');
+            img.src = skillImgPath;
+            img.alt = skillName;
+            img.className = 'skill-icon';
+
+            // 툴팁 생성 및 추가
+            const skillTooltipContent = `${skillType}<br>${originalSkillName}`;
+            const skillTooltip = createTooltip(skillTooltipContent);
+
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(skillTooltip);
+            skillIconsDiv.appendChild(imgContainer);
+        }
+
+        const skillLevelText = document.createElement('div');
+        skillLevelText.className = 'skill-level';
+        skillLevelText.textContent = `Lv.${skillLevel}`;
+
+        div.appendChild(skillIconsDiv);
+        div.appendChild(skillLevelText);
+        container.appendChild(div);
+    }
 }
 
 // 이미지 파일 경로 설정

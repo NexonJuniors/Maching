@@ -29,11 +29,6 @@ const serverImgFolderPath = "../static/image/serverIcon/";
 const serverIconPath = getImagePath(serverImgFolderPath, worldName);
 document.getElementById('serverIcon').src = serverIconPath;
 
-// 스탯 뱃지 설정
-const statImgFolderPath = "../static/image/stat/";
-const mainStatImagePath = getImagePath(statImgFolderPath, mainStat);
-document.getElementById("mainStatBadge").src = mainStatImagePath; //html에 넣기
-
 // statInfo
 // statInfo에서 특정 stat_name을 찾아서 해당 값을 지정된 elementId에 설정하는 함수
 function updateStat(statName, elementId) {

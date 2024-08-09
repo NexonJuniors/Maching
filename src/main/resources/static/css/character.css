@@ -101,27 +101,6 @@
   position: relative;
 }
 
-/* 말풍선 스타일 */
-.skill-tooltip {
-  display: none; /* 기본적으로 숨김 */
-  position: absolute;
-  bottom: 40px; /* 아이콘 위에 위치하도록 조정 */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: black;
-  color: white;
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 0.8em;
-  white-space: nowrap;
-  z-index: 10; /* 말풍선이 위에 보이도록 z-index 설정 */
-}
-
-/* 아이콘에 마우스를 올렸을 때 말풍선 보이도록 */
-.skill-icon-container:hover .skill-tooltip {
-  display: block;
-}
-
 /* 스킬 레벨 스타일 */
 .skill-level {
   margin-top: 5px;
@@ -163,24 +142,4 @@
 
 .stat-item span:last-child {
 
-}
-
-.badges {
-    width: 40px;  /* 원하는 너비로 조정 */
-    height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
-    display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
-    margin: 0 auto; /* 가운데 정렬 */
-    object-fit: cover;
-    border-radius: 80%; /* 이미지 자체를 둥글게 만듦 */
-}
-
-/* 컨테이너 스타일링 */
-.badge-container {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* 요소들을 가로 방향으로 가운데 정렬 */
-    gap: 10px;
-    margin-top: 10px;
-    border-radius: 10px;
-    /* border: 2px solid #BEBEBE; *//* border 속성 추가 */
 }

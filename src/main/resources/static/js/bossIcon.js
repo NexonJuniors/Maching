@@ -50,11 +50,11 @@ function addBossImages() {
     bossImages.forEach((imageName, index) => {
         const bossDiv = document.createElement("div");
         bossDiv.classList.add("col-md-3", "text-center", "mb-1");
-        bossDiv.style.boxShadow = "2px 2px 2px 1px var(--border-color)"; // 박스 쉐도우.. 할까말까
+        bossDiv.style.boxShadow = "2px 2px 2px 1px var(--border-color)";
 
         const button = document.createElement("button");
         button.classList.add("btn", "btn-link");
-        button.style.padding =" 0rem 0rem";
+        button.style.padding = "0rem 0rem";
 
         if (window.location.href.includes('/info')) {
             if (characterSearched) {
@@ -62,47 +62,35 @@ function addBossImages() {
                 button.setAttribute("data-target", "#bossModal");
                 button.addEventListener("click", () => updateModalContent(imageName));
             } else {
-                button.classList.add("disabled"); // CSS 클래스 추가
-                button.disabled = true; // 검색된 캐릭터가 없을 때 버튼 비활성화
+                button.classList.add("disabled");
+                button.disabled = true;
             }
         } else {
-            button.classList.add("disabled"); // CSS 클래스 추가
-            button.disabled = true; // URL에 '/info'가 없을 때 버튼 비활성화
+            button.classList.add("disabled");
+            button.disabled = true;
         }
 
-        const imgContainer = document.createElement("div");
-        imgContainer.classList.add("image-container");
-
-        const img = document.createElement("img");
-        img.src = `${imgFolderPath}${imageName}`;
-        img.alt = `Boss ${index + 1} Icon`;
-        img.classList.add("img-fluid");
-
-        const bossTooltip = document.createElement("div");
-        bossTooltip.classList.add("bossTooltip");
-
-        // 난이도와 이름 추출
-        const difficultyKey = imageName[1]; // 두번째 문자 (난이도)
-        const bossNameKey = imageName[2]; // 세번째 문자 (보스 이름)
+        const difficultyKey = imageName[1];
+        const bossNameKey = imageName[2];
         const difficulty = difficultyMapping[difficultyKey] || "Unknown";
         const bossName = bossNameMapping[bossNameKey] || "Unknown Boss";
 
-        // 툴팁에 난이도와 이름 설정
-        bossTooltip.innerHTML = `${difficulty}<br>${bossName}`;
-
-        imgContainer.appendChild(img);
-        imgContainer.appendChild(bossTooltip);
+        const imgContainer = createImageWithTooltip(
+            `${imgFolderPath}${imageName}`,
+            `Boss ${index + 1} Icon`,
+            `${difficulty}<br>${bossName}`,
+            'image-container',
+            'img-fluid',
+            'bossTooltip'
+        );
 
         button.appendChild(imgContainer);
 
         const matchInfo = document.createElement("p");
-        const matchCount = 0;
-        const partyCount = 0;
-
         matchInfo.innerHTML = `
            <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
-           ${partyCount}<span class="">파티</span>
-            ${matchCount}<span class="">명 매칭</span>
+           0파티
+           0명 매칭
         `;
 
         bossDiv.appendChild(button);
@@ -110,7 +98,6 @@ function addBossImages() {
         bossContainer.appendChild(bossDiv);
     });
 }
-
 // 보스 이미지와 이름 모달에 추가하는 함수
 function updateModalContent(imageName) {
     const difficultyKey = imageName[1]; // 두번째 문자 (난이도)
