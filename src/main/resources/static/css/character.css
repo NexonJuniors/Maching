@@ -101,27 +101,6 @@
   position: relative;
 }
 
-/* 말풍선 스타일 */
-.skill-tooltip {
-  display: none; /* 기본적으로 숨김 */
-  position: absolute;
-  bottom: 40px; /* 아이콘 위에 위치하도록 조정 */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: black;
-  color: white;
-  padding: 5px;
-  border-radius: 5px;
-  font-size: 0.8em;
-  white-space: nowrap;
-  z-index: 10; /* 말풍선이 위에 보이도록 z-index 설정 */
-}
-
-/* 아이콘에 마우스를 올렸을 때 말풍선 보이도록 */
-.skill-icon-container:hover .skill-tooltip {
-  display: block;
-}
-
 /* 스킬 레벨 스타일 */
 .skill-level {
   margin-top: 5px;
