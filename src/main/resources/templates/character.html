@@ -141,13 +141,13 @@
             </div>
             <div class="modal-footer">
                 <div class="container-btn">
-                    <span><button type="button" id="btnGo" class="btn btn-dark">매칭 참여</button></span>
+                    <span><button type="button" id="btnJoinParty" class="btn btn-dark">매칭 참여</button></span>
                     <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
                         <span class="sr-only">Loading...</span>
                     </div>
                 </div>
                 <div class="container-btn">
-                    <span><button type="button" id="btnMake" class="btn btn-dark">파티 생성</button></span>
+                    <span><button type="button" id="btnCreateParty" class="btn btn-dark">파티 생성</button></span>
                     <div id="loadingSpinnerBtnMake" class="spinner-border text-primary" role="status" style="display: none;">
                         <span class="sr-only">Loading...</span>
                     </div>
@@ -156,8 +156,11 @@
         </div>
     </div>
 </div>
+<script src = "https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+<script src="webjars/stomp-websocket/2.3.4/stomp.js"></script>
 <script src="../static/js/darkmode.js"></script>
-<script src="../static/js/partyBtn.js"></script>
+<script src="../static/js/btnCreateParty.js"></script>
+<script src="../static/js/btnJoinParty.js"></script>
 <script src = "../static/js/character.js"></script>
 <script src="../static/js/bossIcon.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
