@@ -26,6 +26,7 @@ body.light-mode {
     --foreground: #FFFFFF; /*에티화이트*/
     --primary: #000000; /*글자색*/
     --primary-foreground: #5588DD;
+    --border-color: #BEBEBE;
 }
 
 body.dark-mode {
@@ -33,6 +34,7 @@ body.dark-mode {
     --foreground: #333737; /*에티그레이*/
     --primary: #FFFFFF; /*글자색*/
     --primary-foreground: #223355;
+    --border-color: #0D0D0D;
 }
 
 @font-face {
@@ -260,7 +262,8 @@ yeti color {
 }
 
 .highlighted-text2 {
-    font-weight: 700;
+    font-family: 'MaplestoryFontBold', sans-serif;
+    font-weight: 500;
 /*    color: transparent; *//* 텍스트를 투명하게 설정 *//*
     background-clip: text; *//* 배경 클립을 텍스트로 설정 *//*
     background-image: linear-gradient(to right, #42A5F5, #FFCA28); *//* 그라데이션 색상 설정 *//*
@@ -276,4 +279,80 @@ yeti color {
 .instructions{
     font-size:10px;
     font-weight:200;
+}
+
+.image-container {
+    position: relative; /* 툴팁을 이미지 위에 위치시키기 위해 상대 위치 설정 */
+    display: inline-block; /* 이미지와 툴팁을 같은 라인에 배치 */
+}
+
+/* 툴팁 기본 스타일 */
+.tooltip {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 10; /* 툴팁이 다른 요소 위에 보이도록 설정 */
+    bottom: 125%; /* 툴팁이 요소 위에 위치하도록 조정 */
+    left: 50%; /* 수평 가운데 정렬 */
+    transform: translateX(-50%); /* 수평 가운데 정렬 */
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+/* 이미지와 뱃지에 대한 툴팁 표시 */
+.badgeContainer-item:hover .tooltip,
+.skill-icon-container:hover .tooltip,
+.image-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 이미지 스타일 */
+.badges {
+    width: 40px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: cover;
+    border-radius: 80%;
+}
+
+/* 컨테이너 스타일 */
+.badgeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+/* 보스 툴팁에 대한 스타일 (기존) */
+.bossTooltip {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.image-container:hover .bossTooltip {
+    display: block;
+}
+
+/* badgeContainer-item에 상대 위치 설정 이게 없어서 안나왔었음 */
+.badgeContainer-item {
+    position: relative; /* 툴팁을 올바르게 표시하기 위해 상대 위치 설정 */
 }

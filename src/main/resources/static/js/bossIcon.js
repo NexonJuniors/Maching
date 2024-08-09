@@ -2,7 +2,7 @@
 
 // 이미지 파일 이름 배열
 const bossImages = [
-    "1하데미.png", "1하스우.png", "1하루시.png", "1하윌.png", "2노진.png", "2카더.png", "2카엔슬.png", "3노세.png", "3하듄.png", "3하진.png", "4하검마.png", "4이칼.png", "4하세.png", "5노칼.png", "5이카.png", "6노림보.png", "6노카.png", "6익스우.png", "6카칼.png", "7익검.png", "7익세.png", "7하림보.png", "7하카.png", "8익카.png", "8익칼.png"
+    "1하스우.png", "1하데미.png", "1하루시.png", "1하윌.png", "2노진.png", "2카더.png", "2카엔슬.png", "3노세.png", "3하듄.png", "3하진.png", "4하검마.png", "4이칼.png", "4하세.png", "5노칼.png", "5이카.png", "6노림보.png", "6노카.png", "6익스우.png", "6카칼.png", "7익검.png", "7익세.png", "7하림보.png", "7하카.png", "8익카.png", "8익칼.png"
 ];
 
 // 이미지 폴더 경로
@@ -19,8 +19,8 @@ const difficultyMapping = {
 
 // 보스 이름 맵핑
 const bossNameMapping = {
-    "데": "데미안",
     "스": "스우",
+    "데": "데미안",
     "루": "루시드",
     "윌": "윌",
     "진": "진 힐라",
@@ -49,9 +49,12 @@ function addBossImages() {
     const characterSearched = isCharacterSearched(); // 현재 내 캐릭터
     bossImages.forEach((imageName, index) => {
         const bossDiv = document.createElement("div");
-        bossDiv.classList.add("col-md-3", "text-center", "mb-4");
+        bossDiv.classList.add("col-md-3", "text-center", "mb-1");
+        bossDiv.style.boxShadow = "2px 2px 2px 1px var(--border-color)";
+
         const button = document.createElement("button");
         button.classList.add("btn", "btn-link");
+        button.style.padding = "0rem 0rem";
 
         if (window.location.href.includes('/info')) {
             if (characterSearched) {
@@ -59,41 +62,42 @@ function addBossImages() {
                 button.setAttribute("data-target", "#bossModal");
                 button.addEventListener("click", () => updateModalContent(imageName));
             } else {
-                button.classList.add("disabled"); // CSS 클래스 추가
-                button.disabled = true; // 검색된 캐릭터가 없을 때 버튼 비활성화
+                button.classList.add("disabled");
+                button.disabled = true;
             }
         } else {
-            button.classList.add("disabled"); // CSS 클래스 추가
-            button.disabled = true; // URL에 '/info'가 없을 때 버튼 비활성화
+            button.classList.add("disabled");
+            button.disabled = true;
         }
 
-        const img = document.createElement("img");
-        img.src = `${imgFolderPath}${imageName}`;
-        img.alt = `Boss ${index + 1} Icon`;
-        img.classList.add("img-fluid");
+        const difficultyKey = imageName[1];
+        const bossNameKey = imageName[2];
+        const difficulty = difficultyMapping[difficultyKey] || "Unknown";
+        const bossName = bossNameMapping[bossNameKey] || "Unknown Boss";
+
+        const imgContainer = createImageWithTooltip(
+            `${imgFolderPath}${imageName}`,
+            `Boss ${index + 1} Icon`,
+            `[${difficulty}]<br>${bossName}`,
+            'image-container',
+            'img-fluid',
+            'bossTooltip'
+        );
+
+        button.appendChild(imgContainer);
 
         const matchInfo = document.createElement("p");
-
-        // 변수 선언
-        const matchCount = 0;
-        const partyCount = 0;
-
-/*        // matchInfo 요소를 선택
-        const matchNow = document.getElementById('matchNow');*/
-
-        // innerHTML을 사용하여 HTML과 변수 값 삽입
         matchInfo.innerHTML = `
-           ${partyCount} <span class="highlighted-text2">개 파티</span><br />
-            ${matchCount} <span class="highlighted-text2">명 매칭중</span>
+           <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
+           0파티
+           0명 매칭
         `;
 
-        button.appendChild(img);
         bossDiv.appendChild(button);
         bossDiv.appendChild(matchInfo);
         bossContainer.appendChild(bossDiv);
     });
 }
-
 // 보스 이미지와 이름 모달에 추가하는 함수
 function updateModalContent(imageName) {
     const difficultyKey = imageName[1]; // 두번째 문자 (난이도)

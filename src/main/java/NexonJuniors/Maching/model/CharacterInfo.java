@@ -7,7 +7,7 @@ public class CharacterInfo {
     private UnionInfo unionInfo;
     private HexaSkillInfo hexaSkillInfo;
     private String characterClassInfo; // 직업 정보 (ex 비숍)
-    private String minutesCharacterClassInfo; // 직업 주기 및 시너지 정보 (ex 2분, 시너지)
+    private String minutesCharacterClassInfo; // 직업 주기 및 주스탯 정보 (ex 2, str)
 
     // Getter 및 Setter
 

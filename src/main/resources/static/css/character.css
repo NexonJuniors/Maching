@@ -31,7 +31,7 @@
     display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
     margin: 0 auto;  /* 가운데 정렬 */
     object-fit: cover;
-    border-radius: 80%; /* 이미지 자체를 둥글게 만듦 */
+/*    border-radius: 80%; *//* 이미지 자체를 둥글게 만듦 */
 }
 .flex-container {
     align-items: stretch; /* 자식 요소들의 높이를 동일하게 맞춥니다 */
@@ -40,22 +40,12 @@
 .flex-item {
     flex: 1;
     border-radius: 10px;
-/*    border-color: #BEBEBE;*/
-/*    border-width: 1px;*/
+    border-color: #BEBEBE;
+    box-shadow:2px 2px 5px 0px var(--border-color);
 }
-
-.serverGuildUnion {
-    display: flex; /* Flexbox 레이아웃을 사용 */
-    text-align: center;
-    font-weight: 700;
-    font-size: 0.8em;
-}
-
-.serverGuildUnion img {
-    display: flex; /* Flexbox 레이아웃을 사용 */
-    text-align: center;
-    width: 16px; /* 이미지 크기를 조정 */
-    height: 16px; /* 이미지 크기를 조정 */
+.nameLevel img {
+    width: 18px; /* 이미지 크기를 조정 */
+    height: 18px; /* 이미지 크기를 조정 */
 }
 
 .nameLevel{
@@ -77,18 +67,79 @@
     -webkit-background-clip: text; *//* 웹킷 브라우저용 배경 클립 설정 */
 }
 
-.textSpac {
-    font-size: 1em;
-    font-weight: 700;
-    margin: 0;
-    padding: 0;
-    text-align: left; /* 텍스트 정렬을 왼쪽으로 설정 */
-}
-
 .hexaSkill {
     font-size: 1em;
     font-weight: 700;
     margin: 0;
     padding: 0;
-    text-align: left; /* 텍스트 정렬을 왼쪽으로 설정 */
+}
+
+/* 컨테이너 스타일 */
+#hexaCoreContainer {
+  display: flex;
+  flex-wrap: wrap; /* 여러 줄에 걸쳐 표시되도록 함 */
+  gap: 10px; /* 스킬 카드 간격 조정 */
+}
+
+/* 스킬 아이콘 컨테이너 스타일 */
+.skill-icons {
+  display: flex;
+  align-items: center;
+  gap: 2px; /* 아이콘 간격 조정 */
+  flex-wrap: wrap; /* 아이콘들이 여러 줄에 걸쳐 표시되도록 함 */
+}
+
+/* 스킬 아이콘 이미지 스타일 */
+.skill-icon-container {
+  align-items: center;
+  position: relative; /* 말풍선 위치 조정을 위한 상대 위치 */
+}
+
+.skill-icon {
+  width: 32px; /* 아이콘 크기 조정 */
+  height: 32px; /* 아이콘 크기 조정 */
+  position: relative;
+}
+
+/* 스킬 레벨 스타일 */
+.skill-level {
+  margin-top: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* 각 스킬 카드 스타일 */
+.hexa-core-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #000; /* 보더 추가 */
+  padding: 5px; /* 보더와 내용 간격 조정 */
+  border-radius: 5px; /* 보더 모서리 둥글게 */
+}
+
+.stats-container {
+    border: 1px solid #e0e0e0; /* Border 색상 */
+    padding: 10px; /* 내부 여백 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    font-size: 14px; /* 글씨 크기 */
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between; /* 좌우로 퍼지게 */
+    padding: 5px 0; /* 아이템 간의 여백 */
+    border-bottom: 1px solid #e0e0e0; /* 아래쪽 border */
+}
+
+.stat-item:last-child {
+    border-bottom: none; /* 마지막 항목은 아래쪽 border 제거 */
+}
+
+.stat-item span:first-child {
+    font-weight: bold; /* 왼쪽 항목의 글씨를 볼드 처리 */
+}
+
+.stat-item span:last-child {
+
 }
