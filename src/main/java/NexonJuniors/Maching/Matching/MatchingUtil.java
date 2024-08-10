@@ -58,7 +58,7 @@ public class MatchingUtil {
 
             // 새로운 방을 만들어 파티 정보 등록
             rooms.put(roomId++, partyInfo);
-            log.info("{} {}", roomId, rooms.size());
+            log.info("생성된 방 번호: {}, 총 방 개수: {}", roomId - 1, rooms.size());
 
 //            findUser();
         }
