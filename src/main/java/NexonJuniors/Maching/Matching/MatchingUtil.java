@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.List;
 
+// 예외 처리 구현 필요
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -58,7 +59,7 @@ public class MatchingUtil {
 
             // 새로운 방을 만들어 파티 정보 등록
             rooms.put(roomId++, partyInfo);
-            log.info("생성된 방 번호: {}, 총 방 개수: {}", roomId - 1, rooms.size());
+            log.info("{}번방 [{}] 파티원 수: {} 생성완료, 총 파티 수: {}", roomId - 1, partyInfo.getBossName(), partyInfo.getMaximumPeople(), rooms.size());
 
 //            findUser();
         }
@@ -84,12 +85,6 @@ public class MatchingUtil {
             StatInfo statInfo = objectMapper.readValue(strStatInfo, StatInfo.class);
             UnionInfo unionInfo = objectMapper.readValue(strUnionInfo, UnionInfo.class);
 
-            log.info("{} {} {} {}",
-                    basicInfo.getCharacterName(),
-                    hexaSkillInfo.getCharacterHexaCoreEquipment().get(0).getHexaCoreName(),
-                    statInfo.getFinalStat().get(0).getStatName(),
-                    unionInfo.getUnion_grade());
-
             // 캐릭터 정보 통합 객체로 통합
             CharacterInfo characterInfo = new CharacterInfo();
             characterInfo.setBasicInfo(basicInfo);
@@ -103,7 +98,7 @@ public class MatchingUtil {
             matchingUser.setUuId(uuId);
             matchingUser.setCharacterInfo(characterInfo);
 
-            for(MatchingUser participant: participants) log.info("참여자: {}", participant.getCharacterInfo().getBasicInfo().getCharacterName());
+           log.info("{} 님이 매칭 대기 큐에 참여했습니다.", basicInfo.getCharacterName());
 
             // 참여 가능 한 방 중 조건에 맞는 방을 찾음
             return findRoom(matchingUser);
@@ -122,7 +117,8 @@ public class MatchingUtil {
             // 조건에 맞는 파티가 존재하면 방 번호 반환
             if(partyInfo.getBossName().equals(matchingUser.getBossName())){
                 partyInfo.getUsers().add(matchingUser.getCharacterInfo());
-                log.info("{} 번방 파티원 수: {}", roomId, partyInfo.getUsers().size());
+                log.info("{} 님이 {} 번 방에 입장했습니다.", matchingUser.getCharacterInfo().getBasicInfo().getCharacterName(), roomId);
+                log.info("{}번 방 파티원 수 : {}",roomId, partyInfo.getUsers().size());
                 return roomId;
             }
         }
