@@ -48,6 +48,15 @@ dependencies {
 
 	// 외부 API 호출 위한 HTTP 클라이언트 ( WebClient 인터페이스 ) 사용 목적
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// WebSocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+	// SockJS
+	implementation 'org.webjars:sockjs-client:1.5.1'
+
+	// STOMP
+	implementation 'org.webjars:stomp-websocket:2.3.4'
 }
 
 tasks.named('test') {
