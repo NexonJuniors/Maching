@@ -11,6 +11,7 @@ function createParty() {
         hexaSkillInfo : JSON.stringify(hexaSkillInfo),
         statInfo : JSON.stringify(statInfo),
         unionInfo : JSON.stringify(unionInfo),
+        minutesCharacterClassInfo : JSON.stringify(),
         bossName : `${document.getElementById("modalBossTitle").innerText}`,
         maximumPeople : '6'
     }

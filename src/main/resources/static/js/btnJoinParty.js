@@ -9,6 +9,7 @@ async function joinParty(){
         hexaSkillInfo : JSON.stringify(hexaSkillInfo),
         statInfo : JSON.stringify(statInfo),
         unionInfo : JSON.stringify(unionInfo),
+        minutesCharacterClassInfo : JSON.stringify(`minutes:${minutes}, mainStat: ${mainStat}`),
         bossName : `${document.getElementById("modalBossTitle").innerText}`
     }
 

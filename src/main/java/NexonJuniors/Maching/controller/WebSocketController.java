@@ -28,10 +28,11 @@ public class WebSocketController {
                             @Header("basicInfo") String basicInfo,
                             @Header("hexaSkillInfo") String hexaSkillInfo,
                             @Header("statInfo") String statInfo,
-                            @Header("unionInfo") String unionInfo
+                            @Header("unionInfo") String unionInfo,
+                            @Header("minutesCharacterClassInfo") String minutesCharacterClassInfo
     )
     {
-        matchingUtil.createParty(maximumPeople, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo);
+        matchingUtil.createParty(maximumPeople, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, minutesCharacterClassInfo);
 
         // return "파티 생성완료"
     }
@@ -43,10 +44,11 @@ public class WebSocketController {
             @Header("basicInfo") String basicInfo,
             @Header("hexaSkillInfo") String hexaSkillInfo,
             @Header("statInfo") String statInfo,
-            @Header("unionInfo") String unionInfo
+            @Header("unionInfo") String unionInfo,
+            @Header("minutesCharacterClassInfo") String minutesCharacterClassInfo
     )
     {
-        long roomId = matchingUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo);
+        long roomId = matchingUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, minutesCharacterClassInfo);
         simpMessagingTemplate.convertAndSend(
                 String.format("/room/%s", uuId),
                 roomId

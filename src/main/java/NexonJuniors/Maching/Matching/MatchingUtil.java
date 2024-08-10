@@ -28,7 +28,8 @@ public class MatchingUtil {
             String strBasicInfo,
             String strHexaSkillInfo,
             String strStatInfo,
-            String strUnionInfo
+            String strUnionInfo,
+            String strMinutesCharacterClassInfo
     )
     {
         try{
@@ -38,18 +39,13 @@ public class MatchingUtil {
             StatInfo statInfo = objectMapper.readValue(strStatInfo, StatInfo.class);
             UnionInfo unionInfo = objectMapper.readValue(strUnionInfo, UnionInfo.class);
 
-            log.info("{} {} {} {}",
-                    basicInfo.getCharacterName(),
-                    hexaSkillInfo.getCharacterHexaCoreEquipment().get(0).getHexaCoreName(),
-                    statInfo.getFinalStat().get(0).getStatName(),
-                    unionInfo.getUnion_grade());
-
             // 캐릭터 정보 통합 객체로 통합
             CharacterInfo characterInfo = new CharacterInfo();
             characterInfo.setBasicInfo(basicInfo);
             characterInfo.setHexaSkillInfo(hexaSkillInfo);
             characterInfo.setStatInfo(statInfo);
             characterInfo.setUnionInfo(unionInfo);
+            characterInfo.setCharacterClassInfo(strMinutesCharacterClassInfo);
 
             // 파티 정보에 보스이름, 방 최대 인원 수, 방장 캐릭터 정보 추가
             PartyInfo partyInfo = new PartyInfo();
@@ -76,7 +72,9 @@ public class MatchingUtil {
             String strBasicInfo,
             String strHexaSkillInfo,
             String strStatInfo,
-            String strUnionInfo)
+            String strUnionInfo,
+            String strMinutesCharacterClassInfo
+            )
     {
         try{
             // JSON 형태의 캐릭터의 모든 정보 자바 객체로 변환
@@ -91,6 +89,7 @@ public class MatchingUtil {
             characterInfo.setHexaSkillInfo(hexaSkillInfo);
             characterInfo.setStatInfo(statInfo);
             characterInfo.setUnionInfo(unionInfo);
+            characterInfo.setCharacterClassInfo(strMinutesCharacterClassInfo);
 
             // 매칭 유저 정보에 보스 이름, uuid, 캐릭터 정보 설정
             MatchingUser matchingUser = new MatchingUser();
