@@ -122,7 +122,7 @@ public class MatchingUtil {
             // 조건에 맞는 파티가 존재하면 방 번호 반환
             if(partyInfo.getBossName().equals(matchingUser.getBossName())){
                 partyInfo.getUsers().add(matchingUser.getCharacterInfo());
-                log.info("{}", partyInfo.getUsers().size());
+                log.info("{} 번방 파티원 수: {}", roomId, partyInfo.getUsers().size());
                 return roomId;
             }
         }
