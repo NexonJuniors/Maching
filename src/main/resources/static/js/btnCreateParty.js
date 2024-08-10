@@ -22,18 +22,23 @@ function createParty() {
     }
 
     stompClient.connect({}, function(frame) {
+        uuid = uuidv4()
+        stompClient.subscribe(`/room/${uuid}`, function(message){
+            if(message.body > 0){
+                stompClient.unsubscribe()
+                stompClient.subscribe(`/room/${message.body}`)
+                location.href = `/chatroom`
+            }
+            else alert("서버 오류")
+        })
+
         onConnected()
-        console.log('Connected: ' + frame);
+        location.href = `/chatroom`
     });
 
     function onConnected(){
         stompClient.send("/app/createParty",
-            connectHeaders,
-            JSON.stringify({
-                'roomId': '-1',
-                'sender': 'Admin',
-                'message': 'hi'
-            }));
+            connectHeaders)
     }
 
     function onMessage(){

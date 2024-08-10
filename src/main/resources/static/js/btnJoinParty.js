@@ -1,5 +1,5 @@
 document.getElementById('btnJoinParty').addEventListener('click', joinParty);
-const uuid = uuidv4()
+let uuid
 
 async function joinParty(){
     const info = JSON.parse(localStorage.getItem("info"));
@@ -20,8 +20,9 @@ async function joinParty(){
     }
 
     stompClient.connect({}, function(frame) {
+        uuid = uuidv4();
         stompClient.subscribe(`/room/${uuid}`, function(message){
-            console.log(message)
+
             if(message.body > 0){
                 stompClient.unsubscribe()
                 stompClient.subscribe(`/room/${message.body}`)
