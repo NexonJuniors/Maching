@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MatchingInfo {
+public class MatchingUser {
+    private String uuId;
     private String bossName;
     private CharacterInfo characterInfo;
 }

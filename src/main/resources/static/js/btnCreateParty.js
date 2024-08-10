@@ -13,13 +13,12 @@ function createParty() {
     const stompClient = Stomp.over(socket);
 
     const connectHeaders ={
-        partyInfo :
-        JSON.stringify(
-        {
-            'bossName' : `${document.getElementById("modalBossTitle").innerText}`,
-            'currentPeople' : '0',
-            'maximumPeople' : '6'
-        }),
+        basicInfo : JSON.stringify(basicInfo),
+        hexaSkillInfo : JSON.stringify(hexaSkillInfo),
+        statInfo : JSON.stringify(statInfo),
+        unionInfo : JSON.stringify(unionInfo),
+        bossName : `${document.getElementById("modalBossTitle").innerText}`,
+        maximumPeople : '6'
     }
 
     stompClient.connect({}, function(frame) {

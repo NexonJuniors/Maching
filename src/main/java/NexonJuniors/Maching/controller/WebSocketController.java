@@ -23,23 +23,34 @@ public class WebSocketController {
 
     @MessageMapping("/createParty")
     @SendTo("/room/{roomId}")
-    public void createParty(@Header("partyInfo") String partyInfo)
+    public void createParty(@Header("maximumPeople") int maximumPeople,
+                            @Header("bossName") String bossName,
+                            @Header("basicInfo") String basicInfo,
+                            @Header("hexaSkillInfo") String hexaSkillInfo,
+                            @Header("statInfo") String statInfo,
+                            @Header("unionInfo") String unionInfo
+    )
     {
-        matchingUtil.createParty(partyInfo);
+        matchingUtil.createParty(maximumPeople, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo);
 
         // return "파티 생성완료"
     }
 
     @MessageMapping("/joinParty")
-    @SendTo("/room/{roomId}")
-    public void joinParty(@Header("basicInfo") String basicInfo,
-                            @Header("hexaSkillInfo") String hexaSkillInfo,
-                            @Header("statInfo") String statInfo,
-                            @Header("unionInfo") String unionInfo){
-
-        matchingUtil.joinParty(basicInfo, hexaSkillInfo, statInfo, unionInfo);
-
-        // return "파티 생성완료"
+    public void joinParty(
+            @Header("uuId") String uuId,
+            @Header("bossName") String bossName,
+            @Header("basicInfo") String basicInfo,
+            @Header("hexaSkillInfo") String hexaSkillInfo,
+            @Header("statInfo") String statInfo,
+            @Header("unionInfo") String unionInfo
+    )
+    {
+        long roomId = matchingUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo);
+        simpMessagingTemplate.convertAndSend(
+                String.format("/room/%s", uuId),
+                roomId
+        );
     }
 
 //    @MessageMapping("/chat")
