@@ -1,13 +1,6 @@
 document.getElementById('btnJoinParty').addEventListener('click', joinParty);
-let uuid
 
 async function joinParty(){
-    const info = JSON.parse(localStorage.getItem("info"));
-    const basicInfo = info.basicInfo;
-    const hexaSkillInfo = info.hexaSkillInfo;
-    const statInfo = info.statInfo;
-    const unionInfo = info.unionInfo;
-
     const socket = new SockJS('/matching');
     const stompClient = Stomp.over(socket);
 
