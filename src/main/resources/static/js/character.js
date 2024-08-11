@@ -5,7 +5,6 @@ const basicInfo = info.basicInfo;
 const statInfo = info.statInfo;
 const unionInfo = info.unionInfo;
 const hexaSkillInfo = info.hexaSkillInfo;
-const minutesCharacterClassInfo = info.minutesCharacterClassInfo;
 const minutes = info.classMinutesInfo
 const mainStat = info.classMainStatInfo
 
