@@ -7,7 +7,10 @@ public class CharacterInfo {
     private UnionInfo unionInfo;
     private HexaSkillInfo hexaSkillInfo;
     private String characterClassInfo; // 직업 정보 (ex 비숍)
-    private String minutesCharacterClassInfo; // 직업 주기 및 주스탯 정보 (ex 2, str)
+
+    // 기존의 minutesCharacterClassInfo를 두 개의 변수로 분리
+    private String classMinutesInfo; // 주기 정보 (ex "2")
+    private String classMainStatInfo; // 주스탯 정보 (ex "str")
 
     // Getter 및 Setter
 
@@ -35,12 +38,20 @@ public class CharacterInfo {
         this.characterClassInfo = characterClassInfo;
     }
 
-    public String getMinutesCharacterClassInfo() {
-        return minutesCharacterClassInfo;
+    public String getClassMinutesInfo() {
+        return classMinutesInfo;
     }
 
-    public void setMinutesCharacterClassInfo(String minutesCharacterClassInfo) {
-        this.minutesCharacterClassInfo = minutesCharacterClassInfo;
+    public void setClassMinutesInfo(String classMinutesInfo) {
+        this.classMinutesInfo = classMinutesInfo;
+    }
+
+    public String getClassMainStatInfo() {
+        return classMainStatInfo;
+    }
+
+    public void setClassMainStatInfo(String classMainStatInfo) {
+        this.classMainStatInfo = classMainStatInfo;
     }
 
     public UnionInfo getUnionInfo() {
@@ -59,13 +70,22 @@ public class CharacterInfo {
         this.hexaSkillInfo = hexaSkillInfo;
     }
 
+    // 추가된 데이터를 위한 메서드
+    public void setMinutesCharacterClassInfo(String minutesCharacterClassInfo) {
+        // 입력된 문자열을 ","로 분리
+        String[] parts = minutesCharacterClassInfo.split(", ");
+        this.classMinutesInfo = parts[0].trim(); // 주기 정보 ("2")
+        this.classMainStatInfo = parts[1].trim(); // 주스탯 정보 ("str")
+    }
+
     @Override
     public String toString() {
         return "CharacterInfo{" +
                 "basicInfo=" + basicInfo +
                 ", statInfo=" + statInfo +
                 ", hexaSkillInfo=" + hexaSkillInfo +
+                ", classMinutesInfo='" + classMinutesInfo +
+                ", classMainStatInfo='" + classMainStatInfo +
                 '}';
     }
 }
-
