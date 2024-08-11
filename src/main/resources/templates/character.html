@@ -274,14 +274,24 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-    let nowPowerStat = { stat_name: "전투력", stat_value: powerStat.stat_value }; // 초기 예시 데이터
-        if (nowPowerStat) {
+    let firstPowerStat = { stat_name: "전투력", stat_value: powerStat.stat_value }; // 초기 예시 데이터
+        if (firstPowerStat) {
             const partyNeedPowerInput = document.getElementById('partyNeedPower');
-            partyNeedPowerInput.value = nowPowerStat.stat_value;
-            document.getElementById('formattedPower').innerText = formatNumber(powerStat.stat_value);
+            partyNeedPowerInput.value = firstPowerStat.stat_value; // 초기 값 설정
+            document.getElementById('formattedPower').innerText = formatNumber(firstPowerStat.stat_value);
+
             partyNeedPowerInput.addEventListener('input', () => {
-                const value = partyNeedPowerInput.value;
-                document.getElementById('formattedPower').innerText = formatNumber(Number(value));
+                const value = Number(partyNeedPowerInput.value);
+
+                // 입력된 값이 firstPowerStat.stat_value보다 큰 경우 처리
+                if (value > firstPowerStat.stat_value) {
+                    partyNeedPowerInput.value = firstPowerStat.stat_value; // 입력값을 원래 값으로 되돌림
+                    document.getElementById('formattedPower').innerText = formatNumber(firstPowerStat.stat_value);
+                    alert('본인의 전투력보다 큰 값을 입력할 수 없습니다.'); // 사용자에게 알림
+                } else {
+                    // 포맷된 값 업데이트
+                    document.getElementById('formattedPower').innerText = formatNumber(value);
+                }
             });
         } else {
             console.warn('전투력 stat not found');
