@@ -80,5 +80,8 @@ if (powerStat) {
     console.warn('전투력 stat not found');
 }
 
+const joinPowerValue = powerStat ? powerStat.stat_value : 0; // 값이 없으면 기본값 0 설정
+document.getElementById("joinPower").innerText = joinPowerValue;
+document.getElementById("joinPowerFormat").innerText = formatNumber(joinPowerValue);
 // unionInfo - 유니온 정보
 document.getElementById("unionLevel").innerText = unionInfo.union_level //더있는데 그냥 일단 레벨만

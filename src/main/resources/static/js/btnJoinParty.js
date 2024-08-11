@@ -3,6 +3,8 @@ document.getElementById('btnJoinParty').addEventListener('click', joinParty);
 async function joinParty(){
     const socket = new SockJS('/matching');
     const stompClient = Stomp.over(socket);
+    const joinMaximumPeople = document.getElementById('joinMaximumPeople').value;
+    const joinPower = joinPowerValue;
 
     const connectHeaders ={
         basicInfo : JSON.stringify(basicInfo),
@@ -11,7 +13,9 @@ async function joinParty(){
         unionInfo : JSON.stringify(unionInfo),
         classMinutesInfo : `${minutes}`,
         classMainStatInfo : `${mainStat}`,
-        bossName : `${document.getElementById("modalBossTitle").innerText}`
+        bossName : `${document.getElementById("modalBossTitle").innerText}`,
+        maximumPeople : joinMaximumPeople,
+        power : joinPower
     }
 
     stompClient.connect({}, function(frame) {

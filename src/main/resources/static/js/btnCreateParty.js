@@ -6,7 +6,7 @@ function createParty() {
     const socket = new SockJS('/matching');
     const stompClient = Stomp.over(socket);
 
-    // 모달에서 입력된 데이터 가져오기
+    // 모달에서 데이터 가져오기
     const partyNeedClassMinutesInfo = document.getElementById('partyNeedClassMinutesInfo').value;
     const createMaximumPeople = document.getElementById('createMaximumPeople').value;
     const partyNeedPower = document.getElementById('partyNeedPower').value;

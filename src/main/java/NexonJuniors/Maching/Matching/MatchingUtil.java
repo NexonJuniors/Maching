@@ -107,7 +107,9 @@ public class MatchingUtil {
             String strStatInfo,
             String strUnionInfo,
             String classMinutesInfo,
-            String classMainStatInfo
+            String classMainStatInfo,
+            int maximumPeople,
+            int power
     ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
@@ -146,6 +148,8 @@ public class MatchingUtil {
         matchingUser.setBossName(bossName);
         matchingUser.setUuId(uuId);
         matchingUser.setCharacterInfo(characterInfo);
+        matchingUser.setMaximumPeople(maximumPeople);
+        matchingUser.setPower(power);
 
         //전투력도 로그에 남길지 고민
         log.info("[매칭참여] | {} 님 | [{}] 매칭 큐 참여.",
@@ -167,11 +171,17 @@ public class MatchingUtil {
     private long findRoom(MatchingUser matchingUser) {
         for (Long roomId : rooms.keySet()) {
             PartyInfo partyInfo = rooms.get(roomId);
-
-            // 조건에 맞는 파티가 존재하면 방 번호 반환
+            // 조건에 맞는 파티가 있으면 방 번호 반환하여 파티 참여됨
             if (
-                    partyInfo.getBossName().equals(matchingUser.getBossName())
-                            && partyInfo.getMaximumPeople() > partyInfo.getUsers().size()) {
+                    partyInfo.getBossName().equals(matchingUser.getBossName()) //파티의 보스이름과 유저가 매칭돌린 보스 이름이 같은가?
+                    /*&& partyInfo.getPartyRequirementInfo().getPartyWorldName().equals(matchingUser.getCharacterInfo.getBasicInfo().getWorldName()) // 방장의 서버와 같은 유저인가?*/
+                    && partyInfo.getMaximumPeople() > partyInfo.getUsers().size() //파티의 최대인원수보다 현재 파티의 유저수가 더 적은가?
+                    // 유저의 직업이 비숍인데 비숍이 더이상 필요한가? -> if matchingUser.getCharacterInfo.getCharacterClassInfo()=="비숍" 이면   partyInfo.getPartyRequirementInfo().getPartyNeedBishop() 이게 0이면 비숍 필요없음. 1이면 비숍 필요함.
+                    // 지금 마지막자리가 비숍이 들어가야하는가? -> 이건위에꺼랑 연관되어야함. 파티원 리스트의 characterClassInfo를 순회하여 비숍이 있는지 확인하거나. 아니면 비숍이 들어올때 비숍이 있다고 플래그를 세워줄까?
+                    // 전투력은 만족하는가? -> partyInfo.getPartyRequirementInfo().getPartyNeedPower()보다 matchingUser.getCharacterInfo.statInfo.여기서 값이 전투력인걸 찾아서그 값을 가져와야함
+                    // 주기를 만족하는가?
+            )
+            {
                 partyInfo.getUsers().add(matchingUser.getCharacterInfo());
 
                 // 기존 파티원들 목록을 가져오기
