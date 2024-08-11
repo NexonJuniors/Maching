@@ -150,28 +150,109 @@
             </div>
             <div class="modal-body">
                 <div id="characterInfo"></div> <!-- 캐릭터 정보 표시할 div -->
-                <!-- 모달에 추가될 flex-container -->
                 <div id="modalFlexContainer" class="flex-container">
                     <!-- 여기 내용은 JavaScript로 동적으로 추가됨 -->
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="container-btn">
-                    <span><button type="button" id="btnJoinParty" class="btn btn-dark">매칭 참여</button></span>
+<!--                    <span><button type="button" id="btnJoinParty" class="btn btn-dark">매칭 참여</button></span>
                     <div id="loadingSpinner" class="spinner-border text-primary" role="status" style="display: none;">
                         <span class="sr-only">Loading...</span>
-                    </div>
+                    </div>-->
+                    <button type="button" id="btnJoinPartyTrigger" class="btn btn-dark" data-toggle="modal" data-target="#joinPartyModal">매칭 참여</button>
                 </div>
                 <div class="container-btn">
-                    <span><button type="button" id="btnCreateParty" class="btn btn-dark">파티 생성</button></span>
+<!--                    <span><button type="button" id="btnCreateParty" class="btn btn-dark">파티 생성</button></span>
                     <div id="loadingSpinnerBtnMake" class="spinner-border text-primary" role="status" style="display: none;">
                         <span class="sr-only">Loading...</span>
-                    </div>
+                    </div>-->
+                    <button type="button" id="btnCreatePartyTrigger" class="btn btn-dark" data-toggle="modal" data-target="#createPartyModal">파티 생성</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- 매칭 참여 모달 -->
+<div class="modal fade" id="joinPartyModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">매칭 참여</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="joinMaximumPeople">몇인 파티를 원하시나요?</label>
+                <select id="joinMaximumPeople" class="form-control">
+                    <option value="0">상관없음</option>
+                    <option value="2">2인 파티</option>
+                    <option value="3">3인 파티</option>
+                    <option value="4">4인 파티</option>
+                    <option value="5">5인 파티</option>
+                    <option value="6">6인 파티</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <span><button type="button" id="btnJoinParty" class="btn btn-dark">매칭 참여</button></span>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 파티 생성 모달 -->
+<div class="modal fade" id="createPartyModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">파티 생성</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- 서버는 파티장의 서버로 선택 -->
+                <!-- 직업 주기 선택, 나중에 default는 파티장의 주기로 -->
+                <label for="classMinutesInfo" class="mt-3">파티원 극딜 주기</label>
+                <select id="classMinutesInfo" class="form-control">
+                    <option value="any">상관없음</option>
+                    <option value="2">2분 주기</option>
+                    <option value="3">3분 주기</option>
+                </select>
+
+                <!-- 최대 인원수 -->
+                <label for="createMaximumPeople" class="mt-3">몇인 파티를 원하시나요?</label>
+                <select id="createMaximumPeople" class="form-control">
+                    <option value="0">상관없음</option>
+                    <option value="2">2인 파티</option>
+                    <option value="3">3인 파티</option>
+                    <option value="4">4인 파티</option>
+                    <option value="5">5인 파티</option>
+                    <option value="6">6인 파티</option>
+                </select>
+
+                <!-- 최소 전투력, 단 파티장의 전투력을 넘게 설정하지 못함.(못해도 파티장보다 쌔면 참여 가능 하단 뜻) -->
+                <label for="minimumPower" class="mt-3">최소 전투력</label>
+                <input type="number" id="minimumPower" class="form-control" placeholder="최소 전투력 입력" required>
+
+                <!-- 비숍 필요 유무 -->
+                <label for="bishop" class="mt-3">비숍 필요 여부</label>
+                <select id="bishop" class="form-control">
+                    <option value="0">비숍 필요 없음</option>
+                    <option value="1">비숍 필요</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <span><button type="button" id="btnCreateParty" class="btn btn-dark">파티 생성</button></span>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src = "https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <script src="webjars/stomp-websocket/2.3.4/stomp.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
