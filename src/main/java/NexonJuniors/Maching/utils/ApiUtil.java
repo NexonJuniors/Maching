@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +59,8 @@ public class ApiUtil {
             characterInfo.setStatInfo(statInfo);
             characterInfo.setUnionInfo(unionInfo);
             characterInfo.setHexaSkillInfo(hexaSkillInfo);
+            // 직업 상세 정보 설정
+            setCharacterClassDetails(characterInfo);
 
             // 콘솔 로그 출력
             log.info("[캐릭터검색] | " + characterInfo);
@@ -111,11 +115,24 @@ public class ApiUtil {
     }
 
     public void setCharacterClassDetails(CharacterInfo characterInfo) {
-        String characterClass = characterInfo.getStatInfo().getCharacterClass();
+        String characterClass = characterInfo.getBasicInfo().getCharacterClass(); // 캐릭터 클래스 정보를 가져옵니다.
         Map<String, List<String>> mapping = CharacterClassMapping.getCharacterClassMapping();
-        List<String> displayInfo = mapping.getOrDefault(characterClass, Collections.singletonList("Unknown"));
 
-        characterInfo.setCharacterClassInfo(characterClass); // 백앤드에서 직업 저장
-        characterInfo.setMinutesCharacterClassInfo(String.join(", ", displayInfo)); // 주기 저장
+        // 매핑된 정보를 가져옴. 없을 경우 "Unknown" 리스트를 반환.
+        List<String> classDetails = mapping.getOrDefault(characterClass, Arrays.asList("Unknown", "Unknown"));
+
+        /*log.info("{}",classDetails); //[3, int]*/
+        // 각각의 정보를 설정
+        String classMinutesInfo = classDetails.get(0); // 주기 정보
+        String classMainStatInfo = classDetails.get(1); // 주 스탯 정보
+        /*log.info("{}|{}",classMinutesInfo,classMainStatInfo); //3 | int*/
+
+        // CharacterInfo 객체에 설정
+        characterInfo.setClassMinutesInfo(classMinutesInfo);
+        characterInfo.setClassMainStatInfo(classMainStatInfo);
+
+        // 백엔드에서 직업명도 저장
+        characterInfo.setCharacterClassInfo(characterClass);
+        /* 잘나오네 log.info("[직업 상세 설정] | 직업: {} | 주기: {} | 주 스탯: {}", characterClass, classMinutesInfo, classMainStatInfo);*/
     }
 }
