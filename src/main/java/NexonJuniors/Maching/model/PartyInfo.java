@@ -12,4 +12,5 @@ public class PartyInfo {
     private String bossName;
     private int maximumPeople;
     private List<CharacterInfo> users = new ArrayList<>();
+    private PartyRequirementInfo partyRequirementInfo; // 파티 필요조건 클래스
 }
