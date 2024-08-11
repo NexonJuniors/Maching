@@ -108,6 +108,7 @@ public class MatchingUtil {
             String strUnionInfo,
             String classMinutesInfo,
             String classMainStatInfo,
+            String className,
             int maximumPeople,
             int power
     ) {
@@ -137,6 +138,7 @@ public class MatchingUtil {
         characterInfo.setHexaSkillInfo(hexaSkillInfo);
         characterInfo.setStatInfo(statInfo);
         characterInfo.setUnionInfo(unionInfo);
+        characterInfo.setCharacterClassInfo(className);
         characterInfo.setClassMinutesInfo(classMinutesInfo);
         characterInfo.setClassMainStatInfo(classMainStatInfo);
 
@@ -171,39 +173,84 @@ public class MatchingUtil {
     private long findRoom(MatchingUser matchingUser) {
         for (Long roomId : rooms.keySet()) {
             PartyInfo partyInfo = rooms.get(roomId);
-            // 조건에 맞는 파티가 있으면 방 번호 반환하여 파티 참여됨
-            if (
-                    partyInfo.getBossName().equals(matchingUser.getBossName()) //파티의 보스이름과 유저가 매칭돌린 보스 이름이 같은가?
-                    /*&& partyInfo.getPartyRequirementInfo().getPartyWorldName().equals(matchingUser.getCharacterInfo.getBasicInfo().getWorldName()) // 방장의 서버와 같은 유저인가?*/
-                    && partyInfo.getMaximumPeople() > partyInfo.getUsers().size() //파티의 최대인원수보다 현재 파티의 유저수가 더 적은가?
-                    // 유저의 직업이 비숍인데 비숍이 더이상 필요한가? -> if matchingUser.getCharacterInfo.getCharacterClassInfo()=="비숍" 이면   partyInfo.getPartyRequirementInfo().getPartyNeedBishop() 이게 0이면 비숍 필요없음. 1이면 비숍 필요함.
-                    // 지금 마지막자리가 비숍이 들어가야하는가? -> 이건위에꺼랑 연관되어야함. 파티원 리스트의 characterClassInfo를 순회하여 비숍이 있는지 확인하거나. 아니면 비숍이 들어올때 비숍이 있다고 플래그를 세워줄까?
-                    // 전투력은 만족하는가? -> partyInfo.getPartyRequirementInfo().getPartyNeedPower()보다 matchingUser.getCharacterInfo.statInfo.여기서 값이 전투력인걸 찾아서그 값을 가져와야함
-                    // 주기를 만족하는가?
-            )
-            {
-                partyInfo.getUsers().add(matchingUser.getCharacterInfo());
 
-                // 기존 파티원들 목록을 가져오기
-                StringBuilder partyMembers = new StringBuilder();
-                for (CharacterInfo member : partyInfo.getUsers()) {
-                    if (partyMembers.length() > 0) {
-                        partyMembers.append(", ");
-                    }
-                    partyMembers.append(member.getBasicInfo().getCharacterName());
-                }
-
-                // 로그 메시지 출력, 조건도 로그에 달아줄까 생각중. 이후 관리자 페이지에서 확인 가능하도록 필터및 슬라이싱
-                log.info("[파티참여] | {} 님 | [{}번][{}] | 현재 파티원 [{}] | 남은 자리 {} 인",
-                        matchingUser.getCharacterInfo().getBasicInfo().getCharacterName(),
-                        roomId,
-                        partyInfo.getBossName(),
-                        partyMembers.toString(),
-                        partyInfo.getMaximumPeople() - partyInfo.getUsers().size()
-                );
-
-                return roomId;
+            // 1. 파티의 서버와 유저의 서버가 같은지 확인
+            boolean isServerMatch = partyInfo.getPartyRequirementInfo().getPartyWorldName()
+                    .equals(matchingUser.getCharacterInfo().getBasicInfo().getWorldName());
+            if (!isServerMatch) {
+                System.out.println("서버 불일치: 유저 " + matchingUser.getCharacterInfo().getBasicInfo().getWorldName() + " / 파티 " + partyInfo.getPartyRequirementInfo().getPartyWorldName());
+                continue; // 서버가 다르면 다음 방으로
             }
+
+            // 2. 파티의 보스 이름과 유저가 매칭 돌린 보스 이름이 같은지 확인
+            boolean isBossNameMatch = partyInfo.getBossName().equals(matchingUser.getBossName());
+            if (!isBossNameMatch) {
+                System.out.println("보스 이름 불일치: 유저 " + matchingUser.getBossName() + " / 파티 " + partyInfo.getBossName());
+                continue; // 보스 이름이 다르면 다음 방으로
+            }
+
+            // 3. 파티의 최대 인원수를 확인 (0이면 최대 6명으로 간주)
+            boolean isMaxPeopleNotReached = (partyInfo.getMaximumPeople() == 0 ? 6 : partyInfo.getMaximumPeople()) > partyInfo.getUsers().size();
+            if (!isMaxPeopleNotReached) {
+                System.out.println("최대 인원 초과: 현재 인원수 " + partyInfo.getUsers().size() + " / 최대 인원수 " + (partyInfo.getMaximumPeople() == 0 ? 6 : partyInfo.getMaximumPeople()));
+                continue; // 인원이 가득 찼으면 다음 방으로
+            }
+
+            // 4. 유저의 전투력이 파티 요구 전투력 이상인지 확인
+            boolean isPowerSufficient = matchingUser.getPower() >= partyInfo.getPartyRequirementInfo().getPartyNeedPower();
+            if (!isPowerSufficient) {
+                System.out.println("전투력 부족: 유저 " + matchingUser.getPower() + " / 파티 요구 " + partyInfo.getPartyRequirementInfo().getPartyNeedPower());
+                continue; // 전투력이 부족하면 다음 방으로
+            }
+
+            // 5. 유저의 직업이 비숍일 경우 비숍이 파티에 필요한지 확인
+            boolean isBishopNeeded = matchingUser.getCharacterInfo().getCharacterClassInfo().equals("비숍")
+                    ? partyInfo.getPartyRequirementInfo().getPartyNeedBishop() == 1 &&
+                    partyInfo.getUsers().stream().noneMatch(member -> member.getCharacterClassInfo().equals("비숍"))
+                    : true;
+            if (!isBishopNeeded) {
+                System.out.println("비숍 필요 여부 불일치: 유저 " + matchingUser.getCharacterInfo().getCharacterClassInfo() + " / 비숍 필요 " + partyInfo.getPartyRequirementInfo().getPartyNeedBishop());
+                continue; // 비숍이 필요하지 않으면 다음 방으로
+            }
+
+            // 6. 유저의 주기와 파티의 요구 주기 일치 여부 확인 (free인 경우 항상 true)
+            String requiredMinutes = partyInfo.getPartyRequirementInfo().getPartyNeedClassMinutesInfo();
+            String userMinutes = matchingUser.getCharacterInfo().getClassMinutesInfo();
+
+            boolean isClassMinutesMatch;
+            if (requiredMinutes.equals("free") || userMinutes.equals("free")) {
+                isClassMinutesMatch = true;
+            } else {
+                isClassMinutesMatch = requiredMinutes.equals(userMinutes);
+            }
+
+            if (!isClassMinutesMatch) {
+                System.out.println("주기 불일치: 유저 " + userMinutes + " / 파티 요구 " + requiredMinutes);
+                continue; // 주기가 맞지 않으면 다음 방으로
+            }
+
+            // 모든 조건을 충족하면 파티에 유저 추가
+            partyInfo.getUsers().add(matchingUser.getCharacterInfo());
+
+            // 파티원 목록을 로그에 출력
+            StringBuilder partyMembers = new StringBuilder();
+            for (CharacterInfo member : partyInfo.getUsers()) {
+                if (partyMembers.length() > 0) {
+                    partyMembers.append(", ");
+                }
+                partyMembers.append(member.getBasicInfo().getCharacterName());
+            }
+
+            // 로그 메시지 출력
+            log.info("[파티참여] | {} 님 | [{}번][{}] | 현재 파티원 [{}] | 남은 자리 {} 인",
+                    matchingUser.getCharacterInfo().getBasicInfo().getCharacterName(),
+                    roomId,
+                    partyInfo.getBossName(),
+                    partyMembers.toString(),
+                    partyInfo.getMaximumPeople() - partyInfo.getUsers().size()
+            );
+
+            return roomId;
         }
 
         // 조건에 맞는 파티가 없으면 매칭 대기 큐에 유저 등록 후 -1 반환

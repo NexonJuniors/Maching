@@ -83,11 +83,12 @@ public class WebSocketController {
             @Header("unionInfo") String unionInfo,
             @Header("classMinutesInfo") String classMinutesInfo,
             @Header("classMainStatInfo") String classMainStatInfo,
+            @Header("className") String className,
             @Header("maximumPeople") int maximumPeople,
-            @Header(name = "power", defaultValue = "0") int power // 기본값 설정
+            @Header("power") int power
     )
     {
-        long roomId = matchingUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo, maximumPeople, power);
+        long roomId = matchingUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo, className, maximumPeople, power);
         simpMessagingTemplate.convertAndSend(
                 String.format("/room/%s", uuId),
                 roomId
