@@ -51,7 +51,7 @@ public class MatchingUtil {
         }
 
         // TODO MathcingException 클래스로 예외 처리
-        if(totalUser.contains(basicInfo.getCharacterName())) throw new RuntimeException("이미 매칭에 참여중인 유저");
+        if (totalUser.contains(basicInfo.getCharacterName())) throw new RuntimeException("이미 매칭에 참여중인 유저");
 
         // 캐릭터 정보 통합 객체로 통합 TODO 생성자로 교체 요망
         CharacterInfo characterInfo = new CharacterInfo();
@@ -72,8 +72,13 @@ public class MatchingUtil {
 
         // 새로운 방을 만들어 파티 정보 등록
         rooms.put(roomId++, partyInfo);
-        log.info("{}번방 [{}] 파티원 수: {} 생성완료, 총 파티 수: {}", roomId - 1, partyInfo.getBossName(), partyInfo.getMaximumPeople(), rooms.size());
-
+        log.info("[파티생성] | [{}번][{}] | 방장 {} 님 | 최대 인원 {} 인 | 전체 파티 {} 개",
+                roomId - 1,
+                partyInfo.getBossName(),
+                characterInfo.getBasicInfo().getCharacterName(),
+                partyInfo.getMaximumPeople(),
+                rooms.size()
+        );
 //            findUser();
     }
 
@@ -86,8 +91,7 @@ public class MatchingUtil {
             String strStatInfo,
             String strUnionInfo,
             String strMinutesCharacterClassInfo
-            )
-    {
+    ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
         StatInfo statInfo;
@@ -106,7 +110,7 @@ public class MatchingUtil {
         }
 
         // TODO MathcingException 클래스로 예외 처리
-        if(totalUser.contains(basicInfo.getCharacterName())) throw new RuntimeException("이미 매칭에 참여중인 유저");
+        if (totalUser.contains(basicInfo.getCharacterName())) throw new RuntimeException("이미 매칭에 참여중인 유저");
 
         // 캐릭터 정보 통합 객체로 통합 TODO 생성자로 교체 요망
         CharacterInfo characterInfo = new CharacterInfo();
@@ -125,7 +129,11 @@ public class MatchingUtil {
         matchingUser.setUuId(uuId);
         matchingUser.setCharacterInfo(characterInfo);
 
-        log.info("{} 님이 매칭 대기 큐에 참여했습니다.", basicInfo.getCharacterName());
+        //전투력도 로그에 남길지 고민
+        log.info("[매칭참여] | {} 님 | [{}] 매칭 큐 참여.",
+                basicInfo.getCharacterName(),
+                bossName
+        );
 
         // 참여 가능 한 방 중 조건에 맞는 방을 찾음
         return findRoom(matchingUser);
@@ -133,23 +141,39 @@ public class MatchingUtil {
 
 
     // TODO 채팅방 입장 시 채팅 방에 있는 사람들을 저장하고 있는 리스트를 뿌려줌
-    public void enterRoom(){
+    public void enterRoom() {
 
     }
 
     // 매칭 대기 큐에 처음 참여 시 기존에 생성되어있는 방들 중 조건에 맞는 방 검색 후 참여
-    private long findRoom(MatchingUser matchingUser){
-        for(Long roomId : rooms.keySet()){
+    private long findRoom(MatchingUser matchingUser) {
+        for (Long roomId : rooms.keySet()) {
             PartyInfo partyInfo = rooms.get(roomId);
 
             // 조건에 맞는 파티가 존재하면 방 번호 반환
-            if(
+            if (
                     partyInfo.getBossName().equals(matchingUser.getBossName())
-                            && partyInfo.getMaximumPeople() > partyInfo.getUsers().size())
-            {
+                            && partyInfo.getMaximumPeople() > partyInfo.getUsers().size()) {
                 partyInfo.getUsers().add(matchingUser.getCharacterInfo());
-                log.info("{} 님이 {} 번 방에 입장했습니다.", matchingUser.getCharacterInfo().getBasicInfo().getCharacterName(), roomId);
-                log.info("{}번 방 파티원 수 : {}",roomId, partyInfo.getUsers().size());
+
+                // 기존 파티원들 목록을 가져오기
+                StringBuilder partyMembers = new StringBuilder();
+                for (CharacterInfo member : partyInfo.getUsers()) {
+                    if (partyMembers.length() > 0) {
+                        partyMembers.append(", ");
+                    }
+                    partyMembers.append(member.getBasicInfo().getCharacterName());
+                }
+
+                // 로그 메시지 출력, 조건도 로그에 달아줄까 생각중. 이후 관리자 페이지에서 확인 가능하도록 필터및 슬라이싱
+                log.info("[파티참여] | {} 님 | [{}번][{}] | 현재 파티원 [{}] | 남은 자리 {} 인",
+                        matchingUser.getCharacterInfo().getBasicInfo().getCharacterName(),
+                        roomId,
+                        partyInfo.getBossName(),
+                        partyMembers.toString(),
+                        partyInfo.getMaximumPeople() - partyInfo.getUsers().size()
+                );
+
                 return roomId;
             }
         }
@@ -160,7 +184,7 @@ public class MatchingUtil {
     }
 
     // TODO 새로운 방 생성 시 매칭 대기 큐에 있는 유저 중 조건에 맞는 유저 검색 후 매칭
-    private void findUser(PartyInfo partyInfo){
+    private void findUser(PartyInfo partyInfo) {
 
     }
 }
