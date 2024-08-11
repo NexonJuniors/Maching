@@ -11,5 +11,16 @@ public class PartyRequirementInfo {
     private String partyNeedClassMinutesInfo; // 주기 정보 (ex free, 2, 3)
     private int partyNeedPower ; // 최소전투력을 정하는건데 파티장 자신보다 높게는 못함
     private int partyNeedBishop; // 0이면 비숍 불필요 1이면 비숍 필요한거(1명만)
+
+    @Override
+    public String toString() {
+        return "PartyRequirementInfo{" +
+                "partyLeader='" + partyLeader + '\'' +
+                ", partyWorldName='" + partyWorldName + '\'' +
+                ", partyNeedClassMinutesInfo='" + partyNeedClassMinutesInfo + '\'' +
+                ", partyNeedPower=" + partyNeedPower +
+                ", partyNeedBishop=" + partyNeedBishop +
+                '}';
+    }
 }
 

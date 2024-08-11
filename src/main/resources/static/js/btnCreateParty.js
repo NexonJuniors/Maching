@@ -11,6 +11,8 @@ function createParty() {
     const createMaximumPeople = document.getElementById('createMaximumPeople').value;
     const partyNeedPower = document.getElementById('partyNeedPower').value;
     const partyNeedBishop = document.getElementById('partyNeedBishop').value;
+    const partyLeader = document.getElementById("characterName").innerText;
+    const partyWorldName = document.getElementById("worldName").innerText;
 
     // 필요한 데이터를 모아 connectHeaders 객체에 추가
     const connectHeaders = {
@@ -22,13 +24,11 @@ function createParty() {
         classMainStatInfo: `${mainStat}`,
         bossName: `${document.getElementById("modalBossTitle").innerText}`,
         maximumPeople: createMaximumPeople, // 모달에서 선택한 최대 인원
-        partyLeader : basicInfo.character_name,
-        partyWorldName : basicInfo.world_name,
+        partyLeader : partyLeader,
+        partyWorldName : partyWorldName,
         partyNeedClassMinutesInfo: partyNeedClassMinutesInfo, // 파티 극딜 주기
         partyNeedPower: partyNeedPower, // 최소 전투력
         partyNeedBishop: partyNeedBishop, // 비숍 필요 여부
-        partyLeader: `${basicInfo.characterName}`, // 파티장 정보
-        partyWorldName: `${basicInfo.worldName}` // 서버 이름
     }
 
     stompClient.connect({}, function(frame) {
