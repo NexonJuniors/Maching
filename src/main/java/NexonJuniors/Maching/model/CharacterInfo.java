@@ -7,8 +7,6 @@ public class CharacterInfo {
     private UnionInfo unionInfo;
     private HexaSkillInfo hexaSkillInfo;
     private String characterClassInfo; // 직업 정보 (ex 비숍)
-
-    // 기존의 minutesCharacterClassInfo를 두 개의 변수로 분리
     private String classMinutesInfo; // 주기 정보 (ex "2")
     private String classMainStatInfo; // 주스탯 정보 (ex "str")
 
@@ -68,14 +66,6 @@ public class CharacterInfo {
 
     public void setHexaSkillInfo(HexaSkillInfo hexaSkillInfo) {
         this.hexaSkillInfo = hexaSkillInfo;
-    }
-
-    // 추가된 데이터를 위한 메서드
-    public void setMinutesCharacterClassInfo(String minutesCharacterClassInfo) {
-        // 입력된 문자열을 ","로 분리
-        String[] parts = minutesCharacterClassInfo.split(", ");
-        this.classMinutesInfo = parts[0].trim(); // 주기 정보 ("2")
-        this.classMainStatInfo = parts[1].trim(); // 주스탯 정보 ("str")
     }
 
     @Override
