@@ -59,7 +59,7 @@ public class ApiUtil {
             characterInfo.setHexaSkillInfo(hexaSkillInfo);
 
             // 콘솔 로그 출력
-            System.out.println("API request: " + characterInfo);
+            log.info("[캐릭터검색] | " + characterInfo);
             return characterInfo;
         }
         catch (Exception e){

@@ -38,11 +38,11 @@ public class MatchingUtil {
             StatInfo statInfo = objectMapper.readValue(strStatInfo, StatInfo.class);
             UnionInfo unionInfo = objectMapper.readValue(strUnionInfo, UnionInfo.class);
 
-            log.info("{} {} {} {}",
+            /*log.info("{} {} {} {}",
                     basicInfo.getCharacterName(),
                     hexaSkillInfo.getCharacterHexaCoreEquipment().get(0).getHexaCoreName(),
                     statInfo.getFinalStat().get(0).getStatName(),
-                    unionInfo.getUnion_grade());
+                    unionInfo.getUnion_grade());*/
 
             // 캐릭터 정보 통합 객체로 통합
             CharacterInfo characterInfo = new CharacterInfo();
@@ -59,8 +59,13 @@ public class MatchingUtil {
 
             // 새로운 방을 만들어 파티 정보 등록
             rooms.put(roomId++, partyInfo);
-            log.info("{}번방 [{}] 파티원 수: {} 생성완료, 총 파티 수: {}", roomId - 1, partyInfo.getBossName(), partyInfo.getMaximumPeople(), rooms.size());
-
+            log.info("[파티생성] | [{}번][{}] | 방장 {} 님 | 최대 인원 {} 인 | 전체 파티 {} 개",
+                    roomId - 1,
+                    partyInfo.getBossName(),
+                    characterInfo.getBasicInfo().getCharacterName(),
+                    partyInfo.getMaximumPeople(),
+                    rooms.size()
+            );
 //            findUser();
         }
         catch (Exception e){
@@ -98,7 +103,11 @@ public class MatchingUtil {
             matchingUser.setUuId(uuId);
             matchingUser.setCharacterInfo(characterInfo);
 
-           log.info("{} 님이 매칭 대기 큐에 참여했습니다.", basicInfo.getCharacterName());
+            //전투력도 로그에 남길지 고민
+           log.info("[매칭참여] | {} 님 | [{}] 매칭 큐 참여.",
+                   basicInfo.getCharacterName(),
+                   bossName
+           );
 
             // 참여 가능 한 방 중 조건에 맞는 방을 찾음
             return findRoom(matchingUser);
@@ -117,8 +126,25 @@ public class MatchingUtil {
             // 조건에 맞는 파티가 존재하면 방 번호 반환
             if(partyInfo.getBossName().equals(matchingUser.getBossName())){
                 partyInfo.getUsers().add(matchingUser.getCharacterInfo());
-                log.info("{} 님이 {} 번 방에 입장했습니다.", matchingUser.getCharacterInfo().getBasicInfo().getCharacterName(), roomId);
-                log.info("{}번 방 파티원 수 : {}",roomId, partyInfo.getUsers().size());
+
+                // 기존 파티원들 목록을 가져오기
+                StringBuilder partyMembers = new StringBuilder();
+                for (CharacterInfo member : partyInfo.getUsers()) {
+                    if (partyMembers.length() > 0) {
+                        partyMembers.append(", ");
+                    }
+                    partyMembers.append(member.getBasicInfo().getCharacterName());
+                }
+
+                // 로그 메시지 출력, 조건도 로그에 달아줄까 생각중. 이후 관리자 페이지에서 확인 가능하도록 필터및 슬라이싱
+                log.info("[파티참여] | {} 님 | [{}번][{}] | 현재 파티원 [{}] | 남은 자리 {} 인",
+                        matchingUser.getCharacterInfo().getBasicInfo().getCharacterName(),
+                        roomId,
+                        partyInfo.getBossName(),
+                        partyMembers.toString(),
+                        partyInfo.getMaximumPeople() - partyInfo.getUsers().size()
+                );
+
                 return roomId;
             }
         }
