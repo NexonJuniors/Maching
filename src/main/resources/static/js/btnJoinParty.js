@@ -1,13 +1,6 @@
 document.getElementById('btnJoinParty').addEventListener('click', joinParty);
-let uuid
 
 async function joinParty(){
-    const info = JSON.parse(localStorage.getItem("info"));
-    const basicInfo = info.basicInfo;
-    const hexaSkillInfo = info.hexaSkillInfo;
-    const statInfo = info.statInfo;
-    const unionInfo = info.unionInfo;
-
     const socket = new SockJS('/matching');
     const stompClient = Stomp.over(socket);
 
@@ -16,19 +9,20 @@ async function joinParty(){
         hexaSkillInfo : JSON.stringify(hexaSkillInfo),
         statInfo : JSON.stringify(statInfo),
         unionInfo : JSON.stringify(unionInfo),
+        classMinutesInfo : `${minutes}`,
+        classMainStatInfo : `${mainStat}`,
         bossName : `${document.getElementById("modalBossTitle").innerText}`
     }
 
     stompClient.connect({}, function(frame) {
         uuid = uuidv4();
         stompClient.subscribe(`/room/${uuid}`, function(message){
-
             if(message.body > 0){
                 stompClient.unsubscribe()
-                stompClient.subscribe(`/room/${message.body}`)
+                localStorage.setItem('roomId', message.body)
                 location.href = `/chatroom`
             }
-            else alert("매칭 대기 중")
+            else alert("매칭 대기 중")  //TODO 로딩 중 화면 띄우기
         })
 
         onConnected(uuid)

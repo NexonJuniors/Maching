@@ -7,6 +7,7 @@ const unionInfo = info.unionInfo;
 const hexaSkillInfo = info.hexaSkillInfo;
 const minutes = info.classMinutesInfo
 const mainStat = info.classMainStatInfo
+let uuid
 
 // 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
 function getImagePath(basePath, fileName, extension = 'png') {
