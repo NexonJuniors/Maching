@@ -31,7 +31,8 @@ public class MatchingUtil {
             String strHexaSkillInfo,
             String strStatInfo,
             String strUnionInfo,
-            String strMinutesCharacterClassInfo
+            String classMinutesInfo,
+            String classMainStatInfo
     ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
@@ -50,7 +51,7 @@ public class MatchingUtil {
             throw new ApiException(ApiExceptionCode.DATA_PARSING_ERROR);
         }
 
-        // TODO MathcingException 클래스로 예외 처리
+        // TODO MathcingException 클래스로 예외 처리, 예외 발생 시 채팅방으로 넘어가지 않도록 구현
         if (totalUser.contains(basicInfo.getCharacterName())) throw new RuntimeException("이미 매칭에 참여중인 유저");
 
         // 캐릭터 정보 통합 객체로 통합 TODO 생성자로 교체 요망
@@ -59,7 +60,8 @@ public class MatchingUtil {
         characterInfo.setHexaSkillInfo(hexaSkillInfo);
         characterInfo.setStatInfo(statInfo);
         characterInfo.setUnionInfo(unionInfo);
-        characterInfo.setCharacterClassInfo(strMinutesCharacterClassInfo);
+        characterInfo.setClassMinutesInfo(classMinutesInfo);
+        characterInfo.setClassMainStatInfo(classMainStatInfo);
 
         // 전체 이용자 리스트에 내 캐릭터 정보 추가
         totalUser.add(characterInfo.getBasicInfo().getCharacterName());
@@ -90,7 +92,8 @@ public class MatchingUtil {
             String strHexaSkillInfo,
             String strStatInfo,
             String strUnionInfo,
-            String strMinutesCharacterClassInfo
+            String classMinutesInfo,
+            String classMainStatInfo
     ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
@@ -109,7 +112,7 @@ public class MatchingUtil {
             throw new ApiException(ApiExceptionCode.DATA_PARSING_ERROR);
         }
 
-        // TODO MathcingException 클래스로 예외 처리
+        // TODO MathcingException 클래스로 예외 처리, 예외 발생 시 채팅방으로 넘어가지 않도록 구현
         if (totalUser.contains(basicInfo.getCharacterName())) throw new RuntimeException("이미 매칭에 참여중인 유저");
 
         // 캐릭터 정보 통합 객체로 통합 TODO 생성자로 교체 요망
@@ -118,7 +121,8 @@ public class MatchingUtil {
         characterInfo.setHexaSkillInfo(hexaSkillInfo);
         characterInfo.setStatInfo(statInfo);
         characterInfo.setUnionInfo(unionInfo);
-        characterInfo.setCharacterClassInfo(strMinutesCharacterClassInfo);
+        characterInfo.setClassMinutesInfo(classMinutesInfo);
+        characterInfo.setClassMainStatInfo(classMainStatInfo);
 
         // 전체 이용자 리스트에 내 캐릭터 정보 추가
         totalUser.add(characterInfo.getBasicInfo().getCharacterName());

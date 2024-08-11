@@ -29,10 +29,11 @@ public class WebSocketController {
                             @Header("hexaSkillInfo") String hexaSkillInfo,
                             @Header("statInfo") String statInfo,
                             @Header("unionInfo") String unionInfo,
-                            @Header("minutesCharacterClassInfo") String minutesCharacterClassInfo
+                            @Header("classMinutesInfo") String classMinutesInfo,
+                            @Header("classMainStatInfo") String classMainStatInfo
     )
     {
-        matchingUtil.createParty(maximumPeople, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, minutesCharacterClassInfo);
+        matchingUtil.createParty(maximumPeople, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo);
 
         // return "파티 생성완료"
     }
@@ -45,36 +46,24 @@ public class WebSocketController {
             @Header("hexaSkillInfo") String hexaSkillInfo,
             @Header("statInfo") String statInfo,
             @Header("unionInfo") String unionInfo,
-            @Header("minutesCharacterClassInfo") String minutesCharacterClassInfo
+            @Header("classMinutesInfo") String classMinutesInfo,
+            @Header("classMainStatInfo") String classMainStatInfo
     )
     {
-        long roomId = matchingUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, minutesCharacterClassInfo);
+        long roomId = matchingUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo);
         simpMessagingTemplate.convertAndSend(
                 String.format("/room/%s", uuId),
                 roomId
         );
     }
 
-//    @MessageMapping("/chat")
-//    public void sendMessage(ChatMessage chatMessage){
-//        String time = new SimpleDateFormat("HH:mm").format(new Date());
-//        chatMessage.setTime(time);
-//        simpMessagingTemplate.convertAndSend(
-//                String.format("/room/%s", chatMessage.getRoomId()),
-//                chatMessage
-//        );
-//    }
+    @MessageMapping("/enterRoom")
+    public void enterRoom(@Header("roomId") Long roomId){
+    }
+
+    // TODO 채팅 쳤을 때 해당 유저가 구독한 채팅방 URL로 메세지를 뿌려야함
+//    @MessageMapping("/room")
+//    public void sendChat(ChatMessage message){
 //
-//
-//    @SubscribeMapping("/chat/1")
-//    public ChatMessage sendGreet(){
-//        ChatMessage chatMessage = new ChatMessage();
-//        chatMessage.setRoomId(Long.valueOf(1));
-//        chatMessage.setSender("admin");
-//        chatMessage.setMessage("입장");
-//        String time = new SimpleDateFormat("HH:mm").format(new Date());
-//        chatMessage.setTime(time);
-//
-//        return chatMessage;
 //    }
 }
