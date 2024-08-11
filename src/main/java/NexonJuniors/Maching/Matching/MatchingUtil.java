@@ -8,23 +8,22 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 // 예외 처리 구현 필요
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class MatchingUtil {
-    private final List<MatchingUser> participants; // 파티 찾는 사람 리스트 ( 매칭 안된 유저 대기 큐 )
-    private final HashMap<Long, PartyInfo> rooms; // 생성된 채팅방 리스트
+    private final List<MatchingUser> participants; // 파티 찾는 사람 리스트 ( 매칭 안된 유저 대기 큐 ) TODO ConcurrentList 로 변경해야 할 수도 있음
+    private final HashMap<Long, PartyInfo> rooms; // 생성된 채팅방 리스트 TODO PartyInfo 클래스 내부에 Users 리스트 자료형을 Mathcinguser 로 변경 후 관련 메소드 변경
     private final HashSet<String> totalUser; // 전체 이용자 ( 닉네임 ) TODO 이후에 CharacterInfo 형태로 저장해서 캐릭터 정보 전체를 저장해서 처리하는 방법 연구
     private final ObjectMapper objectMapper;
     private Long roomId = 1L;
 
     // 파티 생성 요청 시 실행되는 로직
-    public void createParty(
+    public HashMap<Long, List<String>> createParty(
+            String uuid,
             int maximumPeople,
             String bossName,
             String strBasicInfo,
@@ -73,15 +72,24 @@ public class MatchingUtil {
         partyInfo.getUsers().add(characterInfo);
 
         // 새로운 방을 만들어 파티 정보 등록
-        rooms.put(roomId++, partyInfo);
-        log.info("[파티생성] | [{}번][{}] | 방장 {} 님 | 최대 인원 {} 인 | 전체 파티 {} 개",
+        rooms.put(roomId, partyInfo);
+
+        HashMap<Long, List<String>> result = new HashMap<>();
+
+        // 매칭 대기 큐에서 방 조건에 부합하는 유저를 찾아서 추가
+        result.put(roomId, findUser(partyInfo));
+        result.get(roomId++).add(uuid);
+
+        log.info("[파티생성] | [{}번][{}] | 방장 {} 님 | 최대 인원 {} 인 | 현재 인원 {} 명 | 전체 파티 {} 개",
                 roomId - 1,
                 partyInfo.getBossName(),
                 characterInfo.getBasicInfo().getCharacterName(),
                 partyInfo.getMaximumPeople(),
+                partyInfo.getUsers().size(),
                 rooms.size()
         );
-//            findUser();
+
+        return result;
     }
 
     // 매칭 참여 요청 시 실행되는 로직
@@ -187,8 +195,45 @@ public class MatchingUtil {
         return -1;
     }
 
-    // TODO 새로운 방 생성 시 매칭 대기 큐에 있는 유저 중 조건에 맞는 유저 검색 후 매칭
-    private void findUser(PartyInfo partyInfo) {
+    // 새로운 방 생성 시 매칭 대기 큐에 있는 유저 중 조건에 맞는 유저 검색 후 매칭
+    private List<String> findUser(PartyInfo partyInfo) {
+        List<String> uuidList = new ArrayList<>();
 
+        Iterator<MatchingUser> iterator = participants.iterator();
+        while(iterator.hasNext()){
+            // 이미 최대 인원 만큼의 유저를 찾았을 경우 탐색 종료
+            if(partyInfo.getUsers().size() >= partyInfo.getMaximumPeople()) break;
+
+            MatchingUser matchingUser = iterator.next();
+            // 방 조건에 부합한 유저를 추가
+            if(matchingUser.getBossName().equals(partyInfo.getBossName()))
+            {
+                partyInfo.getUsers().add(matchingUser.getCharacterInfo());
+                uuidList.add(matchingUser.getUuId());
+                log.info("{} 님의 파티에 대기큐의 {} 님이 참가",
+                        partyInfo.getUsers().get(0).getBasicInfo().getCharacterName(),
+                        matchingUser.getCharacterInfo().getBasicInfo().getCharacterName());
+                // 매칭 대기큐에서 조건에 부합하는 유저 제거 ( 파티에 참가되기 때문 )
+                iterator.remove();
+            }
+        }
+
+//        혹시 쓸 수도 있으니 일단 대기
+//        for(MatchingUser matchingUser: participants){
+//            // 이미 최대 인원 만큼의 유저를 찾았을 경우 탐색 종료
+//            if(partyInfo.getUsers().size() >= partyInfo.getMaximumPeople()) break;
+//
+//            // 방 조건에 부합한 유저를 추가
+//            if(matchingUser.getBossName().equals(partyInfo.getBossName()))
+//            {
+//                partyInfo.getUsers().add(matchingUser.getCharacterInfo());
+//                uuidList.add(matchingUser.getUuId());
+//                // 매칭 대기큐에서 조건에 부합하는 유저 제거 ( 파티에 참가되기 때문 )
+//                participants.remove(matchingUser);
+//            }
+//        }
+
+        // 연결 되었다는 메세지를 전달하기 위해 연결된 클라이언트들의 uuid 반환
+        return uuidList;
     }
 }

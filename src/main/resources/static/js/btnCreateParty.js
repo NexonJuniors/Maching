@@ -33,6 +33,7 @@ function createParty() {
     });
 
     function onConnected(){
+        connectHeaders.uuId = `${uuid}`
         stompClient.send("/app/createParty",
             connectHeaders)
     }
