@@ -2,6 +2,7 @@ package NexonJuniors.Maching.controller;
 
 import NexonJuniors.Maching.Matching.MatchingUtil;
 import NexonJuniors.Maching.chatting.ChatMessage;
+import NexonJuniors.Maching.model.PartyRequirementInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.Header;
@@ -34,21 +35,42 @@ public class WebSocketController {
             @Header("statInfo") String statInfo,
             @Header("unionInfo") String unionInfo,
             @Header("classMinutesInfo") String classMinutesInfo,
-            @Header("classMainStatInfo") String classMainStatInfo
+            @Header("classMainStatInfo") String classMainStatInfo,
+            @Header("partyLeader") String partyLeader,
+            @Header("partyWorldName") String partyWorldName,
+            @Header("partyNeedClassMinutesInfo") String partyNeedClassMinutesInfo,
+            @Header("partyNeedPower") int partyNeedPower,
+            @Header("partyNeedBishop") int partyNeedBishop
     )
     {
-        HashMap<Long, List<String>> uuidList = matchingUtil.createParty(uuid, maximumPeople, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo);
+        PartyRequirementInfo partyRequirementInfo = new PartyRequirementInfo();
+        partyRequirementInfo.setPartyLeader(partyLeader);
+        partyRequirementInfo.setPartyWorldName(partyWorldName);
+        partyRequirementInfo.setPartyNeedClassMinutesInfo(partyNeedClassMinutesInfo);
+        partyRequirementInfo.setPartyNeedPower(partyNeedPower);
+        partyRequirementInfo.setPartyNeedBishop(partyNeedBishop);
 
-        for(Long roomId: uuidList.keySet()){
-            for(String userId: uuidList.get(roomId)){
+        HashMap<Long, List<String>> uuidList = matchingUtil.createParty(
+                uuid,
+                maximumPeople,
+                bossName,
+                basicInfo,
+                hexaSkillInfo,
+                statInfo,
+                unionInfo,
+                classMinutesInfo,
+                classMainStatInfo,
+                partyRequirementInfo
+        );
+
+        for (Long roomId : uuidList.keySet()) {
+            for (String userId : uuidList.get(roomId)) {
                 simpMessagingTemplate.convertAndSend(
                         String.format("/room/%s", userId),
                         roomId
                 );
             }
         }
-
-        // return "파티 생성완료"
     }
 
     @MessageMapping("/joinParty")

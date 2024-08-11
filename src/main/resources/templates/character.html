@@ -216,9 +216,9 @@
             <div class="modal-body">
                 <!-- 서버는 파티장의 서버로 선택 -->
                 <!-- 직업 주기 선택, 나중에 default는 파티장의 주기로 -->
-                <label for="classMinutesInfo" class="mt-3">파티원 극딜 주기</label>
-                <select id="classMinutesInfo" class="form-control">
-                    <option value="any">상관없음</option>
+                <label for="partyNeedClassMinutesInfo" class="mt-3">파티원 극딜 주기</label>
+                <select id="partyNeedClassMinutesInfo" class="form-control">
+                    <option value="free">상관없음</option>
                     <option value="2">2분 주기</option>
                     <option value="3">3분 주기</option>
                 </select>
@@ -235,12 +235,12 @@
                 </select>
 
                 <!-- 최소 전투력, 단 파티장의 전투력을 넘게 설정하지 못함.(못해도 파티장보다 쌔면 참여 가능 하단 뜻) -->
-                <label for="minimumPower" class="mt-3">최소 전투력</label>
-                <input type="number" id="minimumPower" class="form-control" placeholder="최소 전투력 입력" required>
+                <label for="partyNeedPower" class="mt-3">최소 전투력</label>
+                <input type="number" id="partyNeedPower" class="form-control" placeholder="최소 전투력 입력" required>
 
                 <!-- 비숍 필요 유무 -->
-                <label for="bishop" class="mt-3">비숍 필요 여부</label>
-                <select id="bishop" class="form-control">
+                <label for="partyNeedBishop" class="mt-3">비숍 필요 여부</label>
+                <select id="partyNeedBishop" class="form-control">
                     <option value="0">비숍 필요 없음</option>
                     <option value="1">비숍 필요</option>
                 </select>

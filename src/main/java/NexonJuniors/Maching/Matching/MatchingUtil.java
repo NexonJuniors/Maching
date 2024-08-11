@@ -31,7 +31,8 @@ public class MatchingUtil {
             String strStatInfo,
             String strUnionInfo,
             String classMinutesInfo,
-            String classMainStatInfo
+            String classMainStatInfo,
+            PartyRequirementInfo partyRequirementInfo //파티의 서버, 파티장, 그외 조건들 다수 포함
     ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
@@ -69,6 +70,7 @@ public class MatchingUtil {
         PartyInfo partyInfo = new PartyInfo();
         partyInfo.setBossName(bossName);
         partyInfo.setMaximumPeople(maximumPeople);
+        partyInfo.setPartyRequirementInfo(partyRequirementInfo);
         partyInfo.getUsers().add(characterInfo);
 
         // 새로운 방을 만들어 파티 정보 등록
@@ -80,13 +82,17 @@ public class MatchingUtil {
         result.put(roomId, findUser(partyInfo));
         result.get(roomId++).add(uuid);
 
-        log.info("[파티생성] | [{}번][{}] | 방장 {} 님 | 최대 인원 {} 인 | 현재 인원 {} 명 | 전체 파티 {} 개",
+        log.info("[파티생성] | {} | [{}번][{}] | 방장 {} 님 | 최대 인원 {} 인 | 현재 인원 {} 명 | 전체 파티 {} 개 | {} 극딜 주기 | 최소 전투력 {} | 비숍 {}",
+                partyInfo.getPartyRequirementInfo().getPartyWorldName(),
                 roomId - 1,
                 partyInfo.getBossName(),
                 characterInfo.getBasicInfo().getCharacterName(),
                 partyInfo.getMaximumPeople(),
                 partyInfo.getUsers().size(),
-                rooms.size()
+                rooms.size(),
+                partyInfo.getPartyRequirementInfo().getPartyNeedClassMinutesInfo(),
+                partyInfo.getPartyRequirementInfo().getPartyNeedPower(),
+                partyInfo.getPartyRequirementInfo().getPartyNeedBishop()
         );
 
         return result;
