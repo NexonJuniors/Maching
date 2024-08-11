@@ -38,11 +38,11 @@ public class MatchingUtil {
             StatInfo statInfo = objectMapper.readValue(strStatInfo, StatInfo.class);
             UnionInfo unionInfo = objectMapper.readValue(strUnionInfo, UnionInfo.class);
 
-            log.info("{} {} {} {}",
+            /*log.info("{} {} {} {}",
                     basicInfo.getCharacterName(),
                     hexaSkillInfo.getCharacterHexaCoreEquipment().get(0).getHexaCoreName(),
                     statInfo.getFinalStat().get(0).getStatName(),
-                    unionInfo.getUnion_grade());
+                    unionInfo.getUnion_grade());*/
 
             // 캐릭터 정보 통합 객체로 통합
             CharacterInfo characterInfo = new CharacterInfo();

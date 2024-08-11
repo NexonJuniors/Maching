@@ -108,7 +108,6 @@ function updateModalContent(imageName) {
     // 모달 내용 업데이트
     document.getElementById("modalBossImage").src = `${imgFolderPath}${imageName}`;
     document.getElementById("modalBossTitle").innerText = `${difficulty} ${bossName}`;
-    console.log("보스 제목"+modalBossTitle);
 
     // flex-container의 내용을 모달에 복사
     copyFlexContainerToModal();
