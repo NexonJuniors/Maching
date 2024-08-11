@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -23,17 +25,28 @@ public class WebSocketController {
 
     @MessageMapping("/createParty")
     @SendTo("/room/{roomId}")
-    public void createParty(@Header("maximumPeople") int maximumPeople,
-                            @Header("bossName") String bossName,
-                            @Header("basicInfo") String basicInfo,
-                            @Header("hexaSkillInfo") String hexaSkillInfo,
-                            @Header("statInfo") String statInfo,
-                            @Header("unionInfo") String unionInfo,
-                            @Header("classMinutesInfo") String classMinutesInfo,
-                            @Header("classMainStatInfo") String classMainStatInfo
+    public void createParty(
+            @Header("uuId") String uuid,
+            @Header("maximumPeople") int maximumPeople,
+            @Header("bossName") String bossName,
+            @Header("basicInfo") String basicInfo,
+            @Header("hexaSkillInfo") String hexaSkillInfo,
+            @Header("statInfo") String statInfo,
+            @Header("unionInfo") String unionInfo,
+            @Header("classMinutesInfo") String classMinutesInfo,
+            @Header("classMainStatInfo") String classMainStatInfo
     )
     {
-        matchingUtil.createParty(maximumPeople, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo);
+        HashMap<Long, List<String>> uuidList = matchingUtil.createParty(uuid, maximumPeople, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo);
+
+        for(Long roomId: uuidList.keySet()){
+            for(String userId: uuidList.get(roomId)){
+                simpMessagingTemplate.convertAndSend(
+                        String.format("/room/%s", userId),
+                        roomId
+                );
+            }
+        }
 
         // return "파티 생성완료"
     }
