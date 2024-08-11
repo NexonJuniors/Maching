@@ -34,6 +34,7 @@ public class WebSocketController {
             @Header("hexaSkillInfo") String hexaSkillInfo,
             @Header("statInfo") String statInfo,
             @Header("unionInfo") String unionInfo,
+            @Header("characterClassInfo") String characterClassInfo,
             @Header("classMinutesInfo") String classMinutesInfo,
             @Header("classMainStatInfo") String classMainStatInfo,
             @Header("partyLeader") String partyLeader,
@@ -58,6 +59,7 @@ public class WebSocketController {
                 hexaSkillInfo,
                 statInfo,
                 unionInfo,
+                characterClassInfo,
                 classMinutesInfo,
                 classMainStatInfo,
                 partyRequirementInfo

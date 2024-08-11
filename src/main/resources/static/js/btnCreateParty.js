@@ -1,6 +1,8 @@
 // 파티 매칭 버튼 스크립트
 document.getElementById('btnCreateParty').addEventListener('click', createParty);
 
+
+
 // 파티 생성 버튼 클릭 시 데이터 전송 함수
 function createParty() {
     const socket = new SockJS('/matching');
@@ -8,11 +10,13 @@ function createParty() {
 
     // 모달에서 데이터 가져오기
     const partyNeedClassMinutesInfo = document.getElementById('partyNeedClassMinutesInfo').value;
-    const createMaximumPeople = document.getElementById('createMaximumPeople').value;
+    let createMaximumPeople = parseInt(document.getElementById('createMaximumPeople').value, 10);
+    if(createMaximumPeople == 0){createMaximumPeople = 6}
     const partyNeedPower = document.getElementById('partyNeedPower').value;
     const partyNeedBishop = document.getElementById('partyNeedBishop').value;
     const partyLeader = document.getElementById("characterName").innerText;
     const partyWorldName = document.getElementById("worldName").innerText;
+    const characterClassInfo = document.getElementById("characterClass").innerText;
 
     // 필요한 데이터를 모아 connectHeaders 객체에 추가
     const connectHeaders = {
@@ -29,6 +33,7 @@ function createParty() {
         partyNeedClassMinutesInfo: partyNeedClassMinutesInfo, // 파티 극딜 주기
         partyNeedPower: partyNeedPower, // 최소 전투력
         partyNeedBishop: partyNeedBishop, // 비숍 필요 여부
+        characterClassInfo: characterClassInfo
     }
 
     stompClient.connect({}, function(frame) {

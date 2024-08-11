@@ -30,6 +30,7 @@ public class MatchingUtil {
             String strHexaSkillInfo,
             String strStatInfo,
             String strUnionInfo,
+            String characterClassInfo,
             String classMinutesInfo,
             String classMainStatInfo,
             PartyRequirementInfo partyRequirementInfo //파티의 서버, 파티장, 그외 조건들 다수 포함
@@ -60,6 +61,7 @@ public class MatchingUtil {
         characterInfo.setHexaSkillInfo(hexaSkillInfo);
         characterInfo.setStatInfo(statInfo);
         characterInfo.setUnionInfo(unionInfo);
+        characterInfo.setCharacterClassInfo(characterClassInfo);
         characterInfo.setClassMinutesInfo(classMinutesInfo);
         characterInfo.setClassMainStatInfo(classMainStatInfo);
 
