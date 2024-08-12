@@ -61,9 +61,7 @@ public class ApiUtil {
             characterInfo.setHexaSkillInfo(hexaSkillInfo);
             // 직업 상세 정보 설정
             setCharacterClassDetails(characterInfo);
-
-            // 콘솔 로그 출력
-            log.info("[캐릭터검색] | " + characterInfo);
+            /*log.info("[캐릭터검색] | " + characterInfo);*/
             return characterInfo;
         }
         catch (Exception e){

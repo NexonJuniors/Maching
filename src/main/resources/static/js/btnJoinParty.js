@@ -8,12 +8,17 @@ document.getElementById("joinPower").innerText = joinPowerValue;
 document.getElementById("joinPowerFormat").innerText = formatNumber(joinPowerValue);
 
 async function joinParty(){
+    let userConfirmed = confirm("매칭을 시작하시겠습니까?");
+    if (!userConfirmed) {
+        return;
+    }
     const socket = new SockJS('/matching');
     const stompClient = Stomp.over(socket);
     const className = joinClassName;
     let joinMaximumPeople = parseInt(document.getElementById('joinMaximumPeople').value, 10);
     if(joinMaximumPeople == 0){joinMaximumPeople = 6}
     const joinPower = joinPowerValue;
+    let isMatchingStarted = true;
 
     const connectHeaders ={
         basicInfo : JSON.stringify(basicInfo),
@@ -25,20 +30,22 @@ async function joinParty(){
         bossName : `${document.getElementById("modalBossTitle").innerText}`,
         className : className,
         maximumPeople : joinMaximumPeople,
-        power : joinPower
+        power : joinPower,
+        isMatchingStarted: isMatchingStarted // 매칭 시작 플래그
     }
 
     stompClient.connect({}, function(frame) {
         uuid = uuidv4();
+        sessionStorage.setItem('uuid', uuid); // 세션 스토리지에 UUID 저장
         stompClient.subscribe(`/room/${uuid}`, function(message){
-            if(message.body > 0){
+            if(message.body > 0){ //-1이면 지금 대기중이 되는거 같음
                 stompClient.unsubscribe()
+                alert("조건에 맞는 채팅방에 참여!")
                 localStorage.setItem('roomId', message.body)
                 location.href = `/chatroom`
             }
-            else alert("매칭 대기 중")  //TODO 로딩 중 화면 띄우기
+            else location.href = `/loading`
         })
-
         onConnected(uuid)
     });
 

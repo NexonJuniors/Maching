@@ -53,6 +53,7 @@ public class MatchingUtil {
         }
 
         // TODO MathcingException 클래스로 예외 처리, 예외 발생 시 채팅방으로 넘어가지 않도록 구현
+        // 매칭 참여중인 유저가 매칭을 시도하거나 방을만들려고하면, 화면에 경고 alert을 띄워주고 원래 페이지로 돌아가게해주자.
         if (totalUser.contains(basicInfo.getCharacterName())) throw new RuntimeException("이미 매칭에 참여중인 유저");
 
         // 캐릭터 정보 통합 객체로 통합 TODO 생성자로 교체 요망
@@ -172,6 +173,7 @@ public class MatchingUtil {
     }
 
     // 매칭 대기 큐에 처음 참여 시 기존에 생성되어있는 방들 중 조건에 맞는 방 검색 후 참여
+    // 또한 fondRoom에서 못찾으면 로딩화면으로 이동해줘야함. 로딩화면에서는 취소버튼이 존재해야함.
     private long findRoom(MatchingUser matchingUser) {
         for (Long roomId : rooms.keySet()) {
             PartyInfo partyInfo = rooms.get(roomId);
@@ -237,6 +239,14 @@ public class MatchingUtil {
         return uuidList;
     }
 
+    // 매칭 취소 메소드
+    public void removeParticipant(String characterName) {
+        log.info("[매칭취소] | [대기큐] {} 님 | 매칭 취소 ", characterName);
+        participants.removeIf(user -> user.getCharacterInfo().getBasicInfo().getCharacterName().equals(characterName));
+        totalUser.remove(characterName);
+    }
+
+
     // 파티조건 알고리즘 함수 -> 이걸로 findUser와 findRoom에서 유저가 방에 들어갈 수 있는지 체크를 해준다
     private boolean isUserMatchPartyRequirement(MatchingUser matchingUser, PartyInfo partyInfo) {
 
@@ -263,8 +273,8 @@ public class MatchingUtil {
         }
 
         // 3. 유저가 원한 최대 파티 인원수보다 파티의 최대 인원수가 작거나 같은가
-        boolean isUserWantPartyPeopleNotReached =  partyInfo.getMaximumPeople() <= matchingUser.getMaximumPeople();
-        if(!isUserWantPartyPeopleNotReached){
+        boolean isUserWantPartyPeopleNotReached = partyInfo.getMaximumPeople() <= matchingUser.getMaximumPeople();
+        if (!isUserWantPartyPeopleNotReached) {
             System.out.println("유저가 원하는 최대 파티 인원보다 파티의 최대 인원수가 큽니다.");
             return false;
         }

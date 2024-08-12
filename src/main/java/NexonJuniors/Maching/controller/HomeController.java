@@ -18,4 +18,7 @@ public class HomeController {
 
     @GetMapping("/chatroom")
     public String chatroom(){ return "chatting";}
+
+    @GetMapping("/loading")
+    public String loading(){ return "loading";}
 }

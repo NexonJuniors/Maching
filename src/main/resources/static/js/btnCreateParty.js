@@ -5,6 +5,11 @@ document.getElementById('btnCreateParty').addEventListener('click', createParty)
 
 // 파티 생성 버튼 클릭 시 데이터 전송 함수
 function createParty() {
+    let userConfirmed = confirm("파티를 생성하시겠습니까?");
+    if (!userConfirmed) {
+        return;
+    }
+
     const socket = new SockJS('/matching');
     const stompClient = Stomp.over(socket);
 
