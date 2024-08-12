@@ -2,8 +2,6 @@ package NexonJuniors.Maching.Matching;
 
 import NexonJuniors.Maching.excption.api.ApiException;
 import NexonJuniors.Maching.excption.api.ApiExceptionCode;
-import NexonJuniors.Maching.excption.matching.MatchingException;
-import NexonJuniors.Maching.excption.matching.MatchingExceptionCode;
 import NexonJuniors.Maching.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +55,7 @@ public class MatchingUtil {
         // TODO MathcingException 클래스로 예외 처리, 예외 발생 시 채팅방으로 넘어가지 않도록 구현
         // 매칭 참여중인 유저가 매칭을 시도하거나 방을만들려고하면 서버에서의 에러로 클라이언트에 경고및 리다이랙트를 구현해야지
         if (totalUser.contains(basicInfo.getCharacterName())) {
-            throw new MatchingException(MatchingExceptionCode.ALREADY_EXISTING_USER);
+
         }
 
         // 캐릭터 정보 통합 객체로 통합 TODO 생성자로 교체 요망
@@ -139,7 +137,7 @@ public class MatchingUtil {
         // TODO MathcingException 클래스로 예외 처리, 예외 발생 시 채팅방으로 넘어가지 않도록 구현
         // 매칭 참여중인 유저가 매칭을 시도하거나 방을만들려고하면 서버에서의 에러로 클라이언트에 경고및 리다이랙트를 구현해야지
         if (totalUser.contains(basicInfo.getCharacterName())) {
-            throw new MatchingException(MatchingExceptionCode.ALREADY_EXISTING_USER);
+
         }
 
         // 캐릭터 정보 통합 객체로 통합 TODO 생성자로 교체 요망
