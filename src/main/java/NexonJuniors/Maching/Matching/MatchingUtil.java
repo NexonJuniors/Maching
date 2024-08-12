@@ -240,14 +240,7 @@ public class MatchingUtil {
     // 파티조건 알고리즘 함수 -> 이걸로 findUser와 findRoom에서 유저가 방에 들어갈 수 있는지 체크를 해준다
     private boolean isUserMatchPartyRequirement(MatchingUser matchingUser, PartyInfo partyInfo) {
 
-        // 0. 유저가 원한 최대 파티 인원수가 4면 파티의 최대인원수가 4보다 작아야지. 상관없음(6이면) 무조건 가능.ㅇㅇ
-        boolean isUserWantPartyPeopleNotReached =  partyInfo.getMaximumPeople() <= matchingUser.getMaximumPeople();
-        if(!isUserWantPartyPeopleNotReached){
-            System.out.println("유저가 원하는 최대 파티 인원보다 파티의 최대 인원수가 큽니다.");
-            return false;
-        }
-
-        // 1. 파티의 서버와 유저의 서버가 같은지 확인
+        // 0. 파티의 서버와 유저의 서버가 같은지 확인
         boolean isServerMatch = partyInfo.getPartyRequirementInfo().getPartyWorldName()
                 .equals(matchingUser.getCharacterInfo().getBasicInfo().getWorldName());
         if (!isServerMatch) {
@@ -255,19 +248,27 @@ public class MatchingUtil {
             return false; // 서버가 다르면 다음 방으로
         }
 
-        // 2. 파티의 보스 이름과 유저가 매칭 돌린 보스 이름이 같은지 확인
+        // 1. 파티의 보스 이름과 유저가 매칭 돌린 보스 이름이 같은지 확인
         boolean isBossNameMatch = partyInfo.getBossName().equals(matchingUser.getBossName());
         if (!isBossNameMatch) {
             System.out.println("보스 이름 불일치: 유저 " + matchingUser.getBossName() + " / 파티 " + partyInfo.getBossName());
             return false; // 보스 이름이 다르면 다음 방으로
         }
 
-        // 3. 파티의 최대 인원수를 확인
+        // 2. 파티의 최대 인원수를 확인
         boolean isMaxPeopleNotReached = partyInfo.getMaximumPeople() > partyInfo.getUsers().size();
         if (!isMaxPeopleNotReached) {
             System.out.println("최대 인원 초과: 현재 인원수 " + partyInfo.getUsers().size() + " / 최대 인원수 " + partyInfo.getMaximumPeople());
             return false; // 인원이 가득 찼으면 다음 방으로
         }
+
+        // 3. 유저가 원한 최대 파티 인원수보다 파티의 최대 인원수가 작거나 같은가
+        boolean isUserWantPartyPeopleNotReached =  partyInfo.getMaximumPeople() <= matchingUser.getMaximumPeople();
+        if(!isUserWantPartyPeopleNotReached){
+            System.out.println("유저가 원하는 최대 파티 인원보다 파티의 최대 인원수가 큽니다.");
+            return false;
+        }
+
 
         // 4. 유저의 전투력이 파티 요구 전투력 이상인지 확인
         boolean isPowerSufficient = matchingUser.getPower() >= partyInfo.getPartyRequirementInfo().getPartyNeedPower();
@@ -304,4 +305,29 @@ public class MatchingUtil {
 
         return isClassMinutesMatch;
     }
+
+/*    // 공통 로그 출력 함수
+    private void logPartyJoin(PartyInfo partyInfo, MatchingUser matchingUser, Long roomId, boolean fromQueue) {
+        // 파티원 목록을 로그에 출력
+        StringBuilder partyMembers = new StringBuilder();
+        for (CharacterInfo member : partyInfo.getUsers()) {
+            if (partyMembers.length() > 0) {
+                partyMembers.append(", ");
+            }
+            partyMembers.append(member.getBasicInfo().getCharacterName());
+        }
+
+        String queueIndicator = fromQueue ? "[대기큐]" : "";
+
+        // 로그 메시지 출력
+        log.info("{} [파티참여] | {} 님 | [{}번][{}] | 현재 파티원 [{}] | 남은 자리 {} 인",
+                queueIndicator,
+                matchingUser.getCharacterInfo().getBasicInfo().getCharacterName(),
+                roomId,
+                partyInfo.getBossName(),
+                partyMembers.toString(),
+                partyInfo.getMaximumPeople() - partyInfo.getUsers().size()
+        );
+    }*/
+
 }

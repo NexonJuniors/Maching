@@ -89,8 +89,7 @@ function addBossImages() {
         const matchInfo = document.createElement("p");
         matchInfo.innerHTML = `
            <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
-           0파티
-           0명 매칭
+           0 파티
         `;
 
         bossDiv.appendChild(button);
