@@ -12,8 +12,8 @@ async function joinParty(){
     if (!userConfirmed) {
         return;
     }
-    const socket = new SockJS('/matching');
-    const stompClient = Stomp.over(socket);
+    socket = new SockJS('/matching');
+    stompClient = Stomp.over(socket);
     const className = joinClassName;
     let joinMaximumPeople = parseInt(document.getElementById('joinMaximumPeople').value, 10);
     if(joinMaximumPeople == 0){joinMaximumPeople = 6}
@@ -38,18 +38,28 @@ async function joinParty(){
         uuid = uuidv4();
         sessionStorage.setItem('uuid', uuid); // 세션 스토리지에 UUID 저장
         stompClient.subscribe(`/room/${uuid}`, function(message){
-            if (message.body === '이미 매칭에 참여중인 유저입니다.') {
-                alert("이미 매칭에 참여중입니다. 원래 페이지로 돌아갑니다.");
-                location.href = '/';
-                return;
-            }
             if(message.body > 0){ //-1이면 지금 대기중이 되는거 같음
                 stompClient.unsubscribe()
                 alert("조건에 맞는 채팅방에 참여!")
                 localStorage.setItem('roomId', message.body)
                 location.href = `/chatroom`
             }
-            else location.href = `/loading`
+            else {
+                document.getElementById("changeTitle").innerText="매칭중...";
+                document.getElementById("joinPartyModal").style.display = "none";
+                document.getElementById("bossModal").style.display = "none";
+                const backdropElements = document.querySelectorAll('.modal-backdrop');
+                backdropElements.forEach(function(backdrop) {
+                    backdrop.remove();
+                });
+                bossContainer.style.display = "none"; // 보스 아이콘 none
+               // 버튼 요소 생성
+               let btnCancel = document.createElement("button");
+               btnCancel.innerText = "매칭 취소 하기";
+               btnCancel.classList.add("btn", "btn-danger");
+               btnCancel.addEventListener('click',cancelMatching);
+               document.getElementById("changeCancelBtn").appendChild(btnCancel);
+            }
         })
         onConnected(uuid)
     });
