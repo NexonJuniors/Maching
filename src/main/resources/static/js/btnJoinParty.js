@@ -12,6 +12,7 @@ async function joinParty(){
     const stompClient = Stomp.over(socket);
     const className = joinClassName;
     const joinMaximumPeople = document.getElementById('joinMaximumPeople').value;
+    if(joinMaximumPeople == 0){joinMaximumPeople = 6}
     const joinPower = joinPowerValue;
 
     const connectHeaders ={
