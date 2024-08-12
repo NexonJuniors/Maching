@@ -38,6 +38,11 @@ async function joinParty(){
         uuid = uuidv4();
         sessionStorage.setItem('uuid', uuid); // 세션 스토리지에 UUID 저장
         stompClient.subscribe(`/room/${uuid}`, function(message){
+            if (message.body === '이미 매칭에 참여중인 유저입니다.') {
+                alert("이미 매칭에 참여중입니다. 원래 페이지로 돌아갑니다.");
+                location.href = '/';
+                return;
+            }
             if(message.body > 0){ //-1이면 지금 대기중이 되는거 같음
                 stompClient.unsubscribe()
                 alert("조건에 맞는 채팅방에 참여!")
