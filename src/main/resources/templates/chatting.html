@@ -43,15 +43,15 @@
                 <div class="condition">조건</div>
             </div>
             <div class="sidebar left">
-                <div class="user">유저1</div>
-                <div class="user">유저3</div>
-                <div class="user">유저5</div>
+                <div class="user" id = "user1">유저1</div>
+                <div class="user" id = "user3">유저3</div>
+                <div class="user" id = "user5">유저5</div>
             </div>
-            <div class="chatroom">채팅방</div>
+            <div class="chatroom" id = "chatroom"></div>
             <div class="sidebar right">
-                <div class="user">유저2</div>
-                <div class="user">유저4</div>
-                <div class="user">유저6</div>
+                <div class="user" id = "user2">유저2</div>
+                <div class="user" id = "user4">유저4</div>
+                <div class="user" id = "user6">유저6</div>
             </div>
         </main>
         <footer>
@@ -68,6 +68,8 @@
         </footer>
     </div>
 </div>
+<script src = "https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+<script src="webjars/stomp-websocket/2.3.4/stomp.js"></script>
 <script src="../static/js/darkmode.js"></script>
 <script src="../static/js/tooltip.js"></script>
 <script src="../static/js/chatting.js"></script>

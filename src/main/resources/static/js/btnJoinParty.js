@@ -61,7 +61,7 @@ async function joinParty(){
                document.getElementById("changeCancelBtn").appendChild(btnCancel);
             }
         })
-        onConnected(uuid)
+        .then(onConnected(uuid))
     });
 
     function onConnected(uuid){
