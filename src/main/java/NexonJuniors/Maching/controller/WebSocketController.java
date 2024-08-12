@@ -118,7 +118,7 @@ public class WebSocketController {
                     String.format("/room/%s", characterName),
                     "CANCELLED" // 매칭 취소 메시지 전송
             );
-            log.info("[매칭취소] | {} 님의 매칭 취소 완료", characterName);
+            /*log.info("[매칭취소] | {} 님의 매칭 취소 완료", characterName);*/
         } catch (Exception e) {
             log.error("Error canceling matching for character {}: {}", characterName, e.getMessage());
         }
