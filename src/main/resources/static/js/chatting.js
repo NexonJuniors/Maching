@@ -4,37 +4,58 @@ const roomId = localStorage.getItem("roomId")
 const info = JSON.parse(localStorage.getItem("info"))
 const nickname = info.basicInfo.character_name
 
-
 // 메세지를 보낼 때 헤더에 포함시킬 방번호 저장
 const connectHeaders = {'roomId' : `${roomId}`}
 
+// JS 로드 시 바로 웹 소켓 연결 후 onConnected 함수 실행
 stompClient.connect({}, onConnected)
 
+// 클라이언트가 메세지를 받았을 때 실행되는 함수
 function receiveMessage(message){
     const data = JSON.parse(message.body)
 
     if('greetingMessage' in data){
         const greetingMessage = data.greetingMessage
-        const users = data.users
+        const partyInfo = data.partyInfo
 
+        loadPartyInfo(partyInfo.bossName, partyInfo.bossImg, partyInfo.maximumPeople, partyInfo.partyRequirementInfo)
+
+        const users = partyInfo.users
+
+        // 유저 리스트 정보 출력
         for(let i = 0; i < users.length; i++){
             const user = users[i]
             loadBasic(user, i + 1)
-
         }
 
+        // 입장 인사말 출력
         const newChat = document.createElement("div")
         newChat.innerText = greetingMessage
         document.getElementById("chatroom").appendChild(newChat)
     }
 }
 
+// 웹 소켓 연결 시 실행되는 함수 ( 로컬 스토리지의 방 번호를 가지고 채팅방 구독 후 방 정보 화면에 표시 )
 function onConnected(){
     stompClient.subscribe(`/room/${roomId}`, function(message){
         receiveMessage(message)
     }, connectHeaders)
 
     stompClient.send("/app/enterRoom",connectHeaders, `${nickname}`);
+}
+
+function loadPartyInfo(bossName, bossImg, maximumPeople, partyRequirementInfo){
+    document.getElementById('bossName').innerText = bossName
+    document.getElementById('bossImg').setAttribute('src', bossImg)
+    document.getElementById('maximumPeople').innerText = `파티 최대 인원 수: ${maximumPeople} 명`
+
+    const partyNeedClassMinutesInfo = partyRequirementInfo.partyNeedClassMinutesInfo
+    const partyNeedPower = partyRequirementInfo.partyNeedPower
+    const partyNeedBishop = partyRequirementInfo.partyNeedBishop
+
+    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 주기: ${maximumPeople} 명`
+    document.getElementById('partyNeedPower').innerText = `최소 전투력: ${formatNumber(partyNeedPower)}`
+    document.getElementById('partyNeedBishop').innerText = `비숍 필요 유무: ${partyNeedBishop == 1 ? '유' : '무'}`
 }
 
 // 길드, 캐릭터 이름, 레벨 등 기본 정보를 화면에 표시

@@ -44,7 +44,8 @@ public class WebSocketController {
             @Header("partyNeedClassMinutesInfo") String partyNeedClassMinutesInfo,
             @Header("partyNeedPower") int partyNeedPower,
             @Header("partyNeedBishop") int partyNeedBishop,
-            @Header("isMatchingStarted") boolean isMatchingStarted
+            @Header("isMatchingStarted") boolean isMatchingStarted,
+            @Header("bossImg") String bossImg
     ) {
         PartyRequirementInfo partyRequirementInfo = new PartyRequirementInfo();
         partyRequirementInfo.setPartyLeader(partyLeader);
@@ -65,7 +66,8 @@ public class WebSocketController {
                 classMinutesInfo,
                 classMainStatInfo,
                 partyRequirementInfo,
-                isMatchingStarted
+                isMatchingStarted,
+                bossImg
         );
 
         for (Long roomId : uuidList.keySet()) {

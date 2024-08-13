@@ -56,7 +56,8 @@ public class MatchingUtil {
             String classMinutesInfo,
             String classMainStatInfo,
             PartyRequirementInfo partyRequirementInfo, //파티의 서버, 파티장, 그외 조건들 다수 포함
-            Boolean isMatchingStarted // 파티 생성되면 이사람은 매칭이 시작된거
+            Boolean isMatchingStarted, // 파티 생성되면 이사람은 매칭이 시작된거
+            String bossImg
     ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
@@ -97,6 +98,7 @@ public class MatchingUtil {
         // 파티 정보에 보스이름, 방 최대 인원 수, 방장 캐릭터 정보 추가 TODO 생성자로 교체 요망
         PartyInfo partyInfo = new PartyInfo();
         partyInfo.setBossName(bossName);
+        partyInfo.setBossImg(bossImg);
         partyInfo.setMaximumPeople(maximumPeople);
         partyInfo.setPartyRequirementInfo(partyRequirementInfo);
         partyInfo.getUsers().add(characterInfo);
@@ -198,9 +200,9 @@ public class MatchingUtil {
 
     // 채팅방 입장 시 EnterRoomDto 데이터 뿌림 ( {인사말, 채팅방에 참가한 유저리스트} 로 구성 )
     public EnterRoomDto enterRoom(Long roomId, String nickname) {
-        List<CharacterInfo> users = rooms.get(roomId).getUsers();
+        PartyInfo partyInfo = rooms.get(roomId);
 
-        return new EnterRoomDto(nickname, users);
+        return new EnterRoomDto(nickname, partyInfo);
     }
 
     // 매칭 대기 큐에 처음 참여 시 기존에 생성되어있는 방들 중 조건에 맞는 방 검색 후 참여
