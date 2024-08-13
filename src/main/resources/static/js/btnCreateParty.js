@@ -22,6 +22,7 @@ function createParty() {
     const partyLeader = document.getElementById("characterName").innerText;
     const partyWorldName = document.getElementById("worldName").innerText;
     const characterClassInfo = document.getElementById("characterClass").innerText;
+    let isMatchingStarted = true;
 
     // 필요한 데이터를 모아 connectHeaders 객체에 추가
     const connectHeaders = {
@@ -38,7 +39,8 @@ function createParty() {
         partyNeedClassMinutesInfo: partyNeedClassMinutesInfo, // 파티 극딜 주기
         partyNeedPower: partyNeedPower, // 최소 전투력
         partyNeedBishop: partyNeedBishop, // 비숍 필요 여부
-        characterClassInfo: characterClassInfo
+        characterClassInfo: characterClassInfo,
+        isMatchingStarted: isMatchingStarted,
     }
 
     stompClient.connect({}, function(frame) {
