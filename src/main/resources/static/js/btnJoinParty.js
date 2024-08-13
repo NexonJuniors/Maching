@@ -14,6 +14,11 @@ async function joinParty(){
     }
     socket = new SockJS('/matching');
     stompClient = Stomp.over(socket);
+/*    // 이미 연결된 WebSocket이 있으면 재사용, 없으면 새로 연결
+    if (!stompClient || !stompClient.connected) {
+        socket = new SockJS('/matching');
+        stompClient = Stomp.over(socket);
+    }*/
     const className = joinClassName;
     let joinMaximumPeople = parseInt(document.getElementById('joinMaximumPeople').value, 10);
     if(joinMaximumPeople == 0){joinMaximumPeople = 6}
@@ -71,8 +76,7 @@ async function joinParty(){
 
     function onConnected(uuid){
         connectHeaders.uuId = `${uuid}`
-        stompClient.send("/app/joinParty",
-        connectHeaders);
+        stompClient.send("/app/joinParty",connectHeaders);
     }
 
     function onMessage(){

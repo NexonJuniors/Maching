@@ -1,5 +1,5 @@
 // 스탯 뱃지 설정
-const statImgFolderPath = "../static/image/stat/";
+const statImgFolderPath = "../static/image/badge/";
 const statLabels = {
     int: 'INT',
     str: 'STR',

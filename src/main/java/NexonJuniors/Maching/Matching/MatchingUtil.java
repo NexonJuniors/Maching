@@ -54,7 +54,8 @@ public class MatchingUtil {
             String characterClassInfo,
             String classMinutesInfo,
             String classMainStatInfo,
-            PartyRequirementInfo partyRequirementInfo //파티의 서버, 파티장, 그외 조건들 다수 포함
+            PartyRequirementInfo partyRequirementInfo, //파티의 서버, 파티장, 그외 조건들 다수 포함
+            Boolean isMatchingStarted // 파티 생성되면 이사람은 매칭이 시작된거
     ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
@@ -136,7 +137,8 @@ public class MatchingUtil {
             String classMainStatInfo,
             String className,
             int maximumPeople,
-            int power
+            int power,
+            Boolean isMatchingStarted // 여기선 무조건 True임 매칭참가를 한거니까
     ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
@@ -267,10 +269,23 @@ public class MatchingUtil {
 
     // 매칭 취소 메소드
     public void removeParticipant(String characterName) {
+        // participants 리스트에서 해당 유저를 찾고, 상태를 업데이트한 후 리스트에서 제거
+        participants.removeIf(user -> {
+            if (user.getCharacterInfo().getBasicInfo().getCharacterName().equals(characterName)) {
+                user.setIsMatchingStarted(false);
+                totalUser.remove(characterName);
+                return true;
+            }
+            return false;
+        });
         log.info("[매칭취소] | [대기큐] {} 님 | 매칭 취소 ", characterName);
-        participants.removeIf(user -> user.getCharacterInfo().getBasicInfo().getCharacterName().equals(characterName));
-        totalUser.remove(characterName);
     }
+/*
+    public Optional<MatchingUser> findParticipantByName(String characterName) {
+        return participants.stream()
+                .filter(user -> user.getCharacterInfo().getBasicInfo().getCharacterName().equals(characterName))
+                .findFirst();
+    }*/
 
 
     // 파티조건 알고리즘 함수 -> 이걸로 findUser와 findRoom에서 유저가 방에 들어갈 수 있는지 체크를 해준다
@@ -355,7 +370,7 @@ public class MatchingUtil {
 
         simpMessagingTemplate.convertAndSendToUser(
                 sessionId,
-                "/queue/errors",
+                "/user/queue/errors",
                 exception.getMessage()
         );
 
