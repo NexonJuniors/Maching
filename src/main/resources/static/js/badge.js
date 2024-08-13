@@ -1,5 +1,5 @@
 // 스탯 뱃지 설정
-const statImgFolderPath = "../static/image/stat/";
+const statImgFolderPath = "../static/image/badge/";
 const statLabels = {
     int: 'INT',
     str: 'STR',
@@ -10,14 +10,14 @@ const statLabels = {
 };
 const mainStatText = `${statLabels[mainStat] || mainStat}`
 updateStat(mainStatText, "mainStat");
-
-// 함수 호출 시 변환된 문자열 사용
-const tooltipText = `[기본]<br />내 주스텟은 ${statLabels[mainStat] || mainStat}!`;
+const mainStatTooltipText = `[기본]<br />내 주스텟은 ${statLabels[mainStat] || mainStat}!`;
 const mainStatImagePath = getImagePath(statImgFolderPath, mainStat);
-addBadgeToContainer(mainStatImagePath, mainStat, tooltipText);
-
-// HTML 내에 주스텟을 동적으로 삽입 근데 이거 제논일땐 어떻게하지? 일단 이대로 가자
+addBadgeToContainer(mainStatImagePath, mainStat, mainStatTooltipText);
 document.getElementById('mainStatText').textContent = mainStatText;
+
+document.addEventListener('DOMContentLoaded', function() {
+    isMatchingStardedBadge();
+});
 
 // 뱃지 추가 함수
 function addBadgeToContainer(badgeSrc, badgeAlt, tooltipText) {

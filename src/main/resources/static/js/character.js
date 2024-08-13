@@ -8,6 +8,8 @@ const hexaSkillInfo = info.hexaSkillInfo;
 const minutes = info.classMinutesInfo
 const mainStat = info.classMainStatInfo
 let uuid
+let socket
+let stompClient
 
 // 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
 function getImagePath(basePath, fileName, extension = 'png') {
@@ -82,3 +84,32 @@ if (powerStat) {
 
 // unionInfo - 유니온 정보
 document.getElementById("unionLevel").innerText = unionInfo.union_level //더있는데 그냥 일단 레벨만
+
+// 매칭중인지 확인하는 뱃지
+function isMatchingStardedBadge(){
+    const characterName = document.getElementById("characterName").innerText;
+
+    if (!characterName) {
+        console.error("Character name not found");
+        return;
+    }
+
+    // 매칭 상태를 확인하기 위한 서버 API 호출
+    fetch(`/matching-status?characterName=${encodeURIComponent(characterName)}`)
+        .then(function(response){
+            if(!response.ok) throw new Error('서버오류')
+            return response.json()
+        }
+        ).then(function(json){
+            flag = json.isMatchingStarted;
+            if(flag){
+                const matchingTooltipText = "매칭중인 유저 입니다";
+                const matchingImagePath = "../static/image/badge/matchingBadge.png";
+                addBadgeToContainer(matchingImagePath, "", matchingTooltipText);
+            }
+        }
+        )
+        .catch(error => {
+            console.error('Error fetching matching status:', error);
+        });
+}

@@ -8,11 +8,22 @@ document.getElementById("joinPower").innerText = joinPowerValue;
 document.getElementById("joinPowerFormat").innerText = formatNumber(joinPowerValue);
 
 async function joinParty(){
-    const socket = new SockJS('/matching');
-    const stompClient = Stomp.over(socket);
+    let userConfirmed = confirm("매칭을 시작하시겠습니까?");
+    if (!userConfirmed) {
+        return;
+    }
+    socket = new SockJS('/matching');
+    stompClient = Stomp.over(socket);
+/*    // 이미 연결된 WebSocket이 있으면 재사용, 없으면 새로 연결
+    if (!stompClient || !stompClient.connected) {
+        socket = new SockJS('/matching');
+        stompClient = Stomp.over(socket);
+    }*/
     const className = joinClassName;
-    const joinMaximumPeople = document.getElementById('joinMaximumPeople').value;
+    let joinMaximumPeople = parseInt(document.getElementById('joinMaximumPeople').value, 10);
+    if(joinMaximumPeople == 0){joinMaximumPeople = 6}
     const joinPower = joinPowerValue;
+    let isMatchingStarted = true;
 
     const connectHeaders ={
         basicInfo : JSON.stringify(basicInfo),
@@ -24,27 +35,49 @@ async function joinParty(){
         bossName : `${document.getElementById("modalBossTitle").innerText}`,
         className : className,
         maximumPeople : joinMaximumPeople,
-        power : joinPower
+        power : joinPower,
+        isMatchingStarted: isMatchingStarted // 매칭 시작 플래그
     }
 
     stompClient.connect({}, function(frame) {
         uuid = uuidv4();
+        sessionStorage.setItem('uuid', uuid); // 세션 스토리지에 UUID 저장
+        stompClient.subscribe('/user/queue/errors', function(message) {
+            alert(message.body); // 에러 메시지를 경고창으로 띄움
+            location.href = '/'; // 원래 페이지로 리다이렉트
+        });
         stompClient.subscribe(`/room/${uuid}`, function(message){
-            if(message.body > 0){
+            if(message.body > 0){ //-1이면 지금 대기중이 되는거 같음
                 stompClient.unsubscribe()
+                alert("조건에 맞는 채팅방에 참여!")
                 localStorage.setItem('roomId', message.body)
                 location.href = `/chatroom`
             }
-            else alert("매칭 대기 중")  //TODO 로딩 중 화면 띄우기
+            else {
+                document.getElementById("changeTitle").innerText="매칭중...";
+                document.getElementById("joinPartyModal").style.display = "none";
+                document.getElementById("bossModal").style.display = "none";
+                const backdropElements = document.querySelectorAll('.modal-backdrop');
+                backdropElements.forEach(function(backdrop) {
+                    backdrop.remove();
+                });
+                bossContainer.style.display = "none"; // 보스 아이콘 none
+                changeCancel.style.display = "none";
+               // 버튼 요소 생성
+               let btnCancel = document.createElement("button");
+               btnCancel.innerText = "매칭 취소 하기";
+               btnCancel.classList.add("btn", "btn-danger");
+               btnCancel.addEventListener('click',cancelMatching);
+               document.getElementById("changeCancelBtn").appendChild(btnCancel);
+               isMatchingStardedBadge();
+            }
         })
-
-        onConnected(uuid)
+        .then(onConnected(uuid))
     });
 
     function onConnected(uuid){
         connectHeaders.uuId = `${uuid}`
-        stompClient.send("/app/joinParty",
-        connectHeaders);
+        stompClient.send("/app/joinParty",connectHeaders);
     }
 
     function onMessage(){

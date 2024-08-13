@@ -2,6 +2,8 @@ package NexonJuniors.Maching.controller;
 
 import NexonJuniors.Maching.Matching.MatchingUtil;
 import NexonJuniors.Maching.chatting.ChatMessage;
+import NexonJuniors.Maching.model.MatchingUser;
+import NexonJuniors.Maching.chatting.EnterRoomDto;
 import NexonJuniors.Maching.model.PartyRequirementInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,9 +43,9 @@ public class WebSocketController {
             @Header("partyWorldName") String partyWorldName,
             @Header("partyNeedClassMinutesInfo") String partyNeedClassMinutesInfo,
             @Header("partyNeedPower") int partyNeedPower,
-            @Header("partyNeedBishop") int partyNeedBishop
-    )
-    {
+            @Header("partyNeedBishop") int partyNeedBishop,
+            @Header("isMatchingStarted") boolean isMatchingStarted
+    ) {
         PartyRequirementInfo partyRequirementInfo = new PartyRequirementInfo();
         partyRequirementInfo.setPartyLeader(partyLeader);
         partyRequirementInfo.setPartyWorldName(partyWorldName);
@@ -62,7 +64,8 @@ public class WebSocketController {
                 characterClassInfo,
                 classMinutesInfo,
                 classMainStatInfo,
-                partyRequirementInfo
+                partyRequirementInfo,
+                isMatchingStarted
         );
 
         for (Long roomId : uuidList.keySet()) {
@@ -87,18 +90,71 @@ public class WebSocketController {
             @Header("classMainStatInfo") String classMainStatInfo,
             @Header("className") String className,
             @Header("maximumPeople") int maximumPeople,
-            @Header("power") int power
-    )
-    {
-        long roomId = matchingUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo, className, maximumPeople, power);
-        simpMessagingTemplate.convertAndSend(
-                String.format("/room/%s", uuId),
-                roomId
-        );
+            @Header("power") int power,
+            @Header("isMatchingStarted") boolean isMatchingStarted
+    ) {
+        if (isMatchingStarted) {
+            long roomId = matchingUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo, className, maximumPeople, power, isMatchingStarted);
+            simpMessagingTemplate.convertAndSend(
+                    String.format("/room/%s", uuId),
+                    roomId
+            );
+        } else {
+            // 매칭이 시작되지 않았다면
+            simpMessagingTemplate.convertAndSend(
+                    String.format("/room/%s", uuId),
+                    -1 // 매칭 실패 시의 상태 코드
+            );
+        }
     }
 
+    // 매칭 취소 기능 ToDO 이거 헤더에 UUID 세션스토리지에 저장해서 넘겨준거 가져오면 아마 채팅에서도 사용가능 하지 싶은데
+    @MessageMapping("/cancelMatching")
+    public void cancelMatching(@Header("characterName") String characterName) {
+        if (characterName == null || characterName.isEmpty()) {
+            log.error("Character name is null or empty");
+            return;
+        }
+
+        try {
+            matchingUtil.removeParticipant(characterName); // 참가자 리스트에서 유저 제거
+            simpMessagingTemplate.convertAndSend(
+                    String.format("/room/%s", characterName),
+                    "CANCELLED" // 매칭 취소 메시지 전송
+            );
+            /*log.info("[매칭취소] | {} 님의 매칭 취소 완료", characterName);*/
+        } catch (Exception e) {
+            log.error("Error canceling matching for character {}: {}", characterName, e.getMessage());
+        }
+    }
+
+/*    // 클라이언트가 특정 캐릭터의 매칭 시작 여부를 요청할 수 있는 엔드포인트
+    @MessageMapping("/isMatchingStarted")
+    @SendTo("/user/queue/matchingStatus")
+    public boolean isMatchingStarted(@Header("characterName") String characterName) {
+        if (characterName == null || characterName.isEmpty()) {
+            log.error("Character name is null or empty");
+            return false; // 기본값을 false로 반환
+        }
+
+        // 해당 캐릭터가 매칭에 참여 중인지 확인
+        Optional<MatchingUser> userOptional = matchingUtil.findParticipantByName(characterName);
+
+        // 매칭에 참여 중이면 true, 아니면 false 반환
+        return userOptional.map(MatchingUser::getIsMatchingStarted).orElse(false);
+    }*/
+
+    // 방 입장 시 인사말과 채팅방에 참여 중인 모든 인원 정보를 클라이언트에게 전달
     @MessageMapping("/enterRoom")
-    public void enterRoom(@Header("roomId") Long roomId){
+    public void enterRoom(@Header("roomId") Long roomId,
+                          String nickname) {
+
+        EnterRoomDto dto = matchingUtil.enterRoom(roomId, nickname);
+
+        simpMessagingTemplate.convertAndSend(
+                String.format("/room/%d", roomId),
+                dto
+        );
     }
 
     // TODO 채팅 쳤을 때 해당 유저가 구독한 채팅방 URL로 메세지를 뿌려야함

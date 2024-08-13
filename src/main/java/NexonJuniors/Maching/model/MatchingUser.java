@@ -11,4 +11,5 @@ public class MatchingUser {
     private CharacterInfo characterInfo;
     private int maximumPeople;
     private int power;
+    private Boolean isMatchingStarted;
 }
