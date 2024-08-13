@@ -1,5 +1,6 @@
 package NexonJuniors.Maching.Matching;
 
+import NexonJuniors.Maching.chatting.EnterRoomDto;
 import NexonJuniors.Maching.excption.api.ApiException;
 import NexonJuniors.Maching.excption.api.ApiExceptionCode;
 import NexonJuniors.Maching.model.*;
@@ -195,9 +196,11 @@ public class MatchingUtil {
     }
 
 
-    // TODO 채팅방 입장 시 채팅 방에 있는 사람들을 저장하고 있는 리스트를 뿌려줌
-    public void enterRoom() {
+    // 채팅방 입장 시 EnterRoomDto 데이터 뿌림 ( {인사말, 채팅방에 참가한 유저리스트} 로 구성 )
+    public EnterRoomDto enterRoom(Long roomId, String nickname) {
+        List<CharacterInfo> users = rooms.get(roomId).getUsers();
 
+        return new EnterRoomDto(nickname, users);
     }
 
     // 매칭 대기 큐에 처음 참여 시 기존에 생성되어있는 방들 중 조건에 맞는 방 검색 후 참여

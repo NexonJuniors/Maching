@@ -48,14 +48,15 @@ function createParty() {
         stompClient.subscribe(`/room/${uuid}`, function(message){
             if(message.body > 0){
                 stompClient.unsubscribe()
-                stompClient.subscribe(`/room/${message.body}`)
+                localStorage.setItem("roomId", message.body)
                 location.href = `/chatroom`
             }
             else alert("서버 오류")
         })
-
-        onConnected()
-        location.href = `/chatroom`
+        .then(onConnected())
+        .then(function(){
+            location.href = `/chatroom`
+        })
     });
 
     function onConnected(){

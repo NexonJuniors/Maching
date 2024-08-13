@@ -3,6 +3,7 @@ package NexonJuniors.Maching.controller;
 import NexonJuniors.Maching.Matching.MatchingUtil;
 import NexonJuniors.Maching.chatting.ChatMessage;
 import NexonJuniors.Maching.model.MatchingUser;
+import NexonJuniors.Maching.chatting.EnterRoomDto;
 import NexonJuniors.Maching.model.PartyRequirementInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -144,8 +144,17 @@ public class WebSocketController {
         return userOptional.map(MatchingUser::getIsMatchingStarted).orElse(false);
     }*/
 
+    // 방 입장 시 인사말과 채팅방에 참여 중인 모든 인원 정보를 클라이언트에게 전달
     @MessageMapping("/enterRoom")
-    public void enterRoom(@Header("roomId") Long roomId) {
+    public void enterRoom(@Header("roomId") Long roomId,
+                          String nickname) {
+
+        EnterRoomDto dto = matchingUtil.enterRoom(roomId, nickname);
+
+        simpMessagingTemplate.convertAndSend(
+                String.format("/room/%d", roomId),
+                dto
+        );
     }
 
     // TODO 채팅 쳤을 때 해당 유저가 구독한 채팅방 URL로 메세지를 뿌려야함

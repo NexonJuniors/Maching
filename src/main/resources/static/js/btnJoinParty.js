@@ -72,7 +72,7 @@ async function joinParty(){
                isMatchingStardedBadge();
             }
         })
-        onConnected(uuid)
+        .then(onConnected(uuid))
     });
 
     function onConnected(uuid){
