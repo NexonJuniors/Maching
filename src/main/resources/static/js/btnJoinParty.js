@@ -69,6 +69,7 @@ async function joinParty(){
                btnCancel.classList.add("btn", "btn-danger");
                btnCancel.addEventListener('click',cancelMatching);
                document.getElementById("changeCancelBtn").appendChild(btnCancel);
+               isMatchingStardedBadge();
             }
         })
         onConnected(uuid)

@@ -280,12 +280,10 @@ public class MatchingUtil {
         });
         log.info("[매칭취소] | [대기큐] {} 님 | 매칭 취소 ", characterName);
     }
-/*
-    public Optional<MatchingUser> findParticipantByName(String characterName) {
-        return participants.stream()
-                .filter(user -> user.getCharacterInfo().getBasicInfo().getCharacterName().equals(characterName))
-                .findFirst();
-    }*/
+
+    public boolean findParticipantByName(String characterName) {
+        return totalUser.contains(characterName);
+    }
 
 
     // 파티조건 알고리즘 함수 -> 이걸로 findUser와 findRoom에서 유저가 방에 들어갈 수 있는지 체크를 해준다
