@@ -41,4 +41,10 @@ public class CharacterSearchController {
         response.put("isMatchingStarted",userOptional);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
     }
+
+    @GetMapping("/rooms/count")
+    public ResponseEntity<HashMap<String, Long>> getRoomCountByBossName(){
+        HashMap<String, Long> result = matchingUtil.getRoomCountByBossName();
+        return ResponseEntity.ok().body(result);
+    }
 }

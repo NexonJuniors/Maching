@@ -34,6 +34,19 @@ const bossNameMapping = {
     "림": "림보",
     // 필요한 보스 이름들을 추가
 };
+let bossCntList = {};
+
+// 서버에서 보스별 파티 수를 가져오는 비동기 함수
+fetch('/rooms/count')
+    .then(response => response.json())
+    .then(json => {
+        bossCntList = json; // JSON 데이터를 받아와서 bossCntList에 저장
+        addBossImages(); // 데이터가 로드된 후에 보스 이미지를 추가
+    })
+    .catch(error => {
+        console.error('Failed to load boss count list:', error);
+        addBossImages(); // 오류가 발생해도 이미지를 추가 (모든 파티 수를 0으로 표시)
+    });
 
 // 검색된 캐릭터 정보가 있는지 확인하는 함수
 function isCharacterSearched() {
@@ -46,7 +59,7 @@ const bossContainer = document.getElementById("bossContainer");
 
 // 매칭 가능 보스 이미지를 동적으로 추가하는 함수
 function addBossImages() {
-    const characterSearched = isCharacterSearched(); // 현재 내 캐릭터
+    const characterSearched = isCharacterSearched(); // 현재 내 캐릭터가 검색되었는지 확인
     bossImages.forEach((imageName, index) => {
         const bossDiv = document.createElement("div");
         bossDiv.classList.add("col-md-3", "text-center", "mb-1");
@@ -85,18 +98,29 @@ function addBossImages() {
         );
 
         button.appendChild(imgContainer);
-
         const matchInfo = document.createElement("p");
-        matchInfo.innerHTML = `
-           <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
-           0 파티
-        `;
+
+        let fullName = `${difficulty} ${bossName}`;
+        let nowBossCnt = bossCntList[fullName]; // 보스 이름에 해당하는 파티 수 가져오기
+
+        if (nowBossCnt == null) {
+            matchInfo.innerHTML = `
+              <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
+              0 파티
+           `;
+        } else {
+            matchInfo.innerHTML = `
+            <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
+            ${nowBossCnt} 파티
+         `;
+        }
 
         bossDiv.appendChild(button);
         bossDiv.appendChild(matchInfo);
         bossContainer.appendChild(bossDiv);
     });
 }
+
 // 보스 이미지와 이름 모달에 추가하는 함수
 function updateModalContent(imageName) {
     const difficultyKey = imageName[1]; // 두번째 문자 (난이도)
@@ -133,6 +157,3 @@ document.querySelectorAll(".btn-link").forEach(button => {
         updateModalContent(imageName);
     });
 });
-
-// 페이지 로드 시 이미지 추가
-addBossImages();

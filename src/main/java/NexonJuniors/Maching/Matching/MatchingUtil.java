@@ -29,6 +29,19 @@ public class MatchingUtil {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private Long roomId = 1L;
 
+
+    public HashMap<String, Long> getRoomCountByBossName() {
+        HashMap<String, Long> cntBossRoom = new HashMap<>();
+        for(Long key: rooms.keySet()){
+            PartyInfo currentRoom = rooms.get(key);
+            cntBossRoom.put(currentRoom.getBossName(),
+                    cntBossRoom.getOrDefault(currentRoom.getBossName(), 0L) + 1
+            );
+        }
+
+        return cntBossRoom;
+    }
+
 /*    @Autowired
     // 생성자를 통해 모든 final 필드 초기화
     public MatchingUtil(List<MatchingUser> participants,
