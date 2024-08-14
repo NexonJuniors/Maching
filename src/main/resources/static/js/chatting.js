@@ -3,6 +3,7 @@ const stompClient = Stomp.over(socket);
 const roomId = localStorage.getItem("roomId")
 const info = JSON.parse(localStorage.getItem("info"))
 const nickname = info.basicInfo.character_name
+let partyInfo
 
 // 메세지를 보낼 때 헤더에 포함시킬 방번호 저장
 const connectHeaders = {'roomId' : `${roomId}`}
@@ -10,14 +11,17 @@ const connectHeaders = {'roomId' : `${roomId}`}
 // JS 로드 시 바로 웹 소켓 연결 후 onConnected 함수 실행
 stompClient.connect({}, onConnected)
 
+localStorage.clear();
+
 // 클라이언트가 메세지를 받았을 때 실행되는 함수
 function receiveMessage(message){
     const data = JSON.parse(message.body)
 
     if('greetingMessage' in data){
         const greetingMessage = data.greetingMessage
-        const partyInfo = data.partyInfo
+        partyInfo = data.partyInfo
 
+        loadBasicImg()
         loadPartyInfo(partyInfo.bossName, partyInfo.bossImg, partyInfo.maximumPeople, partyInfo.partyRequirementInfo)
 
         const users = partyInfo.users
@@ -43,6 +47,19 @@ function onConnected(){
 
     stompClient.send("/app/enterRoom",connectHeaders, `${nickname}`);
 }
+
+// 기본 이미지 로딩
+function loadBasicImg(){
+    let i
+    for(i = 1; i <= partyInfo.maximumPeople; i++){
+        document.getElementById(`characterImage${i}`).setAttribute('src', '../static/image/site/유저기본.png')
+    }
+
+    for( ; i <= 6; i++){
+        document.getElementById(`characterImage${i}`).setAttribute('src', '../static/image/site/유저블락.png')
+    }
+}
+
 
 function loadPartyInfo(bossName, bossImg, maximumPeople, partyRequirementInfo){
     document.getElementById('bossName').innerText = bossName
@@ -80,11 +97,11 @@ function loadBasic(user, idx){
     document.getElementById(`characterName${idx}`).innerText = characterName
     document.getElementById(`characterImage${idx}`).setAttribute('src',characterImg)
     document.getElementById(`characterGuildName${idx}`).innerText = guild
-    document.getElementById(`characterLevel${idx}`).innerText = level
+    document.getElementById(`characterLevel${idx}`).innerText = 'LV.' + level
     document.getElementById(`characterClass${idx}`).innerText = characterClass
-    document.getElementById(`power${idx}`).innerText = formatNumber(powerStat)
-    document.getElementById(`unionLevel${idx}`).innerText = unionLevel
-    document.getElementById(`minutes${idx}`).innerText = `${classMinutesInfo} 분 주기`
+    document.getElementById(`power${idx}`).innerText = '전투력 ' + formatNumber(powerStat)
+    document.getElementById(`unionLevel${idx}`).innerText = '유니온 ' + unionLevel
+    document.getElementById(`minutes${idx}`).innerText = `(${classMinutesInfo === "free" ? 특수 : classMinutesInfo + '분'}주기)`
 
     document.getElementById(`tooltip${idx}`).innerText = `내 주스탯은 ${classMainStatInfo}`
     document.getElementById(`badge${idx}`).setAttribute('src', mainStatImgSrc)

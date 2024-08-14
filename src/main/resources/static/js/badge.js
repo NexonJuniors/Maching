@@ -17,6 +17,7 @@ document.getElementById('mainStatText').textContent = mainStatText;
 
 document.addEventListener('DOMContentLoaded', function() {
     isMatchingStardedBadge();
+
 });
 
 // 뱃지 추가 함수
@@ -38,3 +39,4 @@ function addBadgeToContainer(badgeSrc, badgeAlt, tooltipText) {
     badgeContainerItem.appendChild(badgeTooltip);
     badgeContainer.appendChild(badgeContainerItem);
 }
+
