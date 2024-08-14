@@ -54,15 +54,21 @@ async function joinParty(){
                 location.href = `/chatroom`
             }
             else {
-                document.getElementById("changeTitle").innerText="매칭중...";
+                document.getElementById("changeTitle").innerText="매칭중... 해당 페이지를 나가지 마세요.";
+
+                //모달 처리 부분
                 document.getElementById("joinPartyModal").style.display = "none";
                 document.getElementById("bossModal").style.display = "none";
                 const backdropElements = document.querySelectorAll('.modal-backdrop');
                 backdropElements.forEach(function(backdrop) {
                     backdrop.remove();
                 });
+                document.body.classList.remove('modal-open'); // body에서 modal-open 클래스를 제거하여 스크롤을 가능하게 함
+
+                //보스 컨테이너 치우기
                 bossContainer.style.display = "none"; // 보스 아이콘 none
                 changeCancel.style.display = "none";
+
                // 버튼 요소 생성
                let btnCancel = document.createElement("button");
                btnCancel.innerText = "매칭 취소 하기";
