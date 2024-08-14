@@ -41,11 +41,10 @@ async function fetchBossCount() {
     try {
         const response = await fetch('/rooms/count');
         const json = await response.json();
-        console.log('Boss count loaded:', json);
         return json;
     } catch (error) {
         console.error('Failed to load boss count list:', error);
-        return {}; // 오류가 발생하면 빈 객체 반환
+        return {};
     }
 }
 
@@ -149,6 +148,6 @@ document.querySelectorAll(".btn-link").forEach(button => {
 
 // DOM이 로드된 후 실행
 document.addEventListener('DOMContentLoaded', async function() {
-    const bossCntList = await fetchBossCount();
-    addBossImages(bossCntList);
+    const bossCntList = await fetchBossCount(); // await으로 무조건 대기
+    addBossImages(bossCntList); // 이후에 다 가져오고나서 추가
 });
