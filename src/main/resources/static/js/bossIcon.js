@@ -36,30 +36,27 @@ const bossNameMapping = {
 };
 let bossCntList = {};
 
-// 서버에서 보스별 파티 수를 가져오는 비동기 함수
-fetch('/rooms/count')
-    .then(response => response.json())
-    .then(json => {
-        bossCntList = json; // JSON 데이터를 받아와서 bossCntList에 저장
-        addBossImages(); // 데이터가 로드된 후에 보스 이미지를 추가
-    })
-    .catch(error => {
+// 보스 파티 수를 가져오는 함수
+async function fetchBossCount() {
+    try {
+        const response = await fetch('/rooms/count');
+        const json = await response.json();
+        console.log('Boss count loaded:', json);
+        return json;
+    } catch (error) {
         console.error('Failed to load boss count list:', error);
-        addBossImages(); // 오류가 발생해도 이미지를 추가 (모든 파티 수를 0으로 표시)
-    });
-
-// 검색된 캐릭터 정보가 있는지 확인하는 함수
-function isCharacterSearched() {
-    const info = JSON.parse(localStorage.getItem("info"));
-    return info && info.basicInfo && info.basicInfo.character_name;
+        return {}; // 오류가 발생하면 빈 객체 반환
+    }
 }
 
 // bossContainer 요소 가져오기
 const bossContainer = document.getElementById("bossContainer");
 
 // 매칭 가능 보스 이미지를 동적으로 추가하는 함수
-function addBossImages() {
-    const characterSearched = isCharacterSearched(); // 현재 내 캐릭터가 검색되었는지 확인
+function addBossImages(bossCntList) {
+    const bossContainer = document.getElementById("bossContainer");
+    bossContainer.innerHTML = ""; // 이전 내용을 지우고 새로 추가
+
     bossImages.forEach((imageName, index) => {
         const bossDiv = document.createElement("div");
         bossDiv.classList.add("col-md-3", "text-center", "mb-1");
@@ -70,14 +67,9 @@ function addBossImages() {
         button.style.padding = "0rem 0rem";
 
         if (window.location.href.includes('/info')) {
-            if (characterSearched) {
-                button.setAttribute("data-toggle", "modal");
-                button.setAttribute("data-target", "#bossModal");
-                button.addEventListener("click", () => updateModalContent(imageName));
-            } else {
-                button.classList.add("disabled");
-                button.disabled = true;
-            }
+            button.setAttribute("data-toggle", "modal");
+            button.setAttribute("data-target", "#bossModal");
+            button.addEventListener("click", () => updateModalContent(imageName));
         } else {
             button.classList.add("disabled");
             button.disabled = true;
@@ -142,10 +134,6 @@ function copyFlexContainerToModal() {
     const modalFlexContainer = document.getElementById("modalFlexContainer");
 
     if (flexContainer && modalFlexContainer) {
-        // 기존의 내용을 제거
-        modalFlexContainer.innerHTML = "";
-
-        // flex-container의 내용을 모달에 복사
         modalFlexContainer.innerHTML = flexContainer.innerHTML;
     }
 }
@@ -156,4 +144,11 @@ document.querySelectorAll(".btn-link").forEach(button => {
         const imageName = button.querySelector("img").src.split('/').pop();
         updateModalContent(imageName);
     });
+});
+
+
+// DOM이 로드된 후 실행
+document.addEventListener('DOMContentLoaded', async function() {
+    const bossCntList = await fetchBossCount();
+    addBossImages(bossCntList);
 });
