@@ -34,7 +34,6 @@ const bossNameMapping = {
     "림": "림보",
     // 필요한 보스 이름들을 추가
 };
-let bossCntList = {};
 
 // 보스 파티 수를 가져오는 함수
 async function fetchBossCount() {
