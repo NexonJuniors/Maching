@@ -76,6 +76,14 @@ async function joinParty(){
                btnCancel.addEventListener('click',cancelMatching);
                document.getElementById("changeCancelBtn").appendChild(btnCancel);
                isMatchingStardedBadge();
+
+                window.addEventListener('beforeunload', function(event) {
+                    /*event.preventDefault(); event.returnValue = ''; // 크로스브라우저 호환/그냥 이거 주석하고 무조건 취소로 변경 */
+                    const characterName = document.getElementById("characterName").innerText;
+                    if (characterName && stompClient && stompClient.connected) {
+                        stompClient.send("/app/cancelMatching", { characterName: characterName });
+                    }
+                });
             }
         })
         .then(onConnected(uuid))
