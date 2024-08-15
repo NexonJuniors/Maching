@@ -7,11 +7,9 @@ import NexonJuniors.Maching.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.Message;
 
@@ -21,7 +19,7 @@ import java.util.*;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class MatchingUtil {
+public class WebSocketUtil {
     private final List<MatchingUser> participants; // 파티 찾는 사람 리스트 ( 매칭 안된 유저 대기 큐 ) TODO ConcurrentList 로 변경해야 할 수도 있음
     private final HashMap<Long, PartyInfo> rooms; // 생성된 채팅방 리스트 TODO PartyInfo 클래스 내부에 Users 리스트 자료형을 Mathcinguser 로 변경 후 관련 메소드 변경
     private final HashSet<String> totalUser; // 전체 이용자 ( 닉네임 ) TODO 이후에 CharacterInfo 형태로 저장해서 캐릭터 정보 전체를 저장해서 처리하는 방법 연구

@@ -1,10 +1,8 @@
 package NexonJuniors.Maching.controller;
 
-import NexonJuniors.Maching.Matching.MatchingUtil;
+import NexonJuniors.Maching.Matching.WebSocketUtil;
 import NexonJuniors.Maching.model.CharacterInfo;
-import NexonJuniors.Maching.model.MatchingUser;
 import NexonJuniors.Maching.utils.ApiUtil;
-import NexonJuniors.Maching.utils.CharacterClassMapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +11,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 public class CharacterSearchController {
 
     private final ApiUtil apiUtil;
-    private final MatchingUtil matchingUtil;
+    private final WebSocketUtil webSocketUtil;
 
     @GetMapping("/character")
     public CharacterInfo getCharacter(@RequestParam("characterName") String characterName) {
@@ -36,7 +33,7 @@ public class CharacterSearchController {
             return ResponseEntity.badRequest().build();
         }
 
-        boolean userOptional = matchingUtil.findParticipantByName(characterName);
+        boolean userOptional = webSocketUtil.findParticipantByName(characterName);
         HashMap<String,Boolean> response = new HashMap<>();
         response.put("isMatchingStarted",userOptional);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
@@ -44,7 +41,7 @@ public class CharacterSearchController {
 
     @GetMapping("/rooms/count")
     public ResponseEntity<HashMap<String, Long>> getRoomCountByBossName(){
-        HashMap<String, Long> result = matchingUtil.getRoomCountByBossName();
+        HashMap<String, Long> result = webSocketUtil.getRoomCountByBossName();
         return ResponseEntity.ok().body(result);
     }
 }

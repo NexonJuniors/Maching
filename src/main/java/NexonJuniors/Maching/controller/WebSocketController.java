@@ -1,8 +1,7 @@
 package NexonJuniors.Maching.controller;
 
-import NexonJuniors.Maching.Matching.MatchingUtil;
+import NexonJuniors.Maching.Matching.WebSocketUtil;
 import NexonJuniors.Maching.chatting.ChatMessage;
-import NexonJuniors.Maching.model.MatchingUser;
 import NexonJuniors.Maching.chatting.EnterRoomDto;
 import NexonJuniors.Maching.model.PartyRequirementInfo;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
 
 import java.text.SimpleDateFormat;
@@ -24,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebSocketController {
     private final SimpMessagingTemplate simpMessagingTemplate;
-    private final MatchingUtil matchingUtil;
+    private final WebSocketUtil webSocketUtil;
 
     @MessageMapping("/createParty")
     @SendTo("/room/{roomId}")
@@ -54,7 +52,7 @@ public class WebSocketController {
         partyRequirementInfo.setPartyNeedPower(partyNeedPower);
         partyRequirementInfo.setPartyNeedBishop(partyNeedBishop);
 
-        HashMap<Long, List<String>> uuidList = matchingUtil.createParty(
+        HashMap<Long, List<String>> uuidList = webSocketUtil.createParty(
                 uuid,
                 maximumPeople,
                 bossName,
@@ -96,7 +94,7 @@ public class WebSocketController {
             @Header("isMatchingStarted") boolean isMatchingStarted
     ) {
         if (isMatchingStarted) {
-            long roomId = matchingUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo, className, maximumPeople, power, isMatchingStarted);
+            long roomId = webSocketUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo, className, maximumPeople, power, isMatchingStarted);
             simpMessagingTemplate.convertAndSend(
                     String.format("/room/%s", uuId),
                     roomId
@@ -119,7 +117,7 @@ public class WebSocketController {
         }
 
         try {
-            matchingUtil.removeParticipant(characterName); // 참가자 리스트에서 유저 제거
+            webSocketUtil.removeParticipant(characterName); // 참가자 리스트에서 유저 제거
             simpMessagingTemplate.convertAndSend(
                     String.format("/room/%s", characterName),
                     "CANCELLED" // 매칭 취소 메시지 전송
@@ -151,7 +149,7 @@ public class WebSocketController {
     public void enterRoom(@Header("roomId") Long roomId,
                           String nickname) {
 
-        EnterRoomDto dto = matchingUtil.enterRoom(roomId, nickname);
+        EnterRoomDto dto = webSocketUtil.enterRoom(roomId, nickname);
 
         simpMessagingTemplate.convertAndSend(
                 String.format("/room/%d", roomId),
@@ -170,6 +168,11 @@ public class WebSocketController {
                 chatMessage
         );
     }
+
+//    @MessageMapping("/exitRoom")
+//    public void exitRoom(@Header("roomId") Long roomId, String nickname){
+//
+//    }
 
     // TODO 채팅 쳤을 때 해당 유저가 구독한 채팅방 URL로 메세지를 뿌려야함
 //    @MessageMapping("/room")
