@@ -11,11 +11,11 @@ let partyInfo
 // 메세지를 보낼 때 헤더에 포함시킬 방번호 저장
 const connectHeaders = {'roomId' : `${roomId}`}
 
-// JS 로드 시 바로 웹 소켓 연결 후 onConnected 함수 실행
-stompClient.connect({}, onConnected)
-
 localStorage.removeItem("roomId")
 localStorage.removeItem("info")
+
+// JS 로드 시 바로 웹 소켓 연결 후 onConnected 함수 실행
+stompClient.connect({}, onConnected)
 
 // 클라이언트가 메세지를 받았을 때 실행되는 함수
 function receiveMessage(message){
@@ -31,13 +31,8 @@ function receiveMessage(message){
         // 파티 조건 화면에 출력
         loadPartyInfo(partyInfo.bossName, partyInfo.bossImg, partyInfo.maximumPeople, partyInfo.partyRequirementInfo)
 
-        const users = partyInfo.users
-
-        // 유저 리스트 정보 출력
-        for(let i = 0; i < users.length; i++){
-            const user = users[i]
-            loadBasic(user, i + 1)
-        }
+        // 유저 정보 출력
+        refreshUser()
 
         // 입장 인사말 출력
         printGreetingMessage(greetingMessage)
@@ -50,7 +45,7 @@ function receiveMessage(message){
             partyInfo = data.partyInfo
             exitGeneral(exitMessage)
         }
-        else exitLeader()
+        else exitLeader(exitMessage)
     }
     else{
         printMessage(data.sender, data.time, data.message)
@@ -190,8 +185,9 @@ function refreshUser(){
 }
 
 // 방장이 퇴장 시 실행 할 함수
-function exitLeader(){
-
+function exitLeader(exitMessage){
+    alert(`방장 ${exitMessage}`)
+    location.href = '/'
 }
 
 // 채팅방 나가기 버튼을 눌렀을 때 실행되는 함수
