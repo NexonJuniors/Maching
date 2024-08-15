@@ -18,7 +18,7 @@
         </div>
         <header class="header flex items-center justify-between p-4">
             <div class="flex items-center logo">
-                <img aria-hidden="true" alt="icon" src="../static/image/site/icon.png" class="icon mr-2" />
+                <img aria-hidden="true" alt="icon" src="../static/image/site/icon.png" class="icon mr-2"/>
                 <a href="/" style="text-decoration: none; color: inherit;">&nbsp;메칭</a>
             </div>
             <div class="flex items-center space-x-4">
@@ -39,36 +39,224 @@
         </nav>
         <main class="p-4 chatroom-container">
             <div class="header">
-                <div class="title">채팅방 제목</div>
-                <div class="condition">조건</div>
+                <div class="title">
+                    <span><img id = "bossImg"></span>
+                    <span id = "bossName"></span>
+                </div>
+                <div class="condition">
+                    <p id = "maximumPeople"></p>
+                    <p id = "partyNeedClassMinutesInfo"></p>
+                    <p id = "partyNeedPower"></p>
+                    <p id = "partyNeedBishop"></p>
+                </div>
             </div>
             <div class="sidebar left">
-                <div class="user" id = "user1">유저1</div>
-                <div class="user" id = "user3">유저3</div>
-                <div class="user" id = "user5">유저5</div>
+                <div class="user" id="user1">
+                    <div class="flex-item">
+                        <div class="nameLevel">
+                            <span id="characterGuildName1"></span>
+                        </div>
+                        <div class="nameLevel">
+                            Lv.<span id="characterLevel1"></span>
+                            <span id="characterName1"></span>
+                        </div>
+                        <div class="characterImageContainer">
+                            <img id="characterImage1" alt="Character Image" class="characterImage"/>
+                        </div>
+                        <div class="nameLevel">
+                            유니온<span id="unionLevel1"></span><br/>
+                        </div>
+                        <div class="power">
+                            전투력 <span id="power1"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass1"></span>
+                            <small>(<span id="minutes1"></span>)</small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer1">
+                            <div class="badgeContainer-item" id="badgeContainer-item1">
+                                <div class="tooltip" id="tooltip1"></div>
+                                <img class="badges" id="badge1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user" id="user3">
+                    <div class="flex-item">
+                        <div class="nameLevel">
+                            <span id="characterGuildName3"></span>
+                        </div>
+                        <div class="nameLevel">
+                            Lv.<span id="characterLevel3"></span>
+                            <span id="characterName3"></span>
+                        </div>
+                        <div class="characterImageContainer">
+                            <img id="characterImage3" alt="Character Image" class="characterImage"/>
+                        </div>
+                        <div class="nameLevel">
+                            유니온<span id="unionLevel3"></span><br/>
+                        </div>
+                        <div class="power">
+                            전투력 <span id="power3"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass3"></span>
+                            <small>(<span id="minutes3"></span>)</small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer3">
+                            <div class="badgeContainer-item" id="badgeContainer-item3">
+                                <div class="tooltip" id="tooltip3"></div>
+                                <img class="badges" id="badge3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user" id="user5">
+                    <div class="flex-item">
+                        <div class="nameLevel">
+                            <span id="characterGuildName5"></span>
+                        </div>
+                        <div class="nameLevel">
+                            Lv.<span id="characterLevel5"></span>
+                            <span id="characterName5"></span>
+                        </div>
+                        <div class="characterImageContainer">
+                            <img id="characterImage5" alt="Character Image" class="characterImage"/>
+                        </div>
+                        <div class="nameLevel">
+                            유니온<span id="unionLevel5"></span><br/>
+                        </div>
+                        <div class="power">
+                            전투력 <span id="power5"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass5"></span>
+                            <small>(<span id="minutes5"></span>)</small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer5">
+                            <div class="badgeContainer-item" id="badgeContainer-item5">
+                                <div class="tooltip" id="tooltip5"></div>
+                                <img class="badges" id="badge5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="chatroom" id = "chatroom"></div>
+
+            <div class="chatroom" id="chatroom"></div>
+
             <div class="sidebar right">
-                <div class="user" id = "user2">유저2</div>
-                <div class="user" id = "user4">유저4</div>
-                <div class="user" id = "user6">유저6</div>
+                <div class="user" id="user2">
+                    <div class="flex-item">
+                        <div class="nameLevel">
+                            <span id="characterGuildName2"></span>
+                        </div>
+                        <div class="nameLevel">
+                            Lv.<span id="characterLevel2"></span>
+                            <span id="characterName2"></span>
+                        </div>
+                        <div class="characterImageContainer">
+                            <img id="characterImage2" alt="Character Image" class="characterImage"/>
+                        </div>
+                        <div class="nameLevel">
+                            유니온<span id="unionLevel2"></span><br/>
+                        </div>
+                        <div class="power">
+                            전투력 <span id="power2"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass2"></span>
+                            <small>(<span id="minutes2"></span>)</small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer2">
+                            <div class="badgeContainer-item" id="badgeContainer-item2">
+                                <div class="tooltip" id="tooltip2"></div>
+                                <img class="badges" id="badge2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user" id="user4">
+                    <div class="flex-item">
+                        <div class="nameLevel">
+                            <span id="characterGuildName4"></span>
+                        </div>
+                        <div class="nameLevel">
+                            Lv.<span id="characterLevel4"></span>
+                            <span id="characterName4"></span>
+                        </div>
+                        <div class="characterImageContainer">
+                            <img id="characterImage4" alt="Character Image" class="characterImage"/>
+                        </div>
+                        <div class="nameLevel">
+                            유니온<span id="unionLevel4"></span><br/>
+                        </div>
+                        <div class="power">
+                            전투력 <span id="power4"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass4"></span>
+                            <small>(<span id="minutes4"></span>)</small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer4">
+                            <div class="badgeContainer-item" id="badgeContainer-item4">
+                                <div class="tooltip" id="tooltip4"></div>
+                                <img class="badges" id="badge4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user" id="user6">
+                    <div class="flex-item">
+                        <div class="nameLevel">
+                            <span id="characterGuildName6"></span>
+                        </div>
+                        <div class="nameLevel">
+                            Lv.<span id="characterLevel6"></span>
+                            <span id="characterName6"></span>
+                        </div>
+                        <div class="characterImageContainer">
+                            <img id="characterImage6" alt="Character Image" class="characterImage"/>
+                        </div>
+                        <div class="nameLevel">
+                            유니온<span id="unionLevel6"></span><br/>
+                        </div>
+                        <div class="power">
+                            전투력 <span id="power6"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass6"></span>
+                            <small>(<span id="minutes6"></span>)</small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer6">
+                            <div class="badgeContainer-item" id="badgeContainer-item6">
+                                <div class="tooltip" id="tooltip6"></div>
+                                <img class="badges" id="badge6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
         <footer>
             <div class="footer-content">
                 <div style="font-size:12px; text-align: center;">
-                    Data based on NEXON Open API.<br />
+                    Data based on NEXON Open API.<br/>
                     Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. This service is not associated with NEXON
-                    Korea.<br /><br />
-                    본 사이트 내에서 발생하는 이용자 간의 모든 분쟁 및 문제에 대해 사이트 개발자는 어떠한 책임도 지지 않습니다.<br />
-                    이용자 간의 모든 행위와 관련된 책임은 해당 이용자들에게 있으며, 본 사이트는 이에 대한 법적 책임을 지지 않습니다.<br />
+                    Korea.<br/><br/>
+                    본 사이트 내에서 발생하는 이용자 간의 모든 분쟁 및 문제에 대해 사이트 개발자는 어떠한 책임도 지지 않습니다.<br/>
+                    이용자 간의 모든 행위와 관련된 책임은 해당 이용자들에게 있으며, 본 사이트는 이에 대한 법적 책임을 지지 않습니다.<br/>
                     이 페이지에는 메이플스토리가 제공한 메이플스토리 서체가 적용되어 있습니다.
                 </div>
             </div>
         </footer>
     </div>
 </div>
-<script src = "https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <script src="webjars/stomp-websocket/2.3.4/stomp.js"></script>
 <script src="../static/js/darkmode.js"></script>
 <script src="../static/js/tooltip.js"></script>

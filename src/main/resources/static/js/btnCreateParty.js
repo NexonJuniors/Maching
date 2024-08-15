@@ -33,6 +33,7 @@ function createParty() {
         classMinutesInfo: `${minutes}`,
         classMainStatInfo: `${mainStat}`,
         bossName: `${document.getElementById("modalBossTitle").innerText}`,
+        bossImg: `${document.getElementById("modalBossImage").getAttribute("src")}`,
         maximumPeople: createMaximumPeople, // 모달에서 선택한 최대 인원
         partyLeader : partyLeader,
         partyWorldName : partyWorldName,

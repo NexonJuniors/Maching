@@ -15,8 +15,10 @@ const mainStatImagePath = getImagePath(statImgFolderPath, mainStat);
 addBadgeToContainer(mainStatImagePath, mainStat, mainStatTooltipText);
 document.getElementById('mainStatText').textContent = mainStatText;
 
+// 로딩이 끝난 후
 document.addEventListener('DOMContentLoaded', function() {
     isMatchingStardedBadge();
+    localStorage.removeItem("info");
 });
 
 // 뱃지 추가 함수

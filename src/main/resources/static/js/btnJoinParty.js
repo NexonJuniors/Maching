@@ -41,11 +41,11 @@ async function joinParty(){
 
     stompClient.connect({}, function(frame) {
         uuid = uuidv4();
-        sessionStorage.setItem('uuid', uuid); // 세션 스토리지에 UUID 저장
+/*        sessionStorage.setItem('uuid', uuid); // 세션 스토리지에 UUID 저장
         stompClient.subscribe('/user/queue/errors', function(message) {
             alert(message.body); // 에러 메시지를 경고창으로 띄움
             location.href = '/'; // 원래 페이지로 리다이렉트
-        });
+        });*/
         stompClient.subscribe(`/room/${uuid}`, function(message){
             if(message.body > 0){ //-1이면 지금 대기중이 되는거 같음
                 stompClient.unsubscribe()
@@ -54,15 +54,21 @@ async function joinParty(){
                 location.href = `/chatroom`
             }
             else {
-                document.getElementById("changeTitle").innerText="매칭중...";
+                document.getElementById("changeTitle").innerText="매칭중... 해당 페이지를 나가지 마세요.";
+
+                //모달 처리 부분
                 document.getElementById("joinPartyModal").style.display = "none";
                 document.getElementById("bossModal").style.display = "none";
                 const backdropElements = document.querySelectorAll('.modal-backdrop');
                 backdropElements.forEach(function(backdrop) {
                     backdrop.remove();
                 });
+                document.body.classList.remove('modal-open'); // body에서 modal-open 클래스를 제거하여 스크롤을 가능하게 함
+
+                //보스 컨테이너 치우기
                 bossContainer.style.display = "none"; // 보스 아이콘 none
                 changeCancel.style.display = "none";
+
                // 버튼 요소 생성
                let btnCancel = document.createElement("button");
                btnCancel.innerText = "매칭 취소 하기";
@@ -70,6 +76,14 @@ async function joinParty(){
                btnCancel.addEventListener('click',cancelMatching);
                document.getElementById("changeCancelBtn").appendChild(btnCancel);
                isMatchingStardedBadge();
+
+                window.addEventListener('beforeunload', function(event) {
+                    /*event.preventDefault(); event.returnValue = ''; // 크로스브라우저 호환/그냥 이거 주석하고 무조건 취소로 변경 */
+                    const characterName = document.getElementById("characterName").innerText;
+                    if (characterName && stompClient && stompClient.connected) {
+                        stompClient.send("/app/cancelMatching", { characterName: characterName });
+                    }
+                });
             }
         })
         .then(onConnected(uuid))
