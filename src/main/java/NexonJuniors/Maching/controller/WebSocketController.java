@@ -169,14 +169,16 @@ public class WebSocketController {
         );
     }
 
-//    @MessageMapping("/exitRoom")
-//    public void exitRoom(@Header("roomId") Long roomId, String nickname){
-//
-//    }
+    @MessageMapping("/exitRoom")
+    public void exitRoom(@Header("roomId") Long roomId, String nickname){
+        webSocketUtil.exitRoom(roomId, nickname);
 
-    // TODO 채팅 쳤을 때 해당 유저가 구독한 채팅방 URL로 메세지를 뿌려야함
-//    @MessageMapping("/room")
-//    public void sendChat(ChatMessage message){
-//
-//    }
+        HashMap<String, String> response = new HashMap<>();
+        response.put("exitMessage", String.format("%s 님이 퇴장하셨습니다.", nickname));
+
+        simpMessagingTemplate.convertAndSend(
+                String.format("/room/%d", roomId),
+                response
+        );
+    }
 }
