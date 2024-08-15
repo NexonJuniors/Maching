@@ -80,7 +80,7 @@ function loadPartyInfo(bossName, bossImg, maximumPeople, partyRequirementInfo){
     const partyNeedPower = partyRequirementInfo.partyNeedPower
     const partyNeedBishop = partyRequirementInfo.partyNeedBishop
 
-    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 주기: ${maximumPeople} 명`
+    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 주기: ${partyNeedClassMinutesInfo === "free" ? '상관없음' : partyNeedClassMinutesInfo + '분'}`
     document.getElementById('partyNeedPower').innerText = `최소 전투력: ${formatNumber(partyNeedPower)}`
     document.getElementById('partyNeedBishop').innerText = `비숍 필요 유무: ${partyNeedBishop == 1 ? '유' : '무'}`
 }
@@ -154,6 +154,7 @@ function printMessage(sender, time, message){
     outputContainer.appendChild(newMessage)
 }
 
+// 채팅방 나가기 버튼을 눌렀을 때 실행되는 함수
 function exitRoom(){
 
 }
