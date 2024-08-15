@@ -1,3 +1,5 @@
+document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
+
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
 const roomId = localStorage.getItem("roomId")
@@ -21,7 +23,10 @@ function receiveMessage(message){
         const greetingMessage = data.greetingMessage
         partyInfo = data.partyInfo
 
+        // 유저 기본이미지 출력 ( 방의 빈 슬롯에 들어갈 이미지 )
         loadBasicImg()
+
+        // 파티 조건 화면에 출력
         loadPartyInfo(partyInfo.bossName, partyInfo.bossImg, partyInfo.maximumPeople, partyInfo.partyRequirementInfo)
 
         const users = partyInfo.users
@@ -35,7 +40,13 @@ function receiveMessage(message){
         // 입장 인사말 출력
         const newChat = document.createElement("div")
         newChat.innerText = greetingMessage
-        document.getElementById("chatroom").appendChild(newChat)
+        document.getElementById("outputContainer").appendChild(newChat)
+    }
+    else if('exitMessage' in data){
+
+    }
+    else{
+        printMessage(data.sender, data.time, data.message)
     }
 }
 
@@ -48,7 +59,7 @@ function onConnected(){
     stompClient.send("/app/enterRoom",connectHeaders, `${nickname}`);
 }
 
-// 기본 이미지 로딩
+// 기본 이미지 로딩 함수
 function loadBasicImg(){
     let i
     for(i = 1; i <= partyInfo.maximumPeople; i++){
@@ -60,7 +71,7 @@ function loadBasicImg(){
     }
 }
 
-
+// 파티 정보 로딩 함수
 function loadPartyInfo(bossName, bossImg, maximumPeople, partyRequirementInfo){
     document.getElementById('bossName').innerText = bossName
     document.getElementById('bossImg').setAttribute('src', bossImg)
@@ -107,6 +118,7 @@ function loadBasic(user, idx){
     document.getElementById(`badge${idx}`).setAttribute('src', mainStatImgSrc)
 }
 
+// TODO 스탯, 헥사 스킬 등 자세한 정보 로딩 함수 구현
 function loadDetails(user, idx){
 
 }
@@ -131,4 +143,28 @@ function formatNumber(number) {
         unitIndex++;
     }
     return result;
+}
+
+// 보내기 버튼을 눌렀을 때 채팅을 보내는 함수
+function sendMessage(){
+    const input = document.getElementById('message')
+
+    stompClient.send('/app/chatting', {},
+    JSON.stringify({
+        'roomId' : roomId,
+        'sender' : nickname,
+        'message': input.value
+    }))
+}
+
+// 채팅을 보냈을 때 채팅 창에 메세지 출력하는 함수
+function printMessage(sender, time, message){
+    document.getElementById('message').value = ''
+    const outputContainer = document.getElementById('outputContainer')
+
+    const newMessage = document.createElement('p')
+    newMessage.innerText = `${sender}: ${message}(${time})`
+    newMessage.className = 'dialog'
+
+    outputContainer.appendChild(newMessage)
 }
