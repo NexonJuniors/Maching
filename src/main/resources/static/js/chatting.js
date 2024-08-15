@@ -59,6 +59,7 @@ function receiveMessage(message){
         }
         else if(nickname != partyInfo.users[0].basicInfo.character_name) {
             roomStatus = false
+            exitLeader(exitMessage)
             location.href = '/'
         }
     }
@@ -221,7 +222,6 @@ function exitLeader(exitMessage){
 // 채팅방 나갈 때 실행되는 함수
 function exitRoom(){
     if(roomStatus) stompClient.send('/app/exitRoom', connectHeaders, `${nickname}`)
-    else exitGeneral()
 
     location.href = '/'
 }
