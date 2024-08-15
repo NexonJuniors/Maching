@@ -159,6 +159,18 @@ public class WebSocketController {
         );
     }
 
+    // 채팅방에 채팅 입력 시 구독된 채팅방으로 메세지 전달
+    @MessageMapping("/chatting")
+    public void chatting(ChatMessage chatMessage){
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+        chatMessage.setTime(formatter.format(new Date()));
+
+        simpMessagingTemplate.convertAndSend(
+                String.format("/room/%d", chatMessage.getRoomId()),
+                chatMessage
+        );
+    }
+
     // TODO 채팅 쳤을 때 해당 유저가 구독한 채팅방 URL로 메세지를 뿌려야함
 //    @MessageMapping("/room")
 //    public void sendChat(ChatMessage message){
