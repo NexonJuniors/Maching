@@ -1,6 +1,7 @@
 package NexonJuniors.Maching.Matching;
 
 import NexonJuniors.Maching.chatting.EnterRoomDto;
+import NexonJuniors.Maching.chatting.ExitRoomDto;
 import NexonJuniors.Maching.excption.api.ApiException;
 import NexonJuniors.Maching.excption.api.ApiExceptionCode;
 import NexonJuniors.Maching.model.*;
@@ -371,6 +372,51 @@ public class WebSocketUtil {
         return isClassMinutesMatch;
     }
 
+    // 채팅방 나갔을 때 실행되는 메소드
+    public ExitRoomDto exitRoom(Long roomId, String nickname){
+        ExitRoomDto exitRoomDto = null;
+
+        List<CharacterInfo> users = rooms.get(roomId).getUsers();
+        for(int i = 0; i < users.size(); i++){
+            if(users.get(i).getBasicInfo().getCharacterName().equals(nickname)){
+                // 방장일 경우 모든 유저 정보 제거 후 채팅 방 제거
+                if(i == 0){
+                    // 전체 유저에서 채팅 방에 있는 모든 유저 제거
+                    for(CharacterInfo characterInfo : users) totalUser.remove(characterInfo.getBasicInfo().getCharacterName());
+                    // 채팅방 제거
+                    rooms.remove(roomId);
+
+                    log.info("[채팅방 폭파] | [{} 번방 방장] {} 님 | 퇴장",roomId, nickname);
+                    log.info("총 채팅방 수 : {}, 참여 중인 총 유저 수 : {}", rooms.size(), totalUser.size());
+
+                    // 방장이 나갔을 경우는 flag 를 2 로 설정
+                    exitRoomDto = new ExitRoomDto(2, nickname);
+                    break;
+                }
+                // 방장이 아닐 경우 유저 정보 제거 후 채팅 방에서 유저 제거
+                else{
+                    // 전체 유저에서 해당 유저정보 제거
+                    totalUser.remove(nickname);
+
+                    //채팅방에서 해당 유저 제거
+                    users.remove(i);
+
+                    // 방장이 아닌 사람이 퇴장 시 flag 를 1로 설정, 변경된 채팅방 유저 리스트 DTO 에 저장
+                    exitRoomDto = new ExitRoomDto(1, nickname);
+                    exitRoomDto.setPartyInfo(rooms.get(roomId));
+
+                    log.info("[채팅방 퇴장] | [{} 번방] {} 님 | 퇴장",roomId, nickname);
+                    log.info("참여 중인 총 유저 수 : {}", totalUser.size());
+                    break;
+                }
+            }
+        }
+
+        // if(exitRoomDto == null) TODO 예외처리
+        return exitRoomDto;
+    }
+
+
     // 예외 처리 클래스
     public class MatchingException extends RuntimeException {
         public MatchingException(String message) {
@@ -390,6 +436,7 @@ public class WebSocketUtil {
 
         log.error("Exception occurred: {}", exception.getMessage());
     }
+
 
 /*    // 공통 로그 출력 함수
     private void logPartyJoin(PartyInfo partyInfo, MatchingUser matchingUser, Long roomId, boolean fromQueue) {
