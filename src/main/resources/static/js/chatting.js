@@ -1,12 +1,15 @@
 document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
 document.getElementById('btnExit').addEventListener('click', function(){location.href = '/'})
-window.addEventListener('beforeunload', pageUnload);
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
 const roomId = localStorage.getItem("roomId")
 const info = JSON.parse(localStorage.getItem("info"))
+
+if(info == null) location.href = '/'
+
 const nickname = info.basicInfo.character_name
+let roomStatus = true
 let partyInfo
 
 // 메세지를 보낼 때 헤더에 포함시킬 방번호 저장
@@ -42,16 +45,22 @@ function receiveMessage(message){
 
         // 입장 인사말 출력
         printGreetingMessage(greetingMessage)
+
+        // 새로고침, 닫기, 페이지 이동 시 이벤트 핸들러 추가
+        window.addEventListener('beforeunload', pageUnload);
     }
     else if('exitMessage' in data){
         const flag = data.flag // 1 이면 일반 유저 퇴장, 2 이면 방장 퇴장
         const exitMessage = data.exitMessage
 
-        if(flag == 1) {
+        if(flag === 1) {
             partyInfo = data.partyInfo
             exitGeneral(exitMessage)
         }
-        else if(nickname != partyInfo.users[0].basicInfo.character_name) exitLeader(exitMessage)
+        else if(nickname != partyInfo.users[0].basicInfo.character_name) {
+            roomStatus = false
+            location.href = '/'
+        }
     }
     else{
         printMessage(data.sender, data.time, data.message)
@@ -207,12 +216,13 @@ function refreshUser(){
 // 방장이 퇴장 시 실행 할 함수
 function exitLeader(exitMessage){
     alert(`방장 ${exitMessage}`)
-    location.href = '/'
 }
 
-// 채팅방 나가기 버튼을 눌렀을 때 실행되는 함수
+// 채팅방 나갈 때 실행되는 함수
 function exitRoom(){
-    stompClient.send('/app/exitRoom', connectHeaders, `${nickname}`)
+    if(roomStatus) stompClient.send('/app/exitRoom', connectHeaders, `${nickname}`)
+    else exitGeneral()
+
     location.href = '/'
 }
 
