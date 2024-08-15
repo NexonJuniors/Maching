@@ -39,9 +39,7 @@ function receiveMessage(message){
         }
 
         // 입장 인사말 출력
-        const newChat = document.createElement("div")
-        newChat.innerText = greetingMessage
-        document.getElementById("outputContainer").appendChild(newChat)
+        sendGreetingMessage(greetingMessage)
     }
     else if('exitMessage' in data){
 
@@ -124,26 +122,12 @@ function loadDetails(user, idx){
 
 }
 
-// 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
-function getImagePath(basePath, fileName, extension = 'png') {
-    return `${basePath}${fileName}.${extension}`;
-}
-
-// 숫자를 만, 억 단위로 포맷하는 함수
-function formatNumber(number) {
-    if (number === 0) return '0';
-    const units = ['', '만', '억'];
-    let unitIndex = 0;
-    let result = '';
-    while (number > 0) {
-        const part = number % 10000;
-        if (part > 0) {
-            result = part + units[unitIndex] + result;
-        }
-        number = Math.floor(number / 10000);
-        unitIndex++;
-    }
-    return result;
+// 입장 인사말 출력 함수
+function sendGreetingMessage(greetingMessage){
+    const newChat = document.createElement("p")
+    newChat.className = 'greetingMessage'
+    newChat.innerText = greetingMessage
+    document.getElementById("outputContainer").appendChild(newChat)
 }
 
 // 보내기 버튼을 눌렀을 때 채팅을 보내는 함수
@@ -168,4 +152,30 @@ function printMessage(sender, time, message){
     newMessage.className = 'dialog'
 
     outputContainer.appendChild(newMessage)
+}
+
+function exitRoom(){
+
+}
+
+// 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
+function getImagePath(basePath, fileName, extension = 'png') {
+    return `${basePath}${fileName}.${extension}`;
+}
+
+// 숫자를 만, 억 단위로 포맷하는 함수
+function formatNumber(number) {
+    if (number === 0) return '0';
+    const units = ['', '만', '억'];
+    let unitIndex = 0;
+    let result = '';
+    while (number > 0) {
+        const part = number % 10000;
+        if (part > 0) {
+            result = part + units[unitIndex] + result;
+        }
+        number = Math.floor(number / 10000);
+        unitIndex++;
+    }
+    return result;
 }
