@@ -113,7 +113,7 @@ function loadBasic(user, idx){
     document.getElementById(`characterClass${idx}`).innerText = characterClass
     document.getElementById(`power${idx}`).innerText = '전투력 ' + formatNumber(powerStat)
     document.getElementById(`unionLevel${idx}`).innerText = '유니온 ' + unionLevel
-    document.getElementById(`minutes${idx}`).innerText = `(${classMinutesInfo === "free" ? 특수 : classMinutesInfo + '분'}주기)`
+    document.getElementById(`minutes${idx}`).innerText = `(${classMinutesInfo === "free" ? '특수' : classMinutesInfo + '분'}주기)`
 
     document.getElementById(`tooltip${idx}`).innerText = `내 주스탯은 ${classMainStatInfo}`
     document.getElementById(`badge${idx}`).setAttribute('src', mainStatImgSrc)
