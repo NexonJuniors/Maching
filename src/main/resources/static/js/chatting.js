@@ -40,10 +40,17 @@ function receiveMessage(message){
         }
 
         // 입장 인사말 출력
-        sendGreetingMessage(greetingMessage)
+        printGreetingMessage(greetingMessage)
     }
     else if('exitMessage' in data){
+        const flag = data.flag // 1 이면 일반 유저 퇴장, 2 이면 방장 퇴장
+        const exitMessage = data.exitMessage
 
+        if(flag == 1) {
+            partyInfo = data.partyInfo
+            exitGeneral(exitMessage)
+        }
+        else exitLeader()
     }
     else{
         printMessage(data.sender, data.time, data.message)
@@ -124,7 +131,7 @@ function loadDetails(user, idx){
 }
 
 // 입장 인사말 출력 함수
-function sendGreetingMessage(greetingMessage){
+function printGreetingMessage(greetingMessage){
     const newChat = document.createElement("p")
     newChat.className = 'greetingMessage'
     newChat.innerText = greetingMessage
@@ -155,9 +162,42 @@ function printMessage(sender, time, message){
     outputContainer.appendChild(newMessage)
 }
 
+// 퇴장 메세지를 채팅방에 출력하는 함수
+function printExitMessage(exitMessage){
+    const newChat = document.createElement("p")
+    newChat.className = 'ExitMessage'
+    newChat.innerText = exitMessage
+    document.getElementById("outputContainer").appendChild(newChat)
+}
+
+// 일반 유저 퇴장 시 실행 할 함수 ( 유저 리스트 갱신 및 퇴장 메세지 출력 )
+function exitGeneral(exitMessage){
+    printExitMessage(exitMessage)
+    refreshUser()
+}
+
+// 채팅방 유저 갱신하는 함수
+function refreshUser(){
+    loadBasicImg()
+
+    const users = partyInfo.users
+
+    // 유저 리스트 정보 출력
+    for(let i = 0; i < users.length; i++){
+        const user = users[i]
+        loadBasic(user, i + 1)
+    }
+}
+
+// 방장이 퇴장 시 실행 할 함수
+function exitLeader(){
+
+}
+
 // 채팅방 나가기 버튼을 눌렀을 때 실행되는 함수
 function exitRoom(){
-    stompClient.send('/app/chatting', connectHeaders, ${nickname})
+    stompClient.send('/app/exitRoom', connectHeaders, `${nickname}`)
+    location.href = '/'
 }
 
 // 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
