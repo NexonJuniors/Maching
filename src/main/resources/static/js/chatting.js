@@ -1,5 +1,6 @@
 document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
-document.getElementById('btnExit').addEventListener('click', exitRoom)
+document.getElementById('btnExit').addEventListener('click', function(){location.href = '/'})
+window.addEventListener('beforeunload', pageUnload);
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
@@ -31,8 +32,13 @@ function receiveMessage(message){
         // 파티 조건 화면에 출력
         loadPartyInfo(partyInfo.bossName, partyInfo.bossImg, partyInfo.maximumPeople, partyInfo.partyRequirementInfo)
 
-        // 유저 정보 출력
-        refreshUser()
+        const users = partyInfo.users
+
+        // 유저 리스트 정보 출력
+        for(let i = 0; i < users.length; i++){
+            const user = users[i]
+            loadBasic(user, i + 1)
+        }
 
         // 입장 인사말 출력
         printGreetingMessage(greetingMessage)
@@ -175,6 +181,20 @@ function exitGeneral(exitMessage){
 function refreshUser(){
     loadBasicImg()
 
+    for(let i = 1; i <= 6; i++){
+        document.getElementById(`characterName${i}`).innerText = ''
+        document.getElementById(`characterGuildName${i}`).innerText = ''
+        document.getElementById(`characterLevel${i}`).innerText = ''
+        document.getElementById(`characterClass${i}`).innerText = ''
+        document.getElementById(`power${i}`).innerText = ''
+        document.getElementById(`unionLevel${i}`).innerText = ''
+        document.getElementById(`minutes${i}`).innerText = ''
+
+        document.getElementById(`tooltip${i}`).innerText = ''
+        document.getElementById(`badge${i}`).setAttribute('src', '')
+    }
+
+
     const users = partyInfo.users
 
     // 유저 리스트 정보 출력
@@ -194,6 +214,11 @@ function exitLeader(exitMessage){
 function exitRoom(){
     stompClient.send('/app/exitRoom', connectHeaders, `${nickname}`)
     location.href = '/'
+}
+
+// 새로고침, 페이지 이동, 브라우저 X 버튼 클릭 시 실행 될 함수
+function pageUnload(){
+    if (stompClient && stompClient.connected) exitRoom()
 }
 
 // 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
