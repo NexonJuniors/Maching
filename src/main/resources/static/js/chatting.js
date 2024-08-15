@@ -13,7 +13,8 @@ const connectHeaders = {'roomId' : `${roomId}`}
 // JS 로드 시 바로 웹 소켓 연결 후 onConnected 함수 실행
 stompClient.connect({}, onConnected)
 
-localStorage.clear();
+localStorage.removeItem("roomId")
+localStorage.removeItem("info")
 
 // 클라이언트가 메세지를 받았을 때 실행되는 함수
 function receiveMessage(message){
