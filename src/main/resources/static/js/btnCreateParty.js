@@ -46,22 +46,21 @@ function createParty() {
 
     stompClient.connect({}, function(frame) {
         uuid = uuidv4()
+        connectHeaders.uuId = `${uuid}`
         stompClient.subscribe(`/room/${uuid}`, function(message){
             if(message.body > 0){
                 stompClient.unsubscribe()
                 localStorage.setItem("roomId", message.body)
+                localStorage.setItem("info", rawInfo)
                 location.href = `/chatroom`
             }
             else alert("서버 오류")
         })
-        .then(onConnected())
-        .then(function(){
-            location.href = `/chatroom`
-        })
+
+        onConnected()
     });
 
     function onConnected(){
-        connectHeaders.uuId = `${uuid}`
         stompClient.send("/app/createParty",
             connectHeaders)
     }

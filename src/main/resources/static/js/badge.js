@@ -17,7 +17,7 @@ document.getElementById('mainStatText').textContent = mainStatText;
 
 document.addEventListener('DOMContentLoaded', function() {
     isMatchingStardedBadge();
-
+    localStorage.clear()
 });
 
 // 뱃지 추가 함수
