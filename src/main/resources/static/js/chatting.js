@@ -1,4 +1,5 @@
 document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
+document.getElementById('btnExit').addEventListener('click', exitRoom)
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
@@ -156,7 +157,7 @@ function printMessage(sender, time, message){
 
 // 채팅방 나가기 버튼을 눌렀을 때 실행되는 함수
 function exitRoom(){
-
+    stompClient.send('/app/chatting', connectHeaders, ${nickname})
 }
 
 // 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
