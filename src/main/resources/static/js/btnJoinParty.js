@@ -41,16 +41,14 @@ async function joinParty(){
 
     stompClient.connect({}, function(frame) {
         uuid = uuidv4();
-/*        sessionStorage.setItem('uuid', uuid); // 세션 스토리지에 UUID 저장
-        stompClient.subscribe('/user/queue/errors', function(message) {
-            alert(message.body); // 에러 메시지를 경고창으로 띄움
-            location.href = '/'; // 원래 페이지로 리다이렉트
-        });*/
+        connectHeaders.uuId = `${uuid}`
+
         stompClient.subscribe(`/room/${uuid}`, function(message){
             if(message.body > 0){ //-1이면 지금 대기중이 되는거 같음
                 stompClient.unsubscribe()
                 alert("조건에 맞는 채팅방에 참여!")
-                localStorage.setItem('roomId', message.body)
+                localStorage.setItem("roomId", message.body)
+                localStorage.setItem("info", rawInfo)
                 location.href = `/chatroom`
             }
             else {
@@ -86,11 +84,11 @@ async function joinParty(){
                 });
             }
         })
-        .then(onConnected(uuid))
+
+        onConnected()
     });
 
-    function onConnected(uuid){
-        connectHeaders.uuId = `${uuid}`
+    function onConnected(){
         stompClient.send("/app/joinParty",connectHeaders);
     }
 
