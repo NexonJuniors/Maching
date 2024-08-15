@@ -405,7 +405,7 @@ public class WebSocketUtil {
                     exitRoomDto = new ExitRoomDto(1, nickname);
                     exitRoomDto.setPartyInfo(rooms.get(roomId));
 
-                    log.info("[채팅방 퇴장] | [{} 번방] {} 님 | 퇴장",roomId, nickname);
+                    log.info("[채팅방 퇴장] | [{} 번방] {} 님 | 퇴장 | 파티원 수 : {}명",roomId, nickname, users.size());
                     log.info("참여 중인 총 유저 수 : {}", totalUser.size());
                     break;
                 }
