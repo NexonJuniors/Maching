@@ -4,6 +4,23 @@
     padding: 0;
 }
 
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+
+input[type="text"] {
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    outline: none;
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+
 .chatroom-container {
     display: grid;
     grid-template-areas:
@@ -13,12 +30,13 @@
         "left chatroom right";
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: auto 1fr;
-    height: 100vh;
+    height: 100%;
     gap: 10px;
     padding: 10px;
-    border-color: #282828;
-    border-width: 1px;
+    /*border-color: #282828;*/
+    /*border-width: 1px;*/
     border-radius: 10px;
+    background-color: var(--foreground);
 }
 
 .header {
@@ -58,13 +76,14 @@
 .user {
     color: var(--primary);
     flex: 1;
-    border-color: #282828;
-    border-width: 1px;
     border-radius: 10px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column; /* 요소들을 세로로 정렬 */
+    align-items: center;    /* 가로로 중앙 정렬 */
+    justify-content: center; /* 세로로 중앙 정렬 */
     text-align: center;
+    max-length: 210px;
+    max-height: 280px;
 }
 
 .chatroom {
@@ -77,13 +96,26 @@
     justify-content: center;
     padding: 10px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat {
+    flex: 1; /* 채팅 내용이 있는 부분이 가능한 많이 공간을 차지하게 함 */
+    overflow-y: auto; /* 채팅 내용이 많아지면 스크롤 가능하게 */
 }
 
 .flex-item {
     flex: 1;
     border-radius: 10px;
     border-color: #BEBEBE;
-    box-shadow:2px 2px 5px 0px var(--border-color);
+    width: 100%;      /* 너비를 user의 100%로 설정 */
+    height: 100%;     /* 높이를 부모 요소의 100%로 설정 */
+    box-shadow: 2px 2px 5px 0px var(--border-color);
+    display: flex;
+    flex-direction: column; /* 요소들을 세로로 정렬 */
+    justify-content: center; /* 가로로 중앙 정렬 */
+    align-items: center;    /* 세로로 중앙 정렬 */
     margin: 0;
 }
 
@@ -91,39 +123,57 @@
     display: flex;
     justify-content: center;  /* 가로로 가운데 정렬 */
     align-items: center;  /* 세로로 가운데 정렬 */
-    width: 200px; /* 컨테이너 너비 설정 */
-    height: 200px; /* 컨테이너 높이 설정 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 120px; /* 컨테이너 너비 설정 */
+    height: 120px; /* 컨테이너 높이 설정 */
     overflow: hidden;
     position: relative; /* 필요 시 절대 위치 요소들을 포함할 수 있도록 설정 */
 }
 
 .characterImage {
-    width: 200px;  /* 원하는 너비로 조정 */
+    width: 120px;  /* 이미지 너비 설정 */
     height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
+    object-fit: cover; /* 이미지가 컨테이너 크기에 맞게 자를 수 있도록 설정 */
     display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
-    margin: 0 auto;  /* 가운데 정렬 */
-    object-fit: cover;
-/*    border-radius: 80%; *//* 이미지 자체를 둥글게 만듦 */
 }
-.nameLevel img {
-    width: 18px; /* 이미지 크기를 조정 */
-    height: 18px; /* 이미지 크기를 조정 */
-}
+
 
 .nameLevel{
     font-size: 1.1em;
     font-weight: 900;
 }
 
+.union{
+    font-size: 0.8em;
+    font-weight: 700;
+}
+
 .class {
-    font-size: 1.1em;
+    font-size: 0.9em;
     font-weight: 900;
 }
 
 .power{
     font-weight: 700;
     font-size: 1.3em;
+}
+
+.title-img-name {
+    display: flex;
+    position: relative;
+}
+
+.img-container {
+    flex-shrink: 0; /* 이미지 크기에 맞게 공간을 할당 */
+    margin-right: 10px; /* 이미지와 이름 사이에 여백 추가 */
+}
+
+.name-container {
+    position: absolute;
+    left: 50%;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-50%);
+    white-space: nowrap; /* 텍스트가 한 줄로 나오게 함 */
+    font-size: x-large;
+    font-weight: bold;
 }

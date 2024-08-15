@@ -60,7 +60,6 @@ function receiveMessage(message){
         else if(nickname != partyInfo.users[0].basicInfo.character_name) {
             roomStatus = false
             exitLeader(exitMessage)
-            location.href = '/'
         }
     }
     else{
@@ -81,11 +80,19 @@ function onConnected(){
 function loadBasicImg(){
     let i
     for(i = 1; i <= partyInfo.maximumPeople; i++){
-        document.getElementById(`characterImage${i}`).setAttribute('src', '../static/image/site/유저기본.png')
+        const img = document.getElementById(`characterImage${i}`)
+        img.setAttribute('src', '../static/image/site/유저기본.png')
+        img.setAttribute('alt', 'Default User')
+        img.style.width = '100%'  // user 요소의 크기를 유지하기 위해 100% 너비 설정
+        img.style.height = '100%' // 높이도 100%로 설정
     }
 
     for( ; i <= 6; i++){
-        document.getElementById(`characterImage${i}`).setAttribute('src', '../static/image/site/유저블락.png')
+       const img =  document.getElementById(`characterImage${i}`)
+       img.setAttribute('src', '../static/image/site/유저블락.png');
+       img.setAttribute('alt', 'Blocked User');
+       img.style.width = '100%';  // user 요소의 크기를 유지하기 위해 100% 너비 설정
+       img.style.height = '100%'; // 높이도 100%로 설정
     }
 }
 
@@ -93,15 +100,15 @@ function loadBasicImg(){
 function loadPartyInfo(bossName, bossImg, maximumPeople, partyRequirementInfo){
     document.getElementById('bossName').innerText = bossName
     document.getElementById('bossImg').setAttribute('src', bossImg)
-    document.getElementById('maximumPeople').innerText = `파티 최대 인원 수: ${maximumPeople} 명`
+    document.getElementById('maximumPeople').innerText = `최대 ${maximumPeople}인 파티`
 
     const partyNeedClassMinutesInfo = partyRequirementInfo.partyNeedClassMinutesInfo
     const partyNeedPower = partyRequirementInfo.partyNeedPower
     const partyNeedBishop = partyRequirementInfo.partyNeedBishop
 
-    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 주기: ${partyNeedClassMinutesInfo === "free" ? '상관없음' : partyNeedClassMinutesInfo + '분'}`
-    document.getElementById('partyNeedPower').innerText = `최소 전투력: ${formatNumber(partyNeedPower)}`
-    document.getElementById('partyNeedBishop').innerText = `비숍 필요 유무: ${partyNeedBishop == 1 ? '유' : '무'}`
+    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'}주기)`
+    document.getElementById('partyNeedPower').innerText = `최소 전투력 : ${formatNumber(partyNeedPower)}`
+    document.getElementById('partyNeedBishop').innerText = `비숍 모집 : ${partyNeedBishop == 1 ? 'O' : 'X'}`
 }
 
 // 길드, 캐릭터 이름, 레벨 등 기본 정보를 화면에 표시
@@ -126,11 +133,11 @@ function loadBasic(user, idx){
     document.getElementById(`characterName${idx}`).innerText = characterName
     document.getElementById(`characterImage${idx}`).setAttribute('src',characterImg)
     document.getElementById(`characterGuildName${idx}`).innerText = guild
-    document.getElementById(`characterLevel${idx}`).innerText = 'LV.' + level
+    document.getElementById(`characterLevel${idx}`).innerText = 'Lv.' + level
     document.getElementById(`characterClass${idx}`).innerText = characterClass
-    document.getElementById(`power${idx}`).innerText = '전투력 ' + formatNumber(powerStat)
-    document.getElementById(`unionLevel${idx}`).innerText = '유니온 ' + unionLevel
-    document.getElementById(`minutes${idx}`).innerText = `(${classMinutesInfo === "free" ? '특수' : classMinutesInfo + '분'}주기)`
+    document.getElementById(`power${idx}`).innerText = formatNumber(powerStat)
+    document.getElementById(`unionLevel${idx}`).innerText = unionLevel
+    document.getElementById(`minutes${idx}`).innerText = `(${classMinutesInfo === "free" ? "특수" : classMinutesInfo + '분'}주기)`
 
     document.getElementById(`tooltip${idx}`).innerText = `내 주스탯은 ${classMainStatInfo}`
     document.getElementById(`badge${idx}`).setAttribute('src', mainStatImgSrc)
@@ -216,7 +223,7 @@ function refreshUser(){
 
 // 방장이 퇴장 시 실행 할 함수
 function exitLeader(exitMessage){
-    alert(`방장 ${exitMessage}`)
+    if(!alert(`방장 ${exitMessage}`)) location.href = '/'
 }
 
 // 채팅방 나갈 때 실행되는 함수
