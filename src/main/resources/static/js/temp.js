@@ -1,25 +1,20 @@
 document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
-document.getElementById('btnExit').addEventListener('click', function(){location.href = '/'})
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
 const roomId = localStorage.getItem("roomId")
 const info = JSON.parse(localStorage.getItem("info"))
-
-if(info == null) location.href = '/'
-
 const nickname = info.basicInfo.character_name
-let roomStatus = true
 let partyInfo
 
 // 메세지를 보낼 때 헤더에 포함시킬 방번호 저장
 const connectHeaders = {'roomId' : `${roomId}`}
 
-localStorage.removeItem("roomId")
-localStorage.removeItem("info")
-
 // JS 로드 시 바로 웹 소켓 연결 후 onConnected 함수 실행
 stompClient.connect({}, onConnected)
+
+localStorage.removeItem("roomId")
+localStorage.removeItem("info")
 
 // 클라이언트가 메세지를 받았을 때 실행되는 함수
 function receiveMessage(message){
@@ -29,7 +24,7 @@ function receiveMessage(message){
         const greetingMessage = data.greetingMessage
         partyInfo = data.partyInfo
 
-        // 유저 기본이미지 출력 ( 방의 빈 슬롯에 들어갈 이미지 )
+        // 유저 기본이미지 출력 ( 방의 빈 슬롯에 들어갈 이미지 ) 순서 변경했음. 이대로 반영바람
         loadBasicImg()
 
         // 파티 조건 화면에 출력
@@ -44,23 +39,12 @@ function receiveMessage(message){
         }
 
         // 입장 인사말 출력
-        printGreetingMessage(greetingMessage)
-
-        // 새로고침, 닫기, 페이지 이동 시 이벤트 핸들러 추가
-        window.addEventListener('beforeunload', pageUnload);
+        const newChat = document.createElement("div")
+        newChat.innerText = greetingMessage
+        document.getElementById("outputContainer").appendChild(newChat)
     }
     else if('exitMessage' in data){
-        const flag = data.flag // 1 이면 일반 유저 퇴장, 2 이면 방장 퇴장
-        const exitMessage = data.exitMessage
 
-        if(flag === 1) {
-            partyInfo = data.partyInfo
-            exitGeneral(exitMessage)
-        }
-        else if(nickname != partyInfo.users[0].basicInfo.character_name) {
-            roomStatus = false
-            exitLeader(exitMessage)
-        }
     }
     else{
         printMessage(data.sender, data.time, data.message)
@@ -277,12 +261,26 @@ function loadDetails(user, idx){
 
 }
 
-// 입장 인사말 출력 함수
-function printGreetingMessage(greetingMessage){
-    const newChat = document.createElement("p")
-    newChat.className = 'greetingMessage'
-    newChat.innerText = greetingMessage
-    document.getElementById("outputContainer").appendChild(newChat)
+// 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
+function getImagePath(basePath, fileName, extension = 'png') {
+    return `${basePath}${fileName}.${extension}`;
+}
+
+// 숫자를 만, 억 단위로 포맷하는 함수
+function formatNumber(number) {
+    if (number === 0) return '0';
+    const units = ['', '만', '억'];
+    let unitIndex = 0;
+    let result = '';
+    while (number > 0) {
+        const part = number % 10000;
+        if (part > 0) {
+            result = part + units[unitIndex] + result;
+        }
+        number = Math.floor(number / 10000);
+        unitIndex++;
+    }
+    return result;
 }
 
 // 보내기 버튼을 눌렀을 때 채팅을 보내는 함수
@@ -307,68 +305,4 @@ function printMessage(sender, time, message){
     newMessage.className = 'dialog'
 
     outputContainer.appendChild(newMessage)
-}
-
-// 퇴장 메세지를 채팅방에 출력하는 함수
-function printExitMessage(exitMessage){
-    const newChat = document.createElement("p")
-    newChat.className = 'ExitMessage'
-    newChat.innerText = exitMessage
-    document.getElementById("outputContainer").appendChild(newChat)
-}
-
-// 일반 유저 퇴장 시 실행 할 함수 ( 유저 리스트 갱신 및 퇴장 메세지 출력 )
-function exitGeneral(exitMessage){
-    printExitMessage(exitMessage)
-    refreshUser()
-}
-
-// 채팅방 유저 갱신하는 함수
-function refreshUser(){
-    loadBasicImg()
-    const users = partyInfo.users
-    // 유저 리스트 정보 출력
-    for(let i = 0; i < users.length; i++){
-        const user = users[i]
-        loadBasic(user, i + 1)
-    }
-}
-
-// 방장이 퇴장 시 실행 할 함수
-function exitLeader(exitMessage){
-    if(!alert(`방장 ${exitMessage}`)) location.href = '/'
-}
-
-// 채팅방 나갈 때 실행되는 함수
-function exitRoom(){
-    if(roomStatus) stompClient.send('/app/exitRoom', connectHeaders, `${nickname}`)
-
-    location.href = '/'
-}
-
-// 새로고침, 페이지 이동, 브라우저 X 버튼 클릭 시 실행 될 함수
-function pageUnload(){
-    if (stompClient && stompClient.connected) exitRoom()
-}
-
-// 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
-function getImagePath(basePath, fileName, extension = 'png') {
-    return `${basePath}${fileName}.${extension}`;
-}
-
-// 숫자를 만, 억 단위로 포맷하는 함수
-function formatNumber(number) {
-    if (number === 0) return '0';
-    const units = ['', '만', '억'];
-    let unitIndex = 0;
-    let result = '';
-    while (number > 0) {
-        const part = number % 10000;
-        if (part > 0) {
-            result = part + units[unitIndex] + result;
-        }
-        number = Math.floor(number / 10000);
-        unitIndex++;
-    }
-    return result;
 }
