@@ -3,6 +3,7 @@ package NexonJuniors.Maching.controller;
 import NexonJuniors.Maching.Matching.WebSocketUtil;
 import NexonJuniors.Maching.chatting.ChatMessage;
 import NexonJuniors.Maching.chatting.EnterRoomDto;
+import NexonJuniors.Maching.chatting.ExitRoomDto;
 import NexonJuniors.Maching.model.PartyRequirementInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -171,14 +172,11 @@ public class WebSocketController {
 
     @MessageMapping("/exitRoom")
     public void exitRoom(@Header("roomId") Long roomId, String nickname){
-        webSocketUtil.exitRoom(roomId, nickname);
-
-        HashMap<String, String> response = new HashMap<>();
-        response.put("exitMessage", String.format("%s 님이 퇴장하셨습니다.", nickname));
+        ExitRoomDto exitRoomDto = webSocketUtil.exitRoom(roomId, nickname);
 
         simpMessagingTemplate.convertAndSend(
                 String.format("/room/%d", roomId),
-                response
+                exitRoomDto
         );
     }
 }
