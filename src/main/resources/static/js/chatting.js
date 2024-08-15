@@ -45,7 +45,7 @@ function receiveMessage(message){
             partyInfo = data.partyInfo
             exitGeneral(exitMessage)
         }
-        else exitLeader(exitMessage)
+        else if(nickname != partyInfo.users[0].basicInfo.character_name) exitLeader(exitMessage)
     }
     else{
         printMessage(data.sender, data.time, data.message)
