@@ -40,31 +40,40 @@
         <main class="p-4 chatroom-container">
             <div class="header">
                 <div class="title">
-                    <span><img id = "bossImg"></span>
-                    <span id = "bossName"></span>
+                    <div class="title-img-name">
+                        <span class="img-container">
+                            <img id="bossImg">
+                        </span>
+                        <span id="bossName" class="name-container"></span>
+                        <button id = "btnExit">퇴장 하기</button>
+                    </div>
                 </div>
                 <div class="condition">
-                    <p id = "maximumPeople"></p>
-                    <p id = "partyNeedClassMinutesInfo"></p>
-                    <p id = "partyNeedPower"></p>
-                    <p id = "partyNeedBishop"></p>
+                    <div class="class">
+                        <span id = "maximumPeople"></span>
+                        <span id = "partyNeedPower"></span>
+                    </div>
+                    <div class="class">
+                        <span id = "partyNeedClassMinutesInfo"></span>
+                        <span id = "partyNeedBishop"></span>
+                    </div>
                 </div>
             </div>
             <div class="sidebar left">
                 <div class="user" id="user1">
                     <div class="flex-item">
-                        <div class="nameLevel">
+                        <div class="union">
                             <span id="characterGuildName1"></span>
+                            <span id="unionLevel1"></span><br/>
                         </div>
                         <div class="nameLevel">
                             <span id="characterLevel1"></span>
                             <span id="characterName1"></span>
                         </div>
-                        <div class="characterImageContainer">
-                            <img id="characterImage1" alt="Character Image" class="characterImage"/>
-                        </div>
                         <div class="nameLevel">
-                            <span id="unionLevel1"></span><br/>
+                            <div class="characterImageContainer">
+                                <img id="characterImage1" alt="Character Image" class="characterImage"/>
+                            </div>
                         </div>
                         <div class="power">
                             <span id="power1"></span>
@@ -84,8 +93,9 @@
 
                 <div class="user" id="user3">
                     <div class="flex-item">
-                        <div class="nameLevel">
+                        <div class="union">
                             <span id="characterGuildName3"></span>
+                            <span id="unionLevel3"></span><br/>
                         </div>
                         <div class="nameLevel">
                             <span id="characterLevel3"></span>
@@ -93,9 +103,6 @@
                         </div>
                         <div class="characterImageContainer">
                             <img id="characterImage3" alt="Character Image" class="characterImage"/>
-                        </div>
-                        <div class="nameLevel">
-                            <span id="unionLevel3"></span><br/>
                         </div>
                         <div class="power">
                             <span id="power3"></span>
@@ -115,8 +122,9 @@
 
                 <div class="user" id="user5">
                     <div class="flex-item">
-                        <div class="nameLevel">
+                        <div class="union">
                             <span id="characterGuildName5"></span>
+                            <span id="unionLevel5"></span><br/>
                         </div>
                         <div class="nameLevel">
                             <span id="characterLevel5"></span>
@@ -124,9 +132,6 @@
                         </div>
                         <div class="characterImageContainer">
                             <img id="characterImage5" alt="Character Image" class="characterImage"/>
-                        </div>
-                        <div class="nameLevel">
-                            <span id="unionLevel5"></span><br/>
                         </div>
                         <div class="power">
                             <span id="power5"></span>
@@ -146,19 +151,22 @@
             </div>
 
             <div class="chatroom" id="chatroom">
-                <div class = "chat" id = "outputContainer"></div>
+                <div class = "chat" id = "outputContainer">
 
-                <div class = "inputContainer">
+                </div>
+
+                <div class = "input-container">
                     <input type = "text" id = "message">
-                    <button id = "btnSendMessage">보내기</button>
+                    <button id = "btnSendMessage" class="btn btn-custom" style="margin-left:5px;">전송</button>
                 </div>
             </div>
 
             <div class="sidebar right">
                 <div class="user" id="user2">
                     <div class="flex-item">
-                        <div class="nameLevel">
+                        <div class="union">
                             <span id="characterGuildName2"></span>
+                            <span id="unionLevel2"></span><br/>
                         </div>
                         <div class="nameLevel">
                             <span id="characterLevel2"></span>
@@ -166,9 +174,6 @@
                         </div>
                         <div class="characterImageContainer">
                             <img id="characterImage2" alt="Character Image" class="characterImage"/>
-                        </div>
-                        <div class="nameLevel">
-                            <span id="unionLevel2"></span><br/>
                         </div>
                         <div class="power">
                             <span id="power2"></span>
@@ -188,8 +193,9 @@
 
                 <div class="user" id="user4">
                     <div class="flex-item">
-                        <div class="nameLevel">
+                        <div class="union">
                             <span id="characterGuildName4"></span>
+                            <span id="unionLevel4"></span><br/>
                         </div>
                         <div class="nameLevel">
                             <span id="characterLevel4"></span>
@@ -197,9 +203,6 @@
                         </div>
                         <div class="characterImageContainer">
                             <img id="characterImage4" alt="Character Image" class="characterImage"/>
-                        </div>
-                        <div class="nameLevel">
-                            <span id="unionLevel4"></span><br/>
                         </div>
                         <div class="power">
                             <span id="power4"></span>
@@ -219,8 +222,9 @@
 
                 <div class="user" id="user6">
                     <div class="flex-item">
-                        <div class="nameLevel">
+                        <div class="union">
                             <span id="characterGuildName6"></span>
+                            <span id="unionLevel6"></span><br/>
                         </div>
                         <div class="nameLevel">
                             <span id="characterLevel6"></span>
@@ -228,9 +232,6 @@
                         </div>
                         <div class="characterImageContainer">
                             <img id="characterImage6" alt="Character Image" class="characterImage"/>
-                        </div>
-                        <div class="nameLevel">
-                            <span id="unionLevel6"></span><br/>
                         </div>
                         <div class="power">
                             <span id="power6"></span>
