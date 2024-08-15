@@ -2,6 +2,10 @@
 const rawInfo = localStorage.getItem("info")
 const info = JSON.parse(localStorage.getItem("info"));
 
+if(info===null){
+    location.href = '/';
+}
+
 const basicInfo = info.basicInfo;
 const statInfo = info.statInfo;
 const unionInfo = info.unionInfo;

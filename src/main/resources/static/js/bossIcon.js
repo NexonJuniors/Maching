@@ -25,28 +25,36 @@ const bossNameMapping = {
     "윌": "윌",
     "진": "진 힐라",
     "더": "더스크",
-    "엔": "가디언 엔젤 슬라임",
+    "엔": "가엔슬",
     "듄": "듄켈",
     "검": "검은 마법사",
-    "세": "선택받은 세렌",
-    "칼": "감시자 칼로스",
+    "세": "세렌",
+    "칼": "칼로스",
     "카": "카링",
     "림": "림보",
     // 필요한 보스 이름들을 추가
 };
 
-// 검색된 캐릭터 정보가 있는지 확인하는 함수
-function isCharacterSearched() {
-    const info = JSON.parse(localStorage.getItem("info"));
-    return info && info.basicInfo && info.basicInfo.character_name;
+// 보스 파티 수를 가져오는 함수
+async function fetchBossCount() {
+    try {
+        const response = await fetch('/rooms/count');
+        const json = await response.json();
+        return json;
+    } catch (error) {
+        console.error('Failed to load boss count list:', error);
+        return {};
+    }
 }
 
 // bossContainer 요소 가져오기
 const bossContainer = document.getElementById("bossContainer");
 
 // 매칭 가능 보스 이미지를 동적으로 추가하는 함수
-function addBossImages() {
-    const characterSearched = isCharacterSearched(); // 현재 내 캐릭터
+function addBossImages(bossCntList) {
+    const bossContainer = document.getElementById("bossContainer");
+    bossContainer.innerHTML = ""; // 이전 내용을 지우고 새로 추가
+
     bossImages.forEach((imageName, index) => {
         const bossDiv = document.createElement("div");
         bossDiv.classList.add("col-md-3", "text-center", "mb-1");
@@ -57,14 +65,9 @@ function addBossImages() {
         button.style.padding = "0rem 0rem";
 
         if (window.location.href.includes('/info')) {
-            if (characterSearched) {
-                button.setAttribute("data-toggle", "modal");
-                button.setAttribute("data-target", "#bossModal");
-                button.addEventListener("click", () => updateModalContent(imageName));
-            } else {
-                button.classList.add("disabled");
-                button.disabled = true;
-            }
+            button.setAttribute("data-toggle", "modal");
+            button.setAttribute("data-target", "#bossModal");
+            button.addEventListener("click", () => updateModalContent(imageName));
         } else {
             button.classList.add("disabled");
             button.disabled = true;
@@ -85,18 +88,29 @@ function addBossImages() {
         );
 
         button.appendChild(imgContainer);
-
         const matchInfo = document.createElement("p");
-        matchInfo.innerHTML = `
-           <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
-           0 파티
-        `;
+
+        let fullName = `${difficulty} ${bossName}`;
+        let nowBossCnt = bossCntList[fullName]; // 보스 이름에 해당하는 파티 수 가져오기
+
+        if (nowBossCnt == null) {
+            matchInfo.innerHTML = `
+              <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
+              0 파티
+           `;
+        } else {
+            matchInfo.innerHTML = `
+            <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
+            ${nowBossCnt} 파티
+         `;
+        }
 
         bossDiv.appendChild(button);
         bossDiv.appendChild(matchInfo);
         bossContainer.appendChild(bossDiv);
     });
 }
+
 // 보스 이미지와 이름 모달에 추가하는 함수
 function updateModalContent(imageName) {
     const difficultyKey = imageName[1]; // 두번째 문자 (난이도)
@@ -118,10 +132,6 @@ function copyFlexContainerToModal() {
     const modalFlexContainer = document.getElementById("modalFlexContainer");
 
     if (flexContainer && modalFlexContainer) {
-        // 기존의 내용을 제거
-        modalFlexContainer.innerHTML = "";
-
-        // flex-container의 내용을 모달에 복사
         modalFlexContainer.innerHTML = flexContainer.innerHTML;
     }
 }
@@ -134,5 +144,9 @@ document.querySelectorAll(".btn-link").forEach(button => {
     });
 });
 
-// 페이지 로드 시 이미지 추가
-addBossImages();
+
+// DOM이 로드된 후 실행
+document.addEventListener('DOMContentLoaded', async function() {
+    const bossCntList = await fetchBossCount(); // await으로 무조건 대기
+    addBossImages(bossCntList); // 이후에 다 가져오고나서 추가
+});
