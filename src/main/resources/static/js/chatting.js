@@ -12,6 +12,9 @@ const nickname = info.basicInfo.character_name
 let roomStatus = true
 let partyInfo
 
+// 새로고침, 닫기, 페이지 이동 시 이벤트 핸들러 추가
+window.addEventListener('beforeunload', pageUnload);
+
 // 메세지를 보낼 때 헤더에 포함시킬 방번호 저장
 const connectHeaders = {'roomId' : `${roomId}`}
 
@@ -45,9 +48,6 @@ function receiveMessage(message){
 
         // 입장 인사말 출력
         printGreetingMessage(greetingMessage)
-
-        // 새로고침, 닫기, 페이지 이동 시 이벤트 핸들러 추가
-        window.addEventListener('beforeunload', pageUnload);
     }
     else if('exitMessage' in data){
         const flag = data.flag // 1 이면 일반 유저 퇴장, 2 이면 방장 퇴장
@@ -336,7 +336,8 @@ function refreshUser(){
 
 // 방장이 퇴장 시 실행 할 함수
 function exitLeader(exitMessage){
-    if(!alert(`방장 ${exitMessage}`)) location.href = '/'
+    console.log(alert(`방장 ${exitMessage}`))
+    location.href = '/'
 }
 
 // 채팅방 나갈 때 실행되는 함수
