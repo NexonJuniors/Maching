@@ -144,8 +144,8 @@
             <div class="modal-header">
                 <img id="modalBossImage" src="" alt="Boss Icon" class="img-fluid">
                 <div>
-                    <h5 id="modalBossTitle" class="modal-title"></h5>
-                    매칭인원 / 파티수
+                    <h2 id="modalBossTitle" class="modal-title"></h2>
+                    <h2 id="modalBossTitleCnt"></h2>
                 </div>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -157,12 +157,12 @@
                     <!-- 여기 내용은 JavaScript로 동적으로 추가됨 -->
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer footer-container">
                 <div class="container-btn">
-                    <button type="button" id="btnJoinPartyTrigger" class="btn btn-dark" data-toggle="modal" data-target="#joinPartyModal">매칭 참여</button>
+                    <button type="button" id="btnJoinPartyTrigger" class="btn btn-primary" data-toggle="modal" data-target="#joinPartyModal">매칭 참여</button>
                 </div>
                 <div class="container-btn">
-                    <button type="button" id="btnCreatePartyTrigger" class="btn btn-dark" data-toggle="modal" data-target="#createPartyModal">파티 생성</button>
+                    <button type="button" id="btnCreatePartyTrigger" class="btn btn-primary" data-toggle="modal" data-target="#createPartyModal">파티 생성</button>
                 </div>
             </div>
         </div>
@@ -180,7 +180,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <label for="joinMaximumPeople">최대 몇인 파티로 참가할까요?</label>
+                <label class="howToParty" for="joinMaximumPeople">최대 몇인 팟 참가를 원하시나요?</label>
                 <select id="joinMaximumPeople" class="form-control">
                     <option value=0>상관없음</option>
                     <option value=2>2인 파티</option>
@@ -189,13 +189,18 @@
                     <option value=5>5인 파티</option>
                     <option value=6>6인 파티</option>
                 </select>
-                <label for="joinMaximumPeople">현재 내 전투력 확인</label>
+                <br />
+                <label for="joinMaximumPeople" class="howToParty">현재 내 전투력 </label>
                 <span id="joinPower"></span>
-                <span id="joinPowerFormat"></span>
+                (<span id="joinPowerFormat"></span>) <span class="howToParty">으로 매칭에 참가합니다.</span>
             </div>
-            <div class="modal-footer">
-                <span><button type="button" id="btnJoinParty" class="btn btn-dark">매칭 참여</button></span>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            <div class="modal-footer footer-container">
+                <div class="container-btn">
+                    <span><button type="button" id="btnJoinParty" class="btn btn-custom">매칭 참여</button></span>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                </div>
             </div>
         </div>
     </div>
@@ -214,40 +219,45 @@
             <div class="modal-body">
                 <!-- 서버는 파티장의 서버로 선택 -->
                 <!-- 직업 주기 선택, 나중에 default는 파티장의 주기로 -->
-                <label for="partyNeedClassMinutesInfo" class="mt-3">파티원 극딜 주기</label>
+                <label for="partyNeedClassMinutesInfo" class="mt-3 howToParty">1. 파티원 극딜 주기 설정</label>
                 <select id="partyNeedClassMinutesInfo" class="form-control">
                     <option value="free">상관없음</option>
-                    <option value="2">2분 주기</option>
-                    <option value="3">3분 주기</option>
+                    <option value="2">2분 주기 구성</option>
+                    <option value="3">3분 주기 구성</option>
                 </select>
-
+                <br />
                 <!-- 최대 인원수 -->
-                <label for="createMaximumPeople" class="mt-3">최대 몇인 파티로 참가할까요?</label>
+                <label for="createMaximumPeople" class="mt-3 howToParty">2. 파티 구성 인원 설정</label>
                 <select id="createMaximumPeople" class="form-control">
                     <option value=0>상관없음</option>
-                    <option value=2>2인 파티</option>
-                    <option value=3>3인 파티</option>
-                    <option value=4>4인 파티</option>
-                    <option value=5>5인 파티</option>
-                    <option value=6>6인 파티</option>
+                    <option value=2>최대 2인</option>
+                    <option value=3>최대 3인</option>
+                    <option value=4>최대 4인</option>
+                    <option value=5>최대 5인</option>
+                    <option value=6>최대 6인</option>
                 </select>
-
+                <br />
                 <!-- 최소 전투력, 단 파티장의 전투력을 넘게 설정하지 못함.(못해도 파티장보다 쌔면 참여 가능 하단 뜻) -->
-                <label for="partyNeedPower" class="mt-3"></label>
-                최소 전투력 <p id="formattedPower"></p>
+                <label for="partyNeedPower" class="mt-3 howToParty">3. 요구 최소 전투력 설정 <br /> [ 기본:파티장의 80% | 최대:파티장 전투력 ]</label>
+                <p id="formattedPower"></p>
                 <input type="number" id="partyNeedPower" class="form-control" placeholder="최소 전투력 입력" required>
                 <!-- 포맷된 값을 표시할 요소 -->
-
+                <br />
                 <!-- 비숍 필요 유무 -->
-                <label for="partyNeedBishop" class="mt-3">비숍 필요 여부</label>
+                <label for="partyNeedBishop" class="mt-3 howToParty">4. 비숍 모집 여부(파티에 비숍이 더 필요한가요?)</label>
                 <select id="partyNeedBishop" class="form-control">
-                    <option value=0>비숍 필요 없음</option>
-                    <option value=1>비숍 필요</option>
+                    <option value=0>비숍이 더 필요하지 않아요</option>
+                    <option value=1>비숍이 필요해요</option>
                 </select>
+                <br />
             </div>
-            <div class="modal-footer">
-                <span><button type="button" id="btnCreateParty" class="btn btn-dark">파티 생성</button></span>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            <div class="modal-footer footer-container">
+                <div class="container-btn">
+                    <span><button type="button" id="btnCreateParty" class="btn btn-custom">파티 생성</button></span>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                </div>
             </div>
         </div>
     </div>
@@ -275,8 +285,8 @@
     let firstPowerStat = { stat_name: "전투력", stat_value: powerStat.stat_value }; // 초기 예시 데이터
         if (firstPowerStat) {
             const partyNeedPowerInput = document.getElementById('partyNeedPower');
-            partyNeedPowerInput.value = firstPowerStat.stat_value; // 초기 값 설정
-            document.getElementById('formattedPower').innerText = formatNumber(firstPowerStat.stat_value);
+            partyNeedPowerInput.value = Math.floor(firstPowerStat.stat_value * 0.8); // 초기값을 현재값의 20% 낮은 값으로 설정 소수점 버리기
+            document.getElementById('formattedPower').innerText = "전투력" + formatNumber(partyNeedPowerInput.value) + "이상 모집";
 
             partyNeedPowerInput.addEventListener('input', () => {
                 const value = Number(partyNeedPowerInput.value);
@@ -284,11 +294,11 @@
                 // 입력된 값이 firstPowerStat.stat_value보다 큰 경우 처리
                 if (value > firstPowerStat.stat_value) {
                     partyNeedPowerInput.value = firstPowerStat.stat_value; // 입력값을 원래 값으로 되돌림
-                    document.getElementById('formattedPower').innerText = formatNumber(firstPowerStat.stat_value);
+                    document.getElementById('formattedPower').innerText = "전투력" + formatNumber(firstPowerStat.stat_value) + "이상 모집";
                     alert('본인의 전투력보다 큰 값을 입력할 수 없습니다.'); // 사용자에게 알림
                 } else {
                     // 포맷된 값 업데이트
-                    document.getElementById('formattedPower').innerText = formatNumber(value);
+                    document.getElementById('formattedPower').innerText = "전투력" + formatNumber(value) + "이상 모집";
                 }
             });
         } else {

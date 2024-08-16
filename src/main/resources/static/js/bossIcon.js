@@ -67,7 +67,7 @@ function addBossImages(bossCntList) {
         if (window.location.href.includes('/info')) {
             button.setAttribute("data-toggle", "modal");
             button.setAttribute("data-target", "#bossModal");
-            button.addEventListener("click", () => updateModalContent(imageName));
+            button.addEventListener("click", () => updateModalContent(imageName, bossCntList)); // bossCntList 전달
         } else {
             button.classList.add("disabled");
             button.disabled = true;
@@ -111,21 +111,29 @@ function addBossImages(bossCntList) {
     });
 }
 
-// 보스 이미지와 이름 모달에 추가하는 함수
-function updateModalContent(imageName) {
-    const difficultyKey = imageName[1]; // 두번째 문자 (난이도)
-    const bossNameKey = imageName[2]; // 세번째 문자 (보스 이름)
+// 보스 이미지와 이름 모달에 추가하는 함수, 현재 명수도 추가
+function updateModalContent(imageName, bossCntList) {
+    const difficultyKey = imageName[1]; // 두 번째 문자 (난이도)
+    const bossNameKey = imageName[2]; // 세 번째 문자 (보스 이름)
+
     const difficulty = difficultyMapping[difficultyKey] || "Unknown";
     const bossName = bossNameMapping[bossNameKey] || "Unknown Boss";
+    let fullName = `${difficulty} ${bossName}`;
+
+    console.log("difficulty: ", difficulty); // 하드
+    console.log("bossName: ", bossName); // 하
 
     // 모달 내용 업데이트
     document.getElementById("modalBossImage").src = `${imgFolderPath}${imageName}`;
-    document.getElementById("modalBossTitle").innerText = `${difficulty} ${bossName}`;
+    document.getElementById("modalBossTitle").innerHTML = `${difficulty} ${bossName}`;
+
+    // 보스 파티 수 표시
+    let nowBossCnt = bossCntList[fullName] ?? 0; // 보스 파티 수가 없으면 0으로 설정
+    document.getElementById("modalBossTitleCnt").innerHTML = `${nowBossCnt} 파티 대기중!`;
 
     // flex-container의 내용을 모달에 복사
     copyFlexContainerToModal();
 }
-
 // flex-container(캐릭터정보)의 내용을 모달에 복사하는 함수
 function copyFlexContainerToModal() {
     const flexContainer = document.querySelector(".flex-container");
@@ -136,17 +144,16 @@ function copyFlexContainerToModal() {
     }
 }
 
-// 버튼 클릭 시 모달 내용 업데이트
-document.querySelectorAll(".btn-link").forEach(button => {
-    button.addEventListener("click", () => {
-        const imageName = button.querySelector("img").src.split('/').pop();
-        updateModalContent(imageName);
-    });
-});
-
-
 // DOM이 로드된 후 실행
 document.addEventListener('DOMContentLoaded', async function() {
     const bossCntList = await fetchBossCount(); // await으로 무조건 대기
     addBossImages(bossCntList); // 이후에 다 가져오고나서 추가
+
+    // 버튼 클릭 시 모달 내용 업데이트
+    document.querySelectorAll(".btn-link").forEach(button => {
+        button.addEventListener("click", () => {
+            const imageName = button.querySelector("img").src.split('/').pop();
+/*            updateModalContent(imageName, bossCntList); // bossCntList 전달*/
+        });
+    });
 });
