@@ -166,7 +166,7 @@
 .modal-footer {
     font-family: 'MaplestoryFontLight', sans-serif;
     display: flex;
-    justify-content: space-around; /* 두 버튼을 양 끝으로 배치 */
+    justify-content: space-around;
 }
 .modal-footer .container-btn {
     flex: 1!important; /* 버튼 컨테이너를 균등하게 배분 */
@@ -176,4 +176,19 @@
 .modal-footer .container-btn button {
     width: 100%; /* 버튼이 컨테이너의 전체 폭을 차지하도록 */
     height: 100%; /* 버튼이 컨테이너의 전체 높이를 차지하도록 */
+}
+
+.changeMatchingContainer {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    background-color: #FF9933; /*페페오렌지*/
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.matchingChangeThings{
+    display: flex;
+    justify-content: space-around;
+    flex: 1!important;
+    text-align: center;
 }

@@ -120,9 +120,6 @@ function updateModalContent(imageName, bossCntList) {
     const bossName = bossNameMapping[bossNameKey] || "Unknown Boss";
     let fullName = `${difficulty} ${bossName}`;
 
-    console.log("difficulty: ", difficulty); // 하드
-    console.log("bossName: ", bossName); // 하
-
     // 모달 내용 업데이트
     document.getElementById("modalBossImage").src = `${imgFolderPath}${imageName}`;
     document.getElementById("modalBossTitle").innerHTML = `${difficulty} ${bossName}`;

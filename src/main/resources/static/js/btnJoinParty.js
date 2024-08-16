@@ -46,7 +46,7 @@ async function joinParty(){
         stompClient.subscribe(`/room/${uuid}`, function(message){
             if(message.body > 0){ //-1이면 지금 대기중이 되는거 같음
                 stompClient.unsubscribe()
-                alert("조건에 맞는 채팅방에 참여!")
+                alert("조건에 맞는 채팅방에 참여!") //이부분 확인이후 페이지 넘기게 처리 가능?
                 localStorage.setItem("roomId", message.body)
                 localStorage.setItem("info", rawInfo)
                 location.href = `/chatroom`
@@ -66,6 +66,12 @@ async function joinParty(){
                 //보스 컨테이너 치우기
                 bossContainer.style.display = "none"; // 보스 아이콘 none
                 changeCancel.style.display = "none";
+
+                //보스 정보 요소 생성
+                const matchingContainer = document.getElementById("changeMatchingContainer");
+                matchingContainer.style.display = 'block'
+                let MatchingBossName = `${document.getElementById("modalBossTitle").innerText}`
+                document.getElementById("changeMatchingContainer").innerText=`${MatchingBossName} 파티에 매칭 중 입니다!`;
 
                // 버튼 요소 생성
                let btnCancel = document.createElement("button");
