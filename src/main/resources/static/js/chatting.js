@@ -15,9 +15,6 @@ let partyInfo
 // 메세지를 보낼 때 헤더에 포함시킬 방번호 저장
 const connectHeaders = {'roomId' : `${roomId}`}
 
-localStorage.removeItem("roomId")
-localStorage.removeItem("info")
-
 // JS 로드 시 바로 웹 소켓 연결 후 onConnected 함수 실행
 stompClient.connect({}, onConnected)
 
@@ -372,3 +369,8 @@ function formatNumber(number) {
     }
     return result;
 }
+
+setTimeout(() => {
+    localStorage.removeItem("roomId")
+    localStorage.removeItem("info")
+}, 2000); // 2초 대기

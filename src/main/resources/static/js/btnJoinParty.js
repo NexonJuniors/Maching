@@ -50,12 +50,16 @@ async function joinParty(){
 
         stompClient.subscribe(`/room/${uuid}`, function(message){
             if(message.body > 0){ //-1이면 지금 대기중이 되는거 같음
-                window.removeEventListener('beforeunload', beforeUnloadListener); // 채팅방에 참여한 경우 beforeunload 리스너 제거
-                stompClient.unsubscribe()
-                alert("조건에 맞는 채팅방에 참여!") //이부분 확인이후 페이지 넘기게 처리 가능?
-                localStorage.setItem("roomId", message.body)
-                localStorage.setItem("info", rawInfo)
-                location.href = `/chatroom`
+                document.getElementById('loadingSpinner').style.display = 'flex';
+                setTimeout(() => {
+                    window.removeEventListener('beforeunload', beforeUnloadListener); // 채팅방에 참여한 경우 beforeunload 리스너 제거
+                    stompClient.unsubscribe()
+                    localStorage.setItem("roomId", message.body)
+                    localStorage.setItem("info", rawInfo)
+                }, 500); // 2초 대기
+                setTimeout(() => {
+                    location.href = `/chatroom`;
+                }, 500); // 2초 대기
             }
             else {
                 document.getElementById("changeTitle").innerText="매칭중... 해당 페이지를 나가지 마세요.";
