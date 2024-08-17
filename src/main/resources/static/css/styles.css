@@ -304,9 +304,17 @@ yeti color {
     white-space: nowrap;
 }
 
+/* 툴팁이 보이도록 설정하는 클래스 */
+.tooltip-visible {
+    visibility: visible;
+    opacity: 1;
+}
+
 /* 이미지와 뱃지에 대한 툴팁 표시 */
 .badgeContainer-item:hover .tooltip,
 .skill-icon-container:hover .tooltip,
+.levelContainer:hover .tooltip,
+.forceContainer:hover .tooltip,
 .image-container:hover .tooltip {
     visibility: visible;
     opacity: 1;
@@ -324,6 +332,26 @@ yeti color {
 
 /* 컨테이너 스타일 */
 .badgeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+/* 컨테이너 스타일 */
+.forceContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+/* 컨테이너 스타일 */
+.levelContainer {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -355,4 +383,14 @@ yeti color {
 /* badgeContainer-item에 상대 위치 설정 이게 없어서 안나왔었음 */
 .badgeContainer-item {
     position: relative; /* 툴팁을 올바르게 표시하기 위해 상대 위치 설정 */
+}
+
+/* 레벨툴팁 스타일 */
+.levelContainer {
+    position: relative; /* 말풍선 위치 조정을 위한 상대 위치 */
+}
+
+/* 포스툴팁 스타일 */
+.forceContainer {
+    position: relative; /* 말풍선 위치 조정을 위한 상대 위치 */
 }

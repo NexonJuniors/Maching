@@ -42,7 +42,6 @@ async function fetchBossCount() {
         const json = await response.json();
         return json;
     } catch (error) {
-        console.error('Failed to load boss count list:', error);
         return {};
     }
 }
@@ -130,14 +129,37 @@ function updateModalContent(imageName, bossCntList) {
 
     // flex-container의 내용을 모달에 복사
     copyFlexContainerToModal();
+
+    // 캐릭터 레벨과 포스 정보 가져오기
+    const characterLevel = parseInt(document.getElementById("characterLevel").innerText); // 캐릭터 레벨
+    const arcaneForce = parseInt(document.getElementById("arcaneForce").innerText); // 아케인 포스
+    const authenticForce = parseInt(document.getElementById("authenticForce").innerText); // 어센틱 포스
+
+    // 레벨에 따른 툴팁 및 색상 적용
+    checkBossLevelToolTip(characterLevel, fullName);
+    // 포스에 따른 툴팁 및 색상 적용
+    if (forceAdvantage[fullName][1] === "아케인") {
+        checkBossForceToolTip(arcaneForce, fullName);
+    } else if (forceAdvantage[fullName][1] === "어센틱") {
+        checkBossForceToolTip(authenticForce, fullName);
+    } else if (forceAdvantage[fullName][1] === "없음"){
+        checkBossForceToolTip(-1, fullName);
+    }
 }
+
 // flex-container(캐릭터정보)의 내용을 모달에 복사하는 함수
 function copyFlexContainerToModal() {
     const flexContainer = document.querySelector(".flex-container");
     const modalFlexContainer = document.getElementById("modalFlexContainer");
 
     if (flexContainer && modalFlexContainer) {
-        modalFlexContainer.innerHTML = flexContainer.innerHTML;
+        modalFlexContainer.innerHTML = '';  // 기존 내용을 초기화
+
+        // flexContainer의 자식 요소들을 모달에 새로 생성하여 추가
+        Array.from(flexContainer.children).forEach(child => {
+            const clonedChild = child.cloneNode(true);  // 요소를 깊이 복사
+            modalFlexContainer.appendChild(clonedChild);
+        });
     }
 }
 
