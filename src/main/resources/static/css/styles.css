@@ -304,8 +304,9 @@ yeti color {
     white-space: nowrap;
 }
 
-/* 툴팁이 보이도록 설정하는 클래스 */
-.tooltip-visible {
+
+/* 툴팁 보이기 */
+.tooltip-trigger:hover .tooltip {
     visibility: visible;
     opacity: 1;
 }
@@ -385,12 +386,26 @@ yeti color {
     position: relative; /* 툴팁을 올바르게 표시하기 위해 상대 위치 설정 */
 }
 
-/* 레벨툴팁 스타일 */
-.levelContainer {
-    position: relative; /* 말풍선 위치 조정을 위한 상대 위치 */
+/* 이미지와 뱃지에 대한 툴팁 표시 */
+.tooltip-trigger {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
 }
 
-/* 포스툴팁 스타일 */
-.forceContainer {
-    position: relative; /* 말풍선 위치 조정을 위한 상대 위치 */
+.tooltip-trigger .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-trigger:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 툴팁 관련 스타일 */
+.levelContainer, .forceContainer {
+    position: relative; /* 툴팁의 위치를 조정하기 위해 상대 위치 설정 */
+    margin-bottom: 10px;
 }

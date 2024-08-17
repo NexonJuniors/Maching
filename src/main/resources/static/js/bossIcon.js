@@ -129,6 +129,7 @@ function updateModalContent(imageName, bossCntList) {
 
     // flex-container의 내용을 모달에 복사
     copyFlexContainerToModal();
+    modalAddTooltipTriggers();
 
     // 캐릭터 레벨과 포스 정보 가져오기
     const characterLevel = parseInt(document.getElementById("characterLevel").innerText); // 캐릭터 레벨
@@ -136,14 +137,14 @@ function updateModalContent(imageName, bossCntList) {
     const authenticForce = parseInt(document.getElementById("authenticForce").innerText); // 어센틱 포스
 
     // 레벨에 따른 툴팁 및 색상 적용
-    checkBossLevelToolTip(characterLevel, fullName);
+    modalCheckBossLevelToolTip(characterLevel, fullName);
     // 포스에 따른 툴팁 및 색상 적용
     if (forceAdvantage[fullName][1] === "아케인") {
-        checkBossForceToolTip(arcaneForce, fullName);
+        modalCheckBossForceToolTip(arcaneForce, fullName);
     } else if (forceAdvantage[fullName][1] === "어센틱") {
-        checkBossForceToolTip(authenticForce, fullName);
+        modalCheckBossForceToolTip(authenticForce, fullName);
     } else if (forceAdvantage[fullName][1] === "없음"){
-        checkBossForceToolTip(-1, fullName);
+        modalCheckBossForceToolTip(-1, fullName);
     }
 }
 

@@ -60,42 +60,40 @@ const forceAdvantage = {
     "익스트림 칼로스": ["285","어센틱","125%","490"],
 };
 
-function checkBossLevelToolTip(characterLevel, bossName) {
+// 모달 밖은 아럐 3개의 함수에서 #modalFlexContainer이거만 빼면됨
+
+// 모달안에서의 경우
+function modalCheckBossLevelToolTip(characterLevel, bossName) {
     const bossLevel = parseInt(forceAdvantage[bossName][0]);
     const levelDifference = characterLevel - bossLevel;
     let tooltipText = "";
     let color = "";
 
     if (levelDifference >= 5) {
-        tooltipText = "120% (레벨 차이: +5 이상)";
-        color = "blue"; // 파란색
+        tooltipText = "120%";
+        color = "blue";
     } else if (levelDifference >= 0 && levelDifference < 5) {
         tooltipText = levelAdvantageMapping[levelDifference.toString()] || "Unknown";
-        color = "orange"; // 주황색
+        color = "orange";
     } else if (levelDifference > -20 && levelDifference < 0) {
         tooltipText = levelAdvantageMapping[levelDifference.toString()] || "Unknown";
-        color = "red"; // 빨간색
+        color = "red";
     } else if (levelDifference <= -20) {
-        tooltipText = "불가 (레벨 차이: -20 이하)";
-        color = "black"; // 검은색
+        tooltipText = "불가";
+        color = "black";
     }
 
-    const modalLevelElement = document.querySelector('#modalFlexContainer #characterLevel');
-    const levelContainer = document.createElement('div');
-    levelContainer.className = 'levelContainer';
+    const levelElement = document.querySelector('#modalFlexContainer #characterLevel');
+    if (levelElement) {
+        levelElement.style.color = color;
 
-    if (modalLevelElement) {
-        modalLevelElement.style.color = color;
-
-        const tooltip = createTooltip(`보스와의 레벨 차이: ${levelDifference}<br>데미지 증가율: ${tooltipText}`);
-        levelContainer.appendChild(tooltip);
-        // 모달의 flex-container에 툴팁 추가
-        document.querySelector('#modalFlexContainer').appendChild(levelContainer);
+        const tooltip = createTooltip(`보스와의 레벨 차이: ${levelDifference}<br>데미지 비율: ${tooltipText}`);
+        levelElement.appendChild(tooltip);
     }
 }
 
-function checkBossForceToolTip(characterForce, bossName) {
-    //characterForce는 숫자.
+// 모달안에서의 경우
+function modalCheckBossForceToolTip(characterForce, bossName) {
     const advantageBossInfo = forceAdvantage[bossName];
     let tooltipText = "";
     let color = "";
@@ -105,41 +103,58 @@ function checkBossForceToolTip(characterForce, bossName) {
     } else {
         const bossForceRequired = parseInt(advantageBossInfo[3]);
         tooltipText = characterForce >= bossForceRequired
-            ? `보스 포스 종류: ${advantageBossInfo[1]}<br>포뻥 요구 포스: ${bossForceRequired}<br>포뻥 데미지 증가율: ${advantageBossInfo[2]}`
+            ? `보스 포스 종류: ${advantageBossInfo[1]}<br>포뻥 요구 포스: ${bossForceRequired}<br>포뻥 데미지 비율: ${advantageBossInfo[2]}`
             : `보스 포스 종류: ${advantageBossInfo[1]}<br>포뻥 요구 포스: ${bossForceRequired}<br>포뻥 충족하지 못함`;
         color = characterForce >= bossForceRequired ? "blue" : "red";
     }
 
-    let modalForceElement = ''
-    let forceContainer = ''
-    if(advantageBossInfo[1] == "아케인"){
+    let modalForceElement = '';
+    if (advantageBossInfo[1] === "아케인") {
         modalForceElement = document.querySelector('#modalFlexContainer #arcaneForce');
-        forceContainer = document.createElement('div');
-    } else if(advantageBossInfo[1] == "어센틱"){
+    } else if (advantageBossInfo[1] === "어센틱") {
         modalForceElement = document.querySelector('#modalFlexContainer #authenticForce');
-        forceContainer = document.createElement('div');
     }
 
     if (modalForceElement) {
-        forceContainer.className = 'forceContainer';
         modalForceElement.style.color = color;
 
         const tooltip = createTooltip(tooltipText);
-        forceContainer.appendChild(tooltip);
-        // 모달의 flex-container에 툴팁 추가
-        document.querySelector('#modalFlexContainer').appendChild(forceContainer);
+        modalForceElement.appendChild(tooltip);
+    }
+
+    // 보스 레벨과 요구 포스 정보를 modal-header에 추가
+    const modalHeader = document.querySelector('#bossModalHeader');
+    if (modalHeader) {
+        let infoDiv = modalHeader.querySelector('.boss-info');
+        if (infoDiv) {
+            infoDiv.innerHTML = "";
+        } else {
+            infoDiv = document.createElement('div');
+            infoDiv.className = 'boss-info';
+            modalHeader.appendChild(infoDiv);
+        }
+        infoDiv.innerHTML = `<strong>보스 레벨:</strong> ${forceAdvantage[bossName][0]}<br><strong>포스 요구:</strong> ${forceAdvantage[bossName][3] || '없음'}`;
     }
 }
 
-//모달이 닫힐 때 툴팁과 이벤트 리스너를 제거하여 메모리 누수를 방지
+// 모달안에서의 툴팁 클래스 추가
+function modalAddTooltipTriggers() {
+    const tooltipElements = [
+        '#modalFlexContainer #characterLevel',
+        '#modalFlexContainer #arcaneForce',
+        '#modalFlexContainer #authenticForce'
+    ];
+
+    tooltipElements.forEach(selector => {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.classList.add('tooltip-trigger');
+        }
+    });
+}
+
+// 모달이 닫힐 때 툴팁과 이벤트 리스너를 제거하여 메모리 누수를 방지
 document.getElementById('bossModal').addEventListener('hidden.bs.modal', () => {
     const modalFlexContainer = document.getElementById('modalFlexContainer');
     modalFlexContainer.innerHTML = ''; // 모든 내용 제거
 });
-
-/*function checkBossForceLevelInChatting(bossName,userName){
-    // 보스 이름을 받아서
-    // 해당 보스의 포뻥과 레벨뻥 기준을 보고
-    // 현재 채팅방의 캐릭터마다 포뻥 레벨뻥 여부 출력해준다
-    // 채팅방에서도 확인 가능하도록 → 더 높으면 더 높은대로 파란글씨로 보여주면 되겠네 → 올리면 토글로 포뻥 레벨뻥 받는거 얼마인지 확인가능하도록
-}*/
