@@ -143,3 +143,80 @@
 .stat-item span:last-child {
 
 }
+
+.modal-title{
+    font-family: 'MaplestoryFontBold', sans-serif;
+    font-size: 2em;
+    font-weight: 900;
+    color: var(--primary);
+}
+.howToParty{
+    color: var(--primary);
+    font-family: 'MaplestoryFontLight', sans-serif;
+    font-size: 1.1em;
+}
+.modal-header{
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+.modal-content{
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+.modal-footer {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    display: flex;
+    justify-content: space-around;
+}
+.modal-footer .container-btn {
+    flex: 1!important; /* 버튼 컨테이너를 균등하게 배분 */
+    text-align: center; /* 버튼을 중앙에 위치 */
+}
+
+.modal-footer .container-btn button {
+    width: 100%; /* 버튼이 컨테이너의 전체 폭을 차지하도록 */
+    height: 100%; /* 버튼이 컨테이너의 전체 높이를 차지하도록 */
+}
+
+.changeMatchingContainer {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    background-color: #FF9933; /*페페오렌지*/
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.matchingChangeThings{
+    display: flex;
+    justify-content: space-around;
+    flex: 1!important;
+    text-align: center;
+}
+
+/* CSS에 추가할 전체 화면 로딩 스피너 스타일 */
+#loadingSpinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8); /* 배경색과 투명도 조정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* 페이지의 다른 요소들 위에 오도록 설정 */
+}
+
+.spinner {
+    border: 16px solid #f3f3f3; /* 배경색 */
+    border-top: 16px solid #3498db; /* 스피너의 색상 */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

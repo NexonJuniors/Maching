@@ -39,17 +39,27 @@ async function joinParty(){
         isMatchingStarted: isMatchingStarted // 매칭 시작 플래그
     }
 
+    let beforeUnloadListener = function(event) {
+        const characterName = document.getElementById("characterName").innerText;
+        waitingCancelMatching(characterName); // 비동기적으로 이걸 가장 후순위로 처리 가능
+    };
+
     stompClient.connect({}, function(frame) {
         uuid = uuidv4();
         connectHeaders.uuId = `${uuid}`
 
         stompClient.subscribe(`/room/${uuid}`, function(message){
             if(message.body > 0){ //-1이면 지금 대기중이 되는거 같음
-                stompClient.unsubscribe()
-                alert("조건에 맞는 채팅방에 참여!")
-                localStorage.setItem("roomId", message.body)
-                localStorage.setItem("info", rawInfo)
-                location.href = `/chatroom`
+                document.getElementById('loadingSpinner').style.display = 'flex';
+                setTimeout(() => {
+                    window.removeEventListener('beforeunload', beforeUnloadListener); // 채팅방에 참여한 경우 beforeunload 리스너 제거
+                    stompClient.unsubscribe()
+                    localStorage.setItem("roomId", message.body)
+                    localStorage.setItem("info", rawInfo)
+                }, 500); // 2초 대기
+                setTimeout(() => {
+                    location.href = `/chatroom`;
+                }, 500); // 2초 대기
             }
             else {
                 document.getElementById("changeTitle").innerText="매칭중... 해당 페이지를 나가지 마세요.";
@@ -67,6 +77,12 @@ async function joinParty(){
                 bossContainer.style.display = "none"; // 보스 아이콘 none
                 changeCancel.style.display = "none";
 
+                //보스 정보 요소 생성
+                const matchingContainer = document.getElementById("changeMatchingContainer");
+                matchingContainer.style.display = 'block'
+                let MatchingBossName = `${document.getElementById("modalBossTitle").innerText}`
+                document.getElementById("changeMatchingContainer").innerText=`${MatchingBossName} 파티에 매칭 중 입니다!`;
+
                // 버튼 요소 생성
                let btnCancel = document.createElement("button");
                btnCancel.innerText = "매칭 취소 하기";
@@ -75,18 +91,19 @@ async function joinParty(){
                document.getElementById("changeCancelBtn").appendChild(btnCancel);
                isMatchingStardedBadge();
 
-                window.addEventListener('beforeunload', function(event) {
-                    /*event.preventDefault(); event.returnValue = ''; // 크로스브라우저 호환/그냥 이거 주석하고 무조건 취소로 변경 */
-                    const characterName = document.getElementById("characterName").innerText;
-                    if (characterName && stompClient && stompClient.connected) {
-                        stompClient.send("/app/cancelMatching", { characterName: characterName });
-                    }
-                });
+                // beforeunload 이벤트 리스너 추가
+                window.addEventListener('beforeunload', beforeUnloadListener);
             }
         })
 
         onConnected()
     });
+
+    async function waitingCancelMatching(characterName) {
+        if (characterName && stompClient && stompClient.connected) {
+            stompClient.send("/app/cancelMatching", { characterName: characterName });
+        }
+    }
 
     function onConnected(){
         stompClient.send("/app/joinParty",connectHeaders);
