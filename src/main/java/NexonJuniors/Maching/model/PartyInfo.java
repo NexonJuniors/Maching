@@ -15,4 +15,5 @@ public class PartyInfo {
     private List<CharacterInfo> users = new ArrayList<>();
     private PartyRequirementInfo partyRequirementInfo; // 파티 필요조건 클래스
     private String bossImg;
+    private boolean recruitment;
 }
