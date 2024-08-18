@@ -304,9 +304,18 @@ yeti color {
     white-space: nowrap;
 }
 
+
+/* 툴팁 보이기 */
+.tooltip-trigger:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
 /* 이미지와 뱃지에 대한 툴팁 표시 */
 .badgeContainer-item:hover .tooltip,
 .skill-icon-container:hover .tooltip,
+.levelContainer:hover .tooltip,
+.forceContainer:hover .tooltip,
 .image-container:hover .tooltip {
     visibility: visible;
     opacity: 1;
@@ -324,6 +333,26 @@ yeti color {
 
 /* 컨테이너 스타일 */
 .badgeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+/* 컨테이너 스타일 */
+.forceContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+/* 컨테이너 스타일 */
+.levelContainer {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -355,4 +384,28 @@ yeti color {
 /* badgeContainer-item에 상대 위치 설정 이게 없어서 안나왔었음 */
 .badgeContainer-item {
     position: relative; /* 툴팁을 올바르게 표시하기 위해 상대 위치 설정 */
+}
+
+/* 이미지와 뱃지에 대한 툴팁 표시 */
+.tooltip-trigger {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip-trigger .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-trigger:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 툴팁 관련 스타일 */
+.levelContainer, .forceContainer {
+    position: relative; /* 툴팁의 위치를 조정하기 위해 상대 위치 설정 */
+    margin-bottom: 10px;
 }
