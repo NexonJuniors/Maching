@@ -1,5 +1,5 @@
 document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
-document.getElementById('btnExit').addEventListener('click', function(){location.href = '/'})
+document.getElementById('btnExit').addEventListener('click', function(){if(confirm("채팅방을 나가겠습니까?")) location.href = '/'})
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
