@@ -439,6 +439,8 @@ function printStat(event){
     const title = document.createElement('p')
     title.innerHTML = 'STAT'
     title.classList.add('mb-2')
+    title.style.fontWeight = '800'
+    title.color = '#8A8A8A'
     statContainer.appendChild(title)
 
     // 주 스탯 추가
