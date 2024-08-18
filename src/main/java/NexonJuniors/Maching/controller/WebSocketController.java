@@ -179,4 +179,13 @@ public class WebSocketController {
                 exitRoomDto
         );
     }
+
+    // 모집완료 기능
+    @MessageMapping("/successRecruitment")
+    public void successRecruitment(@Header("roomId") Long roomId, String nickname){
+        simpMessagingTemplate.convertAndSend(
+                String.format("/room/%d",roomId),
+                webSocketUtil.successRecruitment(roomId, nickname)
+        );
+    }
 }
