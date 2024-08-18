@@ -1,5 +1,6 @@
 document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
 document.getElementById('btnExit').addEventListener('click', function(){if(confirm("채팅방을 나가겠습니까?")) location.href = '/'})
+document.getElementById('message').addEventListener('keyup', pressEnter)
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
@@ -597,8 +598,16 @@ function printBasic(event){
     loadBasic(partyInfo.users[`${idx - 1}`], idx)
 }
 
+// 해당 스탯의 값을 가져와주는 함수
 function updateStat(statInfo, statName){
     return statInfo.final_stat.find(stat => stat.stat_name === `${statName}`).stat_value
+}
+
+// 채팅을 입력하고 엔터키를 눌렀을 때 실행되는 함수
+function pressEnter(event){
+    const input = document.getElementById('message')
+    if(input.value != null && input.value != '' && event.keyCode === 13)
+        document.getElementById('btnSendMessage').click()
 }
 
 
