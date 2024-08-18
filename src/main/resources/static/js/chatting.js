@@ -408,6 +408,7 @@ function createUserProfile(userId){
 function printStat(event){
     nowUser = event.target
 
+    // user1 의 자식 요소가 클릭 되었을 수 있으므로 user1 을 찾음
     if(!nowUser.classList.contains('user')){
         nowUser = nowUser.parentNode
         while(!nowUser.classList.contains('user')){
@@ -415,10 +416,12 @@ function printStat(event){
         }
     }
 
+    // 유저가 몇 번 째 유저 인지 구해서 해당 유저의 스탯 정보 가져옴
     const idx = nowUser.id.replace('user', '')
     const user = partyInfo.users[`${idx - 1}`]
     const statInfo = user.statInfo
 
+    // 기존 이벤트 핸들러 제거
     nowUser.removeEventListener('click', printStat)
 
     nowUser.innerHTML = ''
@@ -546,7 +549,7 @@ function printStat(event){
     force.appendChild(spanAuthenticTitle)
     force.appendChild(spanAuthentic)
 
-    // flexItem 빼고 statContainer 바로 넣으면 크기대로 조절 되긴함
+    // flexItem 빼고 statContainer 바로 넣어도 보기
     statContainer.appendChild(force)
 
     flexItem.appendChild(statContainer)
@@ -559,6 +562,7 @@ function printStat(event){
 function printHexa(event){
     nowUser = event.target
 
+    // user1 의 자식 요소가 클릭 되었을 수 있으므로 user1 을 찾음
     if(!nowUser.classList.contains('user')){
         nowUser = nowUser.parentNode
         while(!nowUser.classList.contains('user')){
@@ -566,6 +570,7 @@ function printHexa(event){
         }
     }
 
+    // 기존 이벤트 핸들러 제거
     nowUser.removeEventListener('click', printHexa)
     nowUser.innerHTML = ''
 
@@ -591,10 +596,12 @@ function printHexa(event){
 
     const hexaCoreContainer = document.createElement('div')
 
+    // 헥사 스킬 정보와 헥사 스킬 이미지 경로 가져오기
     const hexaSkillInfo = info.hexaSkillInfo
     const hexaSkillEquipment = hexaSkillInfo.character_hexa_core_equipment
     const hexaSkillImgFolderPath = "../static/image/skillIcon/"
 
+    // 헥사 스킬 개수 만큼 반복
     for(let idx in hexaSkillEquipment){
         const hexaCoreInfo = document.createElement('div')
         hexaCoreInfo.classList.add('hexa-core-info')
@@ -604,14 +611,17 @@ function printHexa(event){
 
         const coreNames = hexaSkillEquipment[idx].hexa_core_name
 
+        // 스킬 하나에 최대 세 가지 버전이 있는 경우가 있음 그 경우도 각각 반복하면서 출력
         for(let coreName of coreNames.split('/')){
             const skillIconContainer = document.createElement('div')
             skillIconContainer.classList.add('skill-icon-container')
 
+            // 스킬 이미지 추가
             const hexaImg = document.createElement('img')
             hexaImg.classList.add('skill-icon')
             hexaImg.src = hexaSkillImgFolderPath + coreName.replace(' ', '') + '.png'
 
+            // 툴팁 추가
             const tooltip = document.createElement('div')
             tooltip.classList.add('tooltip')
             tooltip.innerHTML = `[${hexaSkillEquipment[idx].hexa_core_type.replace(' 코어', '')}]<br>${hexaSkillEquipment[idx].hexa_core_name}`
@@ -622,6 +632,7 @@ function printHexa(event){
             skillIcons.appendChild(skillIconContainer)
         }
 
+        // 스킬 레벨 추가
         const skillLevel = document.createElement('div')
         skillLevel.classList.add('skill-level')
         skillLevel.innerText = `Lv.${hexaSkillEquipment[idx].hexa_core_level}`
