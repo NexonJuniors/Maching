@@ -562,13 +562,14 @@ function printStat(event){
 function printHexa(event){
     nowUser = event.target
 
-    // user1 의 자식 요소가 클릭 되었을 수 있으므로 user1 을 찾음
+    // user[idx] 의 자식 요소가 클릭 되었을 수 있으므로 user[idx] 을 찾음
     if(!nowUser.classList.contains('user')){
         nowUser = nowUser.parentNode
         while(!nowUser.classList.contains('user')){
             nowUser = nowUser.parentNode
         }
     }
+
 
     // 기존 이벤트 핸들러 제거
     nowUser.removeEventListener('click', printHexa)
@@ -597,7 +598,10 @@ function printHexa(event){
     const hexaCoreContainer = document.createElement('div')
 
     // 헥사 스킬 정보와 헥사 스킬 이미지 경로 가져오기
-    const hexaSkillInfo = info.hexaSkillInfo
+    // 유저가 몇 번 째 유저 인지 구해서 해당 유저의 스킬 정보 가져옴
+    const idx = nowUser.id.replace('user', '')
+    const user = partyInfo.users[`${idx - 1}`]
+    const hexaSkillInfo = user.hexaSkillInfo
     const hexaSkillEquipment = hexaSkillInfo.character_hexa_core_equipment
     const hexaSkillImgFolderPath = "../static/image/skillIcon/"
 
@@ -619,7 +623,7 @@ function printHexa(event){
             // 스킬 이미지 추가
             const hexaImg = document.createElement('img')
             hexaImg.classList.add('skill-icon')
-            hexaImg.src = hexaSkillImgFolderPath + coreName.replace(' ', '') + '.png'
+            hexaImg.src = hexaSkillImgFolderPath + coreName.replace(/\s/g, '') + '.png'
 
             // 툴팁 추가
             const tooltip = document.createElement('div')
