@@ -1,5 +1,5 @@
 document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
-document.getElementById('btnExit').addEventListener('click', function(){location.href = '/'})
+document.getElementById('btnExit').addEventListener('click', function(){if(confirm("채팅방을 나가겠습니까?")) location.href = '/'})
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
@@ -10,7 +10,11 @@ if(info == null) location.href = '/'
 
 const nickname = info.basicInfo.character_name
 let roomStatus = true
+let recruitment = true
 let partyInfo
+
+// 새로고침, 닫기, 페이지 이동 시 이벤트 핸들러 추가
+window.addEventListener('beforeunload', pageUnload);
 
 // 메세지를 보낼 때 헤더에 포함시킬 방번호 저장
 const connectHeaders = {'roomId' : `${roomId}`}
@@ -32,6 +36,10 @@ function receiveMessage(message){
         // 파티 조건 화면에 출력
         loadPartyInfo(partyInfo.bossName, partyInfo.bossImg, partyInfo.maximumPeople, partyInfo.partyRequirementInfo)
 
+        // 모집 완료 버튼 생성
+        if(partyInfo.partyRequirementInfo.partyLeader == nickname && document.getElementById('btnSuccessRecruitment') == null && recruitment)
+            createBtnSuccessRecruitment()
+
         const users = partyInfo.users
 
         // 유저 리스트 정보 출력
@@ -42,9 +50,6 @@ function receiveMessage(message){
 
         // 입장 인사말 출력
         printGreetingMessage(greetingMessage)
-
-        // 새로고침, 닫기, 페이지 이동 시 이벤트 핸들러 추가
-        window.addEventListener('beforeunload', pageUnload);
     }
     else if('exitMessage' in data){
         const flag = data.flag // 1 이면 일반 유저 퇴장, 2 이면 방장 퇴장
@@ -58,6 +63,12 @@ function receiveMessage(message){
             roomStatus = false
             exitLeader(exitMessage)
         }
+    }
+    else if('recruitmentMessage' in data){
+        document.getElementById('recruitmentStatus').innerText = `파티 상태 : 모집 완료`
+        const newChat = document.createElement('p')
+        newChat.innerText = data.recruitmentMessage
+        document.getElementById("outputContainer").appendChild(newChat)
     }
     else{
         printMessage(data.sender, data.time, data.message)
@@ -116,6 +127,7 @@ function loadPartyInfo(bossName, bossImg, maximumPeople, partyRequirementInfo){
     document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'}주기)`
     document.getElementById('partyNeedPower').innerText = `최소 전투력 : ${formatNumber(partyNeedPower)}`
     document.getElementById('partyNeedBishop').innerText = `비숍 모집 : ${partyNeedBishop == 1 ? 'O' : 'X'}`
+    document.getElementById('recruitmentStatus').innerText = `파티 상태 : 모집 중`
 }
 
 // 길드, 캐릭터 이름, 레벨 등 기본 정보를 화면에 표시
@@ -152,6 +164,130 @@ function loadBasic(user, idx){
 
     document.getElementById(`tooltip${idx}`).innerText = `내 주스탯은 ${classMainStatInfo}`
     document.getElementById(`badge${idx}`).setAttribute('src', mainStatImgSrc)
+}
+
+// 모집 완료 버튼 생성 함수
+function createBtnSuccessRecruitment(){
+    const bossInfo = document.getElementById('bossInfo')
+    const btnSuccessRecruitment = document.createElement('button')
+
+    btnSuccessRecruitment.id = 'btnSuccessRecruitment'
+    btnSuccessRecruitment.addEventListener('click', successRecruitment)
+    btnSuccessRecruitment.innerText = '모집완료'
+
+    bossInfo.appendChild(btnSuccessRecruitment)
+}
+
+// TODO 스탯, 헥사 스킬 등 자세한 정보 로딩 함수 구현
+function loadDetails(user, idx){
+
+}
+
+// 입장 인사말 출력 함수
+function printGreetingMessage(greetingMessage){
+    const newChat = document.createElement("p")
+    newChat.className = 'greetingMessage'
+    newChat.innerText = greetingMessage
+    document.getElementById("outputContainer").appendChild(newChat)
+}
+
+// 보내기 버튼을 눌렀을 때 채팅을 보내는 함수
+function sendMessage(){
+    const input = document.getElementById('message')
+
+    stompClient.send('/app/chatting', {},
+    JSON.stringify({
+        'roomId' : roomId,
+        'sender' : nickname,
+        'message': input.value
+    }))
+}
+
+// 채팅을 보냈을 때 채팅 창에 메세지 출력하는 함수
+function printMessage(sender, time, message){
+    document.getElementById('message').value = ''
+    const outputContainer = document.getElementById('outputContainer')
+
+    const newMessage = document.createElement('p')
+    newMessage.innerText = `${sender}: ${message}(${time})`
+    newMessage.className = 'dialog'
+
+    outputContainer.appendChild(newMessage)
+}
+
+// 퇴장 메세지를 채팅방에 출력하는 함수
+function printExitMessage(exitMessage){
+    const newChat = document.createElement("p")
+    newChat.className = 'ExitMessage'
+    newChat.innerText = exitMessage
+    document.getElementById("outputContainer").appendChild(newChat)
+}
+
+// 일반 유저 퇴장 시 실행 할 함수 ( 유저 리스트 갱신 및 퇴장 메세지 출력 )
+function exitGeneral(exitMessage){
+    printExitMessage(exitMessage)
+    refreshUser()
+}
+
+// 채팅방 유저 갱신하는 함수
+function refreshUser(){
+    loadBasicImg()
+    const users = partyInfo.users
+    // 유저 리스트 정보 출력
+    for(let i = 0; i < users.length; i++){
+        const user = users[i]
+        loadBasic(user, i + 1)
+    }
+}
+
+// 방장이 퇴장 시 실행 할 함수
+function exitLeader(exitMessage){
+    console.log(alert(`방장 ${exitMessage}`))
+    location.href = '/'
+}
+
+// 채팅방 나갈 때 실행되는 함수
+function exitRoom(){
+    if(roomStatus) stompClient.send('/app/exitRoom', connectHeaders, `${nickname}`)
+
+    location.href = '/'
+}
+
+// 새로고침, 페이지 이동, 브라우저 X 버튼 클릭 시 실행 될 함수
+function pageUnload(){
+    if (stompClient && stompClient.connected) exitRoom()
+}
+
+//
+function successRecruitment(){
+    if(confirm("파티원 모집을 완료하겠습니까?")) {
+        stompClient.send('/app/successRecruitment', connectHeaders, nickname)
+
+        const btnSuccessRecruitment = document.getElementById('btnSuccessRecruitment')
+        document.getElementById('bossInfo').removeChild(btnSuccessRecruitment)
+    }
+}
+
+// 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
+function getImagePath(basePath, fileName, extension = 'png') {
+    return `${basePath}${fileName}.${extension}`;
+}
+
+// 숫자를 만, 억 단위로 포맷하는 함수
+function formatNumber(number) {
+    if (number === 0) return '0';
+    const units = ['', '만', '억'];
+    let unitIndex = 0;
+    let result = '';
+    while (number > 0) {
+        const part = number % 10000;
+        if (part > 0) {
+            result = part + units[unitIndex] + result;
+        }
+        number = Math.floor(number / 10000);
+        unitIndex++;
+    }
+    return result;
 }
 
 function createUserProfile(userId){
@@ -267,107 +403,6 @@ function createUserProfile(userId){
     flexItemDiv.appendChild(badgeContainerDiv);
 
     nowUser.appendChild(flexItemDiv);
-}
-
-// TODO 스탯, 헥사 스킬 등 자세한 정보 로딩 함수 구현
-function loadDetails(user, idx){
-
-}
-
-// 입장 인사말 출력 함수
-function printGreetingMessage(greetingMessage){
-    const newChat = document.createElement("p")
-    newChat.className = 'greetingMessage'
-    newChat.innerText = greetingMessage
-    document.getElementById("outputContainer").appendChild(newChat)
-}
-
-// 보내기 버튼을 눌렀을 때 채팅을 보내는 함수
-function sendMessage(){
-    const input = document.getElementById('message')
-
-    stompClient.send('/app/chatting', {},
-    JSON.stringify({
-        'roomId' : roomId,
-        'sender' : nickname,
-        'message': input.value
-    }))
-}
-
-// 채팅을 보냈을 때 채팅 창에 메세지 출력하는 함수
-function printMessage(sender, time, message){
-    document.getElementById('message').value = ''
-    const outputContainer = document.getElementById('outputContainer')
-
-    const newMessage = document.createElement('p')
-    newMessage.innerText = `${sender}: ${message}(${time})`
-    newMessage.className = 'dialog'
-
-    outputContainer.appendChild(newMessage)
-}
-
-// 퇴장 메세지를 채팅방에 출력하는 함수
-function printExitMessage(exitMessage){
-    const newChat = document.createElement("p")
-    newChat.className = 'ExitMessage'
-    newChat.innerText = exitMessage
-    document.getElementById("outputContainer").appendChild(newChat)
-}
-
-// 일반 유저 퇴장 시 실행 할 함수 ( 유저 리스트 갱신 및 퇴장 메세지 출력 )
-function exitGeneral(exitMessage){
-    printExitMessage(exitMessage)
-    refreshUser()
-}
-
-// 채팅방 유저 갱신하는 함수
-function refreshUser(){
-    loadBasicImg()
-    const users = partyInfo.users
-    // 유저 리스트 정보 출력
-    for(let i = 0; i < users.length; i++){
-        const user = users[i]
-        loadBasic(user, i + 1)
-    }
-}
-
-// 방장이 퇴장 시 실행 할 함수
-function exitLeader(exitMessage){
-    if(!alert(`방장 ${exitMessage}`)) location.href = '/'
-}
-
-// 채팅방 나갈 때 실행되는 함수
-function exitRoom(){
-    if(roomStatus) stompClient.send('/app/exitRoom', connectHeaders, `${nickname}`)
-
-    location.href = '/'
-}
-
-// 새로고침, 페이지 이동, 브라우저 X 버튼 클릭 시 실행 될 함수
-function pageUnload(){
-    if (stompClient && stompClient.connected) exitRoom()
-}
-
-// 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
-function getImagePath(basePath, fileName, extension = 'png') {
-    return `${basePath}${fileName}.${extension}`;
-}
-
-// 숫자를 만, 억 단위로 포맷하는 함수
-function formatNumber(number) {
-    if (number === 0) return '0';
-    const units = ['', '만', '억'];
-    let unitIndex = 0;
-    let result = '';
-    while (number > 0) {
-        const part = number % 10000;
-        if (part > 0) {
-            result = part + units[unitIndex] + result;
-        }
-        number = Math.floor(number / 10000);
-        unitIndex++;
-    }
-    return result;
 }
 
 setTimeout(() => {
