@@ -2,6 +2,7 @@ package NexonJuniors.Maching.Matching;
 
 import NexonJuniors.Maching.chatting.EnterRoomDto;
 import NexonJuniors.Maching.chatting.ExitRoomDto;
+import NexonJuniors.Maching.chatting.SuccessRecruitmentDto;
 import NexonJuniors.Maching.excption.api.ApiException;
 import NexonJuniors.Maching.excption.api.ApiExceptionCode;
 import NexonJuniors.Maching.model.*;
@@ -114,6 +115,7 @@ public class WebSocketUtil {
         partyInfo.setMaximumPeople(maximumPeople);
         partyInfo.setPartyRequirementInfo(partyRequirementInfo);
         partyInfo.getUsers().add(characterInfo);
+        partyInfo.setRecruitment(true);
 
         // 새로운 방을 만들어 파티 정보 등록
         rooms.put(roomId, partyInfo);
@@ -306,7 +308,13 @@ public class WebSocketUtil {
     // 파티조건 알고리즘 함수 -> 이걸로 findUser와 findRoom에서 유저가 방에 들어갈 수 있는지 체크를 해준다
     private boolean isUserMatchPartyRequirement(MatchingUser matchingUser, PartyInfo partyInfo) {
 
-        // 0. 파티의 서버와 유저의 서버가 같은지 확인
+        // 0. 모집 중인 파티인지 아닌지를 확인
+        if(!partyInfo.isRecruitment()) {
+            log.info("{} 님의 파티는 이미 모집 완료된 파티", partyInfo.getPartyRequirementInfo().getPartyLeader());
+            return false;
+        }
+
+        // 1. 파티의 서버와 유저의 서버가 같은지 확인
         boolean isServerMatch = partyInfo.getPartyRequirementInfo().getPartyWorldName()
                 .equals(matchingUser.getCharacterInfo().getBasicInfo().getWorldName());
         if (!isServerMatch) {
@@ -314,21 +322,21 @@ public class WebSocketUtil {
             return false; // 서버가 다르면 다음 방으로
         }
 
-        // 1. 파티의 보스 이름과 유저가 매칭 돌린 보스 이름이 같은지 확인
+        // 2. 파티의 보스 이름과 유저가 매칭 돌린 보스 이름이 같은지 확인
         boolean isBossNameMatch = partyInfo.getBossName().equals(matchingUser.getBossName());
         if (!isBossNameMatch) {
             System.out.println("보스 이름 불일치: 유저 " + matchingUser.getBossName() + " / 파티 " + partyInfo.getBossName());
             return false; // 보스 이름이 다르면 다음 방으로
         }
 
-        // 2. 파티의 최대 인원수를 확인
+        // 3. 파티의 최대 인원수를 확인
         boolean isMaxPeopleNotReached = partyInfo.getMaximumPeople() > partyInfo.getUsers().size();
         if (!isMaxPeopleNotReached) {
             System.out.println("최대 인원 초과: 현재 인원수 " + partyInfo.getUsers().size() + " / 최대 인원수 " + partyInfo.getMaximumPeople());
             return false; // 인원이 가득 찼으면 다음 방으로
         }
 
-        // 3. 유저가 원한 최대 파티 인원수보다 파티의 최대 인원수가 작거나 같은가
+        // 4. 유저가 원한 최대 파티 인원수보다 파티의 최대 인원수가 작거나 같은가
         boolean isUserWantPartyPeopleNotReached = partyInfo.getMaximumPeople() <= matchingUser.getMaximumPeople();
         if (!isUserWantPartyPeopleNotReached) {
             System.out.println("유저가 원하는 최대 파티 인원보다 파티의 최대 인원수가 큽니다.");
@@ -336,14 +344,14 @@ public class WebSocketUtil {
         }
 
 
-        // 4. 유저의 전투력이 파티 요구 전투력 이상인지 확인
+        // 5. 유저의 전투력이 파티 요구 전투력 이상인지 확인
         boolean isPowerSufficient = matchingUser.getPower() >= partyInfo.getPartyRequirementInfo().getPartyNeedPower();
         if (!isPowerSufficient) {
             System.out.println("전투력 부족: 유저 " + matchingUser.getPower() + " / 파티 요구 " + partyInfo.getPartyRequirementInfo().getPartyNeedPower());
             return false; // 전투력이 부족하면 다음 방으로
         }
 
-        // 5. 유저의 직업이 비숍일 경우 비숍이 파티에 필요한지 확인
+        // 6. 유저의 직업이 비숍일 경우 비숍이 파티에 필요한지 확인
         boolean isBishopNeeded = matchingUser.getCharacterInfo().getCharacterClassInfo().equals("비숍")
                 ? partyInfo.getPartyRequirementInfo().getPartyNeedBishop() == 1 &&
                 partyInfo.getUsers().stream().noneMatch(member -> member.getCharacterClassInfo().equals("비숍"))
@@ -353,7 +361,7 @@ public class WebSocketUtil {
             return false; // 비숍이 필요하지 않으면 다음 방으로
         }
 
-        // 6. 유저의 주기와 파티의 요구 주기 일치 여부 확인 (free인 경우 항상 true)
+        // 7. 유저의 주기와 파티의 요구 주기 일치 여부 확인 (free인 경우 항상 true)
         String requiredMinutes = partyInfo.getPartyRequirementInfo().getPartyNeedClassMinutesInfo();
         String userMinutes = matchingUser.getCharacterInfo().getClassMinutesInfo();
 
@@ -414,6 +422,19 @@ public class WebSocketUtil {
 
         // if(exitRoomDto == null) TODO 예외처리
         return exitRoomDto;
+    }
+
+    // 모집 완료 버튼 클릭 시 실행 될 함수
+    public SuccessRecruitmentDto successRecruitment(Long roomId, String nickname){
+        SuccessRecruitmentDto successRecruitmentDto = new SuccessRecruitmentDto(nickname);
+
+        // 파티 상태를 모집 완료 상태로 바꿈
+        PartyInfo partyInfo = rooms.get(roomId);
+        partyInfo.setRecruitment(false);
+
+        log.info("[모집 완료] | [{} 번방] {} 님께서 파티원 모집완료",roomId, nickname);
+
+        return successRecruitmentDto;
     }
 
 
