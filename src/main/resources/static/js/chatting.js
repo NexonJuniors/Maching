@@ -179,13 +179,6 @@ function createBtnSuccessRecruitment(){
     bossInfo.appendChild(btnSuccessRecruitment)
 }
 
-
-
-// 헥사 스킬 정보 출력하는 함수
-function printHexa(user, idx){
-
-}
-
 // 입장 인사말 출력 함수
 function printGreetingMessage(greetingMessage){
     const newChat = document.createElement("p")
@@ -574,8 +567,76 @@ function printHexa(event){
     }
 
     nowUser.removeEventListener('click', printHexa)
-    nowUser.innerHTML = '헥사'
+    nowUser.innerHTML = ''
 
+    const flexContainer = document.createElement('div')
+    flexContainer.classList.add('flex-container')
+
+    const flexItem = document.createElement('div')
+    flexItem.classList.add('flex-item')
+
+    const statContainer = document.createElement('div')
+    statContainer.classList.add('stats-container')
+
+    // 헥사스탯 제목 추가
+    const title = document.createElement('p')
+    title.innerHTML = 'HEXA'
+    title.classList.add('mb-2')
+    title.style.fontWeight = '800'
+    title.color = '#8A8A8A'
+    statContainer.appendChild(title)
+
+    const hexaSkill = document.createElement('div')
+    hexaSkill.classList.add('hexaSkill')
+
+    const hexaCoreContainer = document.createElement('div')
+
+    const hexaSkillInfo = info.hexaSkillInfo
+    const hexaSkillEquipment = hexaSkillInfo.character_hexa_core_equipment
+    const hexaSkillImgFolderPath = "../static/image/skillIcon/"
+
+    for(let idx in hexaSkillEquipment){
+        const hexaCoreInfo = document.createElement('div')
+        hexaCoreInfo.classList.add('hexa-core-info')
+
+        const skillIcons = document.createElement('div')
+        skillIcons.classList.add('skill-icons')
+
+        const coreNames = hexaSkillEquipment[idx].hexa_core_name
+
+        for(let coreName of coreNames.split('/')){
+            const skillIconContainer = document.createElement('div')
+            skillIconContainer.classList.add('skill-icon-container')
+
+            const hexaImg = document.createElement('img')
+            hexaImg.classList.add('skill-icon')
+            hexaImg.src = hexaSkillImgFolderPath + coreName.replace(' ', '') + '.png'
+
+            const tooltip = document.createElement('div')
+            tooltip.classList.add('tooltip')
+            tooltip.innerHTML = `[${hexaSkillEquipment[idx].hexa_core_type.replace(' 코어', '')}]<br>${hexaSkillEquipment[idx].hexa_core_name}`
+
+            skillIconContainer.appendChild(hexaImg)
+            skillIconContainer.appendChild(tooltip)
+
+            skillIcons.appendChild(skillIconContainer)
+        }
+
+        const skillLevel = document.createElement('div')
+        skillLevel.classList.add('skill-level')
+        skillLevel.innerText = `Lv.${hexaSkillEquipment[idx].hexa_core_level}`
+
+        skillIcons.appendChild(skillLevel)
+
+        hexaCoreInfo.appendChild(skillIcons)
+        hexaCoreContainer.appendChild(hexaCoreInfo)
+    }
+
+    hexaSkill.appendChild(hexaCoreContainer)
+    statContainer.appendChild(hexaSkill)
+    flexItem.appendChild(statContainer)
+    flexContainer.appendChild(flexItem)
+    nowUser.appendChild(flexContainer)
 
     nowUser.addEventListener('click', printBasic)
 }
