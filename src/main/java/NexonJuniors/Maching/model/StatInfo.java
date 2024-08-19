@@ -1,9 +1,14 @@
 package NexonJuniors.Maching.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.LocalDate; // LocalDate 사용
 import java.util.List;
 
 public class StatInfo {
+
+    private LocalDate searchDate; // LocalDate로 변경
+    private boolean isRealTime; // boolean으로 변경
 
     @JsonProperty("date")
     private String date;
@@ -49,6 +54,22 @@ public class StatInfo {
 
     public void setRemainAp(int remainAp) {
         this.remainAp = remainAp;
+    }
+
+    public LocalDate getSearchDate() {
+        return searchDate;
+    }
+
+    public void setSearchDate(LocalDate searchDate) {
+        this.searchDate = searchDate;
+    }
+
+    public boolean getIsRealTime() {
+        return isRealTime;
+    }
+
+    public void setIsRealTime(boolean realTime) {
+        isRealTime = realTime;
     }
 
     public static class FinalStat {

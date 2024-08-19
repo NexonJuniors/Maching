@@ -137,6 +137,7 @@ body{
     align-items: center;
 }
 .search-section input {
+    margin-top: -10px; /* 원하는 margin-top 값으로 변경 */
     width: 250px; /* 원하는 너비 값으로 변경 */
     height: 50px;
 }
@@ -313,6 +314,7 @@ yeti color {
 
 /* 이미지와 뱃지에 대한 툴팁 표시 */
 .badgeContainer-item:hover .tooltip,
+.powerQuestion-item:hover .tooltip,
 .skill-icon-container:hover .tooltip,
 .levelContainer:hover .tooltip,
 .forceContainer:hover .tooltip,
@@ -383,6 +385,10 @@ yeti color {
 
 /* badgeContainer-item에 상대 위치 설정 이게 없어서 안나왔었음 */
 .badgeContainer-item {
+    position: relative; /* 툴팁을 올바르게 표시하기 위해 상대 위치 설정 */
+}
+
+.powerQuestion-item{
     position: relative; /* 툴팁을 올바르게 표시하기 위해 상대 위치 설정 */
 }
 

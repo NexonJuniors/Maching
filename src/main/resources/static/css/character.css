@@ -59,12 +59,28 @@
 }
 
 .power{
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 수직 가운데 정렬 */
     font-weight: 700;
     font-size: 1.3em;
 /*    color: transparent; *//* 텍스트를 투명하게 설정 *//*
     background-clip: text; *//* 배경 클립을 텍스트로 설정 *//*
     background-image: linear-gradient(to right, #8000FF, #00FF80, #FF9900); *//* 그라데이션 색상 설정 *//*
     -webkit-background-clip: text; *//* 웹킷 브라우저용 배경 클립 설정 */
+}
+/* powerQuestion에 이미지와 텍스트를 배치 */
+.powerQuestion {
+    display: flex;
+    justify-content: center;
+}
+/* 이미지 크기 조정 */
+.powerQuestion img {
+    margin-left:5px;
+    display: flex;
+    justify-content: center;
+    width: 20px; /* 이미지 너비 설정 */
+    height: 20px; /* 이미지 높이 설정 */
 }
 
 .hexaSkill {
@@ -128,6 +144,7 @@
 .stat-item {
     display: flex;
     justify-content: space-between; /* 좌우로 퍼지게 */
+    align-items: center; /* 수직 가운데 정렬 */
     padding: 5px 0; /* 아이템 간의 여백 */
     border-bottom: 1px solid #e0e0e0; /* 아래쪽 border */
 }

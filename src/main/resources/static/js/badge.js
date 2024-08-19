@@ -8,25 +8,32 @@ const statLabels = {
     hp: 'HP',
     strdexluk: '올스텟',
 };
-const mainStatText = `${statLabels[mainStat] || mainStat}`
-updateStat(mainStatText, "mainStat");
-const mainStatTooltipText = `[기본]<br />내 주스텟은 ${statLabels[mainStat] || mainStat}!`;
-const mainStatImagePath = getImagePath(statImgFolderPath, mainStat);
-addBadgeToContainer(mainStatImagePath, mainStat, mainStatTooltipText);
-document.getElementById('mainStatText').textContent = mainStatText;
 
 // 로딩이 끝난 후
 document.addEventListener('DOMContentLoaded', function() {
+    powerTextTooltip();
+    isRealTimeBadge();
     isMatchingStardedBadge();
+    mainStatBadge();
     localStorage.removeItem("info");
 });
 
+function mainStatBadge(){
+    const mainStatText = `${statLabels[mainStat] || mainStat}`
+    updateStat(mainStatText, "mainStat");
+    const mainStatTooltipText = `[주스텟]<br />내 주스텟은 ${statLabels[mainStat] || mainStat}!`;
+    const mainStatImagePath = getImagePath(statImgFolderPath, mainStat);
+    addBadgeToContainer('.badgeContainer','badgeContainer-item',mainStatImagePath, mainStat, mainStatTooltipText);
+    document.getElementById('mainStatText').textContent = mainStatText;
+}
+
 // 뱃지 추가 함수
-function addBadgeToContainer(badgeSrc, badgeAlt, tooltipText) {
-    const badgeContainer = document.querySelector('.badgeContainer');
+function addBadgeToContainer(container, childClass, badgeSrc, badgeAlt, tooltipText) {
+    const badgeContainer = document.querySelector(container);
 
     const badgeContainerItem = document.createElement('div');
-    badgeContainerItem.className = 'badgeContainer-item';
+    /*badgeContainerItem.className = 'badgeContainer-item';*/
+    badgeContainerItem.className = childClass;
 
     const badgeImg = document.createElement('img');
     badgeImg.src = badgeSrc;
@@ -40,3 +47,14 @@ function addBadgeToContainer(badgeSrc, badgeAlt, tooltipText) {
     badgeContainerItem.appendChild(badgeTooltip);
     badgeContainer.appendChild(badgeContainerItem);
 }
+
+/*
+// 텍스트에 툴팁 추가하는 함수 그냥만들어봤는데 아직 실험안해봄
+function addTextToolTip(containerName,tooltipText) {
+    const nowContainer = document.querySelector(containerName);
+    const nowContainerItem = document.createElement('div');
+    nowContainerItem.className = 'badgeContainer-item';
+    const textTooltip = createTooltip(tooltipText);
+    nowContainerItem.appendChild(textTooltip);
+    nowContainer.appendChild(badgeContainerItem);
+}*/

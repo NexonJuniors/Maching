@@ -12,6 +12,8 @@ const unionInfo = info.unionInfo;
 const hexaSkillInfo = info.hexaSkillInfo;
 const minutes = info.classMinutesInfo
 const mainStat = info.classMainStatInfo
+const searchDate = statInfo.searchDate; //전투력과 스탯 조회 일자
+const isRealTime = statInfo.isRealTime; //실시간인가요?
 let uuid
 let socket
 let stompClient
@@ -38,7 +40,7 @@ const serverIconPath = getImagePath(serverImgFolderPath, worldName);
 document.getElementById('serverIcon').src = serverIconPath;
 
 // statInfo
-// statInfo에서 특정 stat_name을 찾아서 해당 값을 지정된 elementId에 설정하는 함수
+// statInfo에서 특정 final_stat의 stat_name을 찾아서 해당 값을 지정된 elementId에 설정하는 함수
 function updateStat(statName, elementId) {
     const stat = statInfo.final_stat.find(stat => stat.stat_name === statName);
     if (stat) {
@@ -108,9 +110,9 @@ function isMatchingStardedBadge(){
         ).then(function(json){
             flag = json.isMatchingStarted;
             if(flag){
-                const matchingTooltipText = "매칭중인 유저 입니다";
-                const matchingImagePath = "../static/image/badge/matchingBadge.png";
-                addBadgeToContainer(matchingImagePath, "", matchingTooltipText);
+                const matchingTooltipText = `[매칭중]<br />현재 매칭중인 유저입니다!`;
+                const matchingImagePath = "../static/image/badge/매칭중.png";
+                addBadgeToContainer('.badgeContainer','badgeContainer-item',matchingImagePath, "", matchingTooltipText);
             }
         }
         )
@@ -118,3 +120,36 @@ function isMatchingStardedBadge(){
             console.error('Error fetching matching status:', error);
         });
 }
+
+// 실시간일경우 뱃지 추가해줌
+function isRealTimeBadge(){
+    if(isRealTime){
+        const isRealTimeTooltipText = `[실시간]<br />따끈따끈한 인게임 정보!`;
+        const isRealTimeImagePath = "../static/image/badge/실시간.png";
+        addBadgeToContainer('.badgeContainer','badgeContainer-item',isRealTimeImagePath, "", isRealTimeTooltipText);
+    }
+}
+
+//전투력 툴팁 물음표에 추가
+function powerTextTooltip(){
+    if(isRealTime){
+        const powerTooltipText = `[실시간]<br />실시간 전투력 정보!`;
+        const isPowerImagePath = "../static/image/badge/물음표.png";
+        addBadgeToContainer('.powerQuestion','powerQuestion-item',isPowerImagePath, "", powerTooltipText);
+    }else{
+        const powerTooltipText = `[${searchDate}]<br />${searchDate}의 전투력!`;
+        const isPowerImagePath = "../static/image/badge/물음표.png";
+        addBadgeToContainer('.powerQuestion','powerQuestion-item',isPowerImagePath, "", powerTooltipText);
+    }
+}
+/*
+// 전투력 툴팁 추가
+function powerTextTooltip(){
+    if(isRealTime){
+        const powerTooltipText = `[실시간]<br />실시간 전투력 정보!`;
+        addTextToolTip(전투력컨테이너, powerTooltipText)
+    }else{
+        const powerTooltipText = `[${searchDate}]<br />${searchDate}의 전투력!`;
+        addTextToolTip(전투력컨테이너, powerTooltipText)
+    }
+}*/

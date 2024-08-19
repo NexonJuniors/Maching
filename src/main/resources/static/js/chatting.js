@@ -462,7 +462,7 @@ function printStat(event){
     bossDamage.classList.add('stat-item')
 
     const spanBossDamageTitle = document.createElement('span')
-    spanBossDamageTitle.innerText = '보스 몬스터 데미지'
+    spanBossDamageTitle.innerText = '보공'
     const spanBossDamage = document.createElement('span')
     spanBossDamage.innerText = `${updateStat(statInfo, '보스 몬스터 데미지')}%`
 
@@ -476,7 +476,7 @@ function printStat(event){
     defenceIgnore.classList.add('stat-item')
 
     const spanDefenceIgnoreTitle = document.createElement('span')
-    spanDefenceIgnoreTitle.innerText = '스탯 방어율 무시'
+    spanDefenceIgnoreTitle.innerText = '방무'
     const spanDefenceIgnore = document.createElement('span')
     spanDefenceIgnore.innerText = `${updateStat(statInfo, '방어율 무시')}%`
 
@@ -490,7 +490,7 @@ function printStat(event){
     durationTime.classList.add('stat-item')
 
     const spanDurationTimeTitle = document.createElement('span')
-    spanDurationTimeTitle.innerText = '지속시간'
+    spanDurationTimeTitle.innerText = ''
     const spanBuffTitle = document.createElement('span')
     spanBuffTitle.innerText = '버프'
     const spanBuff = document.createElement('span')
@@ -513,7 +513,7 @@ function printStat(event){
     coolDown.classList.add('stat-item')
 
     const spanCoolDownTitle = document.createElement('span')
-    spanCoolDownTitle.innerText = '쿨타임 감소'
+    spanCoolDownTitle.innerText = ''
     const spanCoolDown = document.createElement('span')
     spanCoolDown.innerText = `${updateStat(statInfo, '재사용 대기시간 감소 (초)')}초`
     const spanCoolDownPer = document.createElement('span')
@@ -535,11 +535,11 @@ function printStat(event){
     const spanForceTitle = document.createElement('span')
     spanForceTitle.innerText = '포스'
     const spanArcaneTitle = document.createElement('span')
-    spanArcaneTitle.innerText = '아케인'
+    spanArcaneTitle.innerText = ''
     const spanArcane = document.createElement('span')
     spanArcane.innerText = `${updateStat(statInfo, '아케인포스')}`
     const spanAuthenticTitle = document.createElement('span')
-    spanAuthenticTitle.innerText = '어센틱'
+    spanAuthenticTitle.innerText = '/'
     const spanAuthentic = document.createElement('span')
     spanAuthentic.innerText = `${updateStat(statInfo, '어센틱포스')}`
 

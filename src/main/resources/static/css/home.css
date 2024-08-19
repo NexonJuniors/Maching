@@ -13,20 +13,62 @@
     cursor: not-allowed !important; /* 마우스 커서를 금지 아이콘으로 변경 */
 }
 
+/* 공통 스타일 */
 .input-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
     padding: 10px;
     background-color: var(--foreground);
     color: var(--primary);
 }
 
-input[type="text"] {
+/* characterName input에 대한 스타일 */
+#characterName {
     border-color: #007BFF;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
     outline: none;
+    width: 250px;
+    padding: 10px;
     background-color: var(--foreground);
     color: var(--primary);
+}
+
+/* selectedDate input에 대한 스타일 */
+#selectedDate {
+    margin-top: 0px;
+    margin-left:5px;
+    width: 125px;
+    height: 20px;
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+
+input[type="date"] {
+    margin-top: 0px; /* 원하는 margin-top 값으로 변경 */
+    height: 25px;
+    width: 50%!important;
+    padding: 0 5px;
+    font-size: 0.8rem;
+    background-color: var(--foreground);
+    color: var(--primary);
+    width: inherit;
+    white-space: nowrap; /*줄바꿈 안함*/
+}
+
+.btn-small {
+    background-color: #555; /* 원하는 배경색상 */
+    color: #ffffff; /* 텍스트 색상 */
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 5px;
+    height: 25px!important;
+    font-size: 0.8rem;
+    padding: 0 5px;
+}
+
+.btn-small:hover {
+    background-color: #5588DD; /* 호버 시 배경색상 */
+    color: #ffffff; /* 텍스트 색상 */
+    border-color: #282828;
 }
