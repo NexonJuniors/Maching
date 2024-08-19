@@ -1,3 +1,16 @@
+const today = new Date();
+const yesterday = new Date(today);
+yesterday.setDate(today.getDate() - 1);
+
+const twoWeeksAgo = new Date(today);
+twoWeeksAgo.setDate(today.getDate() - 14);
+
+flatpickr("#selectedDate", {
+  maxDate: yesterday,
+  minDate: twoWeeksAgo,
+  dateFormat: "Y-m-d",
+});
+
 // 날짜 선택 버튼과 관련된 이벤트 리스너 추가
 document.getElementById("btnDate").onclick = function() {
     var dateInput = document.getElementById("selectedDate");

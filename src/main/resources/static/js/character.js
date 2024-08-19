@@ -131,17 +131,24 @@ function isRealTimeBadge(){
 }
 
 //전투력 툴팁 물음표에 추가
-function powerTextTooltip(){
+function powerTextTooltip() {
+    const today = new Date();
+    const searchDateObj = new Date(searchDate); // searchDate를 날짜 객체로 변환
+    const timeDiff = today.getTime() - searchDateObj.getTime(); // 밀리초 차이 계산
+    const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1; // 일 수로 변환
+
     const powerElement = document.getElementById('power');
     let powerTooltipText;
     const isPowerImagePath = "../static/image/badge/물음표.png";
+
     if (isRealTime) {
-        powerElement.style.color = "#425F85";
+        powerElement.style.color = "#425F85"; // 실시간인 경우 파란색
         powerTooltipText = `[실시간]<br />실시간 전투력 정보!`;
     } else {
-        powerElement.style.color = "#884444";
-        powerTooltipText = `[실시간X]<br />${searchDate}의 전투력!`;
+        powerElement.style.color = "#884444"; // 과거 데이터인 경우 빨간색
+        powerTooltipText = `[${dayDiff}일 전]<br />${searchDate}의 전투력!`;
     }
+
     addBadgeToContainer('.powerQuestion', 'powerQuestion-item', isPowerImagePath, "", powerTooltipText);
 }
 /*
