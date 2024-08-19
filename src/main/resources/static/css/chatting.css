@@ -187,6 +187,9 @@ input[type="text"] {
     padding: 10px; /* 내부 여백 */
     border-radius: 5px; /* 모서리 둥글게 */
     font-size: 14px; /* 글씨 크기 */
+    width: inherit;
+    height: inherit;
+    white-space: nowrap; /*줄바꿈 안함*/
 }
 
 .stat-item {
