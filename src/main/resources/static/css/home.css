@@ -13,20 +13,33 @@
     cursor: not-allowed !important; /* 마우스 커서를 금지 아이콘으로 변경 */
 }
 
+/* 공통 스타일 */
 .input-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
     padding: 10px;
     background-color: var(--foreground);
     color: var(--primary);
 }
 
-input[type="text"] {
+/* characterName input에 대한 스타일 */
+#characterName {
     border-color: #007BFF;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
     outline: none;
+    width: 250px;
+    padding: 10px;
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+
+/* selectedDate input에 대한 스타일 */
+#selectedDate {
+    margin-top: 0px;
+    margin-left:5px;
+    width: 125px;
+    height: 20px;
     background-color: var(--foreground);
     color: var(--primary);
 }

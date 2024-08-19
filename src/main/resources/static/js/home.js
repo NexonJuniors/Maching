@@ -6,9 +6,10 @@ document.getElementById("btnDate").onclick = function() {
     // 날짜 입력 필드의 표시 상태를 토글
     if (dateInput.style.display === "none") {
         dateInput.style.display = "inline";
+        btnDate.style.width = "120px";
     } else {
         dateInput.style.display = "none";
-
+        btnDate.style.width = "250px";
         // 날짜 값을 초기화하고 버튼의 텍스트를 "실시간 전투력 검색"으로 변경
         dateInput.value = "";
         btnDate.textContent = "조회 날짜 선택"
