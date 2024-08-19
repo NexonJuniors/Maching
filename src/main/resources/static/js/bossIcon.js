@@ -95,12 +95,12 @@ function addBossImages(bossCntList) {
         if (nowBossCnt == null) {
             matchInfo.innerHTML = `
               <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
-              0 파티
+              0 <span class="highlighted-text">파티</span>
            `;
         } else {
             matchInfo.innerHTML = `
             <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
-            ${nowBossCnt} 파티
+            ${nowBossCnt} <span class="highlighted-text">파티</span>
          `;
         }
 

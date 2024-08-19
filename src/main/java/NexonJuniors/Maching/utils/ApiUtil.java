@@ -59,11 +59,11 @@ public class ApiUtil {
             if (date == null) {
                 // 실시간 검색 이용
                 statInfo.setSearchDate(LocalDate.now());
-                statInfo.setRealTime(true);
+                statInfo.setIsRealTime(true);
             } else {
                 // 검색 날짜 이용
                 statInfo.setSearchDate(date);
-                statInfo.setRealTime(false);
+                statInfo.setIsRealTime(false);
             }
 
             // CharacterInfo 객체 생성 및 데이터 설정

@@ -64,11 +64,11 @@ public class StatInfo {
         this.searchDate = searchDate;
     }
 
-    public boolean isRealTime() {
+    public boolean getIsRealTime() {
         return isRealTime;
     }
 
-    public void setRealTime(boolean realTime) {
+    public void setIsRealTime(boolean realTime) {
         isRealTime = realTime;
     }
 
