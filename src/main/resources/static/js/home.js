@@ -53,26 +53,24 @@ document.getElementById("characterName").addEventListener("keydown", function(ev
 
 // 닉네임으로 자신의 캐릭터를 검색하는 함수
 function characterSearch(characterName, selectedDate) {
-    if (characterName == null || characterName == "") {
+    if (!characterName) {
         alert("닉네임을 입력해주세요");
-    } else {
-        var url = `/character?characterName=${characterName}`;
-        if (selectedDate) {
-            url += `&date=${selectedDate}`;
-        }
-
-        fetch(url)
-            .then(function(response) {
-                if (!response.ok) throw new Error('존재하지 않는 유저입니다');
-
-                return response.json();
-            })
-            .then(function(json) {
-                localStorage.setItem("info", JSON.stringify(json));
-                location.href = "/info";
-            })
-            .catch(function(error) {
-                alert(error.message);
-            });
+        return;
     }
+    const baseQuery = `/character?characterName=${characterName}`;
+    const statQuery = selectedDate ? `&date=${selectedDate}` : "";
+
+    //statQuery가 없으면 그냥 baseQuery로 조회하면되는것임
+    fetch(baseQuery + statQuery)
+        .then(response => {
+            if (!response.ok) throw new Error('존재하지 않는 유저입니다');
+            return response.json();
+        })
+        .then(json => {
+            localStorage.setItem("info", JSON.stringify(json));
+            location.href = "/info";
+        })
+        .catch(error => {
+            alert(error.message);
+        });
 }

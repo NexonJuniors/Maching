@@ -19,6 +19,8 @@ import reactor.core.publisher.Mono;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Component
@@ -38,12 +40,12 @@ public class ApiUtil {
                 .build();
     }
 
-    public CharacterInfo getCharacter(String characterName) {
+    public CharacterInfo getCharacter(String characterName, LocalDate date) {
         String ocid = getOcid(characterName); // ocid를 제일 먼저 가져오기
-        String basicInfoJson = getCharacterInfo(ocid,"/character/basic"); // 캐릭터 basic api호출, date default
-        String statInfoJson = getCharacterInfo(ocid,"/character/stat"); // 스텟창 api 호출, dete default
-        String unionInfoJson = getCharacterInfo(ocid,"/user/union"); // 유니온 api 호출, dete default
-        String hexaSkillInfoJson = getCharacterInfo(ocid,"/character/hexamatrix"); // 헥사스킬 api 호출, dete default
+        String basicInfoJson = getCharacterInfo(ocid, "/character/basic", null); // 캐릭터 basic api 호출
+        String statInfoJson = getCharacterInfo(ocid, "/character/stat", date); // 스텟창 api 호출, 날짜 포함
+        String unionInfoJson = getCharacterInfo(ocid, "/user/union", null); // 유니온 api 호출
+        String hexaSkillInfoJson = getCharacterInfo(ocid, "/character/hexamatrix", null); // 헥사스킬 api 호출
 
         CharacterInfo characterInfo = new CharacterInfo();
         try{
@@ -94,14 +96,19 @@ public class ApiUtil {
         return json.get("ocid").asText();
     }
 
-    private String getCharacterInfo(String ocid, String path) {
+    private String getCharacterInfo(String ocid, String path, LocalDate date) {
         String response;
 
+        // 날짜가 제공되면 쿼리 파라미터에 추가
         response = webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path(path)
-                        .queryParam("ocid", ocid)
-                        .build())
+                .uri(uriBuilder -> {
+                    uriBuilder.path(path);
+                    uriBuilder.queryParam("ocid", ocid);
+                    if (path.equals("/character/stat") && date != null) {
+                        uriBuilder.queryParam("date", date.format(DateTimeFormatter.ISO_LOCAL_DATE));
+                    }
+                    return uriBuilder.build();
+                })
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> Mono.just(new ApiException(ApiExceptionCode.NOT_EXIST_USER)))
                 .onStatus(HttpStatusCode::is5xxServerError, clientResponse -> Mono.just(new ApiException(ApiExceptionCode.DATA_PARSING_ERROR)))
