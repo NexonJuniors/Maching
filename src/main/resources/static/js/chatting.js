@@ -1,5 +1,6 @@
 document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
 document.getElementById('btnExit').addEventListener('click', function(){if(confirm("채팅방을 나가겠습니까?")) location.href = '/'})
+document.getElementById('message').addEventListener('keyup', pressEnter)
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
@@ -45,7 +46,7 @@ function receiveMessage(message){
         // 유저 리스트 정보 출력
         for(let i = 0; i < users.length; i++){
             const user = users[i]
-            loadBasic(user, i + 1)
+            if(document.getElementById(`characterName${i + 1}`) == null) loadBasic(user, i + 1)
         }
 
         // 입장 인사말 출력
@@ -178,11 +179,6 @@ function createBtnSuccessRecruitment(){
     bossInfo.appendChild(btnSuccessRecruitment)
 }
 
-// TODO 스탯, 헥사 스킬 등 자세한 정보 로딩 함수 구현
-function loadDetails(user, idx){
-
-}
-
 // 입장 인사말 출력 함수
 function printGreetingMessage(greetingMessage){
     const newChat = document.createElement("p")
@@ -292,6 +288,9 @@ function formatNumber(number) {
 
 function createUserProfile(userId){
     nowUser = document.getElementById(`user${userId}`); //user2란 정보
+
+    // 클릭 시 스탯을 출력하는 이벤트 핸들러 추가
+    nowUser.addEventListener('click', printStat)
 
     // flex-item div
     const flexItemDiv = document.createElement('div');
@@ -404,6 +403,289 @@ function createUserProfile(userId){
 
     nowUser.appendChild(flexItemDiv);
 }
+
+// 스탯 정보 출력하는 함수
+function printStat(event){
+    nowUser = event.target
+
+    // user1 의 자식 요소가 클릭 되었을 수 있으므로 user1 을 찾음
+    if(!nowUser.classList.contains('user')){
+        nowUser = nowUser.parentNode
+        while(!nowUser.classList.contains('user')){
+            nowUser = nowUser.parentNode
+        }
+    }
+
+    // 유저가 몇 번 째 유저 인지 구해서 해당 유저의 스탯 정보 가져옴
+    const idx = nowUser.id.replace('user', '')
+    const user = partyInfo.users[`${idx - 1}`]
+    const statInfo = user.statInfo
+
+    // 기존 이벤트 핸들러 제거
+    nowUser.removeEventListener('click', printStat)
+
+    nowUser.innerHTML = ''
+
+    const flexItem = document.createElement('div')
+    flexItem.classList.add('flex-item')
+
+    const statContainer = document.createElement('div')
+    statContainer.classList.add('stats-container')
+
+    // 스탯 제목 추가
+    const title = document.createElement('p')
+    title.innerHTML = 'STAT'
+    title.classList.add('mb-2')
+    title.style.fontWeight = '800'
+    title.color = '#8A8A8A'
+    statContainer.appendChild(title)
+
+    // 주 스탯 추가
+    const mainStat = document.createElement('div')
+    mainStat.classList.add('stat-item')
+
+    const spanStatTitle = document.createElement('span')
+    spanStatTitle.innerText = '주스탯'
+    const spanMainStat = document.createElement('span')
+    spanMainStat.innerText = updateStat(statInfo, user.classMainStatInfo.toUpperCase())
+    const spanMainStatText = document.createElement('span')
+    spanMainStatText.innerText = user.classMainStatInfo.toUpperCase()
+
+    mainStat.appendChild(spanStatTitle)
+    mainStat.appendChild(spanMainStat)
+    mainStat.appendChild(spanMainStatText)
+
+    statContainer.appendChild(mainStat)
+
+    // 보스 몬스터 데미지 추가
+    const bossDamage = document.createElement('div')
+    bossDamage.classList.add('stat-item')
+
+    const spanBossDamageTitle = document.createElement('span')
+    spanBossDamageTitle.innerText = '보스 몬스터 데미지'
+    const spanBossDamage = document.createElement('span')
+    spanBossDamage.innerText = `${updateStat(statInfo, '보스 몬스터 데미지')}%`
+
+    bossDamage.appendChild(spanBossDamageTitle)
+    bossDamage.appendChild(spanBossDamage)
+
+    statContainer.appendChild(bossDamage)
+
+    // 방어율 무시 추가
+    const defenceIgnore = document.createElement('div')
+    defenceIgnore.classList.add('stat-item')
+
+    const spanDefenceIgnoreTitle = document.createElement('span')
+    spanDefenceIgnoreTitle.innerText = '스탯 방어율 무시'
+    const spanDefenceIgnore = document.createElement('span')
+    spanDefenceIgnore.innerText = `${updateStat(statInfo, '방어율 무시')}%`
+
+    defenceIgnore.appendChild(spanDefenceIgnoreTitle)
+    defenceIgnore.appendChild(spanDefenceIgnore)
+
+    statContainer.appendChild(defenceIgnore)
+
+    // 지속시간 추가
+    const durationTime = document.createElement('div')
+    durationTime.classList.add('stat-item')
+
+    const spanDurationTimeTitle = document.createElement('span')
+    spanDurationTimeTitle.innerText = '지속시간'
+    const spanBuffTitle = document.createElement('span')
+    spanBuffTitle.innerText = '버프'
+    const spanBuff = document.createElement('span')
+    spanBuff.innerText = `${updateStat(statInfo, '버프 지속시간')}%`
+    const spanMinionTitle = document.createElement('span')
+    spanMinionTitle.innerText = '소환수'
+    const spanMinion = document.createElement('span')
+    spanMinion.innerText = `${updateStat(statInfo, '소환수 지속시간 증가')}%`
+
+    durationTime.appendChild(spanDurationTimeTitle)
+    durationTime.appendChild(spanBuffTitle)
+    durationTime.appendChild(spanBuff)
+    durationTime.appendChild(spanMinionTitle)
+    durationTime.appendChild(spanMinion)
+
+    statContainer.appendChild(durationTime)
+
+    // 쿨타임 감소 추가
+    const coolDown = document.createElement('div')
+    coolDown.classList.add('stat-item')
+
+    const spanCoolDownTitle = document.createElement('span')
+    spanCoolDownTitle.innerText = '쿨타임 감소'
+    const spanCoolDown = document.createElement('span')
+    spanCoolDown.innerText = `${updateStat(statInfo, '재사용 대기시간 감소 (초)')}초`
+    const spanCoolDownPer = document.createElement('span')
+    spanCoolDownPer.innerText = `${updateStat(statInfo, '재사용 대기시간 감소 (%)')}%`
+    const spanCoolDownNow = document.createElement('span')
+    spanCoolDownNow.innerText = `(미적용 ${updateStat(statInfo, '재사용 대기시간 미적용')}%)`
+
+    coolDown.appendChild(spanCoolDownTitle)
+    coolDown.appendChild(spanCoolDown)
+    coolDown.appendChild(spanCoolDownPer)
+    coolDown.appendChild(spanCoolDownNow)
+
+    statContainer.appendChild(coolDown)
+
+    // 포스 추가
+    const force = document.createElement('div')
+    force.classList.add('stat-item')
+
+    const spanForceTitle = document.createElement('span')
+    spanForceTitle.innerText = '포스'
+    const spanArcaneTitle = document.createElement('span')
+    spanArcaneTitle.innerText = '아케인'
+    const spanArcane = document.createElement('span')
+    spanArcane.innerText = `${updateStat(statInfo, '아케인포스')}`
+    const spanAuthenticTitle = document.createElement('span')
+    spanAuthenticTitle.innerText = '어센틱'
+    const spanAuthentic = document.createElement('span')
+    spanAuthentic.innerText = `${updateStat(statInfo, '어센틱포스')}`
+
+    force.appendChild(spanForceTitle)
+    force.appendChild(spanArcaneTitle)
+    force.appendChild(spanArcane)
+    force.appendChild(spanAuthenticTitle)
+    force.appendChild(spanAuthentic)
+
+    // flexItem 빼고 statContainer 바로 넣어도 보기
+    statContainer.appendChild(force)
+
+    flexItem.appendChild(statContainer)
+    nowUser.appendChild(flexItem)
+
+    nowUser.addEventListener('click', printHexa)
+}
+
+// 헥사 스킬 정보를 출력하는 함수
+function printHexa(event){
+    nowUser = event.target
+
+    // user[idx] 의 자식 요소가 클릭 되었을 수 있으므로 user[idx] 을 찾음
+    if(!nowUser.classList.contains('user')){
+        nowUser = nowUser.parentNode
+        while(!nowUser.classList.contains('user')){
+            nowUser = nowUser.parentNode
+        }
+    }
+
+
+    // 기존 이벤트 핸들러 제거
+    nowUser.removeEventListener('click', printHexa)
+    nowUser.innerHTML = ''
+
+    const flexContainer = document.createElement('div')
+    flexContainer.classList.add('flex-container')
+
+    const flexItem = document.createElement('div')
+    flexItem.classList.add('flex-item')
+
+    const statContainer = document.createElement('div')
+    statContainer.classList.add('stats-container')
+
+    // 헥사스탯 제목 추가
+    const title = document.createElement('p')
+    title.innerHTML = 'HEXA'
+    title.classList.add('mb-2')
+    title.style.fontWeight = '800'
+    title.color = '#8A8A8A'
+    statContainer.appendChild(title)
+
+    const hexaSkill = document.createElement('div')
+    hexaSkill.classList.add('hexaSkill')
+
+    const hexaCoreContainer = document.createElement('div')
+
+    // 헥사 스킬 정보와 헥사 스킬 이미지 경로 가져오기
+    // 유저가 몇 번 째 유저 인지 구해서 해당 유저의 스킬 정보 가져옴
+    const idx = nowUser.id.replace('user', '')
+    const user = partyInfo.users[`${idx - 1}`]
+    const hexaSkillInfo = user.hexaSkillInfo
+    const hexaSkillEquipment = hexaSkillInfo.character_hexa_core_equipment
+    const hexaSkillImgFolderPath = "../static/image/skillIcon/"
+
+    // 헥사 스킬 개수 만큼 반복
+    for(let idx in hexaSkillEquipment){
+        const hexaCoreInfo = document.createElement('div')
+        hexaCoreInfo.classList.add('hexa-core-info')
+
+        const skillIcons = document.createElement('div')
+        skillIcons.classList.add('skill-icons')
+
+        const coreNames = hexaSkillEquipment[idx].hexa_core_name
+
+        // 스킬 하나에 최대 세 가지 버전이 있는 경우가 있음 그 경우도 각각 반복하면서 출력
+        for(let coreName of coreNames.split('/')){
+            const skillIconContainer = document.createElement('div')
+            skillIconContainer.classList.add('skill-icon-container')
+
+            // 스킬 이미지 추가
+            const hexaImg = document.createElement('img')
+            hexaImg.classList.add('skill-icon')
+            hexaImg.src = hexaSkillImgFolderPath + coreName.replace(/\s/g, '') + '.png'
+
+            // 툴팁 추가
+            const tooltip = document.createElement('div')
+            tooltip.classList.add('tooltip')
+            tooltip.innerHTML = `[${hexaSkillEquipment[idx].hexa_core_type.replace(' 코어', '')}]<br>${hexaSkillEquipment[idx].hexa_core_name}`
+
+            skillIconContainer.appendChild(hexaImg)
+            skillIconContainer.appendChild(tooltip)
+
+            skillIcons.appendChild(skillIconContainer)
+        }
+
+        // 스킬 레벨 추가
+        const skillLevel = document.createElement('div')
+        skillLevel.classList.add('skill-level')
+        skillLevel.innerText = `Lv.${hexaSkillEquipment[idx].hexa_core_level}`
+
+        skillIcons.appendChild(skillLevel)
+
+        hexaCoreInfo.appendChild(skillIcons)
+        hexaCoreContainer.appendChild(hexaCoreInfo)
+    }
+
+    hexaSkill.appendChild(hexaCoreContainer)
+    statContainer.appendChild(hexaSkill)
+    flexItem.appendChild(statContainer)
+    flexContainer.appendChild(flexItem)
+    nowUser.appendChild(flexContainer)
+
+    nowUser.addEventListener('click', printBasic)
+}
+
+// 기본 유저정보를 출력하는 함수
+function printBasic(event){
+    nowUser = event.target
+
+    if(!nowUser.classList.contains('user')){
+        nowUser = nowUser.parentNode
+        while(!nowUser.classList.contains('user')){
+            nowUser = nowUser.parentNode
+        }
+    }
+
+    nowUser.removeEventListener('click', printBasic)
+
+    const idx = nowUser.id.replace('user', '')
+
+    loadBasic(partyInfo.users[`${idx - 1}`], idx)
+}
+
+// 해당 스탯의 값을 가져와주는 함수
+function updateStat(statInfo, statName){
+    return statInfo.final_stat.find(stat => stat.stat_name === `${statName}`).stat_value
+}
+
+// 채팅을 입력하고 엔터키를 눌렀을 때 실행되는 함수
+function pressEnter(event){
+    const input = document.getElementById('message')
+    if(input.value != null && input.value != '' && event.keyCode === 13)
+        document.getElementById('btnSendMessage').click()
+}
+
 
 setTimeout(() => {
     localStorage.removeItem("roomId")
