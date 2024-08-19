@@ -137,6 +137,7 @@ body{
     align-items: center;
 }
 .search-section input {
+    margin-top: -10px; /* 원하는 margin-top 값으로 변경 */
     width: 250px; /* 원하는 너비 값으로 변경 */
     height: 50px;
 }

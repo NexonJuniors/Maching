@@ -57,10 +57,14 @@
                         <div class="flex-item">
                             <div class="search-section d-flex align-items-center">
                                 <div class="input-container">
+                                    <button id="btnDate" type="button" class="btn-small">조회 날짜 선택</button>
+                                    <input type="date" id="selectedDate" name="selectedDate" style="display:none;">
+                                </div>
+                                <div class="input-container">
                                     <input type="text" id="characterName" name="characterName" placeholder="캐릭터명을 입력하세요" required>
                                 </div>
                                 <div>
-                                    <button id="btnSearch" type="submit" class="btn btn-custom">캐릭터 검색</button>
+                                    <button id="btnSearch" type="submit" class="btn btn-custom">실시간 전투력 검색</button>
                                 </div>
                                 <div class="instructions">
                                     - OPEN API 서버 점검 시 점검 종료 후 시도해 주세요.
