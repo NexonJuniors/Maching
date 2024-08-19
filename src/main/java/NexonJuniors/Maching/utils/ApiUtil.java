@@ -55,6 +55,17 @@ public class ApiUtil {
             UnionInfo unionInfo = objectMapper.readValue(unionInfoJson, UnionInfo.class);
             HexaSkillInfo hexaSkillInfo = objectMapper.readValue(hexaSkillInfoJson, HexaSkillInfo.class);
 
+            // 검색 날짜와 실시간 여부 설정
+            if (date == null) {
+                // 실시간 검색 이용
+                statInfo.setSearchDate(LocalDate.now());
+                statInfo.setRealTime(true);
+            } else {
+                // 검색 날짜 이용
+                statInfo.setSearchDate(date);
+                statInfo.setRealTime(false);
+            }
+
             // CharacterInfo 객체 생성 및 데이터 설정
             characterInfo.setBasicInfo(basicInfo);
             characterInfo.setStatInfo(statInfo);
