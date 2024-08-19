@@ -12,7 +12,7 @@ document.getElementById("btnDate").onclick = function() {
         btnDate.style.width = "250px";
         // 날짜 값을 초기화하고 버튼의 텍스트를 "실시간 전투력 검색"으로 변경
         dateInput.value = "";
-        btnDate.textContent = "조회 날짜 선택"
+        btnDate.textContent = "조회 날짜 변경"
         searchButton.textContent = "실시간 전투력 검색";
     }
 };
@@ -24,10 +24,10 @@ document.getElementById("selectedDate").addEventListener("change", function() {
         var date = new Date(this.value);
         var month = date.getMonth() + 1; // 월은 0부터 시작하므로 +1
         var day = date.getDate();
-        btnDate.textContent = `${month}월${day}일 (초기화)`;
+        btnDate.textContent = "조회 날짜 초기화";
         searchButton.textContent = `${month}월${day}일 전투력 검색`;
     } else {
-        btnDate.textContent = "조회 날짜 선택"
+        btnDate.textContent = "조회 날짜 변경"
         searchButton.textContent = "실시간 전투력 검색";
     }
 });
