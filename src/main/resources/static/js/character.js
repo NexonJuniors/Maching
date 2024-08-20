@@ -135,7 +135,7 @@ function powerTextTooltip() {
     const today = new Date();
     const searchDateObj = new Date(searchDate); // searchDate를 날짜 객체로 변환
     const timeDiff = today.getTime() - searchDateObj.getTime(); // 밀리초 차이 계산
-    const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24)) + 1; // 일 수로 변환
+    const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24)); // 일 수로 변환
 
     const powerElement = document.getElementById('power');
     let powerTooltipText;
