@@ -26,11 +26,12 @@ async function fetchLogs(date, filterType) {
         let endpoint = `/api/logs/${date}`;
         if (filterType === 'matching') {
             endpoint = `/api/logs/filtered/${date}`;
-        } else if (filterType === 'chatting') {
-            endpoint = `/api/logs/chattingLog/${date}`;
         } else if (filterType === 'searching') {
             endpoint = `/api/logs/searchingLog/${date}`;
         }
+/*     채팅은 유저의 개인정보이다.   else if (filterType === 'chatting') {
+                     endpoint = `/api/logs/chattingLog/${date}`;
+                 } */
 
         const response = await fetch(endpoint);
         if (!response.ok) throw new Error('Failed to fetch logs');

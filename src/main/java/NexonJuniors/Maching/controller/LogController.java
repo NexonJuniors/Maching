@@ -57,14 +57,13 @@ public class LogController {
             List<String> filteredLogs = logs.stream()
                     .filter(log -> log.contains("매칭") || log.contains("채팅방"))
                     .collect(Collectors.toList());
-            System.out.println(filteredLogs); // 필터링된 로그를 출력
             return ResponseEntity.ok(filteredLogs);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
         }
     }
 
-    // 채팅 로그만 가져오는 API
+/*    // 채팅 로그만 가져오는 API 채팅은 유저의 개인정보이므로 동의를 얻어야한다
     @GetMapping("/chattingLog/{date}")
     public ResponseEntity<List<String>> getChattingLogsByDate(@PathVariable("date") String date) {
         try {
@@ -73,14 +72,14 @@ public class LogController {
 
             // "채팅로그" 가 포함된 로그만 필터링
             List<String> filteredLogs = logs.stream()
-                    .filter(log -> log.contains("채팅로그"))
+                    .filter(log -> log.contains("채팅 로그"))
                     .collect(Collectors.toList());
             System.out.println(filteredLogs); // 필터링된 로그를 출력
             return ResponseEntity.ok(filteredLogs);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
         }
-    }
+    }*/
 
     // 검색 로그만 가져오는 API
     @GetMapping("/searchingLog/{date}")

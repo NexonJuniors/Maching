@@ -297,7 +297,7 @@ public class WebSocketUtil {
             }
             return false;
         });
-        log.info("[매칭취소] | [대기큐] {} 님 | 매칭 취소 ", characterName);
+        log.info("[매칭 취소] | [대기큐] {} 님 | 매칭 취소 ", characterName);
     }
 
     public boolean findParticipantByName(String characterName) {

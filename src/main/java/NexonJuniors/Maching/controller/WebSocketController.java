@@ -109,7 +109,7 @@ public class WebSocketController {
         }
     }
 
-    // 매칭 취소 기능 ToDO 이거 헤더에 UUID 세션스토리지에 저장해서 넘겨준거 가져오면 아마 채팅에서도 사용가능 하지 싶은데
+    // 매칭 취소 기능
     @MessageMapping("/cancelMatching")
     public void cancelMatching(@Header("characterName") String characterName) {
         if (characterName == null || characterName.isEmpty()) {
@@ -163,11 +163,13 @@ public class WebSocketController {
     public void chatting(ChatMessage chatMessage){
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         chatMessage.setTime(formatter.format(new Date()));
-        // 채팅 로그 추가가능? [채팅로그] | 유저이름 | 시간 | 채팅내용
         simpMessagingTemplate.convertAndSend(
                 String.format("/room/%d", chatMessage.getRoomId()),
                 chatMessage
         );
+        /* 채팅로그는 유저의 동의를 명시적으로 받아야 하며 개인정보로 간주된다. 제외
+        log.info("[채팅 로그] | {}번방 | {}님 | 내용 : {}", chatMessage.getRoomId() ,chatMessage.getSender(), chatMessage.getMessage());
+        */
     }
 
     @MessageMapping("/exitRoom")
