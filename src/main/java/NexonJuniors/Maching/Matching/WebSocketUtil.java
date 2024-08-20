@@ -318,28 +318,28 @@ public class WebSocketUtil {
         boolean isServerMatch = partyInfo.getPartyRequirementInfo().getPartyWorldName()
                 .equals(matchingUser.getCharacterInfo().getBasicInfo().getWorldName());
         if (!isServerMatch) {
-            System.out.println("서버 불일치: 유저 " + matchingUser.getCharacterInfo().getBasicInfo().getWorldName() + " / 파티 " + partyInfo.getPartyRequirementInfo().getPartyWorldName());
+            /*System.out.println("서버 불일치: 유저 " + matchingUser.getCharacterInfo().getBasicInfo().getWorldName() + " / 파티 " + partyInfo.getPartyRequirementInfo().getPartyWorldName());*/
             return false; // 서버가 다르면 다음 방으로
         }
 
         // 2. 파티의 보스 이름과 유저가 매칭 돌린 보스 이름이 같은지 확인
         boolean isBossNameMatch = partyInfo.getBossName().equals(matchingUser.getBossName());
         if (!isBossNameMatch) {
-            System.out.println("보스 이름 불일치: 유저 " + matchingUser.getBossName() + " / 파티 " + partyInfo.getBossName());
+            /*System.out.println("보스 이름 불일치: 유저 " + matchingUser.getBossName() + " / 파티 " + partyInfo.getBossName());*/
             return false; // 보스 이름이 다르면 다음 방으로
         }
 
         // 3. 파티의 최대 인원수를 확인
         boolean isMaxPeopleNotReached = partyInfo.getMaximumPeople() > partyInfo.getUsers().size();
         if (!isMaxPeopleNotReached) {
-            System.out.println("최대 인원 초과: 현재 인원수 " + partyInfo.getUsers().size() + " / 최대 인원수 " + partyInfo.getMaximumPeople());
+            /*System.out.println("최대 인원 초과: 현재 인원수 " + partyInfo.getUsers().size() + " / 최대 인원수 " + partyInfo.getMaximumPeople());*/
             return false; // 인원이 가득 찼으면 다음 방으로
         }
 
         // 4. 유저가 원한 최대 파티 인원수보다 파티의 최대 인원수가 작거나 같은가
         boolean isUserWantPartyPeopleNotReached = partyInfo.getMaximumPeople() <= matchingUser.getMaximumPeople();
         if (!isUserWantPartyPeopleNotReached) {
-            System.out.println("유저가 원하는 최대 파티 인원보다 파티의 최대 인원수가 큽니다.");
+            /*System.out.println("유저가 원하는 최대 파티 인원보다 파티의 최대 인원수가 큽니다.");*/
             return false;
         }
 
@@ -347,7 +347,7 @@ public class WebSocketUtil {
         // 5. 유저의 전투력이 파티 요구 전투력 이상인지 확인
         boolean isPowerSufficient = matchingUser.getPower() >= partyInfo.getPartyRequirementInfo().getPartyNeedPower();
         if (!isPowerSufficient) {
-            System.out.println("전투력 부족: 유저 " + matchingUser.getPower() + " / 파티 요구 " + partyInfo.getPartyRequirementInfo().getPartyNeedPower());
+            /*System.out.println("전투력 부족: 유저 " + matchingUser.getPower() + " / 파티 요구 " + partyInfo.getPartyRequirementInfo().getPartyNeedPower());*/
             return false; // 전투력이 부족하면 다음 방으로
         }
 
@@ -357,8 +357,17 @@ public class WebSocketUtil {
                 partyInfo.getUsers().stream().noneMatch(member -> member.getCharacterClassInfo().equals("비숍"))
                 : true;
         if (!isBishopNeeded) {
-            System.out.println("비숍 필요 여부 불일치: 유저 " + matchingUser.getCharacterInfo().getCharacterClassInfo() + " / 비숍 필요 " + partyInfo.getPartyRequirementInfo().getPartyNeedBishop());
+            /*System.out.println("비숍 필요 여부 불일치: 유저 " + matchingUser.getCharacterInfo().getCharacterClassInfo() + " / 비숍 필요 " + partyInfo.getPartyRequirementInfo().getPartyNeedBishop());*/
             return false; // 비숍이 필요하지 않으면 다음 방으로
+        }
+
+        // 비숍 자리가 필요한 경우, 비숍이 파티에 없는 상태에서 다른 클래스의 유저가 들어오는 것을 막음
+        if (partyInfo.getPartyRequirementInfo().getPartyNeedBishop() == 1 &&
+                partyInfo.getUsers().size() == partyInfo.getMaximumPeople() - 1 &&
+                partyInfo.getUsers().stream().noneMatch(member -> member.getCharacterClassInfo().equals("비숍")) &&
+                !matchingUser.getCharacterInfo().getCharacterClassInfo().equals("비숍")) {
+            log.info("[비숍 자리임] | 비숍자리이므로 다음 방으로 갑니다");
+            return false;
         }
 
         // 7. 유저의 주기와 파티의 요구 주기 일치 여부 확인 (free인 경우 항상 true)
@@ -373,7 +382,7 @@ public class WebSocketUtil {
         }
 
         if (!isClassMinutesMatch) {
-            System.out.println("주기 불일치: 유저 " + userMinutes + " / 파티 요구 " + requiredMinutes);
+            /*System.out.println("주기 불일치: 유저 " + userMinutes + " / 파티 요구 " + requiredMinutes);*/
             return false; // 주기가 맞지 않으면 다음 방으로
         }
 
