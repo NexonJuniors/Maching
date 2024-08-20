@@ -126,7 +126,7 @@ public class WebSocketUtil {
         result.put(roomId, findUser(partyInfo));
         result.get(roomId++).add(uuid);
 
-        log.info("[파티생성] | {} | [{}번][{}] | 방장 {} 님 | 최대 인원 {} 인 | 현재 인원 {} 명 | 전체 파티 {} 개 | {} 극딜 주기 | 최소 전투력 {} | 비숍 {}",
+        log.info("[채팅방 생성] | {} | [{}번][{}] | 방장 {} 님 | 최대 인원 {} 인 | 현재 인원 {} 명 | 전체 파티 {} 개 | {} 극딜 주기 | 최소 전투력 {} | 비숍 {}",
                 partyInfo.getPartyRequirementInfo().getPartyWorldName(),
                 roomId - 1,
                 partyInfo.getBossName(),
@@ -202,7 +202,7 @@ public class WebSocketUtil {
         matchingUser.setPower(power);
 
         //전투력도 로그에 남길지 고민
-        log.info("[매칭참여] | {} 님 | [{}] 매칭 큐 참여.",
+        log.info("[매칭 참여] | {} 님 | [{}] 매칭 큐 참여.",
                 basicInfo.getCharacterName(),
                 bossName
         );
@@ -240,7 +240,7 @@ public class WebSocketUtil {
                 }
 
                 // 로그 메시지 출력
-                log.info("[파티참여] | {} 님 | [{}번][{}] | 현재 파티원 [{}] | 남은 자리 {} 인",
+                log.info("[채팅방 참여] | {} 님 | [{}번][{}] | 현재 파티원 [{}] | 남은 자리 {} 인",
                         matchingUser.getCharacterInfo().getBasicInfo().getCharacterName(),
                         roomId,
                         partyInfo.getBossName(),
@@ -274,7 +274,7 @@ public class WebSocketUtil {
                 partyInfo.getUsers().add(matchingUser.getCharacterInfo());
                 uuidList.add(matchingUser.getUuId());
                 // 로그메세지 출력
-                log.info("[파티참여] | [대기큐] {} 님 | {}님 파티에 참가",
+                log.info("[채팅방 참여] | [대기큐] {} 님 | {}님 파티에 참가",
                         matchingUser.getCharacterInfo().getBasicInfo().getCharacterName(),
                         partyInfo.getUsers().get(0).getBasicInfo().getCharacterName()
                 );
@@ -310,7 +310,7 @@ public class WebSocketUtil {
 
         // 0. 모집 중인 파티인지 아닌지를 확인
         if(!partyInfo.isRecruitment()) {
-            log.info("{} 님의 파티는 이미 모집 완료된 파티", partyInfo.getPartyRequirementInfo().getPartyLeader());
+/*            log.info("{} 님의 파티는 이미 모집 완료된 파티", partyInfo.getPartyRequirementInfo().getPartyLeader());*/
             return false;
         }
 
@@ -394,8 +394,7 @@ public class WebSocketUtil {
                     // 채팅방 제거
                     rooms.remove(roomId);
 
-                    log.info("[채팅방 폭파] | [{} 번방 방장] {} 님 | 퇴장",roomId, nickname);
-                    log.info("총 채팅방 수 : {}, 참여 중인 총 유저 수 : {}", rooms.size(), totalUser.size());
+                    log.info("[채팅방 폭파] | [{} 번방 방장] {} 님 | 퇴장 | 총 채팅방 수 : {}, 참여 중인 총 유저 수 : {}",roomId, nickname, rooms.size(), totalUser.size());
 
                     // 방장이 나갔을 경우는 flag 를 2 로 설정
                     exitRoomDto = new ExitRoomDto(2, nickname);
@@ -413,8 +412,7 @@ public class WebSocketUtil {
                     exitRoomDto = new ExitRoomDto(1, nickname);
                     exitRoomDto.setPartyInfo(rooms.get(roomId));
 
-                    log.info("[채팅방 퇴장] | [{} 번방] {} 님 | 퇴장 | 파티원 수 : {}명",roomId, nickname, users.size());
-                    log.info("참여 중인 총 유저 수 : {}", totalUser.size());
+                    log.info("[채팅방 퇴장] | [{} 번방] {} 님 | 퇴장 | 파티원 수 : {}명 | 참여 중인 총 유저 수 : {}",roomId, nickname, users.size(), totalUser.size());
                     break;
                 }
             }
@@ -432,7 +430,7 @@ public class WebSocketUtil {
         PartyInfo partyInfo = rooms.get(roomId);
         partyInfo.setRecruitment(false);
 
-        log.info("[모집 완료] | [{} 번방] {} 님께서 파티원 모집완료",roomId, nickname);
+        log.info("[채팅방 모집 완료] | [{} 번방] {} 님께서 파티원 모집완료",roomId, nickname);
 
         return successRecruitmentDto;
     }
