@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자페이지</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/home.css">
+</head>
+<body class="dark-mode"> <!-- 기본 다크모드 -->
+
+<!--<script>
+    // 유저가 관리자가 아니면 홈으로 내보내기
+    if(!user.isAuthorized){
+        location.href "/"
+    }
+</script>-->
+
+<div class="bg-background text-foreground px-4">
+    <div class="max-w-screen-lg mx-auto px-8">
+        <header class="header flex items-center justify-between p-4">
+            <div class="flex items-center logo">
+                <img aria-hidden="true" alt="icon" src="../static/image/site/icon1.png" class="icon mr-2" />
+                <a href="/" style="text-decoration: none; color: inherit;">메칭 관리자 페이지</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="btnLightMode" class="p-2 rounded hover:bg-blue-600">🔆</button>
+                <button id="btnDarkMode" class="p-2 rounded hover:bg-blue-600">🌙</button>
+                <button class="p-2 rounded hover:bg-blue-600">📒</button>
+                <button class="p-2 rounded hover:bg-blue-600">💰</button>
+            </div>
+        </header>
+
+        <nav class="text-white p-4 navbar">
+            <ul class="flex space-x-4">
+                <li><a href="admin" class="hover:underline nav-item">유저 인증 관리</a></li>
+                <li><a href="admin" class="hover:underline nav-item">사이트가이드 관리</a></li>
+                <li><a href="admin" class="hover:underline nav-item">공지사항 관리</a></li>
+                <li><a href="admin" class="hover:underline nav-item">로그 관리</a></li>
+            </ul>
+        </nav>
+        <main class="p-4">
+            <div class="search-card card">
+                <h2>로그 데이터</h2><select id="logList" class="form-control mb-3"></select>
+                <div>
+                    <label><input type="radio" name="logFilter" value="matching" checked> 매칭 로그</label>
+                    <label><input type="radio" name="logFilter" value="chatting"> 채팅 로그</label>
+                    <label><input type="radio" name="logFilter" value="all"> 전체 로그</label>
+                </div>
+                <div id="logContainer" style="height: 400px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">
+                    <pre id="logContent"></pre>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="footer-content">
+                <div style="font-size:12px; text-align: center;">
+                    Data based on NEXON Open API.<br />
+                    Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. This service is not associated with NEXON
+                    Korea.<br /><br />
+                    본 사이트 내에서 발생하는 이용자 간의 모든 분쟁 및 문제에 대해 사이트 개발자는 어떠한 책임도 지지 않습니다.<br />
+                    이용자 간의 모든 행위와 관련된 책임은 해당 이용자들에게 있으며, 본 사이트는 이에 대한 법적 책임을 지지 않습니다.<br />
+                    이 페이지에는 메이플스토리가 제공한 메이플스토리 서체가 적용되어 있습니다.
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="../static/js/darkmode.js"></script>
+<script src="../static/js/log.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

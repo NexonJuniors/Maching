@@ -163,7 +163,7 @@ public class WebSocketController {
     public void chatting(ChatMessage chatMessage){
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
         chatMessage.setTime(formatter.format(new Date()));
-
+        // 채팅 로그 추가가능? [채팅로그] | 유저이름 | 시간 | 채팅내용
         simpMessagingTemplate.convertAndSend(
                 String.format("/room/%d", chatMessage.getRoomId()),
                 chatMessage

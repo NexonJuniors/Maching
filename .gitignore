@@ -1,6 +1,8 @@
 .env
 .gradle/
 .idea/
+.logs/
+/logs/*
 
 build/
 out/
