@@ -92,7 +92,6 @@ public class LogController {
             List<String> filteredLogs = logs.stream()
                     .filter(log -> log.contains("캐릭터 검색"))
                     .collect(Collectors.toList());
-            System.out.println(filteredLogs); // 필터링된 로그를 출력
             return ResponseEntity.ok(filteredLogs);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
