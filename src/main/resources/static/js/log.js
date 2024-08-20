@@ -28,7 +28,9 @@ async function fetchLogs(date, filterType) {
             endpoint = `/api/logs/filtered/${date}`;
         } else if (filterType === 'chatting') {
             endpoint = `/api/logs/chattingLog/${date}`;
-        } // No additional endpoint needed for 'all'
+        } else if (filterType === 'searching') {
+            endpoint = `/api/logs/searchingLog/${date}`;
+        }
 
         const response = await fetch(endpoint);
         if (!response.ok) throw new Error('Failed to fetch logs');

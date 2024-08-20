@@ -55,7 +55,7 @@ public class LogController {
 
             // "캐릭터", "매칭", "채팅방"이 포함된 로그만 필터링
             List<String> filteredLogs = logs.stream()
-                    .filter(log -> log.contains("캐릭터") || log.contains("매칭") || log.contains("채팅방"))
+                    .filter(log -> log.contains("매칭") || log.contains("채팅방"))
                     .collect(Collectors.toList());
             System.out.println(filteredLogs); // 필터링된 로그를 출력
             return ResponseEntity.ok(filteredLogs);
@@ -74,6 +74,24 @@ public class LogController {
             // "채팅로그" 가 포함된 로그만 필터링
             List<String> filteredLogs = logs.stream()
                     .filter(log -> log.contains("채팅로그"))
+                    .collect(Collectors.toList());
+            System.out.println(filteredLogs); // 필터링된 로그를 출력
+            return ResponseEntity.ok(filteredLogs);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    // 검색 로그만 가져오는 API
+    @GetMapping("/searchingLog/{date}")
+    public ResponseEntity<List<String>> getSearchingLogsByDate(@PathVariable("date") String date) {
+        try {
+            String logFileName = "today".equals(date) ? "logs/today.log" : "logs/app." + date + ".log";
+            List<String> logs = Files.readAllLines(Paths.get(logFileName));
+
+            // "채팅로그" 가 포함된 로그만 필터링
+            List<String> filteredLogs = logs.stream()
+                    .filter(log -> log.contains("캐릭터 검색"))
                     .collect(Collectors.toList());
             System.out.println(filteredLogs); // 필터링된 로그를 출력
             return ResponseEntity.ok(filteredLogs);
