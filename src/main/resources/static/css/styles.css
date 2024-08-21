@@ -1,4 +1,4 @@
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 700px) {
     /* px-4 및 px-8 클래스의 마진을 0으로 설정 */
     .px-4, .px-8, .p-4 {
         padding-left: 0!important;
@@ -14,6 +14,7 @@
     .flex-container{
         display: flex;
         flex-direction: column; /* 카드들을 상하로 배치 */
+        padding: 0!important;
     }
 
     /* 카드들 간의 간격 조정 */
@@ -34,17 +35,11 @@
         margin: 0px;
     }
 
-    /* 카드 제목 크기 줄이기 */
-    .card-title {
-        font-size: 1rem;
-    }
-
     /* 헤더 로고 크기 및 마진 조정 */
     .header .logo {
-        font-size: 1.8em;
+        font-size: 3em;
     }
     .header img {
-        width: 30px;
         height: auto;
     }
 
@@ -97,6 +92,44 @@
     /* 강조 텍스트 크기 조정 */
     .highlighted-text {
         font-size: 1.2rem;
+    }
+
+    .search-card .card-body {
+        padding: 5px; /* 카드 내용의 패딩 조정 */
+    }
+
+    .flex-container {
+        flex-direction: column; /* 요소들을 상하로 배치 */
+        align-items: center; /* 중앙 정렬 */
+        gap: 10px; /* 요소들 사이의 간격 조정 */
+    }
+
+    .flex-item {
+        width: 100%; /* 요소가 부모 컨테이너의 전체 너비를 차지하도록 설정 */
+        height: 100%; /* 요소가 부모 컨테이너의 전체 길이 차지하도록 설정 */
+        flex: 1 1 0px!important; /* 요소가 최소 0px 너비를 가지도록 설정 */
+        text-align: center; /* 텍스트 중앙 정렬 */
+    }
+
+    .search-section {
+        flex-direction: column; /* 검색 섹션의 내부 요소를 상하로 배치 */
+        align-items: stretch; /* 내부 요소가 가로로 꽉 차도록 설정 */
+        gap: 10px; /* 요소들 사이의 간격 조정 */
+    }
+
+    .input-container {
+        width: 100%; /* 입력 컨테이너의 너비를 100%로 설정 */
+    }
+
+    .instructions {
+        font-size: 0.8rem; /* 지침 텍스트 크기 조정 */
+        text-align: center; /* 중앙 정렬 */
+    }
+
+    input[type="date"] {
+        width: 20%!important;
+        padding: 0 5px;
+        font-size: 0.8rem;
     }
 }
 

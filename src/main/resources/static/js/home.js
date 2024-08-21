@@ -1,16 +1,3 @@
-const today = new Date();
-const yesterday = new Date(today);
-yesterday.setDate(today.getDate() - 1);
-
-const twoWeeksAgo = new Date(today);
-twoWeeksAgo.setDate(today.getDate() - 14);
-
-flatpickr("#selectedDate", {
-  maxDate: yesterday,
-  minDate: twoWeeksAgo,
-  dateFormat: "Y-m-d",
-});
-
 // 날짜 선택 버튼과 관련된 이벤트 리스너 추가
 document.getElementById("btnDate").onclick = function() {
     var dateInput = document.getElementById("selectedDate");
@@ -30,16 +17,6 @@ document.getElementById("btnDate").onclick = function() {
     }
 };
 
-/*// 툴팁을 마우스 호버 시 보여주기 위한 이벤트 리스너 추가
-btnDate.onmouseover = function() {
-    tooltip.style.visibility = "visible";
-    tooltip.style.opacity = "1";
-};
-btnDate.onmouseout = function() {
-    tooltip.style.visibility = "hidden";
-    tooltip.style.opacity = "0";
-};*/
-
 // 날짜 입력 필드의 값이 변경되면 검색 버튼의 텍스트를 업데이트
 document.getElementById("selectedDate").addEventListener("change", function() {
     var searchButton = document.getElementById("btnSearch");
@@ -47,7 +24,7 @@ document.getElementById("selectedDate").addEventListener("change", function() {
         var date = new Date(this.value);
         var month = date.getMonth() + 1; // 월은 0부터 시작하므로 +1
         var day = date.getDate();
-        btnDate.textContent = "조회 날짜 초기화";
+        btnDate.textContent = "날짜 초기화";
         searchButton.textContent = `${month}월${day}일 전투력 반영`;
     } else {
         btnDate.textContent = "조회 날짜 변경"
@@ -101,6 +78,22 @@ function characterSearch(characterName, selectedDate) {
 
 // 로딩이 끝난 후
 document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+
+    const twoWeeksAgo = new Date(today);
+    twoWeeksAgo.setDate(today.getDate() - 14);
+
+    flatpickr("#selectedDate", {
+        // 날짜 선택기를 버튼 클릭 시 표시
+        clickOpens: true,
+        // 기본 날짜 포맷 설정
+          maxDate: yesterday,
+          minDate: twoWeeksAgo,
+          dateFormat: "Y-m-d",
+    });
+
     // 버튼 툴팁 추가
     const btnDate = document.getElementById("btnDate");
     const tooltip = createTooltip(`조회날짜 반영 : 전투력, 프리셋 <br />프로필, HEXA는 실시간으로 반영됩니다`);
