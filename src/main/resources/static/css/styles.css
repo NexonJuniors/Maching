@@ -313,6 +313,7 @@ yeti color {
 }
 
 /* 이미지와 뱃지에 대한 툴팁 표시 */
+#toggleBossList:hover .tooltip,
 #btnDate:hover .tooltip,
 .badgeContainer-item:hover .tooltip,
 .powerQuestion-item:hover .tooltip,

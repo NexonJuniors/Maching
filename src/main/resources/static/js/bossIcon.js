@@ -199,6 +199,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         addFilteredBossImages(bossCntList, showZeroOnly); // 새로운 필터링된 보스 목록 추가
     });
 
+    const btnToggleBossList = document.getElementById("toggleBossList");
+    const btnToggleBossListTooltip = createTooltip(`[안내] <br /> 보스 리스트 변경이 가능해요`);
+    btnToggleBossList.classList.add('tooltip-trigger'); // 툴팁 트리거 클래스 이걸 추가해야 툴팁이 나옴
+    btnToggleBossList.appendChild(btnToggleBossListTooltip);
+
     // 버튼 클릭 시 모달 내용 업데이트
     document.querySelectorAll(".btn-link").forEach(button => {
         button.addEventListener("click", () => {
