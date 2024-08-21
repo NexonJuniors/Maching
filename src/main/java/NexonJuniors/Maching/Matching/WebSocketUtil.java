@@ -42,19 +42,30 @@ public class WebSocketUtil {
         return cntBossRoom;
     }
 
-/*    @Autowired
-    // 생성자를 통해 모든 final 필드 초기화
-    public MatchingUtil(List<MatchingUser> participants,
-                        HashMap<Long, PartyInfo> rooms,
-                        HashSet<String> totalUser,
-                        ObjectMapper objectMapper,
-                        SimpMessagingTemplate simpMessagingTemplate) {
-        this.participants = participants;
-        this.rooms = rooms;
-        this.totalUser = totalUser;
-        this.objectMapper = objectMapper;
-        this.simpMessagingTemplate = simpMessagingTemplate;
-    }*/
+    public HashMap<String, Long> getUserCountByBossName() {
+        HashMap<String, Long> cntBossUser = new HashMap<>();
+
+        // 1. 현재 방에 있는 유저 수를 계산
+        for(Long key: rooms.keySet()){
+            PartyInfo currentRoom = rooms.get(key);
+            String bossName = currentRoom.getBossName();
+            Long userCount = (long) currentRoom.getUsers().size(); // 현재 방에 있는 유저 수
+
+            cntBossUser.put(bossName,
+                    cntBossUser.getOrDefault(bossName, 0L) + userCount
+            );
+        }
+
+        // 2. 매칭 중인 유저 수를 계산
+        for(MatchingUser matchingUser: participants){
+            String bossName = matchingUser.getBossName();
+            cntBossUser.put(bossName,
+                    cntBossUser.getOrDefault(bossName, 0L) + 1
+            );
+        }
+
+        return cntBossUser;
+    }
 
     // 파티 생성 요청 시 실행되는 로직
     public HashMap<Long, List<String>> createParty(
@@ -488,6 +499,21 @@ public class WebSocketUtil {
                 partyMembers.toString(),
                 partyInfo.getMaximumPeople() - partyInfo.getUsers().size()
         );
+    }*/
+
+
+/*    @Autowired
+    // 생성자를 통해 모든 final 필드 초기화
+    public MatchingUtil(List<MatchingUser> participants,
+                        HashMap<Long, PartyInfo> rooms,
+                        HashSet<String> totalUser,
+                        ObjectMapper objectMapper,
+                        SimpMessagingTemplate simpMessagingTemplate) {
+        this.participants = participants;
+        this.rooms = rooms;
+        this.totalUser = totalUser;
+        this.objectMapper = objectMapper;
+        this.simpMessagingTemplate = simpMessagingTemplate;
     }*/
 
 }
