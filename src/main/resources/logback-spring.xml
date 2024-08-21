@@ -12,11 +12,10 @@
         </encoder>
     </appender>
 
-    <!-- File Appender 설정 -->
+    <!-- Rolling File Appender 설정 -->
     <!-- 일별로 로그 파일을 생성하고, 최대 30일 동안 보존하도록 설정 -->
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/today.log</file>
-        <!--로그 파일의 이름은 자정이 지나 새로운 날이 시작될 때 자동으로 롤링됨-->
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
         </encoder>
@@ -35,8 +34,7 @@
 
     <!-- 루트 로거 설정 -->
     <root level="INFO">
-        <appender-ref ref="FILE" />
+        <appender-ref ref="ASYNC_FILE" />
         <appender-ref ref="CONSOLE" />
     </root>
-
 </configuration>
