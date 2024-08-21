@@ -49,10 +49,10 @@ const bossNameMapping = {
     // 필요한 보스 이름들을 추가
 };
 
-// 보스 파티 수를 가져오는 함수
+// 전체 보스 참여 명수 가져오기
 async function fetchBossCount() {
     try {
-        const response = await fetch('/rooms/count');
+        const response = await fetch('/rooms/user');
         const json = await response.json();
         return json;
     } catch (error) {
@@ -79,7 +79,7 @@ function updateModalContent(imageName, bossCntList) {
 
     // 보스 파티 수 표시
     let nowBossCnt = bossCntList[fullName] ?? 0; // 보스 파티 수가 없으면 0으로 설정
-    document.getElementById("modalBossTitleCnt").innerHTML = `${nowBossCnt} 파티 대기중!`;
+    document.getElementById("modalBossTitleCnt").innerHTML = `${nowBossCnt}명이 참여중이에요!`;
 
     // flex-container의 내용을 모달에 복사
     copyFlexContainerToModal();
@@ -171,12 +171,12 @@ function addFilteredBossImages(bossCntList, showZeroOnly) {
         if (nowBossCnt == null) {
             matchInfo.innerHTML = `
               <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
-              0 <span class="highlighted-text2">파티</span>
+              <span class="highlighted-text3">0 명 참여중</span>
            `;
         } else {
             matchInfo.innerHTML = `
             <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
-            ${nowBossCnt} <span class="highlighted-text2">파티</span>
+            <span class="highlighted-text3">${nowBossCnt} 명 참여중</span>
          `;
         }
 

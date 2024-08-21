@@ -53,4 +53,11 @@ public class CharacterSearchController {
         HashMap<String, Long> result = webSocketUtil.getRoomCountByBossName();
         return ResponseEntity.ok().body(result);
     }
+
+    @GetMapping("/rooms/user")
+    // 보스 전체 명수 리턴
+    public ResponseEntity<HashMap<String, Long>> getUserCountByBossName(){
+        HashMap<String, Long> result = webSocketUtil.getUserCountByBossName();
+        return ResponseEntity.ok().body(result);
+    }
 }

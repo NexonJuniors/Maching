@@ -265,10 +265,11 @@ yeti color {
 .highlighted-text2 {
     font-family: 'MaplestoryFontBold', sans-serif;
     font-weight: 500;
-/*    color: transparent; *//* 텍스트를 투명하게 설정 *//*
-    background-clip: text; *//* 배경 클립을 텍스트로 설정 *//*
-    background-image: linear-gradient(to right, #42A5F5, #FFCA28); *//* 그라데이션 색상 설정 *//*
-    -webkit-background-clip: text; *//* 웹킷 브라우저용 배경 클립 설정 */
+}
+
+.highlighted-text3 {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    font-weight: 200;
 }
 
 .icon {
