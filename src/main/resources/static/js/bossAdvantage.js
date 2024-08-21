@@ -152,10 +152,10 @@ function modalCheckBossForceToolTip(characterForce, bossName) {
         }
         infoDiv.innerHTML = `
             <strong>보스 레벨:</strong> ${forceAdvantage[bossName][0]}
-            <br><strong>보스 체력:</strong> ${forceAdvantage[bossName][5] || '없음'}
-            <br><strong>결정석 :</strong> ${forceAdvantage[bossName][6] || '없음'} 메소
+            <strong>보스 체력:</strong> ${forceAdvantage[bossName][5] || '없음'}
             <br><strong>입장 포스:</strong> ${forceAdvantage[bossName][4] || '없음'}
-            <br><strong>포뻥 포스:</strong> ${forceAdvantage[bossName][3] || '없음'}
+            <strong>포뻥 포스:</strong> ${forceAdvantage[bossName][3] || '없음'}
+            <br><strong>결정석 :</strong> ${forceAdvantage[bossName][6] || '없음'} 메소
             `;
     }
 }
