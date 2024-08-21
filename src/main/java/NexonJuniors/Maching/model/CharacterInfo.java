@@ -70,12 +70,6 @@ public class CharacterInfo {
 
     @Override
     public String toString() {
-        return "CharacterInfo{" +
-                "basicInfo=" + basicInfo +
-                ", statInfo=" + statInfo +
-                ", hexaSkillInfo=" + hexaSkillInfo +
-                ", classMinutesInfo='" + classMinutesInfo +
-                ", classMainStatInfo='" + classMainStatInfo +
-                '}';
+        return "검색된 캐릭터 : " + basicInfo ;
     }
 }

@@ -49,9 +49,7 @@ public class BasicInfo {
 
     @Override
     public String toString() {
-        return "BasicInfo{" +
-                " characterName='" + characterName +
-                '}';
+        return characterName;
     }
 
 

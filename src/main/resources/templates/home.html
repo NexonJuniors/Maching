@@ -18,11 +18,12 @@
 <div class="bg-background text-foreground px-4">
     <div class="max-w-screen-lg mx-auto px-8">
         <div class="partners">
-            <a href="https://partners.maplestory.nexon.com/developers">메칭 파트너스 응원</a>
+            <p>메이플 보스매칭 서비스</p>
+            <!--<a href="https://partners.maplestory.nexon.com/developers">메칭 파트너스 응원</a>-->
         </div>
         <header class="header flex items-center justify-between p-4">
             <div class="flex items-center logo">
-                <img aria-hidden="true" alt="icon" src="../static/image/site/icon4.png" class="icon mr-2" />
+                <img aria-hidden="true" alt="icon" src="../static/image/site/icon1.png" class="icon mr-2" />
                 <a href="/" style="text-decoration: none; color: inherit;">메칭</a>
             </div>
             <div class="flex items-center space-x-4">
@@ -37,8 +38,12 @@
             <ul class="flex space-x-4">
                 <li><a href="#" class="hover:underline nav-item">사이트가이드</a></li>
                 <li><a href="#" class="hover:underline nav-item">공지사항</a></li>
-                <li><a href="info" class="hover:underline nav-item">dev캐릭터정보</a></li>
-                <li><a href="chatroom" class="hover:underline nav-item">dev채팅방</a></li>
+                <!--<li><a href="info" class="hover:underline nav-item">dev캐릭터정보</a></li>
+                <li><a href="chatroom" class="hover:underline nav-item">dev채팅방</a></li>-->
+                <!--<li><a href="adduser" class="hover:underline nav-item">dev회원가입</a></li>-->
+                <!--로그인에서 회원가입도 같이 처리해도됨--> <!--<li><a href="login" class="hover:underline nav-item">dev로그인</a></li>-->
+                <!--로그인 하면 로그인을 마이페이지로 대체, 회원가입 숨기고 <li><a href="userpage" class="hover:underline nav-item">dev마이페이지</a></li>-->
+                <!--로그인을 했는데 관리자 유저면 관리자탭 보이도록--> <li><a href="admin" class="hover:underline nav-item">dev관리자</a></li>
             </ul>
         </nav>
         <main class="p-4">
@@ -48,14 +53,8 @@
                         <div class="flex-item">
                             <h5 class="card-title">
                                 내 캐릭터의<br>실시간
-                                <span class="highlighted-text">
-                                    전투력
-                                </span>
-                                으로<br>
-                                <span class="highlighted-text">
-                                    파티 매칭
-                                </span>
-                                에 참여하세요!
+                                <span class="highlighted-text">프로필</span>로<br>
+                                <span class="highlighted-text">파티 매칭</span>에 참여하세요!
                             </h5>
                         </div>
                         <div class="flex-item">
@@ -68,7 +67,7 @@
                                     <input type="text" id="characterName" name="characterName" placeholder="캐릭터명을 입력하세요" required>
                                 </div>
                                 <div>
-                                    <button id="btnSearch" type="submit" class="btn btn-custom">실시간 전투력 검색</button>
+                                    <button id="btnSearch" type="submit" class="btn btn-custom">실시간 프로필 검색</button>
                                 </div>
                                 <div class="instructions">
                                     - OPEN API 서버 점검 시 점검 종료 후 시도해 주세요.
@@ -105,13 +104,6 @@
         </footer>
     </div>
 </div>
-<script>
-    flatpickr("#selectedDate", {
-      maxDate: "today",
-      minDate: "2024-08-05",
-      dateFormat: "Y-m-d",
-    });
-</script>
 <script src="../static/js/darkmode.js"></script>
 <script src="../static/js/tooltip.js"></script>
 <script src="../static/js/home.js"></script>
