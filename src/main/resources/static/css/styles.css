@@ -119,6 +119,24 @@ body{
     padding: 0 15px; /* 좌우 여백 설정 */
 }
 
+.bossbar {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    display: flex;
+    align-items: center; /* 요소들을 수직으로 가운데 정렬 */
+    justify-content: space-between; /* 양쪽에 요소들을 배치 */
+    height: 33.4%;
+    background-color: #114488; /* 페페다크블루 */
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 0 20px; /* 양쪽에 적당한 마진을 줌 */
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+}
+
 .partners{
     font-family: 'MaplestoryFontLight', sans-serif;
     background-color: #FF9933;
