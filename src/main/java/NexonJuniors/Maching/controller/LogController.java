@@ -88,9 +88,8 @@ public class LogController {
             String logFileName = "today".equals(date) ? "logs/today.log" : "logs/app." + date + ".log";
             List<String> logs = Files.readAllLines(Paths.get(logFileName));
 
-            // "채팅로그" 가 포함된 로그만 필터링
             List<String> filteredLogs = logs.stream()
-                    .filter(log -> log.contains("캐릭터 검색"))
+                    .filter(log -> log.contains("캐릭터"))
                     .collect(Collectors.toList());
             return ResponseEntity.ok(filteredLogs);
         } catch (Exception e) {

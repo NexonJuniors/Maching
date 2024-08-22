@@ -54,17 +54,15 @@ public class CharacterEquipmentInfo {
     @Setter
     public static class ItemEquipment {
 
-        @JsonProperty("item_name")
-        private String itemName; //진짜 아이템
-
         private String itemEquipmentPart;
         private String itemEquipmentSlot;
         private String itemIcon;
+
+        @JsonProperty("item_name")
+        private String itemName; //진짜 아이템 이름
+
         private String itemDescription;
-
-        @JsonProperty("item_shape_name")
         private String itemShapeName; //모루
-
         private String itemShapeIcon;
         private String itemGender;
         private ItemOption itemTotalOption;
@@ -93,7 +91,10 @@ public class CharacterEquipmentInfo {
         private String starforce;
         private String starforceScrollFlag;
         private ItemOption itemStarforceOption;
-        private int specialRingLevel;
+
+        @JsonProperty("special_ring_level")
+        private int specialRingLevel; //이게 1이상이면 시드링을 끼고있는거임
+
         private String dateExpire;
 
         @Override

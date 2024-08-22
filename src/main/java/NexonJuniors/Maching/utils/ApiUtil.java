@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 import java.time.format.DateTimeFormatter;
 
 @Slf4j
@@ -59,6 +60,7 @@ public class ApiUtil {
             CharacterEquipmentInfo characterEquipmentInfo = objectMapper.readValue(characterEquipmentInfoJson, CharacterEquipmentInfo.class);
 
             // 날짜와 실시간 여부 설정
+            log.info("날짜"+date);
             if (date == null) {
                 statInfo.setSearchDate(LocalDate.now());
                 characterEquipmentInfo.setSearchDate(LocalDate.now());
@@ -81,15 +83,30 @@ public class ApiUtil {
             // 직업 상세 정보 설정
             setCharacterClassDetails(characterInfo);
 
-            // 캐릭터 검색 로그 출력
-            log.info("[캐릭터 검색] | " + characterInfo);
-
 /*            log.info("API 응답: " + characterEquipmentInfoJson);*/
-            // 장착중인 장비의 이름 출력 실험 완료
-/*            List<CharacterEquipmentInfo.ItemEquipment> equipmentList = characterEquipmentInfo.getItemEquipment();
+/*            // 장착중인 장비의 이름 출력 실험 완료
+            List<CharacterEquipmentInfo.ItemEquipment> equipmentList = characterEquipmentInfo.getItemEquipment();
             for (CharacterEquipmentInfo.ItemEquipment item : equipmentList) {
-                log.info("장착중인 장비: " + item.getItemName());
+                if(item.getSpecialRingLevel()>0){
+                    log.info("[캐릭터 장비] | 특수반지:{} 레벨:{}", item.getItemName(), item.getSpecialRingLevel());
+                }else{
+                    log.info("[캐릭터 장비] | 특수반지 없음");
+                }
             }*/
+
+            // 장착중인 장비 중 specialRingLevel이 0 이상인 장비만 필터링 최적화
+            List<CharacterEquipmentInfo.ItemEquipment> filteredEquipmentList = characterEquipmentInfo.getItemEquipment().stream()
+                    .filter(item -> item.getSpecialRingLevel() > 0)
+                    .collect(Collectors.toList());
+
+            if (filteredEquipmentList.isEmpty()) {
+                log.info("[캐릭터 검색] | {} | 특수반지 X",characterInfo);
+            } else {
+                filteredEquipmentList.forEach(item ->
+                        log.info("[캐릭터 검색] | {} | 특수반지: {}{}", characterInfo, item.getItemName(), item.getSpecialRingLevel())
+                );
+            }
+
             return characterInfo;
         } catch (Exception e) {
             log.error(e.getMessage());
