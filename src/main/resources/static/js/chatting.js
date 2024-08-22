@@ -169,14 +169,15 @@ function loadBasic(user, idx){
 
 // 모집 완료 버튼 생성 함수
 function createBtnSuccessRecruitment(){
-    const bossInfo = document.getElementById('bossInfo')
+    const divTitleBtn = document.getElementById('div-title-btn')
     const btnSuccessRecruitment = document.createElement('button')
 
     btnSuccessRecruitment.id = 'btnSuccessRecruitment'
     btnSuccessRecruitment.addEventListener('click', successRecruitment)
     btnSuccessRecruitment.innerText = '모집완료'
+    btnSuccessRecruitment.classList.add('title-btn')
 
-    bossInfo.appendChild(btnSuccessRecruitment)
+    divTitleBtn.appendChild(btnSuccessRecruitment)
 }
 
 // 입장 인사말 출력 함수
@@ -260,7 +261,7 @@ function successRecruitment(){
         stompClient.send('/app/successRecruitment', connectHeaders, nickname)
 
         const btnSuccessRecruitment = document.getElementById('btnSuccessRecruitment')
-        document.getElementById('bossInfo').removeChild(btnSuccessRecruitment)
+        document.getElementById('div-title-btn').removeChild(btnSuccessRecruitment)
     }
 }
 

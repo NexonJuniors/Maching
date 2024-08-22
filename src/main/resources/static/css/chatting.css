@@ -183,6 +183,18 @@ input[type="text"] {
     font-weight: bold;
 }
 
+.title-btn-container{
+    font-family: 'MaplestoryFontBold', sans-serif;
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+    justify-content: space-between;
+}
+
+.title-btn{
+    margin-left: 4px;
+}
+
 .stats-container {
     border: 1px solid #e0e0e0; /* Border 색상 */
     padding: 10px; /* 내부 여백 */
