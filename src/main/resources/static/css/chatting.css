@@ -19,6 +19,7 @@ input[type="text"] {
     outline: none;
     background-color: var(--foreground);
     color: var(--primary);
+    width: 80%
 }
 
 .chatroom-container {
