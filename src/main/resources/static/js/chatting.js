@@ -123,14 +123,14 @@ function loadBasicImg(){
 function loadPartyInfo(bossName, bossImg, maximumPeople, partyRequirementInfo){
     document.getElementById('bossName').innerText = bossName
     document.getElementById('bossImg').setAttribute('src', bossImg)
-    document.getElementById('maximumPeople').innerText = `최대 ${maximumPeople}인 파티`
+    document.getElementById('maximumPeople').innerText = `[${maximumPeople}인 파티]`
 
     const partyNeedClassMinutesInfo = partyRequirementInfo.partyNeedClassMinutesInfo
     const partyNeedPower = partyRequirementInfo.partyNeedPower
     const partyNeedBishop = partyRequirementInfo.partyNeedBishop
 
-    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'}주기)`
-    document.getElementById('partyNeedPower').innerText = `최소 전투력 : ${formatNumber(partyNeedPower)}`
+    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'}주기), `
+    document.getElementById('partyNeedPower').innerText = ` ${formatNumber(partyNeedPower)} 이상`
     document.getElementById('partyNeedBishop').innerText = `비숍 모집 : ${partyNeedBishop == 1 ? 'O' : 'X'}`
     document.getElementById('recruitmentStatus').innerText = `파티 상태 : 모집 중`
 }
