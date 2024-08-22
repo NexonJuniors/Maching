@@ -6,19 +6,19 @@ public class CharacterInfo {
     private StatInfo statInfo;
     private UnionInfo unionInfo;
     private HexaSkillInfo hexaSkillInfo;
-    private CharacterEquipment characterEquipment;
+    private CharacterEquipmentInfo characterEquipmentInfo;
     private String characterClassInfo; // 직업 정보 (ex 비숍)
     private String classMinutesInfo; // 주기 정보 (ex "2")
     private String classMainStatInfo; // 주스탯 정보 (ex "str")
 
     // Getter 및 Setter
 
-    public CharacterEquipment getCharacterEquipment() {
-        return characterEquipment;
+    public CharacterEquipmentInfo getCharacterEquipmentInfo() {
+        return characterEquipmentInfo;
     }
 
-    public void setCharacterEquipment(CharacterEquipment characterEquipment) {
-        this.characterEquipment = characterEquipment;
+    public void setCharacterEquipmentInfo(CharacterEquipmentInfo characterEquipmentInfo) {
+        this.characterEquipmentInfo = characterEquipmentInfo;
     }
 
     public BasicInfo getBasicInfo() {
