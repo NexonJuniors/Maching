@@ -1,3 +1,4 @@
+/*
 async function fetchLogList() {
     try {
         const response = await fetch('/api/logs/list');
@@ -29,9 +30,11 @@ async function fetchLogs(date, filterType) {
         } else if (filterType === 'searching') {
             endpoint = `/api/logs/searchingLog/${date}`;
         }
+*/
 /*     채팅은 유저의 개인정보이다.   else if (filterType === 'chatting') {
                      endpoint = `/api/logs/chattingLog/${date}`;
-                 } */
+                 } *//*
+
 
         const response = await fetch(endpoint);
         if (!response.ok) throw new Error('Failed to fetch logs');
@@ -55,4 +58,4 @@ document.querySelectorAll('input[name="logFilter"]').forEach(radio => {
     });
 });
 
-document.addEventListener('DOMContentLoaded', fetchLogList);
+document.addEventListener('DOMContentLoaded', fetchLogList);*/
