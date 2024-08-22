@@ -9,12 +9,16 @@ const statLabels = {
     strdexluk: '올스텟',
 };
 
-// 로딩이 끝난 후
+// 로딩이 끝난 후 뱃지 생성 부분
 document.addEventListener('DOMContentLoaded', function() {
     powerTextTooltip();
-    isRealTimeBadge();
-    isMatchingStardedBadge();
-    mainStatBadge();
+
+    isMatchingStardedBadge(); // 매칭중인 유저 뱃지
+
+    specialRingBadge(); //시드링 뱃지
+    mainStatBadge(); // 기본스텟 뱃지
+    isRealTimeBadge(); // 실시간정보 뱃지
+
     localStorage.removeItem("info");
 });
 

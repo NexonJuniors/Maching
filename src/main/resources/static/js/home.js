@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 버튼 툴팁 추가
     const btnDate = document.getElementById("btnDate");
-    const tooltip = createTooltip(`조회날짜 반영 : 전투력, 프리셋 <br />프로필, HEXA는 실시간으로 반영됩니다`);
+    const tooltip = createTooltip(`[전투력 조회날짜 선택] <br />이외 프로필, HEXA 등은 실시간 정보로 반영됩니다`);
     btnDate.classList.add('tooltip-trigger'); // 툴팁 트리거 클래스 이걸 추가해야 툴팁이 나옴
     btnDate.appendChild(tooltip);
 });
