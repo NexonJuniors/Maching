@@ -19,6 +19,7 @@ input[type="text"] {
     outline: none;
     background-color: var(--foreground);
     color: var(--primary);
+    width: 80%
 }
 
 .chatroom-container {
@@ -101,6 +102,9 @@ input[type="text"] {
 }
 
 .chat {
+    width: 100%;
+    display: grid;
+    grid-auto-rows: min-content;
     flex: 1; /* 채팅 내용이 있는 부분이 가능한 많이 공간을 차지하게 함 */
     overflow-y: auto; /* 채팅 내용이 많아지면 스크롤 가능하게 */
 }
@@ -152,8 +156,9 @@ input[type="text"] {
 }
 
 .class {
-    font-size: 0.9em;
+    font-size: 1.0em;
     font-weight: 900;
+    font-family: 'MaplestoryFontLight', sans-serif;
 }
 
 .power{
@@ -172,6 +177,7 @@ input[type="text"] {
 }
 
 .name-container {
+    font-family: 'MaplestoryFontBold', sans-serif;
     position: absolute;
     left: 50%;
     align-items: center;
@@ -180,6 +186,18 @@ input[type="text"] {
     white-space: nowrap; /* 텍스트가 한 줄로 나오게 함 */
     font-size: x-large;
     font-weight: bold;
+}
+
+.title-btn-container{
+    font-family: 'MaplestoryFontBold', sans-serif;
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+    justify-content: space-between;
+}
+
+.title-btn{
+    margin-left: 4px;
 }
 
 .stats-container {
@@ -219,7 +237,7 @@ input[type="text"] {
 }
 
 /* 컨테이너 스타일 */
-#hexaCoreContainer {
+.hexaCoreContainer {
   display: flex;
   flex-wrap: wrap; /* 여러 줄에 걸쳐 표시되도록 함 */
   gap: 10px; /* 스킬 카드 간격 조정 */
@@ -261,3 +279,10 @@ input[type="text"] {
   font-weight: bold;
   text-align: center;
 }
+
+.dialog{
+    justify-self: flex-start;
+    font-weight: bold;
+}
+
+

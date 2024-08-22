@@ -17,6 +17,10 @@ let partyInfo
 // 새로고침, 닫기, 페이지 이동 시 이벤트 핸들러 추가
 window.addEventListener('beforeunload', pageUnload);
 
+// 페이지 로딩 시 현재 채팅 창 크기 가져와서 % 단위에서 px 단위로 고정 ( 스크롤바 표시 위해 )
+const divChat = document.getElementById('outputContainer')
+divChat.style.flexBasis = divChat.offsetHeight +'px'
+
 // 메세지를 보낼 때 헤더에 포함시킬 방번호 저장
 const connectHeaders = {'roomId' : `${roomId}`}
 
@@ -119,14 +123,14 @@ function loadBasicImg(){
 function loadPartyInfo(bossName, bossImg, maximumPeople, partyRequirementInfo){
     document.getElementById('bossName').innerText = bossName
     document.getElementById('bossImg').setAttribute('src', bossImg)
-    document.getElementById('maximumPeople').innerText = `최대 ${maximumPeople}인 파티`
+    document.getElementById('maximumPeople').innerText = `[${maximumPeople}인 파티]`
 
     const partyNeedClassMinutesInfo = partyRequirementInfo.partyNeedClassMinutesInfo
     const partyNeedPower = partyRequirementInfo.partyNeedPower
     const partyNeedBishop = partyRequirementInfo.partyNeedBishop
 
-    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'}주기)`
-    document.getElementById('partyNeedPower').innerText = `최소 전투력 : ${formatNumber(partyNeedPower)}`
+    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'}주기), `
+    document.getElementById('partyNeedPower').innerText = ` ${formatNumber(partyNeedPower)} 이상`
     document.getElementById('partyNeedBishop').innerText = `비숍 모집 : ${partyNeedBishop == 1 ? 'O' : 'X'}`
     document.getElementById('recruitmentStatus').innerText = `파티 상태 : 모집 중`
 }
@@ -169,14 +173,15 @@ function loadBasic(user, idx){
 
 // 모집 완료 버튼 생성 함수
 function createBtnSuccessRecruitment(){
-    const bossInfo = document.getElementById('bossInfo')
+    const divTitleBtn = document.getElementById('div-title-btn')
     const btnSuccessRecruitment = document.createElement('button')
 
     btnSuccessRecruitment.id = 'btnSuccessRecruitment'
     btnSuccessRecruitment.addEventListener('click', successRecruitment)
     btnSuccessRecruitment.innerText = '모집완료'
+    btnSuccessRecruitment.classList.add('title-btn')
 
-    bossInfo.appendChild(btnSuccessRecruitment)
+    divTitleBtn.appendChild(btnSuccessRecruitment)
 }
 
 // 입장 인사말 출력 함수
@@ -205,7 +210,7 @@ function printMessage(sender, time, message){
     const outputContainer = document.getElementById('outputContainer')
 
     const newMessage = document.createElement('p')
-    newMessage.innerText = `${sender}: ${message}(${time})`
+    newMessage.innerText = `${time} [${sender}] ${message}`
     newMessage.className = 'dialog'
 
     outputContainer.appendChild(newMessage)
@@ -260,7 +265,7 @@ function successRecruitment(){
         stompClient.send('/app/successRecruitment', connectHeaders, nickname)
 
         const btnSuccessRecruitment = document.getElementById('btnSuccessRecruitment')
-        document.getElementById('bossInfo').removeChild(btnSuccessRecruitment)
+        document.getElementById('div-title-btn').removeChild(btnSuccessRecruitment)
     }
 }
 
@@ -596,6 +601,7 @@ function printHexa(event){
     hexaSkill.classList.add('hexaSkill')
 
     const hexaCoreContainer = document.createElement('div')
+    hexaCoreContainer.classList.add('hexaCoreContainer')
 
     // 헥사 스킬 정보와 헥사 스킬 이미지 경로 가져오기
     // 유저가 몇 번 째 유저 인지 구해서 해당 유저의 스킬 정보 가져옴
@@ -623,12 +629,12 @@ function printHexa(event){
             // 스킬 이미지 추가
             const hexaImg = document.createElement('img')
             hexaImg.classList.add('skill-icon')
-            hexaImg.src = hexaSkillImgFolderPath + coreName.replace(/\s/g, '') + '.png'
+            hexaImg.src = hexaSkillImgFolderPath + coreName.replace(/\s/g, '').replace(':', '') + '.png'
 
             // 툴팁 추가
             const tooltip = document.createElement('div')
             tooltip.classList.add('tooltip')
-            tooltip.innerHTML = `[${hexaSkillEquipment[idx].hexa_core_type.replace(' 코어', '')}]<br>${hexaSkillEquipment[idx].hexa_core_name}`
+            tooltip.innerHTML = `[${hexaSkillEquipment[idx].hexa_core_type.replace(' 코어', '')}]<br>LV.${hexaSkillEquipment[idx].hexa_core_level} ${hexaSkillEquipment[idx].hexa_core_name}`
 
             skillIconContainer.appendChild(hexaImg)
             skillIconContainer.appendChild(tooltip)
@@ -637,11 +643,11 @@ function printHexa(event){
         }
 
         // 스킬 레벨 추가
-        const skillLevel = document.createElement('div')
-        skillLevel.classList.add('skill-level')
-        skillLevel.innerText = `Lv.${hexaSkillEquipment[idx].hexa_core_level}`
+//        const skillLevel = document.createElement('div')
+//        skillLevel.classList.add('skill-level')
+//        skillLevel.innerText = `Lv.${hexaSkillEquipment[idx].hexa_core_level}`
 
-        skillIcons.appendChild(skillLevel)
+//        skillIcons.appendChild(skillLevel)
 
         hexaCoreInfo.appendChild(skillIcons)
         hexaCoreContainer.appendChild(hexaCoreInfo)
