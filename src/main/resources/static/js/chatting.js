@@ -17,6 +17,10 @@ let partyInfo
 // 새로고침, 닫기, 페이지 이동 시 이벤트 핸들러 추가
 window.addEventListener('beforeunload', pageUnload);
 
+// 페이지 로딩 시 현재 채팅 창 크기 가져와서 % 단위에서 px 단위로 고정 ( 스크롤바 표시 위해 )
+const divChat = document.getElementById('outputContainer')
+divChat.style.flexBasis = divChat.offsetHeight +'px'
+
 // 메세지를 보낼 때 헤더에 포함시킬 방번호 저장
 const connectHeaders = {'roomId' : `${roomId}`}
 
