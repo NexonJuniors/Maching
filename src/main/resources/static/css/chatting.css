@@ -156,8 +156,9 @@ input[type="text"] {
 }
 
 .class {
-    font-size: 0.9em;
+    font-size: 1.0em;
     font-weight: 900;
+    font-family: 'MaplestoryFontLight', sans-serif;
 }
 
 .power{
