@@ -84,40 +84,22 @@ public class ApiUtil {
             setCharacterClassDetails(characterInfo);
             /*log.info("[캐릭터 검색] | {} | 특수반지: {}{}", characterInfo, item.getItemName(), item.getSpecialRingLevel())*/
 
-            // 특수반지 레벨이 0 이상인 장비를 필터링
-            List<CharacterEquipmentInfo.ItemEquipment> specialRings = characterInfo.getCharacterEquipmentInfo().getItemEquipment().stream()
-                    .filter(item -> item.getSpecialRingLevel() > 0)
-                    .collect(Collectors.toList());
+            List<CharacterEquipmentInfo.ItemEquipment> specialRings = findSpecialRings(characterInfo.getCharacterEquipmentInfo().getItemEquipment());
+            logSpecialRings(characterInfo, specialRings);
 
-            if (!specialRings.isEmpty()) {
-                // 특수반지가 있는 경우, 장비 프리셋을 출력
-                log.info("[캐릭터 검색] | {} | 특수반지 있는 장비 발견",characterInfo);
-                specialRings.forEach(item ->
-                        log.info("[캐릭터 검색] | {} | 특수반지: {} 레벨: {}", characterInfo, item.getItemName(), item.getSpecialRingLevel())
-                );
-            } else {
-                // 특수반지가 없는 경우, 프리셋 1, 2, 3을 체크하여 가장 높은 레벨의 특수반지가 있는 프리셋 반환
+            if (specialRings.isEmpty()) {
                 int[] presetSpecialRingLevels = new int[3];
 
-                // 각 프리셋에서 특수반지 레벨을 체크
                 checkPresetSpecialRingLevels(characterInfo.getCharacterEquipmentInfo().getItemEquipmentPreset1(), presetSpecialRingLevels, 0);
                 checkPresetSpecialRingLevels(characterInfo.getCharacterEquipmentInfo().getItemEquipmentPreset2(), presetSpecialRingLevels, 1);
                 checkPresetSpecialRingLevels(characterInfo.getCharacterEquipmentInfo().getItemEquipmentPreset3(), presetSpecialRingLevels, 2);
 
-                // 가장 높은 레벨의 특수반지가 있는 프리셋 찾기
-                int maxLevel = -1;
-                int bestPreset = -1;
-                for (int i = 0; i < presetSpecialRingLevels.length; i++) {
-                    if (presetSpecialRingLevels[i] > maxLevel) {
-                        maxLevel = presetSpecialRingLevels[i];
-                        bestPreset = i + 1;
-                    }
-                }
+                int bestPreset = findBestPresetForSpecialRings(presetSpecialRingLevels);
 
                 if (bestPreset != -1) {
                     log.info("[캐릭터 검색] | {} | 특수반지가 있는 가장 높은 레벨의 프리셋: 프리셋 {}", characterInfo, bestPreset);
                 } else {
-                    log.info("[캐릭터 검색] | {} | 특수반지가 아예 없음",characterInfo);
+                    log.info("[캐릭터 검색] | {} | 특수반지가 아예 없음", characterInfo);
                 }
             }
 
@@ -128,14 +110,45 @@ public class ApiUtil {
         }
     }
 
-    private void checkPresetSpecialRingLevels(List<CharacterEquipmentInfo.ItemEquipment> presetItems, int[] levels, int index) {
-        presetItems.stream()
+    // 특수반지 레벨이 0 이상인 장비를 필터링하여 리스트로 반환하는 메서드입니다.
+    private List<CharacterEquipmentInfo.ItemEquipment> findSpecialRings(List<CharacterEquipmentInfo.ItemEquipment> items) {
+        return items.stream()
                 .filter(item -> item.getSpecialRingLevel() > 0)
-                .forEach(item -> {
-                    if (item.getSpecialRingLevel() > levels[index]) {
-                        levels[index] = item.getSpecialRingLevel();
-                    }
-                });
+                .collect(Collectors.toList());
+    }
+    // 프리셋을에서 특수스킬 반지 필터링하여 반환
+    private void checkPresetSpecialRingLevels(List<CharacterEquipmentInfo.ItemEquipment> presetItems, int[] levels, int index) {
+        if (presetItems != null) {
+            presetItems.stream()
+                    .filter(item -> item.getSpecialRingLevel() > 0)
+                    .forEach(item -> {
+                        if (item.getSpecialRingLevel() > levels[index]) {
+                            levels[index] = item.getSpecialRingLevel();
+                        }
+                    });
+        } else {
+            log.warn("프리셋 {}의 장비 리스트가 null입니다.", index + 1);
+        }
+    }
+    // 특수반지 레벨이 가장 높은 프리셋을 찾는 메서드
+    private int findBestPresetForSpecialRings(int[] levels) {
+        int maxLevel = -1;
+        int bestPreset = -1;
+        for (int i = 0; i < levels.length; i++) {
+            if (levels[i] > maxLevel) {
+                maxLevel = levels[i];
+                bestPreset = i + 1;
+            }
+        }
+        return bestPreset;
+    }
+    // 특수스킬반지 로깅 메서드
+    private void logSpecialRings(CharacterInfo characterInfo, List<CharacterEquipmentInfo.ItemEquipment> specialRings) {
+        if (!specialRings.isEmpty()) {
+            specialRings.forEach(item ->
+                    log.info("[캐릭터 검색] | {} | 특수반지: {} 레벨: {}", characterInfo, item.getItemName(), item.getSpecialRingLevel())
+            );
+        }
     }
 
     /*            log.info("API 응답: " + characterEquipmentInfoJson);*/
