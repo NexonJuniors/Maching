@@ -597,6 +597,7 @@ function printHexa(event){
     hexaSkill.classList.add('hexaSkill')
 
     const hexaCoreContainer = document.createElement('div')
+    hexaCoreContainer.classList.add('hexaCoreContainer')
 
     // 헥사 스킬 정보와 헥사 스킬 이미지 경로 가져오기
     // 유저가 몇 번 째 유저 인지 구해서 해당 유저의 스킬 정보 가져옴
@@ -629,7 +630,7 @@ function printHexa(event){
             // 툴팁 추가
             const tooltip = document.createElement('div')
             tooltip.classList.add('tooltip')
-            tooltip.innerHTML = `[${hexaSkillEquipment[idx].hexa_core_type.replace(' 코어', '')}]<br>${hexaSkillEquipment[idx].hexa_core_name}`
+            tooltip.innerHTML = `[${hexaSkillEquipment[idx].hexa_core_type.replace(' 코어', '')}]<br>LV.${hexaSkillEquipment[idx].hexa_core_level} ${hexaSkillEquipment[idx].hexa_core_name}`
 
             skillIconContainer.appendChild(hexaImg)
             skillIconContainer.appendChild(tooltip)
@@ -638,11 +639,11 @@ function printHexa(event){
         }
 
         // 스킬 레벨 추가
-        const skillLevel = document.createElement('div')
-        skillLevel.classList.add('skill-level')
-        skillLevel.innerText = `Lv.${hexaSkillEquipment[idx].hexa_core_level}`
+//        const skillLevel = document.createElement('div')
+//        skillLevel.classList.add('skill-level')
+//        skillLevel.innerText = `Lv.${hexaSkillEquipment[idx].hexa_core_level}`
 
-        skillIcons.appendChild(skillLevel)
+//        skillIcons.appendChild(skillLevel)
 
         hexaCoreInfo.appendChild(skillIcons)
         hexaCoreContainer.appendChild(hexaCoreInfo)

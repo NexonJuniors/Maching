@@ -237,7 +237,7 @@ input[type="text"] {
 }
 
 /* 컨테이너 스타일 */
-#hexaCoreContainer {
+.hexaCoreContainer {
   display: flex;
   flex-wrap: wrap; /* 여러 줄에 걸쳐 표시되도록 함 */
   gap: 10px; /* 스킬 카드 간격 조정 */
