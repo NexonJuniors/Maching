@@ -60,7 +60,7 @@ public class ApiUtil {
             CharacterEquipmentInfo characterEquipmentInfo = objectMapper.readValue(characterEquipmentInfoJson, CharacterEquipmentInfo.class);
 
             // 날짜와 실시간 여부 설정
-            log.info("날짜"+date);
+/*            log.info("날짜"+date);*/
             if (date == null) {
                 statInfo.setSearchDate(LocalDate.now());
                 characterEquipmentInfo.setSearchDate(LocalDate.now());
@@ -82,8 +82,63 @@ public class ApiUtil {
 
             // 직업 상세 정보 설정
             setCharacterClassDetails(characterInfo);
+            /*log.info("[캐릭터 검색] | {} | 특수반지: {}{}", characterInfo, item.getItemName(), item.getSpecialRingLevel())*/
 
-/*            log.info("API 응답: " + characterEquipmentInfoJson);*/
+            // 특수반지 레벨이 0 이상인 장비를 필터링
+            List<CharacterEquipmentInfo.ItemEquipment> specialRings = characterInfo.getCharacterEquipmentInfo().getItemEquipment().stream()
+                    .filter(item -> item.getSpecialRingLevel() > 0)
+                    .collect(Collectors.toList());
+
+            if (!specialRings.isEmpty()) {
+                // 특수반지가 있는 경우, 장비 프리셋을 출력
+                log.info("[캐릭터 검색] | {} | 특수반지 있는 장비 발견",characterInfo);
+                specialRings.forEach(item ->
+                        log.info("[캐릭터 검색] | {} | 특수반지: {} 레벨: {}", characterInfo, item.getItemName(), item.getSpecialRingLevel())
+                );
+            } else {
+                // 특수반지가 없는 경우, 프리셋 1, 2, 3을 체크하여 가장 높은 레벨의 특수반지가 있는 프리셋 반환
+                int[] presetSpecialRingLevels = new int[3];
+
+                // 각 프리셋에서 특수반지 레벨을 체크
+                checkPresetSpecialRingLevels(characterInfo.getCharacterEquipmentInfo().getItemEquipmentPreset1(), presetSpecialRingLevels, 0);
+                checkPresetSpecialRingLevels(characterInfo.getCharacterEquipmentInfo().getItemEquipmentPreset2(), presetSpecialRingLevels, 1);
+                checkPresetSpecialRingLevels(characterInfo.getCharacterEquipmentInfo().getItemEquipmentPreset3(), presetSpecialRingLevels, 2);
+
+                // 가장 높은 레벨의 특수반지가 있는 프리셋 찾기
+                int maxLevel = -1;
+                int bestPreset = -1;
+                for (int i = 0; i < presetSpecialRingLevels.length; i++) {
+                    if (presetSpecialRingLevels[i] > maxLevel) {
+                        maxLevel = presetSpecialRingLevels[i];
+                        bestPreset = i + 1;
+                    }
+                }
+
+                if (bestPreset != -1) {
+                    log.info("[캐릭터 검색] | {} | 특수반지가 있는 가장 높은 레벨의 프리셋: 프리셋 {}", characterInfo, bestPreset);
+                } else {
+                    log.info("[캐릭터 검색] | {} | 특수반지가 아예 없음",characterInfo);
+                }
+            }
+
+            return characterInfo;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new ApiException(ApiExceptionCode.DATA_PARSING_ERROR);
+        }
+    }
+
+    private void checkPresetSpecialRingLevels(List<CharacterEquipmentInfo.ItemEquipment> presetItems, int[] levels, int index) {
+        presetItems.stream()
+                .filter(item -> item.getSpecialRingLevel() > 0)
+                .forEach(item -> {
+                    if (item.getSpecialRingLevel() > levels[index]) {
+                        levels[index] = item.getSpecialRingLevel();
+                    }
+                });
+    }
+
+    /*            log.info("API 응답: " + characterEquipmentInfoJson);*/
 /*            // 장착중인 장비의 이름 출력 실험 완료
             List<CharacterEquipmentInfo.ItemEquipment> equipmentList = characterEquipmentInfo.getItemEquipment();
             for (CharacterEquipmentInfo.ItemEquipment item : equipmentList) {
@@ -93,26 +148,6 @@ public class ApiUtil {
                     log.info("[캐릭터 장비] | 특수반지 없음");
                 }
             }*/
-
-            // 장착중인 장비 중 specialRingLevel이 0 이상인 장비만 필터링 최적화
-            List<CharacterEquipmentInfo.ItemEquipment> filteredEquipmentList = characterEquipmentInfo.getItemEquipment().stream()
-                    .filter(item -> item.getSpecialRingLevel() > 0)
-                    .collect(Collectors.toList());
-
-            if (filteredEquipmentList.isEmpty()) {
-                log.info("[캐릭터 검색] | {} | 특수반지 X",characterInfo);
-            } else {
-                filteredEquipmentList.forEach(item ->
-                        log.info("[캐릭터 검색] | {} | 특수반지: {}{}", characterInfo, item.getItemName(), item.getSpecialRingLevel())
-                );
-            }
-
-            return characterInfo;
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            throw new ApiException(ApiExceptionCode.DATA_PARSING_ERROR);
-        }
-    }
 
     private String getOcid(String characterName) {
         String response;

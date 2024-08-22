@@ -23,18 +23,18 @@ public class CharacterEquipmentInfo {
     private String characterClass; // 직업
 
     @JsonProperty("preset_no")
-    private int presetNo; // 현재 설정된 장비 프리셋
+    private int presetNo; // 현재 설정된 장비 프리셋(!날짜 바뀌어도 무조건 현시점임!)
 
     @JsonProperty("item_equipment")  // JSON의 필드 이름과 매핑
     private List<ItemEquipment> itemEquipment; // 장착중인 장비 리스트
 
-    @JsonProperty("item_equipment_preset1")
+    @JsonProperty("item_equipment_preset_1")
     private List<ItemEquipment> itemEquipmentPreset1; // 장비프리셋1
 
-    @JsonProperty("item_equipment_preset2")
+    @JsonProperty("item_equipment_preset_2")
     private List<ItemEquipment> itemEquipmentPreset2; // 장비프리셋2
 
-    @JsonProperty("item_equipment_preset3")
+    @JsonProperty("item_equipment_preset_3")
     private List<ItemEquipment> itemEquipmentPreset3; // 장비프리셋3
 
     @JsonProperty("title")
@@ -65,32 +65,32 @@ public class CharacterEquipmentInfo {
         private String itemShapeName; //모루
         private String itemShapeIcon;
         private String itemGender;
-        private ItemOption itemTotalOption;
-        private ItemOption itemBaseOption;
-        private String potentialOptionGrade;
-        private String additionalPotentialOptionGrade;
-        private String potentialOption1;
-        private String potentialOption2;
-        private String potentialOption3;
-        private String additionalPotentialOption1;
-        private String additionalPotentialOption2;
-        private String additionalPotentialOption3;
-        private int equipmentLevelIncrease;
-        private ItemExceptionalOption itemExceptionalOption;
-        private ItemAddOption itemAddOption;
-        private int growthExp;
-        private int growthLevel;
-        private String scrollUpgrade;
-        private String cuttableCount;
-        private String goldenHammerFlag;
-        private String scrollResilienceCount;
-        private String scrollUpgradableCount;
-        private String soulName;
-        private String soulOption;
-        private ItemOption itemEtcOption;
-        private String starforce;
-        private String starforceScrollFlag;
-        private ItemOption itemStarforceOption;
+        private ItemOption itemTotalOption; //전체옵션
+        private ItemOption itemBaseOption; //기본옵션
+        private String potentialOptionGrade; //윗잠재등급
+        private String additionalPotentialOptionGrade; //에디잠재등급
+        private String potentialOption1; //윗잠1
+        private String potentialOption2; //윗잠2
+        private String potentialOption3; //윗잠3
+        private String additionalPotentialOption1; //아랫잠1
+        private String additionalPotentialOption2; //이랫잠2
+        private String additionalPotentialOption3; //아랫잠3
+        private int equipmentLevelIncrease; //착용레벨증가
+        private ItemExceptionalOption itemExceptionalOption; //익셉셔널 강화
+        private ItemAddOption itemAddOption; //추옵
+        private int growthExp; //아이템성장경험치
+        private int growthLevel; //아이템성장레벨
+        private String scrollUpgrade; //업글횟수
+        private String cuttableCount; //가횟
+        private String goldenHammerFlag; //황망재련1 이외 미적용
+        private String scrollResilienceCount; //복구가능횟수
+        private String scrollUpgradableCount; //업글가능횟수
+        private String soulName; //무기소울명
+        private String soulOption; //소울옵션
+        private ItemOption itemEtcOption; //기타옵션
+        private String starforce; //스타포스레벨
+        private String starforceScrollFlag; //놀장강사용여부 1:사용 0미사용
+        private ItemOption itemStarforceOption; //스타포스옵션정보
 
         @JsonProperty("special_ring_level")
         private int specialRingLevel; //이게 1이상이면 시드링을 끼고있는거임
@@ -105,7 +105,7 @@ public class CharacterEquipmentInfo {
 
     @Getter
     @Setter
-    public static class ItemOption { // 아이템 옵션
+    public static class ItemOption { // 추옵(스타포스 장비추옵등등)
         private String str;
         private String dex;
         private String int_; // int로 하면 정수형 int랑 충돌나서 _ 붙임
