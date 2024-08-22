@@ -623,7 +623,7 @@ function printHexa(event){
             // 스킬 이미지 추가
             const hexaImg = document.createElement('img')
             hexaImg.classList.add('skill-icon')
-            hexaImg.src = hexaSkillImgFolderPath + coreName.replace(/\s/g, '') + '.png'
+            hexaImg.src = hexaSkillImgFolderPath + coreName.replace(/\s/g, '').replace(':', '') + '.png'
 
             // 툴팁 추가
             const tooltip = document.createElement('div')
