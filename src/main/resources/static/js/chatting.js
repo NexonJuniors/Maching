@@ -206,7 +206,7 @@ function printMessage(sender, time, message){
     const outputContainer = document.getElementById('outputContainer')
 
     const newMessage = document.createElement('p')
-    newMessage.innerText = `${sender}: ${message}(${time})`
+    newMessage.innerText = `${time} [${sender}] ${message}`
     newMessage.className = 'dialog'
 
     outputContainer.appendChild(newMessage)

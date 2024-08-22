@@ -101,8 +101,12 @@ input[type="text"] {
 }
 
 .chat {
+    width: 100%;
+    display: grid;
+    grid-auto-rows: min-content;
     flex: 1; /* 채팅 내용이 있는 부분이 가능한 많이 공간을 차지하게 함 */
     overflow-y: auto; /* 채팅 내용이 많아지면 스크롤 가능하게 */
+    grid-template-columns: repeat(auto-fill, auto);
 }
 
 .flex-container {
@@ -274,3 +278,10 @@ input[type="text"] {
   font-weight: bold;
   text-align: center;
 }
+
+.dialog{
+    justify-self: flex-start;
+    font-weight: bold;
+}
+
+
