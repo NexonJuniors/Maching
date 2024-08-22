@@ -17,6 +17,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.time.LocalDate;
@@ -84,9 +85,11 @@ public class ApiUtil {
             setCharacterClassDetails(characterInfo);
             /*log.info("[캐릭터 검색] | {} | 특수반지: {}{}", characterInfo, item.getItemName(), item.getSpecialRingLevel())*/
 
+            // 현재 프리셋에 시드링이있나요
             List<CharacterEquipmentInfo.ItemEquipment> specialRings = findSpecialRings(characterInfo.getCharacterEquipmentInfo().getItemEquipment());
-            logSpecialRings(characterInfo, specialRings);
+            logSpecialRings(characterInfo, specialRings); //있으면 여기까지, 클라이언트로 시드링 보내주세요
 
+            // 없으면 탐색해드립니다
             if (specialRings.isEmpty()) {
                 int[] presetSpecialRingLevels = new int[3];
 
@@ -97,9 +100,16 @@ public class ApiUtil {
                 int bestPreset = findBestPresetForSpecialRings(presetSpecialRingLevels);
 
                 if (bestPreset != -1) {
-                    log.info("[캐릭터 검색] | {} | 특수반지가 있는 가장 높은 레벨의 프리셋: 프리셋 {}", characterInfo, bestPreset);
+                    List<CharacterEquipmentInfo.ItemEquipment> presetRings = switch (bestPreset) {
+                        case 1 -> characterInfo.getCharacterEquipmentInfo().getItemEquipmentPreset1();
+                        case 2 -> characterInfo.getCharacterEquipmentInfo().getItemEquipmentPreset2();
+                        case 3 -> characterInfo.getCharacterEquipmentInfo().getItemEquipmentPreset3();
+                        default -> Collections.emptyList();
+                    };
+
+                    logSpecialRings(characterInfo, findSpecialRings(presetRings)); //있으면 여기까지, 클라이언트로 시드링 보내주세요
                 } else {
-                    log.info("[캐릭터 검색] | {} | 특수반지가 아예 없음", characterInfo);
+                    log.info("[캐릭터 검색] | {} | 특수반지가 아예 없음", characterInfo); // 이 유저는 보스를 가기 힘들듯.. 아마 이런유저는 없을거임
                 }
             }
 
@@ -127,7 +137,7 @@ public class ApiUtil {
                         }
                     });
         } else {
-            log.warn("프리셋 {}의 장비 리스트가 null입니다.", index + 1);
+            log.warn("프리셋 {}의 장비 리스트가 null입니다.", index + 1); //에러급임
         }
     }
     // 특수반지 레벨이 가장 높은 프리셋을 찾는 메서드
