@@ -6,17 +6,29 @@ if(info===null){
     location.href = '/';
 }
 
-const basicInfo = info.basicInfo;
-const statInfo = info.statInfo;
-const unionInfo = info.unionInfo;
-const hexaSkillInfo = info.hexaSkillInfo;
 const minutes = info.classMinutesInfo
 const mainStat = info.classMainStatInfo
+
+const basicInfo = info.basicInfo;
+
+const statInfo = info.statInfo;
 const searchDate = statInfo.searchDate; //전투력과 스탯 조회 일자
 const isRealTime = statInfo.isRealTime; //실시간인가요?
+
+const unionInfo = info.unionInfo;
+
+const hexaSkillInfo = info.hexaSkillInfo;
+
+const characterEquipmentInfo = info.characterEquipmentInfo
+
 let uuid
 let socket
 let stompClient
+
+let today = new Date();
+let searchDateObj = new Date(searchDate); // searchDate를 날짜 객체로 변환
+let timeDiff = today.getTime() - searchDateObj.getTime(); // 밀리초 차이 계산
+let dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24)); // 일 수로 변환
 
 // 이미지 경로를 동적으로 생성하는 함수, 이거 나중에 basePath를 그냥 지정하도록 리펙토링 예정
 function getImagePath(basePath, fileName, extension = 'png') {
@@ -123,20 +135,64 @@ function isMatchingStardedBadge(){
 
 // 실시간일경우 뱃지 추가해줌
 function isRealTimeBadge(){
+    let isRealTimeTooltipText = ``;
+    let isRealTimeImagePath = "";
+
     if(isRealTime){
-        const isRealTimeTooltipText = `[실시간]<br />따끈따끈한 인게임 정보!`;
-        const isRealTimeImagePath = "../static/image/badge/실시간.png";
+        isRealTimeTooltipText = `[실시간]<br />따끈따끈한 인게임 정보!`;
+        isRealTimeImagePath = "../static/image/badge/실시간.png";
+        addBadgeToContainer('.badgeContainer','badgeContainer-item',isRealTimeImagePath, "", isRealTimeTooltipText);
+    } else{
+        isRealTimeTooltipText = `[${dayDiff}일 전]<br />${searchDate}의 정보!`;
+        isRealTimeImagePath = "../static/image/badge/실시간X.png";
         addBadgeToContainer('.badgeContainer','badgeContainer-item',isRealTimeImagePath, "", isRealTimeTooltipText);
     }
 }
 
+function specialRingBadge() {
+    /*console.log(characterEquipmentInfo);*/
+    const userSpecialRingName = characterEquipmentInfo.specialRingName;
+    const userSpecialRingLevel = characterEquipmentInfo.specialRingLevel;
+    const userNowHasSpecialRing = characterEquipmentInfo.nowUserHasSpecialRing; // 현재 착용중인가요?
+    const userHasNotSpecialRing = characterEquipmentInfo.userHasNotSpecialRing; // 시드링이 아예 없음
+
+    // 이미지 경로와 툴팁 텍스트 초기화
+    let specialRingTooltipText = ``;
+    let specialRingImagePath = "../static/image/badge/반지없음.png"; // 기본 이미지
+
+    // 유저의 특수반지 정보가 없거나 없음을 나타내는 경우
+    if (userHasNotSpecialRing) {
+        specialRingTooltipText = `[없음]<br /> 특수반지를 찾을 수 없어요!`; // 시드링이 없음
+    } else {
+        if (userNowHasSpecialRing) { // 현재 시드링 있음
+            specialRingTooltipText = `[착용중]<br /> ${userSpecialRingName} ${userSpecialRingLevel}렙<br /> 사용중!`;
+        } else {
+            specialRingTooltipText = `[미착용]<br /> ${userSpecialRingName} ${userSpecialRingLevel}렙<br /> 보유중!`;
+        }
+
+        const ringNamePrefix = userSpecialRingName.slice(0, 2);
+        switch (ringNamePrefix) {
+            case "리스":
+                specialRingImagePath = "../static/image/badge/리스트레인트.png";
+                break;
+            case "컨티":
+                specialRingImagePath = "../static/image/badge/컨티뉴어스.png";
+                break;
+            case "웨폰":
+                specialRingImagePath = "../static/image/badge/웨폰퍼프.png";
+                break;
+            default:
+                specialRingImagePath = "../static/image/badge/반지없음.png";
+                break;
+        }
+    }
+
+    // badgeContainer에 배지 추가
+    addBadgeToContainer('.badgeContainer', 'badgeContainer-item', specialRingImagePath, "", specialRingTooltipText);
+}
+
 //전투력 툴팁 물음표에 추가
 function powerTextTooltip() {
-    const today = new Date();
-    const searchDateObj = new Date(searchDate); // searchDate를 날짜 객체로 변환
-    const timeDiff = today.getTime() - searchDateObj.getTime(); // 밀리초 차이 계산
-    const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24)); // 일 수로 변환
-
     const powerElement = document.getElementById('power');
     let powerTooltipText;
     const isPowerImagePath = "../static/image/badge/물음표.png";

@@ -16,10 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 import java.time.format.DateTimeFormatter;
@@ -85,11 +82,9 @@ public class ApiUtil {
             setCharacterClassDetails(characterInfo);
             /*log.info("[캐릭터 검색] | {} | 특수반지: {}{}", characterInfo, item.getItemName(), item.getSpecialRingLevel())*/
 
-            // 현재 프리셋에 시드링이있나요
+            // 현재 프리셋에 시드링이있나요???
             List<CharacterEquipmentInfo.ItemEquipment> specialRings = findSpecialRings(characterInfo.getCharacterEquipmentInfo().getItemEquipment());
-            logSpecialRings(characterInfo, specialRings); //있으면 여기까지, 클라이언트로 시드링 보내주세요
-
-            // 없으면 탐색해드립니다
+            //  없으면 탐색해드립니다
             if (specialRings.isEmpty()) {
                 int[] presetSpecialRingLevels = new int[3];
 
@@ -98,7 +93,6 @@ public class ApiUtil {
                 checkPresetSpecialRingLevels(characterInfo.getCharacterEquipmentInfo().getItemEquipmentPreset3(), presetSpecialRingLevels, 2);
 
                 int bestPreset = findBestPresetForSpecialRings(presetSpecialRingLevels);
-
                 if (bestPreset != -1) {
                     List<CharacterEquipmentInfo.ItemEquipment> presetRings = switch (bestPreset) {
                         case 1 -> characterInfo.getCharacterEquipmentInfo().getItemEquipmentPreset1();
@@ -107,10 +101,16 @@ public class ApiUtil {
                         default -> Collections.emptyList();
                     };
 
-                    logSpecialRings(characterInfo, findSpecialRings(presetRings)); //있으면 여기까지, 클라이언트로 시드링 보내주세요
+                    logSpecialRings(characterInfo, findSpecialRings(presetRings)); //탐색끝, 클라이언트로 시드링 보내주세요
                 } else {
-                    log.info("[캐릭터 검색] | {} | 특수반지가 아예 없음", characterInfo); // 이 유저는 보스를 가기 힘들듯.. 아마 이런유저는 없을거임
+                    characterInfo.getCharacterEquipmentInfo().setUserHasNotSpecialRing(true); //시드링이 아예없는 유저입니다
+                    log.info("[캐릭터 검색] | {} | 특수반지가 아예 없음", characterInfo); // 아예 시드링을 못찾았으니까 뱃지 없음 너는
                 }
+            }else {
+                //있으니까 가세요~
+                characterInfo.getCharacterEquipmentInfo().setNowUserHasSpecialRing(true); // 시드링을 지금 끼고있는 유저입니다.
+                log.info("지금 유저가 시드링을 끼고있음");
+                logSpecialRings(characterInfo, specialRings); // 클라이언트로 시드링 보내주세요
             }
 
             return characterInfo;
@@ -126,7 +126,7 @@ public class ApiUtil {
                 .filter(item -> item.getSpecialRingLevel() > 0)
                 .collect(Collectors.toList());
     }
-    // 프리셋을에서 특수스킬 반지 필터링하여 반환
+    // 프리셋에서 특수스킬 반지 필터링하여 반환
     private void checkPresetSpecialRingLevels(List<CharacterEquipmentInfo.ItemEquipment> presetItems, int[] levels, int index) {
         if (presetItems != null) {
             presetItems.stream()
@@ -142,7 +142,7 @@ public class ApiUtil {
     }
     // 특수반지 레벨이 가장 높은 프리셋을 찾는 메서드
     private int findBestPresetForSpecialRings(int[] levels) {
-        int maxLevel = -1;
+        int maxLevel = 0;
         int bestPreset = -1;
         for (int i = 0; i < levels.length; i++) {
             if (levels[i] > maxLevel) {
@@ -152,12 +152,20 @@ public class ApiUtil {
         }
         return bestPreset;
     }
-    // 특수스킬반지 로깅 메서드
+    // 특수반지의 이름과 레벨을 로깅하고 CharacterInfo에 저장하는 메서드
     private void logSpecialRings(CharacterInfo characterInfo, List<CharacterEquipmentInfo.ItemEquipment> specialRings) {
         if (!specialRings.isEmpty()) {
-            specialRings.forEach(item ->
-                    log.info("[캐릭터 검색] | {} | 특수반지: {} 레벨: {}", characterInfo, item.getItemName(), item.getSpecialRingLevel())
-            );
+            CharacterEquipmentInfo.ItemEquipment highestRing = specialRings.stream()
+                    .max(Comparator.comparingInt(CharacterEquipmentInfo.ItemEquipment::getSpecialRingLevel))
+                    .orElse(null);
+
+            if (highestRing != null) {
+                log.info("[캐릭터 검색] | {} | 특수반지: {} 레벨: {}", characterInfo, highestRing.getItemName(), highestRing.getSpecialRingLevel());
+                characterInfo.getCharacterEquipmentInfo().setSpecialRingName(highestRing.getItemName());
+                characterInfo.getCharacterEquipmentInfo().setSpecialRingLevel(highestRing.getSpecialRingLevel());
+            }
+        } else {
+            log.info("[캐릭터 검색] | {} | 특수반지 없음", characterInfo);
         }
     }
 

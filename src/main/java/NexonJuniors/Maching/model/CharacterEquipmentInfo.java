@@ -12,6 +12,11 @@ import java.util.List;
 public class CharacterEquipmentInfo {
     private LocalDate searchDate; // LocalDate로 변경
     private boolean isRealTime; // boolean으로 변경
+    // 밑에는 클라에서 객체 조회시 사용할 변수
+    private boolean isNowUserHasSpecialRing = false; // 현재 적용된 프리셋에 유저는 특수스킬 반지가 있을까, 기본은 false
+    private boolean isUserHasNotSpecialRing = false; // 설마 없겠냐만 뉴비는 없을수도있으니까 처리해줌, 기본은 false
+    private String specialRingName = ""; // 시드링 이름
+    private int specialRingLevel = 0; // 시드링 레벨
 
     @JsonProperty("date")
     private String date; // 데이터 날짜
