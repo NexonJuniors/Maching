@@ -172,6 +172,7 @@ input[type="text"] {
 }
 
 .name-container {
+    font-family: 'MaplestoryFontBold', sans-serif;
     position: absolute;
     left: 50%;
     align-items: center;
