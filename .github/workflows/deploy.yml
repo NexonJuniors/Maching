@@ -22,9 +22,6 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Make deploy script executable
-        run: chmod +x ./deploy.sh  # 필요시 추가
-
       - name: Build with Gradle
         run: ./gradlew build
 
