@@ -1,14 +1,30 @@
 spring:
   datasource:
-    url: DB ??
-    username: ??? ID
-    password: ??? ????
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
+    database: mysql
     hibernate:
       ddl-auto: create
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    defer-datasource-initialization: true
     properties:
       hibernate:
         show_sql: true
         format_sql: true
+
+    devtools:
+      livereload:
+        enabled: true
+      restart:
+        enabled: true
+
+    thymeleaf:
+      cache: false
+
+  mvc:
+    static-path-pattern: /static/**

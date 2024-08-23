@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BXHV5E8GVH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-BXHV5E8GVH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/image/site/icon5.png" type="image/png">
+    <title>메칭 | 메이플스토리 보스매칭</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/chatting.css">
+</head>
+<body class="dark-mode">
+<div class="bg-background text-foreground px-4">
+    <div class="max-w-screen-lg mx-auto px-8">
+        <div class="partners">
+            <p>[Beta] 메이플 보스매칭 서비스 메칭</p>
+            <!--<a href="https://partners.maplestory.nexon.com/developers">메칭 파트너스 응원</a>-->
+        </div>
+        <header class="header flex items-center justify-between p-4">
+            <div class="flex items-center logo">
+                <img aria-hidden="true" alt="icon" src="../static/image/site/icon1.png" class="icon mr-2"/>
+                <a href="/" style="text-decoration: none; color: inherit;">&nbsp;메칭</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="btnLightMode" class="p-2 rounded hover:bg-blue-600">🔆</button>
+                <button id="btnDarkMode" class="p-2 rounded hover:bg-blue-600">🌙</button>
+                <button class="p-2 rounded hover:bg-blue-600">📒</button>
+                <button class="p-2 rounded hover:bg-blue-600">💰</button>
+            </div>
+        </header>
+
+        <!--<nav class="text-white p-4 navbar">
+            <ul class="flex space-x-4">
+                <li><a href="#" class="hover:underline nav-item">사이트가이드</a></li>
+                <li><a href="#" class="hover:underline nav-item">공지사항</a></li>
+                &lt;!&ndash;<li><a href="info" class="hover:underline nav-item">dev캐릭터정보</a></li>
+                <li><a href="chatroom" class="hover:underline nav-item">dev채팅방</a></li>&ndash;&gt;
+                &lt;!&ndash;<li><a href="admin" class="hover:underline nav-item">dev관리자</a></li>&ndash;&gt;
+                &lt;!&ndash;<li><a href="login" class="hover:underline nav-item">dev로그인</a></li>
+                <li><a href="adduser" class="hover:underline nav-item">dev회원가입</a></li>
+                <li><a href="userpage" class="hover:underline nav-item">dev마이페이지</a></li>&ndash;&gt;
+            </ul>
+            <div style = "margin-right: 0;">※ 페이지 이동 시 채팅 방에서 자동 퇴장됩니다.</div>
+        </nav>-->
+        <main class="p-4 chatroom-container">
+            <div class="header">
+                <div class="title">
+                    <div class="title-img-name" id = "bossInfo">
+                        <span class="img-container">
+                            <img id="bossImg">
+                        </span>
+                        <span id="bossName" class="name-container"></span>
+                        <div id = "div-title-btn" class ="title-btn-container">
+                            <button id = "btnExit" class = "title-btn">퇴장하기</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="condition">
+                    <div class="class">
+                        <span id = "maximumPeople"></span>
+                        <span id = "partyNeedPower"></span>
+                    </div>
+                    <div class="class">
+                        <span id = "partyNeedClassMinutesInfo"></span>
+                        <span id = "partyNeedBishop"></span>
+                    </div>
+                    <div class = "class">
+                        <span id = "recruitmentStatus"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar left">
+                <div class="user" id="user1">
+                    <div class="flex-item">
+                        <div class="union">
+                            <span id="characterGuildName1"></span>
+                            <span id="unionLevel1"></span><br/>
+                        </div>
+                        <div class="nameLevel">
+                            <span id="characterLevel1"></span>
+                            <span id="characterName1"></span>
+                        </div>
+                        <div class="nameLevel">
+                            <div class="characterImageContainer">
+                                <img id="characterImage1" alt="Character Image" class="characterImage"/>
+                            </div>
+                        </div>
+                        <div class="power">
+                            <span id="power1"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass1"></span>
+                            <small><span id="minutes1"></span></small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer1">
+                            <div class="badgeContainer-item" id="badgeContainer-item1">
+                                <div class="tooltip" id="tooltip1"></div>
+                                <img class="badges" id="badge1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user" id="user3">
+                    <div class="flex-item">
+                        <div class="union">
+                            <span id="characterGuildName3"></span>
+                            <span id="unionLevel3"></span><br/>
+                        </div>
+                        <div class="nameLevel">
+                            <span id="characterLevel3"></span>
+                            <span id="characterName3"></span>
+                        </div>
+                        <div class="characterImageContainer">
+                            <img id="characterImage3" alt="Character Image" class="characterImage"/>
+                        </div>
+                        <div class="power">
+                            <span id="power3"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass3"></span>
+                            <small><span id="minutes3"></span></small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer3">
+                            <div class="badgeContainer-item" id="badgeContainer-item3">
+                                <div class="tooltip" id="tooltip3"></div>
+                                <img class="badges" id="badge3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user" id="user5">
+                    <div class="flex-item">
+                        <div class="union">
+                            <span id="characterGuildName5"></span>
+                            <span id="unionLevel5"></span><br/>
+                        </div>
+                        <div class="nameLevel">
+                            <span id="characterLevel5"></span>
+                            <span id="characterName5"></span>
+                        </div>
+                        <div class="characterImageContainer">
+                            <img id="characterImage5" alt="Character Image" class="characterImage"/>
+                        </div>
+                        <div class="power">
+                            <span id="power5"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass5"></span>
+                            <small><span id="minutes5"></span></small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer5">
+                            <div class="badgeContainer-item" id="badgeContainer-item5">
+                                <div class="tooltip" id="tooltip5"></div>
+                                <img class="badges" id="badge5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chatroom" id="chatroom">
+                <div class = "chat" id = "outputContainer">
+
+                </div>
+
+                <div class = "input-container">
+                    <input type = "text" id = "message" class = "input-message">
+                    <button id = "btnSendMessage" class="btn btn-custom" style="margin-left:5px;">전송</button>
+                </div>
+            </div>
+
+            <div class="sidebar right">
+                <div class="user" id="user2">
+                    <div class="flex-item">
+                        <div class="union">
+                            <span id="characterGuildName2"></span>
+                            <span id="unionLevel2"></span><br/>
+                        </div>
+                        <div class="nameLevel">
+                            <span id="characterLevel2"></span>
+                            <span id="characterName2"></span>
+                        </div>
+                        <div class="characterImageContainer">
+                            <img id="characterImage2" alt="Character Image" class="characterImage"/>
+                        </div>
+                        <div class="power">
+                            <span id="power2"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass2"></span>
+                            <small><span id="minutes2"></span></small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer2">
+                            <div class="badgeContainer-item" id="badgeContainer-item2">
+                                <div class="tooltip" id="tooltip2"></div>
+                                <img class="badges" id="badge2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user" id="user4">
+                    <div class="flex-item">
+                        <div class="union">
+                            <span id="characterGuildName4"></span>
+                            <span id="unionLevel4"></span><br/>
+                        </div>
+                        <div class="nameLevel">
+                            <span id="characterLevel4"></span>
+                            <span id="characterName4"></span>
+                        </div>
+                        <div class="characterImageContainer">
+                            <img id="characterImage4" alt="Character Image" class="characterImage"/>
+                        </div>
+                        <div class="power">
+                            <span id="power4"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass4"></span>
+                            <small><span id="minutes4"></span></small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer4">
+                            <div class="badgeContainer-item" id="badgeContainer-item4">
+                                <div class="tooltip" id="tooltip4"></div>
+                                <img class="badges" id="badge4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="user" id="user6">
+                    <div class="flex-item">
+                        <div class="union">
+                            <span id="characterGuildName6"></span>
+                            <span id="unionLevel6"></span><br/>
+                        </div>
+                        <div class="nameLevel">
+                            <span id="characterLevel6"></span>
+                            <span id="characterName6"></span>
+                        </div>
+                        <div class="characterImageContainer">
+                            <img id="characterImage6" alt="Character Image" class="characterImage"/>
+                        </div>
+                        <div class="power">
+                            <span id="power6"></span>
+                        </div>
+                        <div class="class">
+                            <span id="characterClass6"></span>
+                            <small><span id="minutes6"></span></small>
+                        </div>
+                        <div class="badgeContainer" id="badgeContainer6">
+                            <div class="badgeContainer-item" id="badgeContainer-item6">
+                                <div class="tooltip" id="tooltip6"></div>
+                                <img class="badges" id="badge6">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="footer-content">
+                <div style="font-size:12px; text-align: center;">
+                    contact us :
+                    <a href="mailto:matchingmaple@gmail.com">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://discord.gg/4VVrSZUvmn" target="_blank">
+                        <i class="fa-brands fa-discord"></i>
+                    </a><br /><br />
+                    Data based on NEXON Open API.<br/>
+                    Copyright 2024, 스키니아@눈연유 all rights reserved. This service is not associated with NEXON
+                    Korea.<br/><br/>
+                    본 사이트 내에서 발생하는 이용자 간의 모든 분쟁 및 문제에 대해 사이트 개발자는 어떠한 책임도 지지 않습니다.<br/>
+                    이용자 간의 모든 행위와 관련된 책임은 해당 이용자들에게 있으며, 본 사이트는 이에 대한 법적 책임을 지지 않습니다.<br/>
+                    이 페이지에는 메이플스토리가 제공한 메이플스토리 서체가 적용되어 있습니다.
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+<script src="webjars/stomp-websocket/2.3.4/stomp.js"></script>
+<script src="../static/js/darkmode.js"></script>
+<script src="../static/js/tooltip.js"></script>
+<script src="../static/js/chatting.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

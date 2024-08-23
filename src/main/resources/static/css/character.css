@@ -1,0 +1,239 @@
+.card-title {
+    /*글자 그냥 대충 만들어본거임.*/
+    font-weight: 800;
+    line-height: 1.2;
+    font-size: 1.4rem;
+}
+
+/* 버튼 비활성화 상태에서 흐려지지 않도록 */
+.btn-link.disabled, .btn-link[disabled], .btn.disabled , .btn[disabled] {
+    opacity: 1 !important; /* 버튼의 투명도를 1로 설정하여 흐려지지 않게 함 */
+    pointer-events: none !important; /* 클릭 이벤트를 막음 */
+    cursor: not-allowed !important; /* 마우스 커서를 금지 아이콘으로 변경 */
+}
+
+.characterImageContainer {
+    display: flex;
+    justify-content: center;  /* 가로로 가운데 정렬 */
+    align-items: center;  /* 세로로 가운데 정렬 */
+    width: 200px; /* 컨테이너 너비 설정 */
+    height: 200px; /* 컨테이너 높이 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative; /* 필요 시 절대 위치 요소들을 포함할 수 있도록 설정 */
+}
+
+.characterImage {
+    width: 200px;  /* 원하는 너비로 조정 */
+    height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
+    display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
+    margin: 0 auto;  /* 가운데 정렬 */
+    object-fit: cover;
+/*    border-radius: 80%; *//* 이미지 자체를 둥글게 만듦 */
+}
+.flex-container {
+    align-items: stretch; /* 자식 요소들의 높이를 동일하게 맞춥니다 */
+}
+
+.flex-item {
+    flex: 1;
+    border-radius: 10px;
+    border-color: #BEBEBE;
+    box-shadow:2px 2px 5px 0px var(--border-color);
+}
+.nameLevel img {
+    width: 18px; /* 이미지 크기를 조정 */
+    height: 18px; /* 이미지 크기를 조정 */
+}
+
+.nameLevel{
+    font-size: 1.1em;
+    font-weight: 900;
+}
+
+.class {
+    font-size: 1.1em;
+    font-weight: 900;
+}
+
+.power{
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 수직 가운데 정렬 */
+    font-weight: 700;
+    font-size: 1.3em;
+/*    color: transparent; *//* 텍스트를 투명하게 설정 *//*
+    background-clip: text; *//* 배경 클립을 텍스트로 설정 *//*
+    background-image: linear-gradient(to right, #8000FF, #00FF80, #FF9900); *//* 그라데이션 색상 설정 *//*
+    -webkit-background-clip: text; *//* 웹킷 브라우저용 배경 클립 설정 */
+}
+/* powerQuestion에 이미지와 텍스트를 배치 */
+.powerQuestion {
+    display: flex;
+    justify-content: center;
+}
+/* 이미지 크기 조정 */
+.powerQuestion img {
+    margin-left:5px;
+    display: flex;
+    justify-content: center;
+    width: 20px; /* 이미지 너비 설정 */
+    height: 20px; /* 이미지 높이 설정 */
+}
+
+.hexaSkill {
+    font-size: 1em;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+}
+
+/* 컨테이너 스타일 */
+#hexaCoreContainer {
+  display: flex;
+  flex-wrap: wrap; /* 여러 줄에 걸쳐 표시되도록 함 */
+  gap: 10px; /* 스킬 카드 간격 조정 */
+}
+
+/* 스킬 아이콘 컨테이너 스타일 */
+.skill-icons {
+  display: flex;
+  align-items: center;
+  gap: 2px; /* 아이콘 간격 조정 */
+  flex-wrap: wrap; /* 아이콘들이 여러 줄에 걸쳐 표시되도록 함 */
+}
+
+/* 스킬 아이콘 이미지 스타일 */
+.skill-icon-container {
+  align-items: center;
+  position: relative; /* 말풍선 위치 조정을 위한 상대 위치 */
+}
+
+.skill-icon {
+  width: 32px; /* 아이콘 크기 조정 */
+  height: 32px; /* 아이콘 크기 조정 */
+  position: relative;
+}
+
+/* 스킬 레벨 스타일 */
+.skill-level {
+  margin-top: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* 각 스킬 카드 스타일 */
+.hexa-core-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #000; /* 보더 추가 */
+  padding: 5px; /* 보더와 내용 간격 조정 */
+  border-radius: 5px; /* 보더 모서리 둥글게 */
+}
+
+.stats-container {
+    border: 1px solid #e0e0e0; /* Border 색상 */
+    padding: 10px; /* 내부 여백 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    font-size: 14px; /* 글씨 크기 */
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between; /* 좌우로 퍼지게 */
+    align-items: center; /* 수직 가운데 정렬 */
+    padding: 5px 0; /* 아이템 간의 여백 */
+    border-bottom: 1px solid #e0e0e0; /* 아래쪽 border */
+}
+
+.stat-item:last-child {
+    border-bottom: none; /* 마지막 항목은 아래쪽 border 제거 */
+}
+
+.stat-item span:first-child {
+    font-weight: bold; /* 왼쪽 항목의 글씨를 볼드 처리 */
+}
+
+.stat-item span:last-child {
+
+}
+
+.modal-title{
+    font-family: 'MaplestoryFontBold', sans-serif;
+    font-size: 2em;
+    font-weight: 900;
+    color: var(--primary);
+}
+.howToParty{
+    color: var(--primary);
+    font-family: 'MaplestoryFontLight', sans-serif;
+    font-size: 1.1em;
+}
+.modal-header{
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+.modal-content{
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+.modal-footer {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    display: flex;
+    justify-content: space-around;
+}
+.modal-footer .container-btn {
+    flex: 1!important; /* 버튼 컨테이너를 균등하게 배분 */
+    text-align: center; /* 버튼을 중앙에 위치 */
+}
+
+.modal-footer .container-btn button {
+    width: 100%; /* 버튼이 컨테이너의 전체 폭을 차지하도록 */
+    height: 100%; /* 버튼이 컨테이너의 전체 높이를 차지하도록 */
+}
+
+.changeMatchingContainer {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    background-color: #FF9933; /*페페오렌지*/
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.matchingChangeThings{
+    display: flex;
+    justify-content: space-around;
+    flex: 1!important;
+    text-align: center;
+}
+
+/* CSS에 추가할 전체 화면 로딩 스피너 스타일 */
+#loadingSpinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8); /* 배경색과 투명도 조정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* 페이지의 다른 요소들 위에 오도록 설정 */
+}
+
+.spinner {
+    border: 16px solid #f3f3f3; /* 배경색 */
+    border-top: 16px solid #3498db; /* 스피너의 색상 */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -1,0 +1,573 @@
+@media only screen and (max-width: 700px) {
+    /* px-4 및 px-8 클래스의 마진을 0으로 설정 */
+    .px-4, .px-8, .p-4 {
+        padding-left: 0!important;
+        padding-right: 0!important;
+    }
+
+    /* modal-body가 작은 화면에서 characterInfo 내의 카드들을 상하로 배치 */
+    #characterInfo {
+        display: flex;
+        flex-direction: column; /* 카드들을 상하로 배치 */
+    }
+
+    .flex-container{
+        display: flex;
+        flex-direction: column; /* 카드들을 상하로 배치 */
+        padding: 0!important;
+    }
+
+    /* 카드들 간의 간격 조정 */
+    #characterInfo .card {
+        margin-bottom: 10px; /* 카드들 사이에 간격 추가 */
+        display: flex;
+        flex-direction: column; /* 카드들을 상하로 배치 */
+    }
+
+    /* 기본 글꼴 크기 및 요소 크기 줄이기 */
+    body {
+        font-size: 14px;
+    }
+
+    /* 카드 내 패딩 및 마진 줄이기 */
+    .card {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    /* 헤더 로고 크기 및 마진 조정 */
+    .header .logo {
+        font-size: 3em;
+    }
+    .header img {
+        height: auto;
+    }
+
+    /* 네비게이션 바의 아이템 크기 및 패딩 조정 */
+    .navbar {
+        padding: 10px;
+        height: auto;
+        flex-direction: column;
+    }
+    .nav-item {
+        padding: 5px 0;
+        font-size: 0.9rem;
+    }
+
+    /* 버튼 크기 줄이기 */
+    button {
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
+
+    /* 검색 섹션 너비 및 마진 조정 */
+    .search-section input, .search-section button {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    /* Boss Container 및 Boss 아이템 크기 조정 */
+    #bossContainer .boss {
+        flex: 1 1 100%;
+        margin: 5px 0;
+    }
+
+    /* Footer 높이 및 내용 크기 조정 */
+    .footer {
+        height: auto;
+        padding: 20px;
+    }
+
+    .footer-content {
+        font-size: 10px;
+        text-align: center;
+    }
+
+    /* 툴팁 텍스트 크기 조정 */
+    .tooltip {
+        font-size: 0.7rem;
+        padding: 4px;
+    }
+
+    /* 강조 텍스트 크기 조정 */
+    .highlighted-text {
+        font-size: 1.2rem;
+    }
+
+    .search-card .card-body {
+        padding: 5px; /* 카드 내용의 패딩 조정 */
+    }
+
+    .flex-container {
+        flex-direction: column; /* 요소들을 상하로 배치 */
+        align-items: center; /* 중앙 정렬 */
+        gap: 10px; /* 요소들 사이의 간격 조정 */
+    }
+
+    .flex-item {
+        width: 100%; /* 요소가 부모 컨테이너의 전체 너비를 차지하도록 설정 */
+        height: 100%; /* 요소가 부모 컨테이너의 전체 길이 차지하도록 설정 */
+        flex: 1 1 0px!important; /* 요소가 최소 0px 너비를 가지도록 설정 */
+        text-align: center; /* 텍스트 중앙 정렬 */
+    }
+
+    .search-section {
+        flex-direction: column; /* 검색 섹션의 내부 요소를 상하로 배치 */
+        align-items: stretch; /* 내부 요소가 가로로 꽉 차도록 설정 */
+        gap: 10px; /* 요소들 사이의 간격 조정 */
+    }
+
+    .input-container {
+        width: 100%; /* 입력 컨테이너의 너비를 100%로 설정 */
+    }
+
+    .instructions {
+        font-size: 0.8rem; /* 지침 텍스트 크기 조정 */
+        text-align: center; /* 중앙 정렬 */
+    }
+
+    input[type="date"] {
+        width: 20%!important;
+        padding: 0 5px;
+        font-size: 0.8rem;
+    }
+}
+
+:root {
+    --background: hsl(0, 0%, 100%);
+    --foreground: hsl(240, 10%, 3.9%);
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(240, 10%, 3.9%);
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(240, 10%, 3.9%);
+    --primary: hsl(240, 5.9%, 10%);
+    --primary-foreground: hsl(0, 0%, 98%);
+    --secondary: hsl(240, 4.8%, 95.9%);
+    --secondary-foreground: hsl(240, 5.9%, 10%);
+    --muted: hsl(240, 4.8%, 95.9%);
+    --muted-foreground: hsl(240, 3.8%, 46.1%);
+    --accent: hsl(240, 4.8%, 95.9%);
+    --accent-foreground: hsl(240, 5.9%, 10%);
+    --destructive: hsl(0, 84.2%, 60.2%);
+    --destructive-foreground: hsl(0, 0%, 98%);
+    --border: hsl(240, 5.9%, 90%);
+    --input: hsl(240, 5.9%, 90%);
+    --ring: hsl(240, 5.9%, 10%);
+    --radius: 0.5rem;
+}
+
+body.light-mode {
+    --background: #DDDDDD; /*에티라이트그래이*/
+    --foreground: #FFFFFF; /*에티화이트*/
+    --primary: #000000; /*글자색*/
+    --primary-foreground: #5588DD;
+    --border-color: #BEBEBE;
+}
+
+body.dark-mode {
+    --background: #1E1E1E; /*그냥 그레이*/
+    --foreground: #333737; /*에티그레이*/
+    --primary: #FFFFFF; /*글자색*/
+    --primary-foreground: #223355;
+    --border-color: #0D0D0D;
+}
+
+@font-face {
+    font-family: 'MaplestoryFontBold';
+    src: url('../../static/fonts/MaplestoryBold.ttf') format('truetype'),
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MaplestoryFontLight';
+    src: url('../../static/fonts/MaplestoryLight.ttf') format('truetype'),
+    font-weight: normal;
+    font-style: normal;
+}
+
+.row {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.card {
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+    background-color: var(--foreground);
+    color: var(--primary);
+    padding: 20px;
+    margin: 20px;
+}
+.card-body {
+    background-color: var(--foreground);
+    display: flex;
+    flex-direction: column; /* 내용이 세로로 쌓이도록 설정 */
+    padding: 16px; /* 카드 내부 여백 추가 */
+}
+body{
+    height: 100vh;
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.container{
+    display: flex;
+    height: 100%;
+    max-width: 100%;
+}
+
+.bg-background {
+    background-color: var(--background);
+}
+
+/*헤더부분 시작*/
+.header{
+    background-color: var(--primary-foreground);
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.logo {
+    font-family: 'MaplestoryFontBold', sans-serif;
+    font-size: 2.5em;
+    font-weight: 900;
+    color:white;
+}
+.navbar {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    display: flex;
+    align-items: center; /* 요소들을 수직으로 가운데 정렬 */
+    height: 33.4%;
+    background-color: #114488; /*페페다크블루*/
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+}
+.nav-item {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    color: white;
+    font-weight: 700;
+    padding: 0 15px; /* 좌우 여백 설정 */
+}
+
+.bossbar {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    display: flex;
+    align-items: center; /* 요소들을 수직으로 가운데 정렬 */
+    justify-content: space-between; /* 양쪽에 요소들을 배치 */
+    height: 33.4%;
+    background-color: #114488; /* 페페다크블루 */
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 0 20px; /* 양쪽에 적당한 마진을 줌 */
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+}
+
+.partners{
+    font-family: 'MaplestoryFontLight', sans-serif;
+    background-color: #FF9933;
+    color: white;
+    text-align: center;
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 5px;
+}
+/*헤더부분 끝*/
+
+/*바디 부분 시작*/
+.search-section {
+    display: flex;
+    flex-direction: column; /* 세로 정렬로 변경 */
+    align-items: center;
+}
+.search-section input {
+    margin-top: -10px; /* 원하는 margin-top 값으로 변경 */
+    width: 250px; /* 원하는 너비 값으로 변경 */
+    height: 50px;
+}
+.search-section button {
+    width: 250px; /* 원하는 버튼 너비 값으로 변경 */
+    height: 50px;
+}
+.search-card {
+    background-color: var(--foreground);
+    color: var(--primary);
+    overflow: hidden; /* 카드 안의 내용이 넘치지 않도록 설정 */
+    margin-top: -10px; /* 원하는 margin-top 값으로 변경 */
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap; /* 요소가 줄바꿈되도록 설정 */
+    justify-content: space-evenly; /* 아이템 사이에 균등한 간격을 설정 */
+    align-items: center; /* 아이템들이 수직으로 중앙 정렬되도록 설정 */
+    width: 100%; /* 컨테이너의 너비를 100%로 설정 */
+}
+
+.flex-item {
+    flex: 1 1 200px; /* 요소가 최소 200px 너비를 가지도록 설정 */
+    margin: 10px; /* 요소 간의 간격 조정 */
+    padding: 10px; /* 내부 여백 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함하여 너비 계산 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+#bossContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* 공간을 균등하게 배분 */
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+
+#bossContainer .boss {
+    flex: 1 1 18%; /* 각 자식 요소의 너비를 설정하여 부모 요소의 크기에 맞게 배치되도록 설정 */
+    box-sizing: border-box;
+    text-align: center;
+    margin: 10px;
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+
+#bossContainer .boss img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+/*바디부분끝*/
+
+/*푸터 시작*/
+.footer{
+    font-family: 'MaplestoryFontBold', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* 맨 아래로 정렬 */
+    height: 255px;
+    background-color: var(--primary-foreground);
+    color: var(--primary);
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.footer-content {
+    font-family: 'MaplestoryFontBold', sans-serif;
+    flex-grow: 1; /* 남은 공간을 차지하도록 설정 */
+    padding: 10px;
+    background-color: var(--primary-foreground);
+    color: var(--primary);
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+}
+/*푸터끝*/
+
+/* 버튼 비활성화 상태에서 흐려지지 않도록 */
+.btn-link.disabled, .btn-link[disabled], .btn.disabled , .btn[disabled] {
+    opacity: 1 !important; /* 버튼의 투명도를 1로 설정하여 흐려지지 않게 함 */
+    pointer-events: none !important; /* 클릭 이벤트를 막음 */
+    cursor: not-allowed !important; /* 마우스 커서를 금지 아이콘으로 변경 */
+}
+
+yeti color {
+    /*
+    페페 라이트 블루 : #5588DD
+    페페 다크 블루 :  #114488
+    페페 오렌지 :  #FF9933
+    예티 화이트 :  #FFFFFF
+    예티 그레이 :  #DDDDDD
+    예티와페페브라운 :  #997733
+    예티와페페다크브라운 :  #443322
+    견장 : #CCDDDD
+    */
+}
+
+.btn-custom {
+    background-color: #FF9933; /* 원하는 배경색상 */
+    color: #ffffff; /* 텍스트 색상 */
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.btn-custom:hover {
+    background-color: #5588DD; /* 호버 시 배경색상 */
+    color: #ffffff; /* 텍스트 색상 */
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.highlighted-text {
+    color: transparent; /* 텍스트를 투명하게 설정 */
+    background-clip: text; /* 배경 클립을 텍스트로 설정 */
+    background-image: linear-gradient(to right, #4477DD, #FF9933); /* 그라데이션 색상 설정 */
+    -webkit-background-clip: text; /* 웹킷 브라우저용 배경 클립 설정 */
+}
+
+.highlighted-text2 {
+    font-family: 'MaplestoryFontBold', sans-serif;
+    font-weight: 500;
+}
+
+.highlighted-text3 {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    font-weight: 200;
+}
+
+.icon {
+    width: 50px;  /* 원하는 너비로 조정 */
+    height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
+    display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
+}
+
+.instructions{
+    font-size:10px;
+    font-weight:200;
+}
+
+.image-container {
+    position: relative; /* 툴팁을 이미지 위에 위치시키기 위해 상대 위치 설정 */
+    display: inline-block; /* 이미지와 툴팁을 같은 라인에 배치 */
+}
+
+/* 툴팁 기본 스타일 */
+.tooltip {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    position: absolute;
+    z-index: 10; /* 툴팁이 다른 요소 위에 보이도록 설정 */
+    bottom: 125%; /* 툴팁이 요소 위에 위치하도록 조정 */
+    left: 50%; /* 수평 가운데 정렬 */
+    transform: translateX(-50%); /* 수평 가운데 정렬 */
+    opacity: 0;
+    transition: opacity 0.3s;
+    white-space: nowrap;
+}
+
+
+/* 툴팁 보이기 */
+.tooltip-trigger:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 이미지와 뱃지에 대한 툴팁 표시 */
+#toggleBossList:hover .tooltip,
+#btnDate:hover .tooltip,
+.badgeContainer-item:hover .tooltip,
+.powerQuestion-item:hover .tooltip,
+.skill-icon-container:hover .tooltip,
+.levelContainer:hover .tooltip,
+.forceContainer:hover .tooltip,
+.image-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 이미지 스타일 */
+.badges {
+    width: 40px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: cover;
+    border-radius: 80%;
+}
+
+/* 컨테이너 스타일 */
+.badgeContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+/* 컨테이너 스타일 */
+.forceContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+/* 컨테이너 스타일 */
+.levelContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+/* 보스 툴팁에 대한 스타일 (기존) */
+.bossTooltip {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.image-container:hover .bossTooltip {
+    display: block;
+}
+
+/* badgeContainer-item에 상대 위치 설정 이게 없어서 안나왔었음 */
+.badgeContainer-item {
+    position: relative; /* 툴팁을 올바르게 표시하기 위해 상대 위치 설정 */
+}
+
+.powerQuestion-item{
+    position: relative; /* 툴팁을 올바르게 표시하기 위해 상대 위치 설정 */
+}
+
+/* 이미지와 뱃지에 대한 툴팁 표시 */
+.tooltip-trigger {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip-trigger .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-trigger:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* 툴팁 관련 스타일 */
+.levelContainer, .forceContainer {
+    position: relative; /* 툴팁의 위치를 조정하기 위해 상대 위치 설정 */
+    margin-bottom: 10px;
+}

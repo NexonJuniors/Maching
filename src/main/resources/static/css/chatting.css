@@ -1,0 +1,288 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    background-color: var(--foreground);
+    color: var(--primary);
+}
+
+input[type="text"] {
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    outline: none;
+    background-color: var(--foreground);
+    color: var(--primary);
+    width: 80%
+}
+
+.chatroom-container {
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "left chatroom right"
+        "left chatroom right"
+        "left chatroom right";
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    gap: 10px;
+    padding: 10px;
+    /*border-color: #282828;*/
+    /*border-width: 1px;*/
+    border-radius: 10px;
+    background-color: var(--foreground);
+}
+
+.header {
+    color: var(--primary);
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.title, .condition {
+    color: var(--primary);
+    flex: 1;
+    text-align: center;
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+    margin: 0 5px;
+    padding: 10px;
+}
+
+.sidebar {
+    color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.left {
+    grid-area: left;
+}
+
+.right {
+    grid-area: right;
+}
+
+.user {
+    color: var(--primary);
+    flex: 1;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* 요소들을 세로로 정렬 */
+    align-items: center;    /* 가로로 중앙 정렬 */
+    justify-content: center; /* 세로로 중앙 정렬 */
+    text-align: center;
+    max-length: 210px;
+    max-height: 280px;
+}
+
+.chatroom {
+    color: var(--primary);
+    grid-area: chatroom;
+    border-color: #282828;
+    border-width: 1px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat {
+    width: 100%;
+    display: grid;
+    grid-auto-rows: min-content;
+    flex: 1; /* 채팅 내용이 있는 부분이 가능한 많이 공간을 차지하게 함 */
+    overflow-y: auto; /* 채팅 내용이 많아지면 스크롤 가능하게 */
+}
+
+.flex-container {
+    align-items: stretch; /* 자식 요소들의 높이를 동일하게 맞춥니다 */
+}
+
+.flex-item {
+    flex: 1;
+    border-radius: 10px;
+    border-color: #BEBEBE;
+    width: 100%;      /* 너비를 user의 100%로 설정 */
+    height: 100%;     /* 높이를 부모 요소의 100%로 설정 */
+    box-shadow: 2px 2px 5px 0px var(--border-color);
+    display: flex;
+    flex-direction: column; /* 요소들을 세로로 정렬 */
+    justify-content: center; /* 가로로 중앙 정렬 */
+    align-items: center;    /* 세로로 중앙 정렬 */
+    margin: 0;
+}
+
+.characterImageContainer {
+    display: flex;
+    justify-content: center;  /* 가로로 가운데 정렬 */
+    align-items: center;  /* 세로로 가운데 정렬 */
+    width: 120px; /* 컨테이너 너비 설정 */
+    height: 120px; /* 컨테이너 높이 설정 */
+    overflow: hidden;
+    position: relative; /* 필요 시 절대 위치 요소들을 포함할 수 있도록 설정 */
+}
+
+.characterImage {
+    width: 120px;  /* 이미지 너비 설정 */
+    height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
+    object-fit: cover; /* 이미지가 컨테이너 크기에 맞게 자를 수 있도록 설정 */
+    display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
+}
+
+
+.nameLevel{
+    font-size: 1.1em;
+    font-weight: 900;
+}
+
+.union{
+    font-size: 0.8em;
+    font-weight: 700;
+}
+
+.class {
+    font-size: 1.0em;
+    font-weight: 900;
+    font-family: 'MaplestoryFontLight', sans-serif;
+}
+
+.power{
+    font-weight: 700;
+    font-size: 1.3em;
+}
+
+.title-img-name {
+    display: flex;
+    position: relative;
+}
+
+.img-container {
+    flex-shrink: 0; /* 이미지 크기에 맞게 공간을 할당 */
+    margin-right: 10px; /* 이미지와 이름 사이에 여백 추가 */
+}
+
+.name-container {
+    font-family: 'MaplestoryFontBold', sans-serif;
+    position: absolute;
+    left: 50%;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-50%);
+    white-space: nowrap; /* 텍스트가 한 줄로 나오게 함 */
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.title-btn-container{
+    font-family: 'MaplestoryFontBold', sans-serif;
+    position: absolute;
+    right: 0%;
+    bottom: 0%;
+    justify-content: space-between;
+}
+
+.title-btn{
+    margin-left: 4px;
+}
+
+.stats-container {
+    border: 1px solid #e0e0e0; /* Border 색상 */
+    padding: 10px; /* 내부 여백 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    font-size: 14px; /* 글씨 크기 */
+    width: inherit;
+    height: inherit;
+    white-space: nowrap; /*줄바꿈 안함*/
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between; /* 좌우로 퍼지게 */
+    padding: 5px 0; /* 아이템 간의 여백 */
+    border-bottom: 1px solid #e0e0e0; /* 아래쪽 border */
+}
+
+.stat-item:last-child {
+    border-bottom: none; /* 마지막 항목은 아래쪽 border 제거 */
+}
+
+.stat-item span:first-child {
+    font-weight: bold; /* 왼쪽 항목의 글씨를 볼드 처리 */
+}
+
+.stat-item span:last-child {
+
+}
+
+.hexaSkill {
+    font-size: 1em;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+}
+
+/* 컨테이너 스타일 */
+.hexaCoreContainer {
+  display: flex;
+  flex-wrap: wrap; /* 여러 줄에 걸쳐 표시되도록 함 */
+  gap: 10px; /* 스킬 카드 간격 조정 */
+}
+
+/* 각 스킬 카드 스타일 */
+.hexa-core-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #000; /* 보더 추가 */
+  padding: 5px; /* 보더와 내용 간격 조정 */
+  border-radius: 5px; /* 보더 모서리 둥글게 */
+}
+
+/* 스킬 아이콘 컨테이너 스타일 */
+.skill-icons {
+  display: flex;
+  align-items: center;
+  gap: 2px; /* 아이콘 간격 조정 */
+  flex-wrap: wrap; /* 아이콘들이 여러 줄에 걸쳐 표시되도록 함 */
+}
+
+/* 스킬 아이콘 이미지 스타일 */
+.skill-icon-container {
+  align-items: center;
+  position: relative; /* 말풍선 위치 조정을 위한 상대 위치 */
+}
+
+.skill-icon {
+  width: 32px; /* 아이콘 크기 조정 */
+  height: 32px; /* 아이콘 크기 조정 */
+  position: relative;
+}
+
+/* 스킬 레벨 스타일 */
+.skill-level {
+  margin-top: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.dialog{
+    justify-self: flex-start;
+    font-weight: bold;
+}
+
+
