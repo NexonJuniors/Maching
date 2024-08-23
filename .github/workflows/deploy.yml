@@ -17,7 +17,13 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'temurin'  # Eclipse Temurin 배포판 사용
+          distribution: 'temurin'
+
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+
+      - name: Make deploy script executable
+        run: chmod +x ./deploy.sh  # 필요시 추가
 
       - name: Build with Gradle
         run: ./gradlew build
@@ -41,6 +47,7 @@ jobs:
       - name: Restart application on EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            chmod +x /home/ubuntu/maple_matching/Maching-0.0.1-SNAPSHOT.jar  # 필요시 추가
             ps -ef | grep Maching-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{print $2}' | xargs kill -9
             nohup java -jar /home/ubuntu/maple_matching/Maching-0.0.1-SNAPSHOT.jar > /home/ubuntu/maple_matching/app.log 2>&1 &
           EOF
