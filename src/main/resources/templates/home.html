@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BXHV5E8GVH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-BXHV5E8GVH');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메칭 메인</title>
+    <link rel="icon" href="../static/image/site/icon5.png" type="image/png">
+    <title>메칭 | 메이플스토리 보스매칭</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
     <link rel="stylesheet" type="text/css" href="../static/css/home.css">
     <!-- Flatpickr start 날짜 선택 커스터마이징 -->
@@ -18,7 +29,7 @@
 <div class="bg-background text-foreground px-4">
     <div class="max-w-screen-lg mx-auto px-8">
         <div class="partners">
-            <p>메이플 보스매칭 서비스</p>
+            <p>[Beta] 메이플 보스매칭 서비스 메칭</p>
             <!--<a href="https://partners.maplestory.nexon.com/developers">메칭 파트너스 응원</a>-->
         </div>
         <header class="header flex items-center justify-between p-4">
@@ -34,18 +45,18 @@
             </div>
         </header>
 
-        <nav class="text-white p-4 navbar">
+        <!--<nav class="text-white p-4 navbar">
             <ul class="flex space-x-4">
                 <li><a href="#" class="hover:underline nav-item">사이트가이드</a></li>
                 <li><a href="#" class="hover:underline nav-item">공지사항</a></li>
-                <!--<li><a href="info" class="hover:underline nav-item">dev캐릭터정보</a></li>
-                <li><a href="chatroom" class="hover:underline nav-item">dev채팅방</a></li>-->
-                <!--<li><a href="adduser" class="hover:underline nav-item">dev회원가입</a></li>-->
-                <!--로그인에서 회원가입도 같이 처리해도됨--> <!--<li><a href="login" class="hover:underline nav-item">dev로그인</a></li>-->
-                <!--로그인 하면 로그인을 마이페이지로 대체, 회원가입 숨기고 <li><a href="userpage" class="hover:underline nav-item">dev마이페이지</a></li>-->
-                <!--로그인을 했는데 관리자 유저면 관리자탭 보이도록--> <li><a href="admin" class="hover:underline nav-item">dev관리자</a></li>
+                &lt;!&ndash;<li><a href="info" class="hover:underline nav-item">dev캐릭터정보</a></li>
+                <li><a href="chatroom" class="hover:underline nav-item">dev채팅방</a></li>&ndash;&gt;
+                &lt;!&ndash;<li><a href="adduser" class="hover:underline nav-item">dev회원가입</a></li>&ndash;&gt;
+                &lt;!&ndash;로그인에서 회원가입도 같이 처리해도됨&ndash;&gt; &lt;!&ndash;<li><a href="login" class="hover:underline nav-item">dev로그인</a></li>&ndash;&gt;
+                &lt;!&ndash;로그인 하면 로그인을 마이페이지로 대체, 회원가입 숨기고 <li><a href="userpage" class="hover:underline nav-item">dev마이페이지</a></li>&ndash;&gt;
+                &lt;!&ndash;로그인을 했는데 관리자 유저면 관리자탭 보이도록 <li><a href="admin" class="hover:underline nav-item">dev관리자</a></li>&ndash;&gt;
             </ul>
-        </nav>
+        </nav>-->
         <main class="p-4">
             <div class="search-card card">
                 <div class="card-body">
@@ -96,8 +107,15 @@
         <footer>
             <div class="footer-content">
                 <div style="font-size:12px; text-align: center;">
+                    contact us :
+                    <a href="mailto:matchingmaple@gmail.com">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://discord.gg/4VVrSZUvmn" target="_blank">
+                        <i class="fa-brands fa-discord"></i>
+                    </a><br /><br />
                     Data based on NEXON Open API.<br />
-                    Copyright 2024, 스키니아@눈연유, 스키니아@메칭개발자 all rights reserved. This service is not associated with NEXON
+                    Copyright 2024, 스키니아@눈연유 all rights reserved. This service is not associated with NEXON
                     Korea.<br /><br />
                     본 사이트 내에서 발생하는 이용자 간의 모든 분쟁 및 문제에 대해 사이트 개발자는 어떠한 책임도 지지 않습니다.<br />
                     이용자 간의 모든 행위와 관련된 책임은 해당 이용자들에게 있으며, 본 사이트는 이에 대한 법적 책임을 지지 않습니다.<br />
