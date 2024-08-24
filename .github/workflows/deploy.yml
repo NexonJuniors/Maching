@@ -63,10 +63,10 @@ jobs:
             --protocol tcp \
             --port 22 \
             --cidr ${{ steps.ip.outputs.ipv4 }}/32
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ap-northeast-2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
 
       # 10. Deploy to AWS EC2 using SCP
       - name: Deploy to AWS EC2 using SCP
@@ -79,7 +79,11 @@ jobs:
       - name: Restart application on EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            ps -ef | grep Maching-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{print $2}' | xargs kill -9 || true
+            export $(cat /home/ubuntu/maple_matching/.env | xargs)  # .env 파일을 환경 변수로 로드
+            pid=$(ps -ef | grep Maching-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{print $2}')
+            if [ -n "$pid" ]; then
+              kill -9 $pid
+            fi
             nohup java -jar /home/ubuntu/maple_matching/Maching-0.0.1-SNAPSHOT.jar > /home/ubuntu/maple_matching/app.log 2>&1 &
           EOF
 
@@ -91,7 +95,7 @@ jobs:
             --protocol tcp \
             --port 22 \
             --cidr ${{ steps.ip.outputs.ipv4 }}/32
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ap-northeast-2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
