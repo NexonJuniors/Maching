@@ -42,6 +42,12 @@ function createParty() {
         partyNeedBishop: partyNeedBishop, // 비숍 필요 여부
         characterClassInfo: characterClassInfo,
         isMatchingStarted: isMatchingStarted,
+        specialRingInfo: JSON.stringify({
+            specialRingName: characterEquipmentInfo.specialRingName,
+            specialRingLevel: characterEquipmentInfo.specialRingLevel,
+            userHasNotSpecialRing: characterEquipmentInfo.userHasNotSpecialRing,
+            nowUserHasSpecialRing: characterEquipmentInfo.nowUserHasSpecialRing
+        })
     }
 
     stompClient.connect({}, function(frame) {
@@ -61,8 +67,7 @@ function createParty() {
     });
 
     function onConnected(){
-        stompClient.send("/app/createParty",
-            connectHeaders)
+        stompClient.send("/app/createParty",connectHeaders)
     }
 
     function onMessage(){
