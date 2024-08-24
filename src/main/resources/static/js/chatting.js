@@ -162,7 +162,11 @@ function loadBasic(user, idx){
 
     document.getElementById(`characterName${idx}`).innerText = characterName
     document.getElementById(`characterImage${idx}`).setAttribute('src',characterImg)
-    document.getElementById(`characterLevel${idx}`).innerText = 'Lv.' + level
+
+    document.getElementById(`characterLevel${idx}`).innerText = level
+    document.getElementById(`characterLevel${idx}`).classList.add('tooltip-trigger')
+    EnhanceDueToLevel(document.getElementById(`characterLevel${idx}`), document.getElementById('bossName').innerText)
+
     document.getElementById(`characterClass${idx}`).innerText = characterClass
     document.getElementById(`power${idx}`).innerText = formatNumber(powerStat)
     document.getElementById(`unionLevel${idx}`).innerText = unionLevel
@@ -329,6 +333,7 @@ function createUserProfile(userId){
     // nameLevel div for character level and name
     const nameLevelDiv = document.createElement('div');
     nameLevelDiv.className = 'nameLevel';
+    nameLevelDiv.innerText = 'Lv.'
 
     const characterLevelSpan = document.createElement('span');
     characterLevelSpan.id = `characterLevel${userId}`;
@@ -713,8 +718,6 @@ function scrolled(){
 
 // 시드링 정보 가져오는 함수
 function addSpecialRingBadge(container ,userId) {
-    /*console.log(characterEquipmentInfo);*/
-    console.log(partyInfo.users[userId])
     const currentEquipment = partyInfo.users[userId - 1].specialRingInfo
     const userSpecialRingName = currentEquipment.specialRingName
     const userSpecialRingLevel = currentEquipment.specialRingLevel;
@@ -765,6 +768,33 @@ function addSpecialRingBadge(container ,userId) {
     ringDetail.id = `ringDetail{userId}`;
     ringDetail.innerHTML = specialRingTooltipText
     container.appendChild(ringDetail);
+}
+
+// 레벨뻥 계산, 레벨 색상, 툴팁 추가하는 함수
+function EnhanceDueToLevel(levelElement, bossName){
+    const bossLevel = parseInt(forceAdvantage[bossName][0]);
+    const levelDifference = parseInt(levelElement.innerText) - bossLevel;
+    let tooltipText = "";
+    let color = "";
+
+    if (levelDifference >= 5) {
+        tooltipText = "120%";
+        color = "blue";
+    } else if (levelDifference >= 0 && levelDifference < 5) {
+        tooltipText = levelAdvantageMapping[levelDifference.toString()] || "Unknown";
+        color = "orange";
+    } else if (levelDifference > -20 && levelDifference < 0) {
+        tooltipText = levelAdvantageMapping[levelDifference.toString()] || "Unknown";
+        color = "red";
+    } else if (levelDifference <= -20) {
+        tooltipText = "불가";
+        color = "black";
+    }
+
+    levelElement.style.color = color;
+
+    const tooltip = createTooltip(`보스와의 레벨 차이: ${levelDifference}<br>데미지 비율: ${tooltipText}`);
+    levelElement.appendChild(tooltip);
 }
 
 
