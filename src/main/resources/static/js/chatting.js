@@ -1,6 +1,7 @@
 document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
 document.getElementById('btnExit').addEventListener('click', function(){if(confirm("채팅방을 나가겠습니까?")) location.href = '/'})
 document.getElementById('message').addEventListener('keyup', pressEnter)
+document.getElementById('outputContainer').addEventListener('scroll', scrolled)
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
@@ -12,6 +13,7 @@ if(info == null) location.href = '/'
 const nickname = info.basicInfo.character_name
 let roomStatus = true
 let recruitment = true
+let scrolledByUser = false;
 let partyInfo
 
 // 새로고침, 닫기, 페이지 이동 시 이벤트 핸들러 추가
@@ -215,6 +217,9 @@ function printMessage(sender, time, message){
     newMessage.className = 'dialog'
 
     outputContainer.appendChild(newMessage)
+
+    if(!scrolledByUser && outputContainer.scrollHeight > outputContainer.clientHeight)
+        outputContainer.scrollTop = outputContainer.scrollHeight
 }
 
 // 퇴장 메세지를 채팅방에 출력하는 함수
@@ -691,6 +696,13 @@ function pressEnter(event){
     const input = document.getElementById('message')
     if(input.value != null && input.value != '' && event.keyCode === 13)
         document.getElementById('btnSendMessage').click()
+}
+
+// 스크롤바가 유저에 의해 움직였는지, 맨 밑에 위치하는지를 구해서 flag 값 수정
+function scrolled(){
+    const outputContainer = document.getElementById('outputContainer')
+    if(outputContainer.scrollTop + outputContainer.clientHeight >= outputContainer.scrollHeight) scrolledByUser = false
+    else scrolledByUser = true
 }
 
 
