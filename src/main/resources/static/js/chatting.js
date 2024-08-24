@@ -202,11 +202,12 @@ function sendMessage(){
         'sender' : nickname,
         'message': input.value
     }))
+
+    input.value = ''
 }
 
 // 채팅을 보냈을 때 채팅 창에 메세지 출력하는 함수
 function printMessage(sender, time, message){
-    document.getElementById('message').value = ''
     const outputContainer = document.getElementById('outputContainer')
 
     const newMessage = document.createElement('p')
