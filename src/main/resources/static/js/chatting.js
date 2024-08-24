@@ -559,11 +559,15 @@ function printStat(event){
     const spanArcaneTitle = document.createElement('span')
     spanArcaneTitle.innerText = ''
     const spanArcane = document.createElement('span')
+    spanArcane.classList.add('tooltip-trigger')
     spanArcane.innerText = `${updateStat(statInfo, '아케인포스')}`
     const spanAuthenticTitle = document.createElement('span')
     spanAuthenticTitle.innerText = '/'
     const spanAuthentic = document.createElement('span')
+    spanAuthentic.classList.add('tooltip-trigger')
     spanAuthentic.innerText = `${updateStat(statInfo, '어센틱포스')}`
+
+    EnhanceDueToForce(spanArcane, spanAuthentic, document.getElementById('bossName').innerText)
 
     force.appendChild(spanForceTitle)
     force.appendChild(spanArcaneTitle)
@@ -795,6 +799,50 @@ function EnhanceDueToLevel(levelElement, bossName){
 
     const tooltip = createTooltip(`보스와의 레벨 차이: ${levelDifference}<br>데미지 비율: ${tooltipText}`);
     levelElement.appendChild(tooltip);
+}
+
+// 포스뻥 계산, 포스 색상, 툴팁 추가하는 함수
+function EnhanceDueToForce(arcane, authentic, bossName){
+    const advantageBossInfo = forceAdvantage[bossName];
+    console.log(advantageBossInfo)
+    console.log(advantageBossInfo[1])
+    let tooltipText = "";
+    let color = "";
+
+    let force;
+
+    if (advantageBossInfo[1] === "아케인") {
+        force = arcane;
+    } else if (advantageBossInfo[1] === "어센틱") {
+        force = authentic;
+    } else if (advantageBossInfo[1] === "없음"){
+        force = -1;
+    }
+
+
+    if(force == -1){
+        tooltipText = `보스 포스 종류: ${advantageBossInfo[1]}<br>포뻥이 없는 보스`;
+    }
+    else{
+        const characterForce = parseInt(force.innerText)
+        const bossForceRequired = parseInt(advantageBossInfo[3]);
+                tooltipText = characterForce >= bossForceRequired
+                    ? `보스 포스 종류: ${advantageBossInfo[1]}<br>포뻥 요구 포스: ${bossForceRequired}<br>포뻥 데미지 비율: ${advantageBossInfo[2]}`
+                    : `보스 포스 종류: ${advantageBossInfo[1]}<br>포뻥 요구 포스: ${bossForceRequired}<br>포뻥 충족하지 못함`;
+                color = characterForce >= bossForceRequired ? "blue" : "red";
+    }
+
+    if(force != -1) {
+        force.style.color = color
+        const tooltip = createTooltip(tooltipText);
+        force.appendChild(tooltip);
+    }
+    else{
+        const tooltip1 = createTooltip(tooltipText);
+        const tooltip2 = createTooltip(tooltipText);
+        authentic.appendChild(tooltip1);
+        arcane.appendChild(tooltip2);
+    }
 }
 
 
