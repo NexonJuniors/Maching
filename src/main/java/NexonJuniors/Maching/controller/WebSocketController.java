@@ -44,7 +44,8 @@ public class WebSocketController {
             @Header("partyNeedPower") int partyNeedPower,
             @Header("partyNeedBishop") int partyNeedBishop,
             @Header("isMatchingStarted") boolean isMatchingStarted,
-            @Header("bossImg") String bossImg
+            @Header("bossImg") String bossImg,
+            @Header("specialRingInfo") String specialRingInfo
     ) {
         PartyRequirementInfo partyRequirementInfo = new PartyRequirementInfo();
         partyRequirementInfo.setPartyLeader(partyLeader);
@@ -66,7 +67,8 @@ public class WebSocketController {
                 classMainStatInfo,
                 partyRequirementInfo,
                 isMatchingStarted,
-                bossImg
+                bossImg,
+                specialRingInfo
         );
 
         for (Long roomId : uuidList.keySet()) {
@@ -92,10 +94,11 @@ public class WebSocketController {
             @Header("className") String className,
             @Header("maximumPeople") int maximumPeople,
             @Header("power") int power,
-            @Header("isMatchingStarted") boolean isMatchingStarted
+            @Header("isMatchingStarted") boolean isMatchingStarted,
+            @Header("specialRingInfo") String specialRingInfo
     ) {
         if (isMatchingStarted) {
-            long roomId = webSocketUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo, className, maximumPeople, power, isMatchingStarted);
+            long roomId = webSocketUtil.joinParty(uuId, bossName, basicInfo, hexaSkillInfo, statInfo, unionInfo, classMinutesInfo, classMainStatInfo, className, maximumPeople, power, isMatchingStarted, specialRingInfo);
             simpMessagingTemplate.convertAndSend(
                     String.format("/room/%s", uuId),
                     roomId

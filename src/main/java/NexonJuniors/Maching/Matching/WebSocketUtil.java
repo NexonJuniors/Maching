@@ -81,12 +81,14 @@ public class WebSocketUtil {
             String classMainStatInfo,
             PartyRequirementInfo partyRequirementInfo, //파티의 서버, 파티장, 그외 조건들 다수 포함
             Boolean isMatchingStarted, // 파티 생성되면 이사람은 매칭이 시작된거
-            String bossImg
+            String bossImg,
+            String strSpecialRingInfo
     ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
         StatInfo statInfo;
         UnionInfo unionInfo;
+        SpecialRingInfo specialRingInfo;
 
         try {
             // JSON 형태의 캐릭터의 모든 정보 자바 객체로 변환
@@ -94,6 +96,7 @@ public class WebSocketUtil {
             hexaSkillInfo = objectMapper.readValue(strHexaSkillInfo, HexaSkillInfo.class);
             statInfo = objectMapper.readValue(strStatInfo, StatInfo.class);
             unionInfo = objectMapper.readValue(strUnionInfo, UnionInfo.class);
+            specialRingInfo = objectMapper.readValue(strSpecialRingInfo, SpecialRingInfo.class);
         } catch (Exception e) {
             log.error(e.getMessage());
             // TODO MathcingException 클래스로 예외 처리
@@ -115,6 +118,7 @@ public class WebSocketUtil {
         characterInfo.setCharacterClassInfo(characterClassInfo);
         characterInfo.setClassMinutesInfo(classMinutesInfo);
         characterInfo.setClassMainStatInfo(classMainStatInfo);
+        characterInfo.setSpecialRingInfo(specialRingInfo);
 
         // 전체 이용자 리스트에 내 캐릭터 정보 추가
         totalUser.add(characterInfo.getBasicInfo().getCharacterName());
@@ -166,12 +170,14 @@ public class WebSocketUtil {
             String className,
             int maximumPeople,
             int power,
-            Boolean isMatchingStarted // 여기선 무조건 True임 매칭참가를 한거니까
+            Boolean isMatchingStarted, // 여기선 무조건 True임 매칭참가를 한거니까
+            String strSpecialRingInfo
     ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
         StatInfo statInfo;
         UnionInfo unionInfo;
+        SpecialRingInfo specialRingInfo;
 
         try {
             // JSON 형태의 캐릭터의 모든 정보 자바 객체로 변환
@@ -179,6 +185,7 @@ public class WebSocketUtil {
             hexaSkillInfo = objectMapper.readValue(strHexaSkillInfo, HexaSkillInfo.class);
             statInfo = objectMapper.readValue(strStatInfo, StatInfo.class);
             unionInfo = objectMapper.readValue(strUnionInfo, UnionInfo.class);
+            specialRingInfo = objectMapper.readValue(strSpecialRingInfo, SpecialRingInfo.class);
         } catch (Exception e) {
             log.error(e.getMessage());
             // TODO MathcingException 클래스로 예외 처리
@@ -200,6 +207,7 @@ public class WebSocketUtil {
         characterInfo.setCharacterClassInfo(className);
         characterInfo.setClassMinutesInfo(classMinutesInfo);
         characterInfo.setClassMainStatInfo(classMainStatInfo);
+        characterInfo.setSpecialRingInfo(specialRingInfo);
 
         // 전체 이용자 리스트에 내 캐릭터 정보 추가
         totalUser.add(characterInfo.getBasicInfo().getCharacterName());

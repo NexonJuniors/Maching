@@ -36,7 +36,13 @@ async function joinParty(){
         className : className,
         maximumPeople : joinMaximumPeople,
         power : joinPower,
-        isMatchingStarted: isMatchingStarted // 매칭 시작 플래그
+        isMatchingStarted: isMatchingStarted, // 매칭 시작 플래그,
+        specialRingInfo: JSON.stringify({
+                    specialRingName: characterEquipmentInfo.specialRingName,
+                    specialRingLevel: characterEquipmentInfo.specialRingLevel,
+                    userHasNotSpecialRing: characterEquipmentInfo.userHasNotSpecialRing,
+                    nowUserHasSpecialRing: characterEquipmentInfo.nowUserHasSpecialRing
+        })
     }
 
     let beforeUnloadListener = function(event) {

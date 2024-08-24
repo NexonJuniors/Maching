@@ -40,8 +40,18 @@ function createParty() {
         partyNeedClassMinutesInfo: partyNeedClassMinutesInfo, // 파티 극딜 주기
         partyNeedPower: partyNeedPower, // 최소 전투력
         partyNeedBishop: partyNeedBishop, // 비숍 필요 여부
+        bossLevel: 'asd' ,
+        requiredForce: 'asd',
+        EnhancementForce: 'asd',
+        bossForceKind: 'asd',
         characterClassInfo: characterClassInfo,
         isMatchingStarted: isMatchingStarted,
+        specialRingInfo: JSON.stringify({
+            specialRingName: characterEquipmentInfo.specialRingName,
+            specialRingLevel: characterEquipmentInfo.specialRingLevel,
+            userHasNotSpecialRing: characterEquipmentInfo.userHasNotSpecialRing,
+            nowUserHasSpecialRing: characterEquipmentInfo.nowUserHasSpecialRing
+        })
     }
 
     stompClient.connect({}, function(frame) {
@@ -61,8 +71,7 @@ function createParty() {
     });
 
     function onConnected(){
-        stompClient.send("/app/createParty",
-            connectHeaders)
+        stompClient.send("/app/createParty",connectHeaders)
     }
 
     function onMessage(){

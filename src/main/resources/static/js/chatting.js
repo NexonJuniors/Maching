@@ -1,6 +1,7 @@
 document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
 document.getElementById('btnExit').addEventListener('click', function(){if(confirm("채팅방을 나가겠습니까?")) location.href = '/'})
 document.getElementById('message').addEventListener('keyup', pressEnter)
+document.getElementById('outputContainer').addEventListener('scroll', scrolled)
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
@@ -12,6 +13,7 @@ if(info == null) location.href = '/'
 const nickname = info.basicInfo.character_name
 let roomStatus = true
 let recruitment = true
+let scrolledByUser = false;
 let partyInfo
 
 // 새로고침, 닫기, 페이지 이동 시 이벤트 핸들러 추가
@@ -160,7 +162,11 @@ function loadBasic(user, idx){
 
     document.getElementById(`characterName${idx}`).innerText = characterName
     document.getElementById(`characterImage${idx}`).setAttribute('src',characterImg)
-    document.getElementById(`characterLevel${idx}`).innerText = 'Lv.' + level
+
+    document.getElementById(`characterLevel${idx}`).innerText = level
+    document.getElementById(`characterLevel${idx}`).classList.add('tooltip-trigger')
+    EnhanceDueToLevel(document.getElementById(`characterLevel${idx}`), document.getElementById('bossName').innerText)
+
     document.getElementById(`characterClass${idx}`).innerText = characterClass
     document.getElementById(`power${idx}`).innerText = formatNumber(powerStat)
     document.getElementById(`unionLevel${idx}`).innerText = unionLevel
@@ -202,11 +208,12 @@ function sendMessage(){
         'sender' : nickname,
         'message': input.value
     }))
+
+    input.value = ''
 }
 
 // 채팅을 보냈을 때 채팅 창에 메세지 출력하는 함수
 function printMessage(sender, time, message){
-    document.getElementById('message').value = ''
     const outputContainer = document.getElementById('outputContainer')
 
     const newMessage = document.createElement('p')
@@ -214,6 +221,9 @@ function printMessage(sender, time, message){
     newMessage.className = 'dialog'
 
     outputContainer.appendChild(newMessage)
+
+    if(!scrolledByUser && outputContainer.scrollHeight > outputContainer.clientHeight)
+        outputContainer.scrollTop = outputContainer.scrollHeight
 }
 
 // 퇴장 메세지를 채팅방에 출력하는 함수
@@ -323,6 +333,7 @@ function createUserProfile(userId){
     // nameLevel div for character level and name
     const nameLevelDiv = document.createElement('div');
     nameLevelDiv.className = 'nameLevel';
+    nameLevelDiv.innerText = 'Lv.'
 
     const characterLevelSpan = document.createElement('span');
     characterLevelSpan.id = `characterLevel${userId}`;
@@ -400,7 +411,13 @@ function createUserProfile(userId){
     badgeImg.id = `badge${userId}`;
     badgeContainerItemDiv.appendChild(badgeImg);
 
+    const badgeContainerItem2 = document.createElement('div')
+    badgeContainerItem2.className = 'badgeContainer-item';
+
+    addSpecialRingBadge(badgeContainerItem2, userId)
+
     // Append badgeContainer-item to badgeContainer
+    badgeContainerDiv.appendChild(badgeContainerItem2);
     badgeContainerDiv.appendChild(badgeContainerItemDiv);
 
     // Append badgeContainer to flexItemDiv
@@ -542,11 +559,15 @@ function printStat(event){
     const spanArcaneTitle = document.createElement('span')
     spanArcaneTitle.innerText = ''
     const spanArcane = document.createElement('span')
+    spanArcane.classList.add('tooltip-trigger')
     spanArcane.innerText = `${updateStat(statInfo, '아케인포스')}`
     const spanAuthenticTitle = document.createElement('span')
     spanAuthenticTitle.innerText = '/'
     const spanAuthentic = document.createElement('span')
+    spanAuthentic.classList.add('tooltip-trigger')
     spanAuthentic.innerText = `${updateStat(statInfo, '어센틱포스')}`
+
+    EnhanceDueToForce(spanArcane, spanAuthentic, document.getElementById('bossName').innerText)
 
     force.appendChild(spanForceTitle)
     force.appendChild(spanArcaneTitle)
@@ -690,6 +711,138 @@ function pressEnter(event){
     const input = document.getElementById('message')
     if(input.value != null && input.value != '' && event.keyCode === 13)
         document.getElementById('btnSendMessage').click()
+}
+
+// 스크롤바가 유저에 의해 움직였는지, 맨 밑에 위치하는지를 구해서 flag 값 수정 하는 함수
+function scrolled(){
+    const outputContainer = document.getElementById('outputContainer')
+    if(outputContainer.scrollTop + outputContainer.clientHeight >= outputContainer.scrollHeight) scrolledByUser = false
+    else scrolledByUser = true
+}
+
+// 시드링 정보 가져오는 함수
+function addSpecialRingBadge(container ,userId) {
+    const currentEquipment = partyInfo.users[userId - 1].specialRingInfo
+    const userSpecialRingName = currentEquipment.specialRingName
+    const userSpecialRingLevel = currentEquipment.specialRingLevel;
+    const userNowHasSpecialRing = currentEquipment.nowUserHasSpecialRing; // 현재 착용중인가요?
+    const userHasNotSpecialRing = currentEquipment.userHasNotSpecialRing; // 시드링이 아예 없음
+
+    // 이미지 경로와 툴팁 텍스트 초기화
+    let specialRingTooltipText = ``;
+    let specialRingImagePath = "../static/image/badge/반지없음.png"; // 기본 이미지
+
+    // 유저의 특수반지 정보가 없거나 없음을 나타내는 경우
+    if (userHasNotSpecialRing) {
+        specialRingTooltipText = `[없음]<br /> 특수반지를 찾을 수 없어요!`; // 시드링이 없음
+    } else {
+        if (userNowHasSpecialRing) { // 현재 시드링 있음
+            specialRingTooltipText = `[착용중]<br /> ${userSpecialRingName} ${userSpecialRingLevel}렙<br /> 사용중!`;
+        } else {
+            specialRingTooltipText = `[미착용]<br /> ${userSpecialRingName} ${userSpecialRingLevel}렙<br /> 보유중!`;
+        }
+
+        const ringNamePrefix = userSpecialRingName.slice(0, 2);
+        switch (ringNamePrefix) {
+            case "리스":
+                specialRingImagePath = "../static/image/badge/리스트레인트.png";
+                break;
+            case "컨티":
+                specialRingImagePath = "../static/image/badge/컨티뉴어스.png";
+                break;
+            case "웨폰":
+                specialRingImagePath = "../static/image/badge/웨폰퍼프.png";
+                break;
+            default:
+                specialRingImagePath = "../static/image/badge/반지없음.png";
+                break;
+        }
+    }
+
+    // 시드링 이미지
+    const ringImg = document.createElement('img');
+    ringImg.className = 'badges';
+    ringImg.id = `ring${userId}`;
+    ringImg.src = `${specialRingImagePath}`
+    container.appendChild(ringImg);
+
+    // 시드링 툴팁
+    const ringDetail = document.createElement('div');
+    ringDetail.className = 'tooltip';
+    ringDetail.id = `ringDetail{userId}`;
+    ringDetail.innerHTML = specialRingTooltipText
+    container.appendChild(ringDetail);
+}
+
+// 레벨뻥 계산, 레벨 색상, 툴팁 추가하는 함수
+function EnhanceDueToLevel(levelElement, bossName){
+    const bossLevel = parseInt(forceAdvantage[bossName][0]);
+    const levelDifference = parseInt(levelElement.innerText) - bossLevel;
+    let tooltipText = "";
+    let color = "";
+
+    if (levelDifference >= 5) {
+        tooltipText = "120%";
+        color = "blue";
+    } else if (levelDifference >= 0 && levelDifference < 5) {
+        tooltipText = levelAdvantageMapping[levelDifference.toString()] || "Unknown";
+        color = "orange";
+    } else if (levelDifference > -20 && levelDifference < 0) {
+        tooltipText = levelAdvantageMapping[levelDifference.toString()] || "Unknown";
+        color = "red";
+    } else if (levelDifference <= -20) {
+        tooltipText = "불가";
+        color = "black";
+    }
+
+    levelElement.style.color = color;
+
+    const tooltip = createTooltip(`보스와의 레벨 차이: ${levelDifference}<br>데미지 비율: ${tooltipText}`);
+    levelElement.appendChild(tooltip);
+}
+
+// 포스뻥 계산, 포스 색상, 툴팁 추가하는 함수
+function EnhanceDueToForce(arcane, authentic, bossName){
+    const advantageBossInfo = forceAdvantage[bossName];
+    console.log(advantageBossInfo)
+    console.log(advantageBossInfo[1])
+    let tooltipText = "";
+    let color = "";
+
+    let force;
+
+    if (advantageBossInfo[1] === "아케인") {
+        force = arcane;
+    } else if (advantageBossInfo[1] === "어센틱") {
+        force = authentic;
+    } else if (advantageBossInfo[1] === "없음"){
+        force = -1;
+    }
+
+
+    if(force == -1){
+        tooltipText = `보스 포스 종류: ${advantageBossInfo[1]}<br>포뻥이 없는 보스`;
+    }
+    else{
+        const characterForce = parseInt(force.innerText)
+        const bossForceRequired = parseInt(advantageBossInfo[3]);
+                tooltipText = characterForce >= bossForceRequired
+                    ? `보스 포스 종류: ${advantageBossInfo[1]}<br>포뻥 요구 포스: ${bossForceRequired}<br>포뻥 데미지 비율: ${advantageBossInfo[2]}`
+                    : `보스 포스 종류: ${advantageBossInfo[1]}<br>포뻥 요구 포스: ${bossForceRequired}<br>포뻥 충족하지 못함`;
+                color = characterForce >= bossForceRequired ? "blue" : "red";
+    }
+
+    if(force != -1) {
+        force.style.color = color
+        const tooltip = createTooltip(tooltipText);
+        force.appendChild(tooltip);
+    }
+    else{
+        const tooltip1 = createTooltip(tooltipText);
+        const tooltip2 = createTooltip(tooltipText);
+        authentic.appendChild(tooltip1);
+        arcane.appendChild(tooltip2);
+    }
 }
 
 
