@@ -87,10 +87,12 @@ updateStat("재사용 대기시간 감소 (%)", "cooldownPer");
 updateStat("재사용 대기시간 미적용", "cooldownNow");
 updateStat("소환수 지속시간 증가", "minions");
 
-if (minutes == "free"){
-    document.getElementById("minutes").innerText =  "특수 주기" // 특수주기
-} else {
-    document.getElementById("minutes").innerText =  minutes+"분 주기" // 직업주기
+if(!(minutes == "4차 전직 이전")){
+    if (minutes == "free"){
+        document.getElementById("minutes").innerText =  "(특수 주기)" // 특수주기
+    } else {
+        document.getElementById("minutes").innerText =  "("+minutes+"분 주기)" // 직업주기
+    }
 }
 
 // 전투력은 따로 포맷하여 업데이트
