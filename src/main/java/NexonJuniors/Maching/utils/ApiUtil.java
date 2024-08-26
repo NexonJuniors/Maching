@@ -232,7 +232,7 @@ public class ApiUtil {
         Map<String, List<String>> mapping = CharacterClassMapping.getCharacterClassMapping();
 
         // 매핑된 정보를 가져옴. 없을 경우 "Unknown" 리스트를 반환.
-        List<String> classDetails = mapping.getOrDefault(characterClass, Arrays.asList("Unknown", "Unknown"));
+        List<String> classDetails = mapping.getOrDefault(characterClass, Arrays.asList("4차 전직 이전", "4차 전직 이전"));
 
         /*log.info("{}",classDetails); //[3, int]*/
         // 각각의 정보를 설정
