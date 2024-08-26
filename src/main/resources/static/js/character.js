@@ -87,10 +87,12 @@ updateStat("재사용 대기시간 감소 (%)", "cooldownPer");
 updateStat("재사용 대기시간 미적용", "cooldownNow");
 updateStat("소환수 지속시간 증가", "minions");
 
-if (minutes == "free"){
-    document.getElementById("minutes").innerText =  "특수 주기" // 특수주기
-} else {
-    document.getElementById("minutes").innerText =  minutes+"분 주기" // 직업주기
+if(!(minutes == "4차 전직 이전")){
+    if (minutes == "free"){
+        document.getElementById("minutes").innerText =  "(특수 주기)" // 특수주기
+    } else {
+        document.getElementById("minutes").innerText =  "("+minutes+"분 주기)" // 직업주기
+    }
 }
 
 // 전투력은 따로 포맷하여 업데이트
@@ -198,10 +200,10 @@ function powerTextTooltip() {
     const isPowerImagePath = "../static/image/badge/물음표.png";
 
     if (isRealTime) {
-        powerElement.style.color = "#425F85"; // 실시간인 경우 파란색
+        /*powerElement.style.color = "#425F85"; // 실시간인 경우 파란색*/
         powerTooltipText = `[실시간]<br />실시간 전투력 정보!`;
     } else {
-        powerElement.style.color = "#884444"; // 과거 데이터인 경우 빨간색
+        /*powerElement.style.color = "#884444"; // 과거 데이터인 경우 빨간색*/
         powerTooltipText = `[${dayDiff}일 전]<br />${searchDate}의 전투력!`;
     }
 

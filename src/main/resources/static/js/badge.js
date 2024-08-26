@@ -23,12 +23,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function mainStatBadge(){
-    const mainStatText = `${statLabels[mainStat] || mainStat}`
-    updateStat(mainStatText, "mainStat");
-    const mainStatTooltipText = `[주스텟]<br />내 주스텟은 ${statLabels[mainStat] || mainStat}!`;
-    const mainStatImagePath = getImagePath(statImgFolderPath, mainStat);
-    addBadgeToContainer('.badgeContainer','badgeContainer-item',mainStatImagePath, mainStat, mainStatTooltipText);
-    document.getElementById('mainStatText').textContent = mainStatText;
+    if(!(minutes == "4차 전직 이전")){
+        const mainStatText = `${statLabels[mainStat] || mainStat}`
+        updateStat(mainStatText, "mainStat");
+        const mainStatTooltipText = `[주스텟]<br />내 주스텟은 ${statLabels[mainStat] || mainStat}!`;
+        const mainStatImagePath = getImagePath(statImgFolderPath, mainStat);
+        addBadgeToContainer('.badgeContainer','badgeContainer-item',mainStatImagePath, mainStat, mainStatTooltipText);
+        document.getElementById('mainStatText').textContent = mainStatText;
+    }
 }
 
 // 뱃지 추가 함수

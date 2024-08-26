@@ -81,12 +81,14 @@ public class WebSocketUtil {
             String classMainStatInfo,
             PartyRequirementInfo partyRequirementInfo, //파티의 서버, 파티장, 그외 조건들 다수 포함
             Boolean isMatchingStarted, // 파티 생성되면 이사람은 매칭이 시작된거
-            String bossImg
+            String bossImg,
+            String strSpecialRingInfo
     ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
         StatInfo statInfo;
         UnionInfo unionInfo;
+        SpecialRingInfo specialRingInfo;
 
         try {
             // JSON 형태의 캐릭터의 모든 정보 자바 객체로 변환
@@ -94,6 +96,7 @@ public class WebSocketUtil {
             hexaSkillInfo = objectMapper.readValue(strHexaSkillInfo, HexaSkillInfo.class);
             statInfo = objectMapper.readValue(strStatInfo, StatInfo.class);
             unionInfo = objectMapper.readValue(strUnionInfo, UnionInfo.class);
+            specialRingInfo = objectMapper.readValue(strSpecialRingInfo, SpecialRingInfo.class);
         } catch (Exception e) {
             log.error(e.getMessage());
             // TODO MathcingException 클래스로 예외 처리
@@ -115,6 +118,7 @@ public class WebSocketUtil {
         characterInfo.setCharacterClassInfo(characterClassInfo);
         characterInfo.setClassMinutesInfo(classMinutesInfo);
         characterInfo.setClassMainStatInfo(classMainStatInfo);
+        characterInfo.setSpecialRingInfo(specialRingInfo);
 
         // 전체 이용자 리스트에 내 캐릭터 정보 추가
         totalUser.add(characterInfo.getBasicInfo().getCharacterName());
@@ -166,12 +170,14 @@ public class WebSocketUtil {
             String className,
             int maximumPeople,
             int power,
-            Boolean isMatchingStarted // 여기선 무조건 True임 매칭참가를 한거니까
+            Boolean isMatchingStarted, // 여기선 무조건 True임 매칭참가를 한거니까
+            String strSpecialRingInfo
     ) {
         BasicInfo basicInfo;
         HexaSkillInfo hexaSkillInfo;
         StatInfo statInfo;
         UnionInfo unionInfo;
+        SpecialRingInfo specialRingInfo;
 
         try {
             // JSON 형태의 캐릭터의 모든 정보 자바 객체로 변환
@@ -179,6 +185,7 @@ public class WebSocketUtil {
             hexaSkillInfo = objectMapper.readValue(strHexaSkillInfo, HexaSkillInfo.class);
             statInfo = objectMapper.readValue(strStatInfo, StatInfo.class);
             unionInfo = objectMapper.readValue(strUnionInfo, UnionInfo.class);
+            specialRingInfo = objectMapper.readValue(strSpecialRingInfo, SpecialRingInfo.class);
         } catch (Exception e) {
             log.error(e.getMessage());
             // TODO MathcingException 클래스로 예외 처리
@@ -200,6 +207,7 @@ public class WebSocketUtil {
         characterInfo.setCharacterClassInfo(className);
         characterInfo.setClassMinutesInfo(classMinutesInfo);
         characterInfo.setClassMainStatInfo(classMainStatInfo);
+        characterInfo.setSpecialRingInfo(specialRingInfo);
 
         // 전체 이용자 리스트에 내 캐릭터 정보 추가
         totalUser.add(characterInfo.getBasicInfo().getCharacterName());
@@ -362,23 +370,25 @@ public class WebSocketUtil {
             return false; // 전투력이 부족하면 다음 방으로
         }
 
-        // 6. 유저의 직업이 비숍일 경우 비숍이 파티에 필요한지 확인
-        boolean isBishopNeeded = matchingUser.getCharacterInfo().getCharacterClassInfo().equals("비숍")
-                ? partyInfo.getPartyRequirementInfo().getPartyNeedBishop() == 1 &&
-                partyInfo.getUsers().stream().noneMatch(member -> member.getCharacterClassInfo().equals("비숍"))
-                : true;
-        if (!isBishopNeeded) {
-            /*System.out.println("비숍 필요 여부 불일치: 유저 " + matchingUser.getCharacterInfo().getCharacterClassInfo() + " / 비숍 필요 " + partyInfo.getPartyRequirementInfo().getPartyNeedBishop());*/
-            return false; // 비숍이 필요하지 않으면 다음 방으로
-        }
+        // 6. 유저의 직업이 비숍일 경우 비숍이 파티에 필요한지 확인, 2일때는 비숍인지 아닌지 여부를 보지않아도 됨.
+        if(!(partyInfo.getPartyRequirementInfo().getPartyNeedBishop() == 2)){
+            boolean isBishopNeeded = matchingUser.getCharacterInfo().getCharacterClassInfo().equals("비숍")
+                    ? partyInfo.getPartyRequirementInfo().getPartyNeedBishop() == 1 &&
+                    partyInfo.getUsers().stream().noneMatch(member -> member.getCharacterClassInfo().equals("비숍"))
+                    : true;
+            if (!isBishopNeeded) {
+                /*System.out.println("비숍 필요 여부 불일치: 유저 " + matchingUser.getCharacterInfo().getCharacterClassInfo() + " / 비숍 필요 " + partyInfo.getPartyRequirementInfo().getPartyNeedBishop());*/
+                return false; // 비숍이 필요하지 않으면 다음 방으로
+            }
 
-        // 비숍 자리가 필요한 경우, 비숍이 파티에 없는 상태에서 다른 클래스의 유저가 들어오는 것을 막음
-        if (partyInfo.getPartyRequirementInfo().getPartyNeedBishop() == 1 &&
-                partyInfo.getUsers().size() == partyInfo.getMaximumPeople() - 1 &&
-                partyInfo.getUsers().stream().noneMatch(member -> member.getCharacterClassInfo().equals("비숍")) &&
-                !matchingUser.getCharacterInfo().getCharacterClassInfo().equals("비숍")) {
-            log.info("[비숍 자리임] | 비숍자리이므로 다음 방으로 갑니다");
-            return false;
+            // 비숍 자리가 필요한 경우, 비숍이 파티에 없는 상태에서 다른 클래스의 유저가 들어오는 것을 막음
+            if (partyInfo.getPartyRequirementInfo().getPartyNeedBishop() == 1 &&
+                    partyInfo.getUsers().size() == partyInfo.getMaximumPeople() - 1 &&
+                    partyInfo.getUsers().stream().noneMatch(member -> member.getCharacterClassInfo().equals("비숍")) &&
+                    !matchingUser.getCharacterInfo().getCharacterClassInfo().equals("비숍")) {
+                log.info("[비숍 자리임] | 비숍자리이므로 다음 방으로 갑니다");
+                return false;
+            }
         }
 
         // 7. 유저의 주기와 파티의 요구 주기 일치 여부 확인 (free인 경우 항상 true)

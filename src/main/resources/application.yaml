@@ -16,6 +16,7 @@ spring:
     show-sql: true
     defer-datasource-initialization: true
     properties:
+      hibernate.jdbc.time_zone: Asia/Seoul
       hibernate:
         show_sql: true
         format_sql: true

@@ -36,8 +36,8 @@
             <div class="flex items-center space-x-4">
                 <button id="btnLightMode" class="p-2 rounded hover:bg-blue-600">🔆</button>
                 <button id="btnDarkMode" class="p-2 rounded hover:bg-blue-600">🌙</button>
-                <button class="p-2 rounded hover:bg-blue-600">📒</button>
-                <button class="p-2 rounded hover:bg-blue-600">💰</button>
+<!--                <button class="p-2 rounded hover:bg-blue-600">📒</button>
+                <button class="p-2 rounded hover:bg-blue-600">💰</button>-->
             </div>
         </header>
 
@@ -88,7 +88,7 @@
                             </div>
                             <div class="class">
                                 <span id="characterClass"></span>
-                                <small>(<span id="minutes"></span>)</small>
+                                <small><span id="minutes"></span></small>
                             </div>
                             <div class="badgeContainer"></div>
                         </div>
@@ -280,6 +280,7 @@
                 <select id="partyNeedBishop" class="form-control">
                     <option value=0>비숍이 더 필요하지 않아요</option>
                     <option value=1>비숍이 필요해요</option>
+                    <option value=2>상관 없음</option>
                 </select>
                 <br />
             </div>
@@ -299,6 +300,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
 <script src="../static/js/darkmode.js"></script>
 <script src="../static/js/tooltip.js"></script>
+<script src = "../static/js/bossAdvantageData.js"></script>
 <script src="../static/js/bossAdvantage.js"></script>
 <script src = "../static/js/character.js"></script>
 <script src="../static/js/bossIcon.js"></script>
