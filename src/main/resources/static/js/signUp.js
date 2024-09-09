@@ -53,8 +53,9 @@ function signUpForm() {
     // 모달 폼 콘텐츠 생성
     const formHTML = `
     <div>
-        <label for="userId" class = "mt-3 signUp">이메일</label><button class = "btn btn-primary signUp">이메일 인증</button><br>
-        <input id="userId" name="userId" class = "form-control"><br>
+        <label for="userId" class = "mt-3 signUp">이메일</label><br>
+        <input id="userId" name="userId" class = "form-control">
+        <div style ="text-align: right"><button class = "btn btn-primary signUp">이메일 인증</button></div>
         <label for="userPw" class = "mt-3 signUp">비밀번호</label><br>
         <input type="password" id="userPw" name="userPw" class = "form-control"><br>
         <label for="pwCheck" class = "mt-3 signUp">비밀번호 확인</label><br>
