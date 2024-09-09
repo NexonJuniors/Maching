@@ -55,13 +55,13 @@ function signUpForm() {
     <div>
         <label for="userId" class = "mt-3 signUp">이메일</label><br>
         <input id="userId" name="userId" class = "form-control">
-        <div style ="text-align: right"><button class = "btn btn-primary signUp">이메일 인증</button></div>
+        <div style ="text-align: right"><button id = "btnEmailAuth" class = "btn btn-primary signUp">이메일 인증</button></div>
         <label for="userPw" class = "mt-3 signUp">비밀번호</label><br>
         <input type="password" id="userPw" name="userPw" class = "form-control"><br>
         <label for="pwCheck" class = "mt-3 signUp">비밀번호 확인</label><br>
         <input type="password" id="pwCheck" name="pwCheck" class = "form-control"><br>
         <label for="emailAuth" class = "mt-3 signUp">이메일 인증 코드</label><label id = "authCodeTime" class = "signUp"></label><br>
-        <input id="emailAuth" name="emailAuth" class = "form-control" disabled><br>
+        <input id="emailAuth" name="emailAuth" class = "form-control"><br>
 
         <div style = "text-align: right">
             <button class = "btn btn-primary signUp" id = "btnSignUp">회원가입</button>
@@ -87,6 +87,7 @@ function signUpForm() {
 
     document.getElementById("btnCancelSignUp").addEventListener("click", closeModal);
     document.getElementById("btnSignUp").addEventListener("click", signUp);
+    document.getElementById("btnEmailAuth").addEventListener("click", emailAuthRequest);
 
     // 모달 닫는 함수
     function closeModal() {
@@ -109,7 +110,7 @@ function signUp(){
 
 //    else if(emailAuth(userId, emailAuth)){}
     else{
-        signUpRequest(userId, userPw);
+        signUpRequest(userId, userPw, emailAuth);
     }
 }
 
@@ -141,7 +142,7 @@ function emailAuth(userId, emailAuth){
 }
 
 // 회원가입 요청 보내는 함수
-function signUpRequest(userId, userPw){
+function signUpRequest(userId, userPw, authCode){
     fetch('/user', {
       method: 'POST',
       headers: {
@@ -149,7 +150,8 @@ function signUpRequest(userId, userPw){
       },
       body: JSON.stringify({
         userId: userId,
-        userPw: userPw
+        userPw: userPw,
+        authCode: authCode
       })
     })
     .then(response => {
@@ -161,6 +163,28 @@ function signUpRequest(userId, userPw){
     })
     .catch(error => {
         alert(error.message)
+    });
+}
+
+function emailAuthRequest(){
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    loadingSpinner.style.display = 'flex';
+
+    fetch('/emailAuth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            userId: document.getElementById('userId').value
+          })
+        })
+        .then(response => {
+            loadingSpinner.style.display = 'none';
+            alert('입력한 이메일로 인증 메일을 발송했습니다.')
+        })
+        .catch(error => {
+            alert(error.message)
     });
 }
 
