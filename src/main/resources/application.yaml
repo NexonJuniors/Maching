@@ -32,3 +32,25 @@ spring:
 
   mvc:
     static-path-pattern: /static/**
+
+  data:
+    redis:
+      host: ${REDIS_URL}
+      port: ${REDIS_PORT}
+      username: ${REDIS_USERNAME}
+      password: ${REDIS_PASSWORD}
+    ssl:
+      enabled: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_ADDRESS}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 1000
+          starttls:
+            enable: true
