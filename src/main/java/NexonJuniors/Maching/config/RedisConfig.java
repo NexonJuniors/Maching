@@ -4,6 +4,7 @@ package NexonJuniors.Maching.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -12,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
+@DependsOn("dotenv")
 public class RedisConfig {
 
     @Value("${spring.data.redis.host}")
@@ -19,6 +21,12 @@ public class RedisConfig {
 
     @Value("${spring.data.redis.port}")
     private Integer port;
+
+    @Value("${spring.data.redis.username}")
+    private String username;
+
+    @Value("${spring.data.redis.password}")
+    private String password;
 
     // REDIS 연결 정보 설정
     @Bean
@@ -29,6 +37,9 @@ public class RedisConfig {
         redisConfiguration.setHostName(host);
         // REDIS Port 설정
         redisConfiguration.setPort(port);
+
+        redisConfiguration.setUsername(username);
+        redisConfiguration.setPassword(password);
 
         // REDIS 연결 객체 생성 후 설정 삽입
         return new LettuceConnectionFactory(redisConfiguration);
