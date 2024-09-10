@@ -1,6 +1,6 @@
 async function fetchLogList() {
     try {
-        const response = await fetch('/api/logs/list');
+        const response = await fetch('/api/logs/listLogs');
         if (!response.ok) throw new Error('Failed to fetch log list');
 
         const logList = await response.json();
@@ -23,7 +23,7 @@ async function fetchLogList() {
 
 async function fetchLogs(date, filterType) {
     try {
-        let endpoint = `/api/logs/${date}`;
+        let endpoint = `/api/logs/systemNotChatLog/${date}`;
         if (filterType === 'matching') {
             endpoint = `/api/logs/filtered/${date}`;
         } else if (filterType === 'searching') {

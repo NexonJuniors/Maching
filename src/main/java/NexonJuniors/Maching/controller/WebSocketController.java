@@ -170,9 +170,7 @@ public class WebSocketController {
                 String.format("/room/%d", chatMessage.getRoomId()),
                 chatMessage
         );
-        /* 채팅로그는 유저의 동의를 명시적으로 받아야 하며 개인정보로 간주된다. 제외
         log.info("[채팅 로그] | {}번방 | {}님 | 내용 : {}", chatMessage.getRoomId() ,chatMessage.getSender(), chatMessage.getMessage());
-        */
     }
 
     @MessageMapping("/exitRoom")

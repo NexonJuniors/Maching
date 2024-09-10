@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/logs")
 public class LogController {
 
+    // 이건 위험한거같음.
     @GetMapping("/{date}")
     public ResponseEntity<List<String>> getLogsByDate(@PathVariable("date") String date) {
         try {
@@ -29,7 +30,7 @@ public class LogController {
     }
 
     // 이건 지난 로그들을 리스트로 불러올거임
-    @GetMapping("/list")
+    @GetMapping("/listLogs")
     public ResponseEntity<List<String>> getLogList() {
         try {
             List<String> logs = Files.list(Paths.get("logs"))
@@ -90,6 +91,22 @@ public class LogController {
 
             List<String> filteredLogs = logs.stream()
                     .filter(log -> log.contains("캐릭터"))
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok(filteredLogs);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(null);
+        }
+    }
+
+    // 채팅로그,검색로그,매칭,채팅방 제외한 시스템 로그
+    @GetMapping("/systemNotChatLog/{date}")
+    public ResponseEntity<List<String>> getSystemNotChatLog(@PathVariable("date") String date) {
+        try {
+            String logFileName = "today".equals(date) ? "logs/today.log" : "logs/app." + date + ".log";
+            List<String> logs = Files.readAllLines(Paths.get(logFileName));
+
+            List<String> filteredLogs = logs.stream()
+                    .filter(log -> !log.contains("매칭") && !log.contains("채팅") && !log.contains("캐릭터"))
                     .collect(Collectors.toList());
             return ResponseEntity.ok(filteredLogs);
         } catch (Exception e) {
