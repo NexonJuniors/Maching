@@ -3,6 +3,7 @@ package NexonJuniors.Maching.user;
 import NexonJuniors.Maching.excption.user.UserException;
 import NexonJuniors.Maching.excption.user.UserExceptionCode;
 import NexonJuniors.Maching.user.dto.EmailAuthDto;
+import NexonJuniors.Maching.user.dto.SignInDto;
 import NexonJuniors.Maching.user.dto.SignUpDto;
 import NexonJuniors.Maching.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,7 +38,7 @@ public class UserService {
         redisUtil.deleteEmailAuthCode(userId);
     }
 
-    // 인증코드 생성 및 인증 메일 발솔하는 메소드
+    // 인증코드 생성 및 인증 메일 발송하는 메소드
     public void IssueEmailAuthCode(EmailAuthDto dto){
         Integer authCode = generateEmailAuthCode();
         String email = dto.getUserId();
@@ -44,6 +47,23 @@ public class UserService {
         redisUtil.setEmailAuthCode(email, authCode);
         // 이메일 인증 메일 전송
         sendMail(email, authCode);
+    }
+
+    // 로그인 메소드
+    public void signIn(SignInDto dto){
+        String userId = dto.getUserId();
+        String userPw = dto.getUserPw();
+
+        Optional<UserEntity> optionalUser = userRepository.findByUserId(userId);
+
+        if(optionalUser.isEmpty()) throw new UserException(UserExceptionCode.NOT_EXIST_USER);
+
+        UserEntity user = optionalUser.get();
+
+        // 패스워드 디코딩 후 입력한 패스워드와 같은 지 비교
+        if(!passwordEncoder.matches(userPw, user.getUserPw())) throw new UserException(UserExceptionCode.IS_NOT_VALID_PASSWORD);
+
+        // 토근 발급
     }
 
     // 이메일 인증 메일을 전송하는 메소드
