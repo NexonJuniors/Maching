@@ -107,8 +107,6 @@ function signUp(){
     else if(isNotEmail(userId)) alert('아이디는 이메일 형식으로 입력해주세요.')
     else if(!isValidPw(userPw)) alert("비밀번호는 특수문자, 영대문자, 숫자를 하나이상 포함한 8자리 이상의 비밀번호이어야 합니다.")
     else if(checkPw(userPw, pwCheck)) alert('비밀번호 확인이 일치하지 않습니다.')
-
-//    else if(emailAuth(userId, emailAuth)){}
     else{
         signUpRequest(userId, userPw, emailAuth);
     }
@@ -116,7 +114,7 @@ function signUp(){
 
 // 입력되지 않은 항목이 있는지 검사
 function isNull(userId, userPw, pwCheck, emailAuth){
-    return userId == "" || userPw == "" || pwCheck == "" // || emailAuth.value == "";
+    return userId == "" || userPw == "" || pwCheck == "" || emailAuth.value == "" || userId == null || userPw == null || pwCheck == null || emailAuth.value == null;
 }
 
 // 아이디가 이메일 형식이 아닌지 검사
@@ -134,11 +132,6 @@ function isValidPw(userPw){
 // 비밀번호와 비밀번호 확인란에 입력한 값이 다른지 확인
 function checkPw(userPw, pwCheck){
     return userPw != pwCheck
-}
-
-// 이메일 인증 코드가 틀렸는지 확인
-function emailAuth(userId, emailAuth){
-
 }
 
 // 회원가입 요청 보내는 함수
@@ -175,16 +168,20 @@ function signUpRequest(userId, userPw, authCode){
 }
 
 function emailAuthRequest(){
-    const loadingSpinner = document.getElementById('loadingSpinner');
-    loadingSpinner.style.display = 'flex';
+    const userId = document.getElementById('userId').value
 
-    fetch('/emailAuth', {
+    if(isNotEmail(userId)) alert('아이디는 이메일 형식으로 입력해주세요.')
+    else{
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        loadingSpinner.style.display = 'flex';
+
+        fetch('/emailAuth', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            userId: document.getElementById('userId').value
+            userId: userId
           })
         })
         .then(response => {
@@ -192,7 +189,10 @@ function emailAuthRequest(){
             alert('입력한 이메일로 인증 메일을 발송했습니다.')
         })
         .catch(error => {
+            loadingSpinner.style.display = 'none';
             alert(error.message)
-    });
+        });
+    }
+
 }
 
