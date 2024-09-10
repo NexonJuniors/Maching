@@ -6,6 +6,7 @@ import NexonJuniors.Maching.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final RedisUtil redisUtil;
     private final JavaMailSender mailSender;
+    private final PasswordEncoder passwordEncoder;
 
     // 회원가입 메소드
     public void registerUser(SignUpDto signUpDto){
@@ -25,7 +27,7 @@ public class UserService {
 
         if(!isCheckEmailAuthCode(userId, authCode)) throw new RuntimeException("잘못된 이메일 인증 코드입니다.");
 
-        UserEntity userEntity = new UserEntity(userId, userPw);
+        UserEntity userEntity = new UserEntity(userId, passwordEncoder.encode(userPw));
         userRepository.save(userEntity);
 
         redisUtil.deleteEmailAuthCode(userId);
