@@ -53,19 +53,19 @@ function signUpForm() {
     // 모달 폼 콘텐츠 생성
     const formHTML = `
     <div>
-        <label for="userId" class = "mt-3 signUp">이메일</label><br>
+        <label for="userId" class = "mt-3 signInUp">이메일</label><br>
         <input id="userId" name="userId" class = "form-control">
-        <div style ="text-align: right"><button id = "btnEmailAuth" class = "btn btn-primary signUp">이메일 인증</button></div>
-        <label for="userPw" class = "mt-3 signUp">비밀번호</label><br>
+        <div style ="text-align: right"><button id = "btnEmailAuth" class = "btn btn-primary signInUp">이메일 인증</button></div>
+        <label for="userPw" class = "mt-3 signInUp">비밀번호</label><br>
         <input type="password" id="userPw" name="userPw" class = "form-control"><br>
-        <label for="pwCheck" class = "mt-3 signUp">비밀번호 확인</label><br>
+        <label for="pwCheck" class = "mt-3 signInUp">비밀번호 확인</label><br>
         <input type="password" id="pwCheck" name="pwCheck" class = "form-control"><br>
-        <label for="emailAuth" class = "mt-3 signUp">이메일 인증 코드</label><label id = "authCodeTime" class = "signUp"></label><br>
+        <label for="emailAuth" class = "mt-3 signInUp">이메일 인증 코드</label><label id = "authCodeTime" class = "signInUp"></label><br>
         <input id="emailAuth" name="emailAuth" class = "form-control"><br>
 
         <div style = "text-align: right">
-            <button class = "btn btn-primary signUp" id = "btnSignUp">회원가입</button>
-            <button class = "btn btn-danger signUp" id = "btnCancelSignUp">취소</button>
+            <button class = "btn btn-primary signInUp" id = "btnSignUp">회원가입</button>
+            <button class = "btn btn-danger signInUp" id = "btnCancelSignUp">취소</button>
         </div>
     </div>
     `;
