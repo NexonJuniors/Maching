@@ -8,9 +8,6 @@ import org.springframework.context.annotation.Configuration;
 public class EnvConfig {
     @Bean
     public Dotenv dotenv() {
-        Dotenv dotenv = Dotenv.configure().load();
-        dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
-
-        return dotenv;
+        return  Dotenv.configure().load();
     }
 }
