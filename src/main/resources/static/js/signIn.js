@@ -53,7 +53,7 @@ function signInForm() {
     // 모달 폼 콘텐츠 생성
     const formHTML = `
     <div>
-        <label for="userId" class = "mt-3 signUp">아이디</label><br>
+        <label for="userId" class = "mt-3 signInUp">아이디</label><br>
         <input id="userId" name="userId" class = "form-control">
         <label for="userPw" class = "mt-3 signInUp">비밀번호</label><br>
         <input type="password" id="userPw" name="userPw" class = "form-control"><br>
@@ -89,4 +89,50 @@ function signInForm() {
         modal.classList.add('fade');
         modal.remove()
     };
+}
+
+function signIn(){
+    const userId = document.getElementById('userId').value
+    const userPw = document.getElementById('userPw').value
+
+    if(isNull(userId, userPw))alert('아이디와 비밀번호를 입력해주세요.')
+    else{
+        signInRequest(userId, userPw);
+    }
+}
+
+// 입력되지 않은 항목이 있는지 검사
+function isNull(userId, userPw){
+    return userId == "" || userPw == "";
+}
+
+function signInRequest(userId, userPw){
+    fetch('/signIn', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userId: userId,
+        userPw: userPw
+      })
+    })
+    .then(response => {
+        if(response.ok){
+            alert('로그인 되었습니다.')
+            document.getElementById('btnCancelSignIn').click();
+        }
+        else{
+            return response.json().then(data => {
+                console.log(data.message)
+                throw new Error(data.message);
+            })
+        }
+    })
+    .then(function(){
+        location.href = '/'
+    })
+    .catch(error => {
+        alert(error.message)
+    });
 }
