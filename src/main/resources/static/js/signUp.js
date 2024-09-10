@@ -155,8 +155,16 @@ function signUpRequest(userId, userPw, authCode){
       })
     })
     .then(response => {
-        alert('회원가입이 완료되었습니다!')
-        document.getElementById('btnCancelSignUp').click();
+        if(response.ok){
+            alert('회원가입이 완료되었습니다!')
+            document.getElementById('btnCancelSignUp').click();
+        }
+        else{
+            return response.json().then(data => {
+                console.log(data.message)
+                throw new Error(data.message);
+            })
+        }
     })
     .then(function(){
         location.href = '/'

@@ -1,5 +1,7 @@
 package NexonJuniors.Maching.user;
 
+import NexonJuniors.Maching.excption.user.UserException;
+import NexonJuniors.Maching.excption.user.UserExceptionCode;
 import NexonJuniors.Maching.user.dto.EmailAuthDto;
 import NexonJuniors.Maching.user.dto.SignUpDto;
 import NexonJuniors.Maching.utils.RedisUtil;
@@ -23,9 +25,9 @@ public class UserService {
         String userPw = signUpDto.getUserPw();
         String authCode = signUpDto.getAuthCode();
 
-        if(isExistUser(userId)) throw new RuntimeException("이미 존재하는 유저입니다.");
+        if(isExistUser(userId)) throw new UserException(UserExceptionCode.EXIST_USER);
 
-        if(!isCheckEmailAuthCode(userId, authCode)) throw new RuntimeException("잘못된 이메일 인증 코드입니다.");
+        if(!isCheckEmailAuthCode(userId, authCode)) throw new UserException(UserExceptionCode.IS_NOT_VALID_CODE);
 
         UserEntity userEntity = new UserEntity(userId, passwordEncoder.encode(userPw));
         userRepository.save(userEntity);
@@ -70,6 +72,7 @@ public class UserService {
 
     // 인증코드를 올바르게 입력했는지 확인하는 메소드
     private boolean isCheckEmailAuthCode(String userId, String authCode){
-        return authCode.equals(redisUtil.getEmailAuthCode(userId).toString());
+        Object code = redisUtil.getEmailAuthCode(userId);
+        return code != null && authCode.equals(code.toString());
     }
 }
