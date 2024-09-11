@@ -1,3 +1,5 @@
+let token
+
 // 로그인 클릭 시 로그인 폼 출력
 function signInForm() {
     // 이미 모달이 있으면 생성하지 않음
@@ -119,8 +121,13 @@ function signInRequest(userId, userPw){
     })
     .then(response => {
         if(response.ok){
-            alert('로그인 되었습니다.')
-            document.getElementById('btnCancelSignIn').click();
+            return response.json().then(data => {
+                token = data.accessToken;
+                document.cookie = `MachingRefreshToken = ${data.refreshToken}`
+
+                alert('로그인 되었습니다.')
+                document.getElementById('btnCancelSignIn').click();
+            })
         }
         else{
             return response.json().then(data => {
@@ -128,9 +135,6 @@ function signInRequest(userId, userPw){
                 throw new Error(data.message);
             })
         }
-    })
-    .then(function(){
-        location.href = '/'
     })
     .catch(error => {
         alert(error.message)
