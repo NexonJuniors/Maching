@@ -2,6 +2,7 @@ package NexonJuniors.Maching.user;
 
 import NexonJuniors.Maching.user.dto.EmailAuthDto;
 import NexonJuniors.Maching.user.dto.SignInDto;
+import NexonJuniors.Maching.user.dto.SignInResponseDto;
 import NexonJuniors.Maching.user.dto.SignUpDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ public class UserController {
 
     // 로그인 요천 URL
     @PostMapping("/signIn")
-    public void singIn(@RequestBody SignInDto dto){
-        userService.signIn(dto);
+    public SignInResponseDto singIn(@RequestBody SignInDto dto){
+        return userService.signIn(dto);
     }
 }

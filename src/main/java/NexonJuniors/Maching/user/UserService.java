@@ -4,6 +4,7 @@ import NexonJuniors.Maching.excption.user.UserException;
 import NexonJuniors.Maching.excption.user.UserExceptionCode;
 import NexonJuniors.Maching.user.dto.EmailAuthDto;
 import NexonJuniors.Maching.user.dto.SignInDto;
+import NexonJuniors.Maching.user.dto.SignInResponseDto;
 import NexonJuniors.Maching.user.dto.SignUpDto;
 import NexonJuniors.Maching.utils.JwtUtil;
 import NexonJuniors.Maching.utils.RedisUtil;
@@ -52,7 +53,7 @@ public class UserService {
     }
 
     // 로그인 메소드
-    public void signIn(SignInDto dto){
+    public SignInResponseDto signIn(SignInDto dto){
         String userId = dto.getUserId();
         String userPw = dto.getUserPw();
 
@@ -66,8 +67,10 @@ public class UserService {
         if(!passwordEncoder.matches(userPw, user.getUserPw())) throw new UserException(UserExceptionCode.IS_NOT_VALID_PASSWORD);
 
         // 토근 발급
-        String jwtToken = jwtUtil.generateToken(user.getId());
+        String accessToken = jwtUtil.generateToken(user.getId(), 300);
+        String refreshToken = jwtUtil.generateToken(user.getId(), 1800);
 
+        return new SignInResponseDto(accessToken, refreshToken);
     }
 
     // 이메일 인증 메일을 전송하는 메소드
