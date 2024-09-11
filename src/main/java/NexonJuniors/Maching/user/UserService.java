@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -89,7 +90,7 @@ public class UserService {
 
     // 인증코드로 사용할 랜덤한 6자리 난수 리턴하는 메소드
     private Integer generateEmailAuthCode(){
-        return (int)(Math.random() * 1000000);
+        return new Random().nextInt(100000, 1000000);
     }
 
     // 이미 존재하는 유저인지 확인하는 메소드
