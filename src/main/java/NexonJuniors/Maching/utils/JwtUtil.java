@@ -25,11 +25,11 @@ public class JwtUtil {
     }
 
     // JWT 만드는 메소드
-    public String generateToken(Long id){
+    public String generateToken(Long id, Integer time){
         Claims claims = Jwts.claims()
                 .setSubject(String.valueOf(id))
                 .setIssuedAt(Date.from(Instant.now()))
-                .setExpiration(Date.from(Instant.now().plusSeconds(600)));
+                .setExpiration(Date.from(Instant.now().plusSeconds(time)));
 
         return Jwts.builder()
                 .setClaims(claims)
