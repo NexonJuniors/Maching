@@ -123,7 +123,7 @@ function signInRequest(userId, userPw){
         if(response.ok){
             return response.json().then(data => {
                 token = data.accessToken;
-                document.cookie = `MachingRefreshToken = ${data.refreshToken}`
+                document.cookie = `MachingRefreshToken = ${data.refreshToken}; max-age = 1800`
 
                 alert('로그인 되었습니다.')
                 document.getElementById('btnCancelSignIn').click();
@@ -135,6 +135,9 @@ function signInRequest(userId, userPw){
                 throw new Error(data.message);
             })
         }
+    })
+    .then(function(){
+
     })
     .catch(error => {
         alert(error.message)
