@@ -1,6 +1,6 @@
 package NexonJuniors.Maching.controller;
 
-import NexonJuniors.Maching.Matching.WebSocketUtil;
+import NexonJuniors.Maching.matching.WebSocketUtil;
 import NexonJuniors.Maching.chatting.ChatMessage;
 import NexonJuniors.Maching.chatting.EnterRoomDto;
 import NexonJuniors.Maching.chatting.ExitRoomDto;

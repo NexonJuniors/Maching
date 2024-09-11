@@ -1,6 +1,6 @@
 package NexonJuniors.Maching.controller;
 
-import NexonJuniors.Maching.Matching.WebSocketUtil;
+import NexonJuniors.Maching.matching.WebSocketUtil;
 import NexonJuniors.Maching.model.CharacterInfo;
 import NexonJuniors.Maching.utils.ApiUtil;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import java.time.LocalDate;
 
 import java.util.HashMap;

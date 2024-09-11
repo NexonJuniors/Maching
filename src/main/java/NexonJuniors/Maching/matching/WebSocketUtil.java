@@ -1,4 +1,4 @@
-package NexonJuniors.Maching.Matching;
+package NexonJuniors.Maching.matching;
 
 import NexonJuniors.Maching.chatting.EnterRoomDto;
 import NexonJuniors.Maching.chatting.ExitRoomDto;
