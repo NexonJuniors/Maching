@@ -50,6 +50,6 @@ spring:
           starttls:
             enable: true
 
-  jwt:
-    header: ${JWT_HEADER}
-    secret: ${JWT_SECRET}
+jwt:
+  header: ${JWT_HEADER}
+  secret: ${JWT_SECRET}
