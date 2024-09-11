@@ -3,7 +3,7 @@ package NexonJuniors.Maching.user;
 import NexonJuniors.Maching.excption.user.UserException;
 import NexonJuniors.Maching.excption.user.UserExceptionCode;
 import NexonJuniors.Maching.user.dto.EmailAuthDto;
-import NexonJuniors.Maching.user.dto.SignInDto;
+import NexonJuniors.Maching.user.dto.SignInRequestDto;
 import NexonJuniors.Maching.user.dto.SignInResponseDto;
 import NexonJuniors.Maching.user.dto.SignUpDto;
 import NexonJuniors.Maching.utils.JwtUtil;
@@ -53,7 +53,7 @@ public class UserService {
     }
 
     // 로그인 메소드
-    public SignInResponseDto signIn(SignInDto dto){
+    public SignInResponseDto signIn(SignInRequestDto dto){
         String userId = dto.getUserId();
         String userPw = dto.getUserPw();
 
