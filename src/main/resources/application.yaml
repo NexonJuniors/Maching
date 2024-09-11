@@ -49,3 +49,7 @@ spring:
           timeout: 1000
           starttls:
             enable: true
+
+  jwt:
+    header: ${JWT_HEADER}
+    secret: ${JWT_SECRET}

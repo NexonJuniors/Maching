@@ -5,6 +5,7 @@ import NexonJuniors.Maching.excption.user.UserExceptionCode;
 import NexonJuniors.Maching.user.dto.EmailAuthDto;
 import NexonJuniors.Maching.user.dto.SignInDto;
 import NexonJuniors.Maching.user.dto.SignUpDto;
+import NexonJuniors.Maching.utils.JwtUtil;
 import NexonJuniors.Maching.utils.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -21,6 +22,7 @@ public class UserService {
     private final RedisUtil redisUtil;
     private final JavaMailSender mailSender;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     // 회원가입 메소드
     public void registerUser(SignUpDto signUpDto){
@@ -64,6 +66,8 @@ public class UserService {
         if(!passwordEncoder.matches(userPw, user.getUserPw())) throw new UserException(UserExceptionCode.IS_NOT_VALID_PASSWORD);
 
         // 토근 발급
+        String jwtToken = jwtUtil.generateToken(user.getId());
+
     }
 
     // 이메일 인증 메일을 전송하는 메소드
