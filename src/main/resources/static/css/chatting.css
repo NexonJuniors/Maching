@@ -1,3 +1,43 @@
+@media only screen and (max-width: 430px){
+    #bossName.name-container {
+        font-size: 1.1em!important;
+    }
+
+    #partners.partners{
+        min-width: 320px!important;
+    }
+
+    #header.header{
+        min-width: 320px!important;
+    }
+
+    #footer.footer-content{
+        min-width: 320px!important;
+    }
+
+    .chatroom-container {
+        min-width: 320px!important;
+    }
+
+    .title-img-name{
+        justify-content: center;
+    }
+}
+
+@media only screen and (max-width: 900px){
+    #bossName.name-container {
+        font-size: 1.2em;
+    }
+
+    #div-title-btn.title-btn-container{
+        font-size: 0.7em;
+    }
+
+    .bossImg{
+        width: 3.5em;
+    }
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -22,6 +62,18 @@ input[type="text"] {
     width: 80%
 }
 
+#header.header{
+    min-width: 640px;
+}
+
+#partners.partners{
+    min-width: 640px;
+}
+
+#footer.footer-content{
+    min-width: 640px;
+}
+
 .chatroom-container {
     display: grid;
     grid-template-areas:
@@ -38,6 +90,7 @@ input[type="text"] {
     /*border-width: 1px;*/
     border-radius: 10px;
     background-color: var(--foreground);
+    min-width: 640px;
 }
 
 .header {
@@ -169,11 +222,14 @@ input[type="text"] {
 .title-img-name {
     display: flex;
     position: relative;
+    height: 100%;
 }
 
 .img-container {
+    display: flex;
     flex-shrink: 0; /* 이미지 크기에 맞게 공간을 할당 */
     margin-right: 10px; /* 이미지와 이름 사이에 여백 추가 */
+    align-items: center;
 }
 
 .name-container {
@@ -184,8 +240,10 @@ input[type="text"] {
     justify-content: center;
     transform: translateX(-50%);
     white-space: nowrap; /* 텍스트가 한 줄로 나오게 함 */
-    font-size: x-large;
+    font-size: 1.5em;
     font-weight: bold;
+    width: 100%;
+    z-index: 2;
 }
 
 .title-btn-container{
@@ -194,10 +252,11 @@ input[type="text"] {
     right: 0%;
     bottom: 0%;
     justify-content: space-between;
+    font-size: 1em;
 }
 
 .title-btn{
-    margin-left: 4px;
+    margin: 2px;
 }
 
 .stats-container {
@@ -285,4 +344,6 @@ input[type="text"] {
     font-weight: bold;
 }
 
-
+.bossImg{
+    max-height: 80px;
+}
