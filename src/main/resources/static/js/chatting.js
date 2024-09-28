@@ -2,6 +2,7 @@ document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
 document.getElementById('btnExit').addEventListener('click', function(){if(confirm("채팅방을 나가겠습니까?")) location.href = '/'})
 document.getElementById('message').addEventListener('keyup', pressEnter)
 document.getElementById('outputContainer').addEventListener('scroll', scrolled)
+document.addEventListener('visibilitychange',function(){if(isMobile()) exitRoom()})
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
@@ -856,6 +857,17 @@ function EnhanceDueToForce(arcane, authentic, bossName){
         authentic.appendChild(tooltip1);
         arcane.appendChild(tooltip2);
     }
+}
+
+// 모바일 기기인지 확인
+function isMobile(){
+    // User-Agent 기반 모바일 기기 감지
+    const userAgentCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(navigator.userAgent);
+
+    // 화면 크기 기반 추가 확인 (넓이가 767px 이하일 경우 모바일로 판단)
+//    const screenCheck = window.matchMedia("(max-width: 767px)").matches;
+
+    return userAgentCheck
 }
 
 
