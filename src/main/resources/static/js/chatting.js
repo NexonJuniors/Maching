@@ -2,6 +2,7 @@ document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
 document.getElementById('btnExit').addEventListener('click', function(){if(confirm("채팅방을 나가겠습니까?")) location.href = '/'})
 document.getElementById('message').addEventListener('keyup', pressEnter)
 document.getElementById('outputContainer').addEventListener('scroll', scrolled)
+document.addEventListener('visibilitychange',function(){if(isMobile()) exitRoom()})
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
@@ -131,7 +132,7 @@ function loadPartyInfo(bossName, bossImg, maximumPeople, partyRequirementInfo){
     const partyNeedPower = partyRequirementInfo.partyNeedPower
     const partyNeedBishop = partyRequirementInfo.partyNeedBishop
 
-    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'}주기), `
+    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'} 주기) , `
     document.getElementById('partyNeedPower').innerText = ` ${formatNumber(partyNeedPower)} 이상`
     document.getElementById('partyNeedBishop').innerText = `비숍 모집 : ${partyNeedBishop == 1 ? 'O' : 'X'}`
     document.getElementById('recruitmentStatus').innerText = `파티 상태 : 모집 중`
@@ -424,6 +425,8 @@ function createUserProfile(userId){
     flexItemDiv.appendChild(badgeContainerDiv);
 
     nowUser.appendChild(flexItemDiv);
+    nowUser.style.height = nowUser.clientHeight;
+    nowUser.style.maxHeight = nowUser.clientHeight;
 }
 
 // 스탯 정보 출력하는 함수
@@ -446,7 +449,12 @@ function printStat(event){
     // 기존 이벤트 핸들러 제거
     nowUser.removeEventListener('click', printStat)
 
-    nowUser.innerHTML = ''
+//    nowUser.innerHTML = ''
+    const childNodes = nowUser.childNodes;
+
+    for (let i = childNodes.length - 1; i >= 0; i--) {
+      nowUser.removeChild(childNodes[i]);
+    }
 
     const flexItem = document.createElement('div')
     flexItem.classList.add('flex-item')
@@ -599,7 +607,13 @@ function printHexa(event){
 
     // 기존 이벤트 핸들러 제거
     nowUser.removeEventListener('click', printHexa)
-    nowUser.innerHTML = ''
+//    nowUser.innerHTML = ''
+
+    const childNodes = nowUser.childNodes;
+
+    for (let i = childNodes.length - 1; i >= 0; i--) {
+      nowUser.removeChild(childNodes[i]);
+    }
 
     const flexContainer = document.createElement('div')
     flexContainer.classList.add('flex-container')
@@ -843,6 +857,17 @@ function EnhanceDueToForce(arcane, authentic, bossName){
         authentic.appendChild(tooltip1);
         arcane.appendChild(tooltip2);
     }
+}
+
+// 모바일 기기인지 확인
+function isMobile(){
+    // User-Agent 기반 모바일 기기 감지
+    const userAgentCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(navigator.userAgent);
+
+    // 화면 크기 기반 추가 확인 (넓이가 767px 이하일 경우 모바일로 판단)
+//    const screenCheck = window.matchMedia("(max-width: 767px)").matches;
+
+    return userAgentCheck
 }
 
 
