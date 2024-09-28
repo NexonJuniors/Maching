@@ -9,17 +9,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
-    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: create
-    database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
-    defer-datasource-initialization: true
     properties:
       hibernate.jdbc.time_zone: Asia/Seoul
-      hibernate:
-        show_sql: true
-        format_sql: true
 
     devtools:
       livereload:
@@ -32,3 +27,25 @@ spring:
 
   mvc:
     static-path-pattern: /static/**
+
+  data:
+    redis:
+      host: ${REDIS_URL}
+      port: ${REDIS_PORT}
+      username: ${REDIS_USERNAME}
+      password: ${REDIS_PASSWORD}
+    ssl:
+      enabled: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_ADDRESS}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 1000
+          starttls:
+            enable: true
