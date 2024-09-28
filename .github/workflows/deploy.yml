@@ -91,8 +91,8 @@ jobs:
       - name: Start application on EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            export $(cat /home/ubuntu/maple_matching/.env | xargs)  # .env 파일을 환경 변수로 로드
-            nohup java -Duser.timezone=Asia/Seoul -jar /home/ubuntu/maple_matching/Maching-0.0.1-SNAPSHOT.jar > /home/ubuntu/maple_matching/app.log 2>&1 &
+            cd /home/ubuntu/maple_matching
+            nohup java -Duser.timezone=Asia/Seoul -jar Maching-0.0.1-SNAPSHOT.jar --spring.config.location=file:/home/ubuntu/maple_matching/.env > app.log 2>&1 &
             echo "Application started"
           EOF
 
