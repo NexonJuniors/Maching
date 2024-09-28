@@ -131,7 +131,7 @@ function loadPartyInfo(bossName, bossImg, maximumPeople, partyRequirementInfo){
     const partyNeedPower = partyRequirementInfo.partyNeedPower
     const partyNeedBishop = partyRequirementInfo.partyNeedBishop
 
-    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'}주기), `
+    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'} 주기) , `
     document.getElementById('partyNeedPower').innerText = ` ${formatNumber(partyNeedPower)} 이상`
     document.getElementById('partyNeedBishop').innerText = `비숍 모집 : ${partyNeedBishop == 1 ? 'O' : 'X'}`
     document.getElementById('recruitmentStatus').innerText = `파티 상태 : 모집 중`
@@ -424,6 +424,8 @@ function createUserProfile(userId){
     flexItemDiv.appendChild(badgeContainerDiv);
 
     nowUser.appendChild(flexItemDiv);
+    nowUser.style.height = nowUser.clientHeight;
+    nowUser.style.maxHeight = nowUser.clientHeight;
 }
 
 // 스탯 정보 출력하는 함수
@@ -446,7 +448,12 @@ function printStat(event){
     // 기존 이벤트 핸들러 제거
     nowUser.removeEventListener('click', printStat)
 
-    nowUser.innerHTML = ''
+//    nowUser.innerHTML = ''
+    const childNodes = nowUser.childNodes;
+
+    for (let i = childNodes.length - 1; i >= 0; i--) {
+      nowUser.removeChild(childNodes[i]);
+    }
 
     const flexItem = document.createElement('div')
     flexItem.classList.add('flex-item')
@@ -599,7 +606,13 @@ function printHexa(event){
 
     // 기존 이벤트 핸들러 제거
     nowUser.removeEventListener('click', printHexa)
-    nowUser.innerHTML = ''
+//    nowUser.innerHTML = ''
+
+    const childNodes = nowUser.childNodes;
+
+    for (let i = childNodes.length - 1; i >= 0; i--) {
+      nowUser.removeChild(childNodes[i]);
+    }
 
     const flexContainer = document.createElement('div')
     flexContainer.classList.add('flex-container')

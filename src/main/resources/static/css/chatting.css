@@ -17,10 +17,59 @@
 
     .chatroom-container {
         min-width: 320px!important;
+        font-size:
+    }
+
+    .chatroom{
+        font-size: 3.2vw;
     }
 
     .title-img-name{
         justify-content: center;
+    }
+
+    .flex-item .characterImageContainer {
+        width: 16.5vw;
+        height: auto;
+    }
+
+    .flex-item .power{
+        font-size: 2.3vw;
+    }
+
+    .flex-item .nameLevel{
+        font-size: 2.6vw;
+    }
+
+    .flex-item .union{
+        font-size: 2vw;
+    }
+
+    .badgeContainer{
+        margin-top: 0px;
+    }
+
+    .badges{
+        width: 16px;
+    }
+
+    .flex-item{
+        padding: 2px;
+    }
+
+    .flex-item .class{
+        font-size: 2vw;
+    }
+
+    .flex-item .stats-container{
+        font-size: 0.5em;
+        padding: 2px;
+    }
+
+    .btn-custom{
+        font-size: 3.3vw;
+        width: 10vw;
+        height: 10vw;
     }
 }
 
@@ -136,8 +185,6 @@ input[type="text"] {
     align-items: center;    /* 가로로 중앙 정렬 */
     justify-content: center; /* 세로로 중앙 정렬 */
     text-align: center;
-    max-length: 210px;
-    max-height: 280px;
 }
 
 .chatroom {
@@ -166,6 +213,10 @@ input[type="text"] {
     align-items: stretch; /* 자식 요소들의 높이를 동일하게 맞춥니다 */
 }
 
+.user .flex-container{
+    height: 100%;
+}
+
 .flex-item {
     flex: 1;
     border-radius: 10px;
@@ -180,6 +231,11 @@ input[type="text"] {
     margin: 0;
 }
 
+.user .flex-item{
+    overflow-y : auto;
+    overflow-x : hidden;
+}
+
 .characterImageContainer {
     display: flex;
     justify-content: center;  /* 가로로 가운데 정렬 */
@@ -191,7 +247,7 @@ input[type="text"] {
 }
 
 .characterImage {
-    width: 120px;  /* 이미지 너비 설정 */
+    width: 100%;  /* 이미지 너비 설정 */
     height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
     object-fit: cover; /* 이미지가 컨테이너 크기에 맞게 자를 수 있도록 설정 */
     display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
@@ -267,6 +323,8 @@ input[type="text"] {
     width: inherit;
     height: inherit;
     white-space: nowrap; /*줄바꿈 안함*/
+    overflow-y : auto;
+    overflow-x : hidden;
 }
 
 .stat-item {

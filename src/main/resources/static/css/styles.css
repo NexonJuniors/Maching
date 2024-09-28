@@ -398,6 +398,7 @@ yeti color {
     border-color: #282828;
     border-width: 1px;
     border-radius: 10px;
+    height: 100%;
 }
 
 .btn-custom:hover {
