@@ -56,6 +56,7 @@
 
     .flex-item{
         padding: 2px;
+        flex: 1 !important
     }
 
     .flex-item .class{
