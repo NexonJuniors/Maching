@@ -61,19 +61,26 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ap-northeast-2
 
-      # 9. SSH into EC2 and pull latest code
+      # 9. Setup SSH key
+      - name: Setup SSH key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > /tmp/id_rsa
+          chmod 600 /tmp/id_rsa
+
+      # 10. SSH into EC2 to pull latest code
       - name: Pull latest code on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             cd /home/ubuntu/maple_matching/Maching
             git pull origin main
+            echo "Latest code pulled"
           EOF
 
-      # 10. Stop application on EC2
+      # 11. Stop application on EC2
       - name: Stop application on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            pid=$(ps -ef | grep 'gradlew bootRun' | grep -v grep | awk '{print $2}')
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            pid=$(ps -ef | grep Maching | grep -v grep | awk '{print $2}')
             if [ -n "$pid" ]; then
               kill -9 $pid
               echo "Application stopped"
@@ -81,17 +88,17 @@ jobs:
               echo "No application running"
             fi
           EOF
-
-      # 11. Start application on EC2
+          
+      # 12. Start application on EC2
       - name: Start application on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             cd /home/ubuntu/maple_matching/Maching
             nohup ./gradlew bootRun -Dspring.application.name=Maple_Matching > output.log 2>&1 &
             echo "Application started"
           EOF
 
-      # 12. Remove GitHub Actions IP from Security Group
+      # 13. Remove GitHub Actions IP from Security Group
       - name: Remove GitHub Actions IP from Security Group
         run: |
           aws ec2 revoke-security-group-ingress \
