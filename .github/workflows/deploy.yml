@@ -29,24 +29,18 @@ jobs:
       - name: Build with Gradle (skip tests)
         run: ./gradlew build -x test
 
-      # 5. Upload JAR file as artifact
-      - name: Upload JAR file as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: my-application
-          path: build/libs/Maching-0.0.1-SNAPSHOT.jar
-
-      # 6. Get GitHub Actions IP
+      # 5. Get GitHub Actions IP
       - name: Get GitHub Actions IP
         id: ip
         uses: haythem/public-ip@v1.2
 
-      # 7. Set environment variables
+      # 6. Set environment variables
       - name: Set environment variables
         run: |
           echo "AWS_DEFAULT_REGION=ap-northeast-2" >> $GITHUB_ENV
           echo "AWS_SG_ID=sg-0a23132ecef539746" >> $GITHUB_ENV
-      # 8. Configure AWS credentials
+
+      # 7. Configure AWS credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -54,7 +48,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
 
-      # 9. Add GitHub Actions IP to Security Group
+      # 8. Add GitHub Actions IP to Security Group
       - name: Add GitHub Actions IP to Security Group
         run: |
           aws ec2 authorize-security-group-ingress \
@@ -67,18 +61,19 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ap-northeast-2
 
-      # 10. Deploy to AWS EC2 using SCP
-      - name: Deploy to AWS EC2 using SCP
+      # 9. SSH into EC2 and pull latest code
+      - name: Pull latest code on EC2
         run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" > /tmp/id_rsa
-          chmod 600 /tmp/id_rsa
-          scp -i /tmp/id_rsa -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/libs/Maching-0.0.1-SNAPSHOT.jar ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/maple_matching/
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /home/ubuntu/maple_matching/Maching
+            git pull origin main
+          EOF
 
-      # 11. Stop application on EC2
+      # 10. Stop application on EC2
       - name: Stop application on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            pid=$(ps -ef | grep Maching-0.0.1-SNAPSHOT.jar | grep -v grep | awk '{print $2}')
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            pid=$(ps -ef | grep 'gradlew bootRun' | grep -v grep | awk '{print $2}')
             if [ -n "$pid" ]; then
               kill -9 $pid
               echo "Application stopped"
@@ -86,17 +81,17 @@ jobs:
               echo "No application running"
             fi
           EOF
-          
-      # 12. Start application on EC2
+
+      # 11. Start application on EC2
       - name: Start application on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            cd /home/ubuntu/maple_matching
-            nohup java -Duser.timezone=Asia/Seoul -jar Maching-0.0.1-SNAPSHOT.jar --spring.config.location=file:/home/ubuntu/maple_matching/.env > app.log 2>&1 &
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /home/ubuntu/maple_matching/Maching
+            nohup ./gradlew bootRun -Dspring.application.name=Maple_Matching > output.log 2>&1 &
             echo "Application started"
           EOF
 
-      # 13. Remove GitHub Actions IP from Security Group
+      # 12. Remove GitHub Actions IP from Security Group
       - name: Remove GitHub Actions IP from Security Group
         run: |
           aws ec2 revoke-security-group-ingress \
