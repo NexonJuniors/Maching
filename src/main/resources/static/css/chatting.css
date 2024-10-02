@@ -218,13 +218,13 @@ input[type="text"] {
 
 .user {
     color: var(--primary);
-    flex: 1;
     border-radius: 10px;
     display: flex;
     flex-direction: column; /* 요소들을 세로로 정렬 */
     align-items: center;    /* 가로로 중앙 정렬 */
     justify-content: center; /* 세로로 중앙 정렬 */
     text-align: center;
+    height: 280px;
     max-height: 280px;
 }
 
