@@ -402,8 +402,14 @@ function createUserProfile(userId){
     badgeContainerItemDiv.classList.add('tooltip-trigger');
     badgeContainerItemDiv.id = `badgeContainer-item${userId}`;
 
-    badgeContainerItemDiv.addEventListener('mouseover', function(event){printTooltip(event)})
-    badgeContainerItemDiv.addEventListener('mouseout', function(event){hideTooltip(event)})
+    if(isMobile()){
+        badgeContainerItemDiv.addEventListener('touchstart', function(event){printTooltip(event)});
+        badgeContainerItemDiv.addEventListener('touchend', function(event){hideTooltip(event)});
+    }
+    else{
+        badgeContainerItemDiv.addEventListener('mouseover', function(event){printTooltip(event)})
+        badgeContainerItemDiv.addEventListener('mouseout', function(event){hideTooltip(event)})
+    }
 
     // tooltip div
     const tooltipDiv = document.createElement('div');
@@ -423,8 +429,14 @@ function createUserProfile(userId){
 
     addSpecialRingBadge(badgeContainerItem2, userId)
 
-    badgeContainerItem2.addEventListener('mouseover', function(event){printTooltip(event)})
-    badgeContainerItem2.addEventListener('mouseout', function(event){hideTooltip(event)})
+    if(isMobile()){
+        badgeContainerItem2.addEventListener('touchstart', function(event){printTooltip(event)});
+        badgeContainerItem2.addEventListener('touchend', function(event){hideTooltip(event)});
+    }
+    else{
+        badgeContainerItem2.addEventListener('mouseover', function(event){printTooltip(event)})
+        badgeContainerItem2.addEventListener('mouseout', function(event){hideTooltip(event)})
+    }
 
     // Append badgeContainer-item to badgeContainer
     badgeContainerDiv.appendChild(badgeContainerItem2);
@@ -684,8 +696,14 @@ function printHexa(event){
             skillIconContainer.appendChild(hexaImg)
             skillIconContainer.appendChild(tooltip)
 
-            skillIconContainer.addEventListener('mouseover', function(event){printTooltip(event)})
-            skillIconContainer.addEventListener('mouseout', function(event){hideTooltip(event)})
+            if(isMobile()){
+                skillIconContainer.addEventListener('touchstart', function(event){printTooltip(event)});
+                skillIconContainer.addEventListener('touchend', function(event){hideTooltip(event)});
+            }
+            else{
+                skillIconContainer.addEventListener('mouseover', function(event){printTooltip(event)})
+                skillIconContainer.addEventListener('mouseout', function(event){hideTooltip(event)})
+            }
 
             skillIcons.appendChild(skillIconContainer)
         }
@@ -826,9 +844,14 @@ function EnhanceDueToLevel(levelElement, bossName){
 
     const tooltip = createTooltip(`보스와의 레벨 차이: ${levelDifference}<br>데미지 비율: ${tooltipText}`);
     levelElement.appendChild(tooltip);
-
-    levelElement.addEventListener('mouseover', function(event){printTooltip(event)})
-    levelElement.addEventListener('mouseout', function(event){hideTooltip(event)})
+    if(isMobile()){
+        levelElement.addEventListener('touchstart', function(event){printTooltip(event)});
+        levelElement.addEventListener('touchend', function(event){hideTooltip(event)});
+    }
+    else{
+        levelElement.addEventListener('mouseover', function(event){printTooltip(event)})
+        levelElement.addEventListener('mouseout', function(event){hideTooltip(event)})
+    }
 }
 
 // 포스뻥 계산, 포스 색상, 툴팁 추가하는 함수
@@ -867,8 +890,14 @@ function EnhanceDueToForce(arcane, authentic, bossName){
         const tooltip = createTooltip(tooltipText);
         force.appendChild(tooltip);
 
-        force.addEventListener('mouseover', function(event){printTooltip(event)})
-        force.addEventListener('mouseout', function(event){hideTooltip(event)})
+         if(isMobile()){
+            force.addEventListener('touchstart', function(event){printTooltip(event)});
+            force.addEventListener('touchend', function(event){hideTooltip(event)});
+        }
+        else{
+            force.addEventListener('mouseover', function(event){printTooltip(event)})
+            force.addEventListener('mouseout', function(event){hideTooltip(event)})
+        }
     }
     else{
         const tooltip1 = createTooltip(tooltipText);
@@ -876,10 +905,18 @@ function EnhanceDueToForce(arcane, authentic, bossName){
         authentic.appendChild(tooltip1);
         arcane.appendChild(tooltip2);
 
-        authentic.addEventListener('mouseover', function(event){printTooltip(event)})
-        authentic.addEventListener('mouseout', function(event){hideTooltip(event)})
-        arcane.addEventListener('mouseover', function(event){printTooltip(event)})
-        arcane.addEventListener('mouseout', function(event){hideTooltip(event)})
+        if(isMobile()){
+            authentic.addEventListener('touchstart', function(event){printTooltip(event)});
+            authentic.addEventListener('touchend', function(event){hideTooltip(event)});
+            arcane.addEventListener('touchstart', function(event){printTooltip(event)});
+            arcane.addEventListener('touchend', function(event){hideTooltip(event)});
+        }
+        else{
+            authentic.addEventListener('mouseover', function(event){printTooltip(event)})
+            authentic.addEventListener('mouseout', function(event){hideTooltip(event)})
+            arcane.addEventListener('mouseover', function(event){printTooltip(event)})
+            arcane.addEventListener('mouseout', function(event){hideTooltip(event)})
+        }
     }
 }
 
@@ -894,21 +931,22 @@ function isMobile(){
     return userAgentCheck
 }
 
+// 툴팁 표시하는 함수
 function printTooltip(event){
     let tooltipTrigger = event.target
     while(!tooltipTrigger.classList.contains('tooltip-trigger')){
         tooltipTrigger = tooltipTrigger.parentNode
     }
 
-    console.log(tooltipTrigger.className)
     const tooltip = tooltipTrigger.querySelector('div.tooltip')
-    console.log(tooltip.className)
 
     const rectTooltip = tooltip.getBoundingClientRect();
-    const left = rectTooltip.left
+    let left = rectTooltip.left
+    if(left < 0) left = 0
     const top = rectTooltip.top
     const height = tooltip.offsetHeight
 
+    if(isMobile()) tooltip.style.visibility = 'visible'
     tooltip.style.left = `${left}px`
     tooltip.style.top = `${top}px`
     tooltip.style.bottom = 'auto'
@@ -917,17 +955,18 @@ function printTooltip(event){
     tooltip.style.height = height
 }
 
+// 툴팁 숨기는 함수
 function hideTooltip(event){
     let tooltipTrigger = event.target
     while(!tooltipTrigger.classList.contains('tooltip-trigger')){
         tooltipTrigger = tooltipTrigger.parentNode
     }
 
-    console.log(tooltipTrigger.className)
     const tooltip = tooltipTrigger.querySelector('div.tooltip')
-    console.log(tooltip.className)
 
     const rect = tooltip.getBoundingClientRect();
+
+    if(isMobile()) tooltip.style.visibility = 'hidden'
     tooltip.style.position = 'absolute'
     tooltip.style.top = ''
     tooltip.style.height = 'auto'
