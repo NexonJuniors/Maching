@@ -93,8 +93,9 @@ jobs:
       - name: Start application on EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            export JAVA_TOOL_OPTIONS="-Duser.timezone=Asia/Seoul"
             cd /home/ubuntu/maple_matching/Maching
-            nohup JAVA_TOOL_OPTIONS="-Duser.timezone=Asia/Seoul" ./gradlew bootRun -Dspring.application.name=Maple_Matching > output.log 2>&1 &
+            nohup ./gradlew bootRun -Dspring.application.name=Maple_Matching > output.log 2>&1 &
             echo "Application started"
           EOF
 
