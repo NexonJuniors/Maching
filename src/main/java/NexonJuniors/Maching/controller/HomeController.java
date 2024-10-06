@@ -19,6 +19,6 @@ public class HomeController {
     @GetMapping("/chatroom")
     public String chatroom(){ return "chatting";}
 
-    @GetMapping("/admin")
+    @GetMapping("/machingadmin")
     public String admin() { return "admin";}
 }
