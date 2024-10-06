@@ -20,5 +20,5 @@ public class HomeController {
     public String chatroom(){ return "chatting";}
 
     @GetMapping("/machingadmin")
-    public String admin() { return "machingadmin";}
+    public String admin() { return "admin";}
 }
