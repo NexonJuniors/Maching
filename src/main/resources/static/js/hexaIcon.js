@@ -29,6 +29,7 @@ async function findSkillImagePath(skillName) {
   if (await doesImageExist(skillImgPath)) {
     return skillImgPath;
   }
+  console.log("스킬이름경로"+skillImgPath)
   return `${hexaSkillImgFolderPath}default.png`;
 }
 
