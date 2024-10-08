@@ -55,7 +55,12 @@ async function joinParty(){
         connectHeaders.uuId = `${uuid}`
 
         stompClient.subscribe(`/room/${uuid}`, function(message){
-            if(message.body > 0){ //-1이면 지금 대기중이 되는거 같음
+            const data = JSON.parse(message.body)
+            if(typeof data === 'object' && 'errorMessage' in data){
+                alert(data.errorMessage);
+                return;
+            }
+            if(data > 0){ //-1이면 지금 대기중이 되는거 같음
                 document.getElementById('loadingSpinner').style.display = 'flex';
                 setTimeout(() => {
                     window.removeEventListener('beforeunload', beforeUnloadListener); // 채팅방에 참여한 경우 beforeunload 리스너 제거
