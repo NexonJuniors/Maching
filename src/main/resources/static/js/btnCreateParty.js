@@ -67,7 +67,12 @@ function createParty() {
         uuid = uuidv4()
         connectHeaders.uuId = `${uuid}`
         stompClient.subscribe(`/room/${uuid}`, function(message){
-            if(message.body > 0){
+            const data = JSON.parse(message.body)
+            if(typeof data === 'object' && 'errorMessage' in data){
+                alert(data.errorMessage);
+                return;
+            }
+            if(data > 0){
                 stompClient.unsubscribe()
                 localStorage.setItem("roomId", message.body)
                 localStorage.setItem("info", rawInfo)

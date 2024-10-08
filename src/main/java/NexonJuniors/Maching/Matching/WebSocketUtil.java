@@ -5,15 +5,14 @@ import NexonJuniors.Maching.chatting.ExitRoomDto;
 import NexonJuniors.Maching.chatting.SuccessRecruitmentDto;
 import NexonJuniors.Maching.excption.api.ApiException;
 import NexonJuniors.Maching.excption.api.ApiExceptionCode;
+import NexonJuniors.Maching.excption.matching.MatchingException;
+import NexonJuniors.Maching.excption.matching.MatchingExceptionCode;
 import NexonJuniors.Maching.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.Message;
 
 import java.util.*;
 
@@ -106,7 +105,7 @@ public class WebSocketUtil {
         // TODO MathcingException 클래스로 예외 처리, 예외 발생 시 채팅방으로 넘어가지 않도록 구현
         // 매칭 참여중인 유저가 매칭을 시도하거나 방을만들려고하면 서버에서의 에러로 클라이언트에 경고및 리다이랙트를 구현해야지
         if (totalUser.contains(basicInfo.getCharacterName())) {
-            throw new MatchingException("이미 매칭에 참여중인 유저입니다.");
+            throw new MatchingException(uuid, basicInfo.getCharacterName(), MatchingExceptionCode.ALREADY_PARTICIPATING_USER);
         }
 
         // 캐릭터 정보 통합 객체로 통합 TODO 생성자로 교체 요망
@@ -195,7 +194,7 @@ public class WebSocketUtil {
         // TODO MathcingException 클래스로 예외 처리, 예외 발생 시 채팅방으로 넘어가지 않도록 구현
         // 매칭 참여중인 유저가 매칭을 시도하거나 방을만들려고하면 서버에서의 에러로 클라이언트에 경고및 리다이랙트를 구현해야지
         if (totalUser.contains(basicInfo.getCharacterName())) {
-            throw new MatchingException("이미 매칭에 참여중인 유저입니다.");
+            throw new MatchingException(uuId, basicInfo.getCharacterName(), MatchingExceptionCode.ALREADY_PARTICIPATING_USER);
         }
 
         // 캐릭터 정보 통합 객체로 통합 TODO 생성자로 교체 요망
@@ -465,65 +464,16 @@ public class WebSocketUtil {
         return successRecruitmentDto;
     }
 
-
-    // 예외 처리 클래스
-    public class MatchingException extends RuntimeException {
-        public MatchingException(String message) {
-            super(message);
-        }
-    }
-
-    @MessageExceptionHandler(MatchingException.class)
-    public void handleMatchingException(MatchingException exception, Message<?> message, SimpMessageHeaderAccessor headerAccessor) {
-        String sessionId = headerAccessor.getSessionId();
-
-        simpMessagingTemplate.convertAndSendToUser(
-                sessionId,
-                "/user/queue/errors",
-                exception.getMessage()
-        );
-
-        log.error("Exception occurred: {}", exception.getMessage());
-    }
-
-
-/*    // 공통 로그 출력 함수
-    private void logPartyJoin(PartyInfo partyInfo, MatchingUser matchingUser, Long roomId, boolean fromQueue) {
-        // 파티원 목록을 로그에 출력
-        StringBuilder partyMembers = new StringBuilder();
-        for (CharacterInfo member : partyInfo.getUsers()) {
-            if (partyMembers.length() > 0) {
-                partyMembers.append(", ");
-            }
-            partyMembers.append(member.getBasicInfo().getCharacterName());
-        }
-
-        String queueIndicator = fromQueue ? "[대기큐]" : "";
-
-        // 로그 메시지 출력
-        log.info("{} [파티참여] | {} 님 | [{}번][{}] | 현재 파티원 [{}] | 남은 자리 {} 인",
-                queueIndicator,
-                matchingUser.getCharacterInfo().getBasicInfo().getCharacterName(),
-                roomId,
-                partyInfo.getBossName(),
-                partyMembers.toString(),
-                partyInfo.getMaximumPeople() - partyInfo.getUsers().size()
-        );
-    }*/
-
-
-/*    @Autowired
-    // 생성자를 통해 모든 final 필드 초기화
-    public MatchingUtil(List<MatchingUser> participants,
-                        HashMap<Long, PartyInfo> rooms,
-                        HashSet<String> totalUser,
-                        ObjectMapper objectMapper,
-                        SimpMessagingTemplate simpMessagingTemplate) {
-        this.participants = participants;
-        this.rooms = rooms;
-        this.totalUser = totalUser;
-        this.objectMapper = objectMapper;
-        this.simpMessagingTemplate = simpMessagingTemplate;
-    }*/
-
+//    @MessageExceptionHandler(MatchingException.class)
+//    public void handleMatchingException(MatchingException exception, Message<?> message, SimpMessageHeaderAccessor headerAccessor) {
+//        String sessionId = headerAccessor.getSessionId();
+//
+//        simpMessagingTemplate.convertAndSendToUser(
+//                sessionId,
+//                "/user/queue/errors",
+//                exception.getMessage()
+//        );
+//
+//        log.error("Exception occurred: {}", exception.getMessage());
+//    }
 }
