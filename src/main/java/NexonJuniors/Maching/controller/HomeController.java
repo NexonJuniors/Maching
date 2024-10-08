@@ -21,4 +21,7 @@ public class HomeController {
 
     @GetMapping("/machingadmin")
     public String admin() { return "admin";}
+
+    @GetMapping("/guide")
+    public String guide() { return "guide";}
 }
