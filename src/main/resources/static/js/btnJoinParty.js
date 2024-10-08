@@ -99,6 +99,7 @@ async function joinParty(){
 
                 // beforeunload 이벤트 리스너 추가
                 window.addEventListener('beforeunload', beforeUnloadListener);
+                if(isMobile()) document.addEventListener('visibilitychange', function(){location.href ='/'})
             }
         })
 
@@ -118,4 +119,15 @@ async function joinParty(){
     function onMessage(){
 
     }
+}
+
+// 모바일 기기인지 확인
+function isMobile(){
+    // User-Agent 기반 모바일 기기 감지
+    const userAgentCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(navigator.userAgent);
+
+    // 화면 크기 기반 추가 확인 (넓이가 767px 이하일 경우 모바일로 판단)
+//    const screenCheck = window.matchMedia("(max-width: 767px)").matches;
+
+    return userAgentCheck
 }
