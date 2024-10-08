@@ -109,7 +109,6 @@ public class ApiUtil {
             }else {
                 //있으니까 가세요~
                 characterInfo.getCharacterEquipmentInfo().setNowUserHasSpecialRing(true); // 시드링을 지금 끼고있는 유저입니다.
-                log.info("지금 유저가 시드링을 끼고있음");
                 logSpecialRings(characterInfo, specialRings); // 클라이언트로 시드링 보내주세요
             }
 
