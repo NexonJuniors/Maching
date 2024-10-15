@@ -27,6 +27,10 @@ spring:
 
   mvc:
     static-path-pattern: /static/**
+    #throw-exception-if-no-handler-found: true  # nginx 설정으로
+  #web:
+    #resources:
+      #add-mappings: false  # nginx 설정으로
 
   data:
     redis:
