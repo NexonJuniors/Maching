@@ -102,3 +102,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.getElementById('signUp').addEventListener('click', signUpForm);
+document.getElementById('signIn').addEventListener('click', signInForm);

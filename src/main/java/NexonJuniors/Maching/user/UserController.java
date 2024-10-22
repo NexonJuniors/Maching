@@ -1,6 +1,7 @@
 package NexonJuniors.Maching.user;
 
 import NexonJuniors.Maching.user.dto.EmailAuthDto;
+import NexonJuniors.Maching.user.dto.SignInDto;
 import NexonJuniors.Maching.user.dto.SignUpDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +16,19 @@ public class UserController {
 
     // 회원가입 URL
     @PostMapping("/user")
-    public void registerUser(@RequestBody SignUpDto signUpDto){
-        userService.registerUser(signUpDto);
+    public void registerUser(@RequestBody SignUpDto dto){
+        userService.registerUser(dto);
     }
 
+    // 이메일 인증 요청 URL
     @PostMapping("/emailAuth")
-    public void IssueEmailAuthCode(@RequestBody EmailAuthDto emailAuthDto){
-        userService.IssueEmailAuthCode(emailAuthDto);
+    public void IssueEmailAuthCode(@RequestBody EmailAuthDto dto){
+        userService.IssueEmailAuthCode(dto);
+    }
+
+    // 로그인 요천 URL
+    @PostMapping("/signIn")
+    public void singIn(@RequestBody SignInDto dto){
+        userService.signIn(dto);
     }
 }

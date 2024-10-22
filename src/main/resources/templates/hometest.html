@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BXHV5E8GVH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-BXHV5E8GVH');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/image/site/icon5.png" type="image/png">
+    <title>메칭 | 메이플스토리 보스매칭</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script src="https://unpkg.com/unlazy@0.11.3/dist/unlazy.with-hashing.iife.js" defer init></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/home.css">
+    <!-- Flatpickr start 날짜 선택 커스터마이징 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Flatpickr end -->
+</head>
+<body class="dark-mode"> <!-- 기본 다크모드 -->
+<div class="bg-background text-foreground px-4">
+    <div class="max-w-screen-lg mx-auto px-8">
+        <div class="partners">
+            <p>[Beta] 메이플 보스매칭 서비스 메칭</p>
+            <!--<a href="https://partners.maplestory.nexon.com/developers">메칭 파트너스 응원</a>-->
+        </div>
+        <header class="header flex items-center justify-between p-4">
+            <div class="flex items-center logo">
+                <img aria-hidden="true" alt="icon" src="../static/image/site/icon1.png" class="icon mr-2" />
+                <a href="/" style="text-decoration: none; color: inherit;">메칭</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="btnLightMode" class="p-2 rounded hover:bg-blue-600">🔆</button>
+                <button id="btnDarkMode" class="p-2 rounded hover:bg-blue-600">🌙</button>
+                <!--                <button class="p-2 rounded hover:bg-blue-600">📒</button>
+                                <button class="p-2 rounded hover:bg-blue-600">💰</button>-->
+            </div>
+        </header>
+
+        <nav class="text-white p-4 navbar">
+            <ul class="flex space-x-4">
+                <li><a href="#" class="hover:underline nav-item">사이트가이드</a></li>
+                <li><a href="#" class="hover:underline nav-item">공지사항</a></li>
+                <!--                <li><a href="info" class="hover:underline nav-item">dev캐릭터정보</a></li>-->
+                <!--                <li><a href="chatroom" class="hover:underline nav-item">dev채팅방</a></li>-->
+                <li><a href = "#" id = "signUp" class="hover:underline nav-item">회원가입</a></li>
+                                <!--로그인에서 회원가입도 같이 처리해도됨 --><li><a href="#"  id = "signIn" class="hover:underline nav-item">로그인</a></li>
+                <!--    &lt;!&ndash;로그인 하면 로그인을 마이페이지로 대체, 회원가입 숨기고&ndash;&gt; <li><a href="userpage" class="hover:underline nav-item">dev마이페이지</a></li>-->
+                <!--                &lt;!&ndash;로그인을 했는데 관리자 유저면 관리자탭 보이도록 &ndash;&gt; <li><a href="admin" class="hover:underline nav-item">dev관리자</a></li>-->
+            </ul>
+        </nav>
+        <main class="p-4">
+            <div class="search-card card">
+                <div class="card-body">
+                    <div class="flex-container">
+                        <div class="flex-item">
+                            <h5 class="card-title">
+                                내 캐릭터의<br>실시간
+                                <span class="highlighted-text">프로필</span>로<br>
+                                <span class="highlighted-text">파티 매칭</span>에 참여하세요!
+                            </h5>
+                        </div>
+                        <div class="flex-item">
+                            <div class="search-section d-flex align-items-center">
+                                <div class="input-container">
+                                    <button id="btnDate" type="button" class="btn-small">조회 날짜 선택</button>
+                                    <input type="date" id="selectedDate" name="selectedDate" placeholder="최근2주 선택" style="display:none;">
+                                </div>
+                                <div class="input-container">
+                                    <input type="text" id="characterName" name="characterName" placeholder="캐릭터명을 입력하세요" required>
+                                </div>
+                                <div>
+                                    <button id="btnSearch" type="submit" class="btn btn-custom">실시간 프로필 검색</button>
+                                </div>
+                                <div class="instructions">
+                                    - OPEN API 서버 점검 시 점검 종료 후 시도해 주세요.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="boss-card card">
+                <div class="card-body">
+                    <div class="text-white p-3 bossbar card-title">
+                        <div class="left-section">
+                            <button id="toggleBossList" class="btn btn-primary" style="margin-right:5px;">주간보스</button>
+                            매칭 현황
+                        </div>
+                        <div class="instructions">
+                            - 실제 반영까지 시간이 소요 될 수 있습니다. <br />
+                            - 캐릭터 검색 후 매칭에 참가하거나 필요한 파티원을 구해보세요!
+                        </div>
+                    </div>
+                    <div id="bossContainer"></div> <!--보스 매칭 현황 컨테이너-->
+                </div>
+            </div>
+        </main>
+        <div id="loadingSpinner" style="display:none;">
+            <div class="spinner"></div>
+        </div>
+        <footer>
+            <div class="footer-content">
+                <div style="font-size:12px; text-align: center;">
+                    contact us :
+                    <a href="mailto:matchingmaple@gmail.com">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://discord.gg/4VVrSZUvmn" target="_blank">
+                        <i class="fa-brands fa-discord"></i>
+                    </a><br /><br />
+                    Data based on NEXON Open API.<br />
+                    Copyright 2024, 스키니아@눈연유 all rights reserved. This service is not associated with NEXON
+                    Korea.<br /><br />
+                    본 사이트 내에서 발생하는 이용자 간의 모든 분쟁 및 문제에 대해 사이트 개발자는 어떠한 책임도 지지 않습니다.<br />
+                    이용자 간의 모든 행위와 관련된 책임은 해당 이용자들에게 있으며, 본 사이트는 이에 대한 법적 책임을 지지 않습니다.<br />
+                    이 페이지에는 메이플스토리가 제공한 메이플스토리 서체가 적용되어 있습니다.
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<script src="../static/js/darkmode.js"></script>
+<script src="../static/js/tooltip.js"></script>
+<script src="../static/js/signUp.js"></script>
+<script src="../static/js/signIn.js"></script>
+<script src="../static/js/home.js"></script>
+<script src="../static/js/bossIcon.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

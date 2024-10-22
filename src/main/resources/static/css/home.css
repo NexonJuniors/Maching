@@ -100,7 +100,7 @@ input[type="date"] {
     width: 100%; /* 버튼이 컨테이너의 전체 폭을 차지하도록 */
     height: 100%; /* 버튼이 컨테이너의 전체 높이를 차지하도록 */
 }
-.signUp{
+.signInUp{
     color: var(--primary);
     font-family: 'MaplestoryFontLight', sans-serif;
     font-size: 1.1em;

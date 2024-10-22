@@ -53,19 +53,19 @@ function signUpForm() {
     // 모달 폼 콘텐츠 생성
     const formHTML = `
     <div>
-        <label for="userId" class = "mt-3 signUp">이메일</label><br>
+        <label for="userId" class = "mt-3 signInUp">이메일</label><br>
         <input id="userId" name="userId" class = "form-control">
-        <div style ="text-align: right"><button id = "btnEmailAuth" class = "btn btn-primary signUp">이메일 인증</button></div>
-        <label for="userPw" class = "mt-3 signUp">비밀번호</label><br>
+        <div style ="text-align: right"><button id = "btnEmailAuth" class = "btn btn-primary signInUp">이메일 인증</button></div>
+        <label for="userPw" class = "mt-3 signInUp">비밀번호</label><br>
         <input type="password" id="userPw" name="userPw" class = "form-control"><br>
-        <label for="pwCheck" class = "mt-3 signUp">비밀번호 확인</label><br>
+        <label for="pwCheck" class = "mt-3 signInUp">비밀번호 확인</label><br>
         <input type="password" id="pwCheck" name="pwCheck" class = "form-control"><br>
-        <label for="emailAuth" class = "mt-3 signUp">이메일 인증 코드</label><label id = "authCodeTime" class = "signUp"></label><br>
+        <label for="emailAuth" class = "mt-3 signInUp">이메일 인증 코드</label><label id = "authCodeTime" class = "signInUp"></label><br>
         <input id="emailAuth" name="emailAuth" class = "form-control"><br>
 
         <div style = "text-align: right">
-            <button class = "btn btn-primary signUp" id = "btnSignUp">회원가입</button>
-            <button class = "btn btn-danger signUp" id = "btnCancelSignUp">취소</button>
+            <button class = "btn btn-primary signInUp" id = "btnSignUp">회원가입</button>
+            <button class = "btn btn-danger signInUp" id = "btnCancelSignUp">취소</button>
         </div>
     </div>
     `;
@@ -107,8 +107,6 @@ function signUp(){
     else if(isNotEmail(userId)) alert('아이디는 이메일 형식으로 입력해주세요.')
     else if(!isValidPw(userPw)) alert("비밀번호는 특수문자, 영대문자, 숫자를 하나이상 포함한 8자리 이상의 비밀번호이어야 합니다.")
     else if(checkPw(userPw, pwCheck)) alert('비밀번호 확인이 일치하지 않습니다.')
-
-//    else if(emailAuth(userId, emailAuth)){}
     else{
         signUpRequest(userId, userPw, emailAuth);
     }
@@ -116,7 +114,7 @@ function signUp(){
 
 // 입력되지 않은 항목이 있는지 검사
 function isNull(userId, userPw, pwCheck, emailAuth){
-    return userId == "" || userPw == "" || pwCheck == "" // || emailAuth.value == "";
+    return userId == "" || userPw == "" || pwCheck == "" || emailAuth.value == "" || userId == null || userPw == null || pwCheck == null || emailAuth.value == null;
 }
 
 // 아이디가 이메일 형식이 아닌지 검사
@@ -136,11 +134,6 @@ function checkPw(userPw, pwCheck){
     return userPw != pwCheck
 }
 
-// 이메일 인증 코드가 틀렸는지 확인
-function emailAuth(userId, emailAuth){
-
-}
-
 // 회원가입 요청 보내는 함수
 function signUpRequest(userId, userPw, authCode){
     fetch('/user', {
@@ -155,8 +148,16 @@ function signUpRequest(userId, userPw, authCode){
       })
     })
     .then(response => {
-        alert('회원가입이 완료되었습니다!')
-        document.getElementById('btnCancelSignUp').click();
+        if(response.ok){
+            alert('회원가입이 완료되었습니다!')
+            document.getElementById('btnCancelSignUp').click();
+        }
+        else{
+            return response.json().then(data => {
+                console.log(data.message)
+                throw new Error(data.message);
+            })
+        }
     })
     .then(function(){
         location.href = '/'
@@ -167,16 +168,20 @@ function signUpRequest(userId, userPw, authCode){
 }
 
 function emailAuthRequest(){
-    const loadingSpinner = document.getElementById('loadingSpinner');
-    loadingSpinner.style.display = 'flex';
+    const userId = document.getElementById('userId').value
 
-    fetch('/emailAuth', {
+    if(isNotEmail(userId)) alert('아이디는 이메일 형식으로 입력해주세요.')
+    else{
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        loadingSpinner.style.display = 'flex';
+
+        fetch('/emailAuth', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            userId: document.getElementById('userId').value
+            userId: userId
           })
         })
         .then(response => {
@@ -184,7 +189,10 @@ function emailAuthRequest(){
             alert('입력한 이메일로 인증 메일을 발송했습니다.')
         })
         .catch(error => {
+            loadingSpinner.style.display = 'none';
             alert(error.message)
-    });
+        });
+    }
+
 }
 
