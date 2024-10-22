@@ -13,6 +13,11 @@ public class HomeController {
         return "home"; // resources/templates/home.html을 렌더링
     }
 
+    @GetMapping("/hometest")
+    public String hometest() {
+        return "hometest"; // resources/templates/hometest.html을 렌더링
+    }
+
     @GetMapping("/info")
     public String info(){ return "character";}
 
