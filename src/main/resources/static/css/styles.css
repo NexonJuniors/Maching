@@ -583,9 +583,16 @@ yeti color {
 
 /* 프로그레스 바 색상 및 크기 */
 .progress {
-    max-width: 50%; /* 현재 크기의 절반 */
+    max-width: 40%; /* 현재 크기의 절반 */
     margin: 0 auto; /* 가운데 정렬 */
 }
+
+.progress-modal {
+    max-width: 100%;
+    margin: 0 auto; /* 가운데 정렬 */
+    margin-top: 10px;
+}
+
 
 .progress-bar-custom {
     width: 100%;
