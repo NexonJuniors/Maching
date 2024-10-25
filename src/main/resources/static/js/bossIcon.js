@@ -63,26 +63,6 @@ async function fetchBossCount() {
 // bossContainer 요소 가져오기
 const bossContainer = document.getElementById("bossContainer");
 
-function updateProgressBar(progressBar, nowBossCnt) {
-    let color = '#F4C9CE';
-
-    if (nowBossCnt === null || nowBossCnt === 0) {
-        color = '#F4C9CE';
-    } else if (nowBossCnt > 0 && nowBossCnt <= 1) {
-        color = 'red';
-    } else if (nowBossCnt > 1 && nowBossCnt <= 4) {
-        color = '#ff4500'; // 주황색 계열
-    } else if (nowBossCnt > 4 && nowBossCnt <= 8) {
-        color = '#ffae00'; // 노란색 계열
-    } else if (nowBossCnt > 8 && nowBossCnt < 16) {
-        color = '#9acd32'; // 연두색 계열
-    } else if (nowBossCnt >= 16) {
-        color = '#006400'; // 진한 초록색
-    }
-
-    progressBar.style.background = color;
-}
-
 // 보스 이미지와 이름 모달에 추가하는 함수, 현재 명수도 추가
 function updateModalContent(imageName, bossCntList) {
     const numKey = imageName[0]; // 이미지의 특정 넘버(퀘,0~8)
@@ -93,32 +73,13 @@ function updateModalContent(imageName, bossCntList) {
     const bossName = bossNameMapping[bossNameKey] || "Unknown Boss";
     let fullName = `${difficulty} ${bossName}`;
 
-    // 보스 파티 수 표시
-    let nowBossCnt = bossCntList[fullName] ?? 0;
-    const modalBossTitleCnt = document.getElementById("modalBossTitleCnt");
-
-    // 기존 내용을 지우고 새로운 내용 추가
-    modalBossTitleCnt.innerHTML = '';
-
-    // 프로그래스바 생성
-    const progressContainer = document.createElement('div');
-    progressContainer.classList.add('progress', 'progress-modal');
-    const progressBar = document.createElement('div');
-    progressBar.classList.add('progress-bar', 'progress-bar-custom');
-    progressBar.style.width = '100%';
-    progressBar.setAttribute('role', 'progressbar');
-/*    progressBar.setAttribute('aria-valuenow', '100');
-    progressBar.setAttribute('aria-valuemin', '0');
-    progressBar.setAttribute('aria-valuemax', '100');*/
-    updateProgressBar(progressBar, nowBossCnt); // 프로그래스바 색상 업데이트
-    progressContainer.appendChild(progressBar); // 프로그래스바 추가
-    modalBossTitleCnt.appendChild(progressContainer); // 프로그래스바 추가
-
-/*    modalBossTitleCnt.append(`${nowBossCnt}명이 참여중이에요!`);*/
-
     // 모달 내용 업데이트
     document.getElementById("modalBossImage").src = `${imgFolderPath}${imageName}`;
     document.getElementById("modalBossTitle").innerHTML = `${difficulty} ${bossName}`;
+
+    // 보스 파티 수 표시
+    // let nowBossCnt = bossCntList[fullName] ?? 0; // 보스 파티 수가 없으면 0으로 설정
+    // document.getElementById("modalBossTitleCnt").innerHTML = `${nowBossCnt}명이 참여중이에요!`;
 
     // flex-container의 내용을 모달에 복사
     copyFlexContainerToModal();
@@ -155,6 +116,26 @@ function copyFlexContainerToModal() {
             modalFlexContainer.appendChild(clonedChild);
         });
     }
+}
+
+function updateProgressBar(progressBar, nowBossCnt) {
+    let color = '#F4C9CE';
+
+    if (nowBossCnt === null || nowBossCnt === 0) {
+        color = '#F4C9CE';
+    } else if (nowBossCnt > 0 && nowBossCnt <= 1) {
+        color = 'red';
+    } else if (nowBossCnt > 1 && nowBossCnt <= 4) {
+        color = '#ff4500'; // 주황색 계열
+    } else if (nowBossCnt > 4 && nowBossCnt <= 8) {
+        color = '#ffae00'; // 노란색 계열
+    } else if (nowBossCnt > 8 && nowBossCnt < 16) {
+        color = '#9acd32'; // 연두색 계열
+    } else if (nowBossCnt >= 16) {
+        color = '#006400'; // 진한 초록색
+    }
+
+    progressBar.style.background = color;
 }
 
 function addFilteredBossImages(bossCntList, showZeroOnly) {
