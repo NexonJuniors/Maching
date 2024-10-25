@@ -83,6 +83,24 @@ function updateProgressBar(progressBar, nowBossCnt) {
     progressBar.style.background = color;
 }
 
+// 보스 수에 따라 색상을 반환하는 함수 (프로그래스바랑 둘중 마음에 드는걸로 쓰도록 일단 구현)
+function getColorForBossCount(nowBossCnt) {
+    if (nowBossCnt === null || nowBossCnt === 0) {
+        return '#F4C9CE';
+    } else if (nowBossCnt > 0 && nowBossCnt <= 1) {
+        return 'red';
+    } else if (nowBossCnt > 1 && nowBossCnt <= 4) {
+        return '#ff4500'; // 주황색 계열
+    } else if (nowBossCnt > 4 && nowBossCnt <= 8) {
+        return '#ffae00'; // 노란색 계열
+    } else if (nowBossCnt > 8 && nowBossCnt < 16) {
+        return '#9acd32'; // 연두색 계열
+    } else if (nowBossCnt >= 16) {
+        return '#006400'; // 진한 초록색
+    }
+    return '#F4C9CE'; // 기본 색상
+}
+
 // 보스 이미지와 이름 모달에 추가하는 함수, 현재 명수도 추가
 function updateModalContent(imageName, bossCntList) {
     const numKey = imageName[0]; // 이미지의 특정 넘버(퀘,0~8)
@@ -194,9 +212,9 @@ function addFilteredBossImages(bossCntList, showZeroOnly) {
             `Boss ${index + 1} Icon`,
             `
                 [${difficulty} ${bossName}]<br>
-                <span class="circle" style="background-color: #F4C9CE;"></span> 참여필요 <br>
+                <span class="circle-explain" style="background-color: #F4C9CE;"></span> 참여필요 <br>
                 <span class="circle-half-bad"></span> 느림 <br>
-                <span class="circle" style="background-color: #ffae00;"></span>  보통 <br>
+                <span class="circle-explain" style="background-color: #ffae00;"></span>  보통 <br>
                 <span class="circle-half-good"></span> 빠름 <br>
             `,
             'image-container',
@@ -211,15 +229,17 @@ function addFilteredBossImages(bossCntList, showZeroOnly) {
         let nowBossCnt = bossCntList[fullName]; // 보스 이름에 해당하는 파티 수 가져오기
 
         matchInfo.innerHTML = `
-            <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
-            <div class="progress" style="margin-bottom:0.5rem">
-                <div class="progress-bar progress-bar-custom" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
+            <div class="circle">
+                <div class="circle" style="background-color: ${getColorForBossCount(nowBossCnt)};"></div>
+            </div><br />
+            <span class="highlighted-text2">${difficulty} ${bossName}</span>
         `;
 
-        // 추가한 progress bar 요소에 대해 updateProgressBar 호출
+        /*// 추가한 progress bar 요소에 대해 updateProgressBar 호출
         const progressBar = matchInfo.querySelector('.progress-bar-custom');
-        updateProgressBar(progressBar, nowBossCnt);
+        updateProgressBar(progressBar, nowBossCnt);*/
+        // 위에것 원으로 변경했음
+        const circle = matchInfo.querySelector('.circle');
 
         bossDiv.appendChild(button);
         bossDiv.appendChild(matchInfo);
