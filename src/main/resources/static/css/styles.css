@@ -600,10 +600,16 @@ yeti color {
 
 .circle {
     display: inline-block;
+    width: 15px; /* 원의 크기 */
+    height: 15px; /* 원의 크기 */
+    border-radius: 50%; /* 둥글게 만들기 */
+}
+
+.circle-explain {
+    display: inline-block;
     width: 10px; /* 원의 크기 */
     height: 10px; /* 원의 크기 */
     border-radius: 50%; /* 둥글게 만들기 */
-    margin-right: 5px; /* 원과 설명 사이의 간격 */
 }
 
 .circle-half-bad {
