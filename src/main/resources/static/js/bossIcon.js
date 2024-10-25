@@ -78,8 +78,8 @@ function updateModalContent(imageName, bossCntList) {
     document.getElementById("modalBossTitle").innerHTML = `${difficulty} ${bossName}`;
 
     // 보스 파티 수 표시
-    let nowBossCnt = bossCntList[fullName] ?? 0; // 보스 파티 수가 없으면 0으로 설정
-    document.getElementById("modalBossTitleCnt").innerHTML = `${nowBossCnt}명이 참여중이에요!`;
+    // let nowBossCnt = bossCntList[fullName] ?? 0; // 보스 파티 수가 없으면 0으로 설정
+    // document.getElementById("modalBossTitleCnt").innerHTML = `${nowBossCnt}명이 참여중이에요!`;
 
     // flex-container의 내용을 모달에 복사
     copyFlexContainerToModal();
@@ -116,6 +116,26 @@ function copyFlexContainerToModal() {
             modalFlexContainer.appendChild(clonedChild);
         });
     }
+}
+
+function updateProgressBar(progressBar, nowBossCnt) {
+    let color = '#F4C9CE';
+
+    if (nowBossCnt === null || nowBossCnt === 0) {
+        color = '#F4C9CE';
+    } else if (nowBossCnt > 0 && nowBossCnt <= 1) {
+        color = 'red';
+    } else if (nowBossCnt > 1 && nowBossCnt <= 4) {
+        color = '#ff4500'; // 주황색 계열
+    } else if (nowBossCnt > 4 && nowBossCnt <= 8) {
+        color = '#ffae00'; // 노란색 계열
+    } else if (nowBossCnt > 8 && nowBossCnt < 16) {
+        color = '#9acd32'; // 연두색 계열
+    } else if (nowBossCnt >= 16) {
+        color = '#006400'; // 진한 초록색
+    }
+
+    progressBar.style.background = color;
 }
 
 function addFilteredBossImages(bossCntList, showZeroOnly) {
@@ -168,17 +188,16 @@ function addFilteredBossImages(bossCntList, showZeroOnly) {
         let fullName = `${difficulty} ${bossName}`;
         let nowBossCnt = bossCntList[fullName]; // 보스 이름에 해당하는 파티 수 가져오기
 
-        if (nowBossCnt == null) {
-            matchInfo.innerHTML = `
-              <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
-              <span class="highlighted-text3">0 명 참여중</span>
-           `;
-        } else {
-            matchInfo.innerHTML = `
+        matchInfo.innerHTML = `
             <span class="highlighted-text2">${difficulty} ${bossName}</span><br />
-            <span class="highlighted-text3">${nowBossCnt} 명 참여중</span>
-         `;
-        }
+            <div class="progress" style="margin-bottom:0.5rem">
+                <div class="progress-bar progress-bar-custom" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        `;
+
+        // 추가한 progress bar 요소에 대해 updateProgressBar 호출
+        const progressBar = matchInfo.querySelector('.progress-bar-custom');
+        updateProgressBar(progressBar, nowBossCnt);
 
         bossDiv.appendChild(button);
         bossDiv.appendChild(matchInfo);
