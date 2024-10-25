@@ -107,6 +107,9 @@ function updateModalContent(imageName, bossCntList) {
     progressBar.classList.add('progress-bar', 'progress-bar-custom');
     progressBar.style.width = '100%';
     progressBar.setAttribute('role', 'progressbar');
+/*    progressBar.setAttribute('aria-valuenow', '100');
+    progressBar.setAttribute('aria-valuemin', '0');
+    progressBar.setAttribute('aria-valuemax', '100');*/
     updateProgressBar(progressBar, nowBossCnt); // 프로그래스바 색상 업데이트
     progressContainer.appendChild(progressBar); // 프로그래스바 추가
     modalBossTitleCnt.appendChild(progressContainer); // 프로그래스바 추가
@@ -192,13 +195,7 @@ function addFilteredBossImages(bossCntList, showZeroOnly) {
         const imgContainer = createImageWithTooltip(
             `${imgFolderPath}${imageName}`,
             `Boss ${index + 1} Icon`,
-            `
-                [${difficulty} ${bossName}]<br>
-                <span class="circle" style="background-color: #F4C9CE;"></span> 참여필요 <br>
-                <span class="circle-half-bad"></span> 느림 <br>
-                <span class="circle" style="background-color: #ffae00;"></span>  보통 <br>
-                <span class="circle-half-good"></span> 빠름 <br>
-            `,
+            `[${difficulty}]<br>${bossName}`,
             'image-container',
             'img-fluid',
             'bossTooltip'
