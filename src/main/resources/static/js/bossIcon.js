@@ -229,9 +229,9 @@ function addFilteredBossImages(bossCntList, showZeroOnly) {
         let nowBossCnt = bossCntList[fullName]; // 보스 이름에 해당하는 파티 수 가져오기
 
         matchInfo.innerHTML = `
-            <div class="circle"">
+            <div class="circle">
                 <div class="circle" style="background-color: ${getColorForBossCount(nowBossCnt)};"></div>
-            </div>
+            </div><br />
             <span class="highlighted-text2">${difficulty} ${bossName}</span>
         `;
 

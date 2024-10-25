@@ -600,8 +600,8 @@ yeti color {
 
 .circle {
     display: inline-block;
-    width: 13px; /* 원의 크기 */
-    height: 13px; /* 원의 크기 */
+    width: 15px; /* 원의 크기 */
+    height: 15px; /* 원의 크기 */
     border-radius: 50%; /* 둥글게 만들기 */
 }
 
