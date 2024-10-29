@@ -100,6 +100,3 @@ document.addEventListener('DOMContentLoaded', function() {
     btnDate.classList.add('tooltip-trigger'); // 툴팁 트리거 클래스 이걸 추가해야 툴팁이 나옴
     btnDate.appendChild(tooltip);
 });
-
-document.getElementById('signUp').addEventListener('click', signUpForm);
-document.getElementById('signIn').addEventListener('click', signInForm);
