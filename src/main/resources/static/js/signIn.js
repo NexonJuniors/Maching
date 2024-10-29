@@ -31,10 +31,7 @@ function signInRequest(userId, userPw){
     .then(response => {
         if(response.ok){
             return response.json().then(data => {
-                token = data.accessToken;
-                document.cookie = `MachingRefreshToken = ${data.refreshToken}; max-age = 1800`
-
-                alert('로그인 되었습니다.')
+                alert(data.message)
                 location.href = '/'
             })
         }
