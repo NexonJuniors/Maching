@@ -4,10 +4,16 @@ import NexonJuniors.Maching.user.dto.EmailAuthDto;
 import NexonJuniors.Maching.user.dto.SignInRequestDto;
 import NexonJuniors.Maching.user.dto.SignInResponseDto;
 import NexonJuniors.Maching.user.dto.SignUpDto;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,9 +32,29 @@ public class UserController {
         userService.IssueEmailAuthCode(dto);
     }
 
-    // 로그인 요천 URL
+    // 로그인 요청 URL
     @PostMapping("/signIn")
-    public SignInResponseDto singIn(@RequestBody SignInRequestDto dto){
-        return userService.signIn(dto);
+    public ResponseEntity<?> singIn(@RequestBody SignInRequestDto dto){
+        SignInResponseDto signInResponseDto = userService.signIn(dto);
+
+        ResponseCookie refreshToken = ResponseCookie
+                .from("refreshToken", signInResponseDto.getRefreshToken())
+                .httpOnly(true)
+                .secure(true)
+                .maxAge(1800)
+                .build();
+
+        ResponseCookie accessToken = ResponseCookie
+                .from("accessToken", signInResponseDto.getAccessToken())
+                .maxAge(300)
+                .build();
+
+        HashMap<String, String> responseBody = new HashMap<>();
+        responseBody.put("message", "로그인 되었습니다.");
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, refreshToken.toString())
+                .header(HttpHeaders.SET_COOKIE, accessToken.toString())
+                .body(responseBody);
     }
 }
