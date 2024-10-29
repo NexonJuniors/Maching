@@ -1,11 +1,13 @@
 let token = null
-let userId
 
 function signIn(){
     const userId = document.getElementById('userId').value
     const userPw = document.getElementById('userPw').value
 
-    if(isNull(userId, userPw))alert('아이디와 비밀번호를 입력해주세요.')
+
+    if(isNull(userId, userPw)){
+        alert('아이디와 비밀번호를 입력해주세요.')
+    }
     else{
         signInRequest(userId, userPw);
     }
@@ -13,6 +15,7 @@ function signIn(){
 
 // 입력되지 않은 항목이 있는지 검사
 function isNull(userId, userPw){
+    console.log(1);
     return userId == "" || userPw == "";
 }
 
@@ -23,8 +26,8 @@ function signInRequest(userId, userPw){
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        userId: userId,
-        userPw: userPw
+        'userId': `${userId}`,
+        'userPw': `${userPw}`
       })
     })
     .then(response => {
@@ -34,8 +37,7 @@ function signInRequest(userId, userPw){
                 document.cookie = `MachingRefreshToken = ${data.refreshToken}; max-age = 1800`
 
                 alert('로그인 되었습니다.')
-                document.getElementById('btnCancelSignIn').click();
-                loginSuccess()
+                location.href = '/'
             })
         }
         else{
@@ -50,21 +52,7 @@ function signInRequest(userId, userPw){
     });
 }
 
-function loginSuccess(){
-    const logout = document.getElementById('signIn')
-    logout.removeEventListener('click', signInForm)
-    logout.id = 'logout'
-    logout.innerText = '로그아웃'
-
-    const myPage = document.getElementById('signUp')
-    myPage.removeEventListener('click', signUpForm)
-    myPage.id = 'mypage'
-    myPage.innerText = '마이페이지'
-
-//    logout.addEventListener('click', logout)
-}
-
-document.getElementById('btnSignIn').addEventListener('click', signInRequest);
+document.getElementById('btnSignIn').addEventListener('click', signIn);
 document.getElementById('btnSignUp').addEventListener('click', function(){
     location.href = 'signUpPage'
 })
