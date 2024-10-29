@@ -4,7 +4,6 @@ function signIn(){
     const userId = document.getElementById('userId').value
     const userPw = document.getElementById('userPw').value
 
-
     if(isNull(userId, userPw)){
         alert('아이디와 비밀번호를 입력해주세요.')
     }
@@ -15,7 +14,6 @@ function signIn(){
 
 // 입력되지 않은 항목이 있는지 검사
 function isNull(userId, userPw){
-    console.log(1);
     return userId == "" || userPw == "";
 }
 
