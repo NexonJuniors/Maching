@@ -106,6 +106,7 @@ function emailAuthRequest(){
 
 document.getElementById('btnEmailAuth').addEventListener('click', emailAuthRequest)
 document.getElementById('btnSignUp').addEventListener('click', signUp)
+document.getElementById('btnCancelSignUp').addEventListener('click', function(){location.href ='/'})
 
 
 
