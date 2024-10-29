@@ -8,7 +8,7 @@
 .divSignInContainer{
     display: inline-block;
     text-align: center;
-    background-color: lightblue;
+    background-color: var(--primary-foreground);
     border-radius: 10px;
     width: 60%;
     padding:50px 80px;
@@ -19,9 +19,7 @@
     margin-top: 10px;
 }
 
-.inputBox{
-    width: 100%;
-}
+
 
 .buttons{
     width: 100%;

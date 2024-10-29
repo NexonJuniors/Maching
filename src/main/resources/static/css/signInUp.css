@@ -42,3 +42,8 @@
     color: var(--primary);
     font-family: 'MaplestoryFontLight', sans-serif;
 }
+
+.inputBox{
+    width: 100%;
+    color: black;
+}
