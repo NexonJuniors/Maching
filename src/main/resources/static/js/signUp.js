@@ -59,7 +59,6 @@ function signUpRequest(userId, userPw, authCode){
     .then(response => {
         if(response.ok){
             alert('회원가입이 완료되었습니다!')
-            document.getElementById('btnCancelSignUp').click();
         }
         else{
             return response.json().then(data => {
@@ -69,7 +68,7 @@ function signUpRequest(userId, userPw, authCode){
         }
     })
     .then(function(){
-        location.href = '/'
+        location.href = '/signInPage'
     })
     .catch(error => {
         loadingSpinner.style.display = 'none';
@@ -107,9 +106,6 @@ function emailAuthRequest(){
 
 document.getElementById('btnEmailAuth').addEventListener('click', emailAuthRequest)
 document.getElementById('btnSignUp').addEventListener('click', signUp)
-document.getElementById('btnCancelSignUp').addEventListener('click', function(){
-    location.href = '/'
-})
 
 
 
