@@ -46,7 +46,6 @@ public class UserController {
 
         ResponseCookie accessToken = ResponseCookie
                 .from("accessToken", signInResponseDto.getAccessToken())
-                .maxAge(300)
                 .build();
 
         HashMap<String, String> responseBody = new HashMap<>();
