@@ -68,8 +68,8 @@ public class UserService {
         if(!passwordEncoder.matches(userPw, user.getUserPw())) throw new UserException(UserExceptionCode.IS_NOT_VALID_PASSWORD);
 
         // 토근 발급
-        String accessToken = jwtUtil.generateToken(user.getId(), 300);
-        String refreshToken = jwtUtil.generateToken(user.getId(), 1800);
+        String accessToken = jwtUtil.generateToken(user.getId(), 60 * 30);
+        String refreshToken = jwtUtil.generateToken(user.getId(), 60 * 60 * 24);
 
         return new SignInResponseDto(accessToken, refreshToken);
     }
@@ -88,7 +88,8 @@ public class UserService {
         mailSender.send(simpleMailMessage);
     }
 
-    // 인증코드로 사용할 랜덤한 6자리 난수 리턴하는 메소드
+    // 인증코드로 사용할 랜덤한 6자리 난수
+    // 리턴하는 메소드
     private Integer generateEmailAuthCode(){
         return new Random().nextInt(100000, 1000000);
     }
