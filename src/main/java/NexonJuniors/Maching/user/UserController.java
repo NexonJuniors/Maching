@@ -41,7 +41,6 @@ public class UserController {
                 .from("refreshToken", signInResponseDto.getRefreshToken())
                 .httpOnly(true)
                 .secure(true)
-                .maxAge(1800)
                 .build();
 
         ResponseCookie accessToken = ResponseCookie
