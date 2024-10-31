@@ -8,6 +8,7 @@ import NexonJuniors.Maching.user.dto.SignInResponseDto;
 import NexonJuniors.Maching.user.dto.SignUpDto;
 import NexonJuniors.Maching.utils.JwtUtil;
 import NexonJuniors.Maching.utils.RedisUtil;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -74,6 +75,17 @@ public class UserService {
         return new SignInResponseDto(accessToken, refreshToken);
     }
 
+    public boolean signOut(String token){
+        token = token.split(" ")[1];
+
+        Claims claims = jwtUtil.parseClaims(token);
+        Long id = Long.parseLong(claims.getSubject());
+
+        if(!isExistUser(id)) throw new UserException(UserExceptionCode.NOT_EXIST_USER);
+
+        return true;
+    }
+
     // 이메일 인증 메일을 전송하는 메소드
     private void sendMail(String email, Integer authCode){
         // 이메일 전송 시 내용 구성 설정 객체 생성
@@ -97,6 +109,9 @@ public class UserService {
     // 이미 존재하는 유저인지 확인하는 메소드
     private boolean isExistUser(String userId){
         return userRepository.existsByUserId(userId);
+    }
+    private boolean isExistUser(Long id){
+        return userRepository.existsById(id);
     }
 
     // 인증코드를 올바르게 입력했는지 확인하는 메소드
