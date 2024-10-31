@@ -58,7 +58,7 @@ public class JwtUtil {
     public boolean isExpired(String token){
         Claims claims = parseClaims(token);
 
-        return ((Date)claims.getExpiration()).before(new Date());
+        return claims.getExpiration().before(new Date());
     }
 
     public Claims parseClaims(String token){
