@@ -4,11 +4,6 @@ function signUp(){
     const pwCheck = document.getElementById('pwCheck').value
     const emailAuth = document.getElementById('emailAuth').value
 
-    console.log(userId)
-    console.log(userPw)
-    console.log(pwCheck)
-    console.log(emailAuth)
-
     if(isNull(userId, userPw, pwCheck, emailAuth)) alert('모든 항목을 입력해주세요.')
     else if(isNotEmail(userId)) alert('아이디는 이메일 형식으로 입력해주세요.')
     else if(!isValidPw(userPw)) alert("비밀번호는 특수문자, 영대문자, 숫자를 하나이상 포함한 8자리 이상의 비밀번호이어야 합니다.")

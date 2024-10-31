@@ -27,12 +27,12 @@ function removeAccessToken(){
 
 function signInNavBar(){
     const navSignUp = document.getElementById("signUp")
-    navSignUp.href = '/#'
+    navSignUp.href = '#'
     navSignUp.innerText = '마이페이지'
     navSignUp.id = "myPage"
 
     const navSignIn = document.getElementById("signIn")
-    navSignIn.href = '/#'
+    navSignIn.href = '#'
     navSignIn.innerText = '로그아웃'
     navSignIn.id = "signOut"
 }

@@ -209,9 +209,6 @@ function powerTextTooltip() {
 
     addBadgeToContainer('.powerQuestion', 'powerQuestion-item', isPowerImagePath, "", powerTooltipText);
 }
-
-document.getElementById('signUp').addEventListener('click', signUpForm);
-document.getElementById('signIn').addEventListener('click', signInForm);
 /*
 // 전투력 툴팁 추가
 function powerTextTooltip(){

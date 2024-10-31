@@ -1,4 +1,4 @@
-function logout(){
+function signOut(){
     if(accessToken == null) {
         location.href('/');
     }
@@ -6,14 +6,12 @@ function logout(){
         fetch('/signOut',{
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             }
         })
-        .then(function(response){
+        .then(response =>{
             if(response.ok){
-                console.log(response)
-                return response.json().then(data => {
+                response.json().then(data => {
                     alert(data.message)
                 })
             }
@@ -34,4 +32,4 @@ function logout(){
 }
 
 const btnSignOut = document.getElementById('signOut')
-if(btnSignOut != null) btnSignOut.addEventListener('click', logout)
+if(btnSignOut != null) btnSignOut.addEventListener('click', signOut)
