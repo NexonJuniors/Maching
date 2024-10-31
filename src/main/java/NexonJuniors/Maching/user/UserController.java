@@ -4,14 +4,11 @@ import NexonJuniors.Maching.user.dto.EmailAuthDto;
 import NexonJuniors.Maching.user.dto.SignInRequestDto;
 import NexonJuniors.Maching.user.dto.SignInResponseDto;
 import NexonJuniors.Maching.user.dto.SignUpDto;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
@@ -49,6 +46,32 @@ public class UserController {
 
         HashMap<String, String> responseBody = new HashMap<>();
         responseBody.put("message", "로그인 되었습니다.");
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, refreshToken.toString())
+                .header(HttpHeaders.SET_COOKIE, accessToken.toString())
+                .body(responseBody);
+    }
+
+    // 로그아웃 요청 URL
+    @PostMapping("/signOut")
+    public ResponseEntity<?> signOut(@RequestHeader("Authorization") String token){
+        userService.signOut(token);
+
+        ResponseCookie refreshToken = ResponseCookie
+                .from("refreshToken", "")
+                .httpOnly(true)
+                .secure(true)
+                .maxAge(0)
+                .build();
+
+        ResponseCookie accessToken = ResponseCookie
+                .from("accessToken", "")
+                .maxAge(0)
+                .build();
+
+        HashMap<String, String> responseBody = new HashMap<>();
+        responseBody.put("message", "로그아웃 되었습니다.");
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, refreshToken.toString())
