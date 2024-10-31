@@ -10,12 +10,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -53,7 +59,13 @@ public class JwtFilter extends OncePerRequestFilter {
                     setNewAccessToken(response, reIssueAccessToken(accessToken));
                 }
 
+                UserDetails userDetails = getUserDetails();
+
+                AbstractAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails, accessToken, new ArrayList<>());
+
                 SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
+                securityContext.setAuthentication(authentication);
                 SecurityContextHolder.setContext(securityContext);
             }
         }
@@ -76,7 +88,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if(cookies == null) return refreshToken;
 
         for (Cookie cookie : cookies) {
-            if (cookie.isHttpOnly() && cookie.getName().equals(REFRESH_TOKEN)) {
+            if (cookie.getName().equals(REFRESH_TOKEN)) {
                 refreshToken = cookie.getValue();
                 break;
             }
@@ -120,6 +132,27 @@ public class JwtFilter extends OncePerRequestFilter {
     private void setNewAccessToken(HttpServletResponse response, String token){
         Cookie cookie = new Cookie(ACCESS_TOKEN, token);
         response.addCookie(cookie);
+    }
+
+    private UserDetails getUserDetails(){
+        UserDetails userDetails = new UserDetails() {
+            @Override
+            public Collection<? extends GrantedAuthority> getAuthorities() {
+                return null;
+            }
+
+            @Override
+            public String getPassword() {
+                return null;
+            }
+
+            @Override
+            public String getUsername() {
+                return null;
+            }
+        };
+
+        return userDetails;
     }
 }
 
