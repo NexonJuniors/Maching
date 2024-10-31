@@ -1,4 +1,5 @@
 let tokenTimeout
+let accessToken = null
 
 if(existAccessToken()){
     tokenTimeout = setTimeout(removeAccessToken, 1000 * 60 * 30)
@@ -8,8 +9,15 @@ if(existAccessToken()){
 
 function existAccessToken(){
     const cookies = document.cookie.split('; ')
+    const accessTokenCookie = cookies.find(cookie => cookie.startsWith('accessToken='))
 
-    return cookies.some(cookie => cookie.startsWith('accessToken='))
+    if(accessTokenCookie){
+        accessToken = accessTokenCookie.split("=")[1]
+
+        return true
+    }
+
+    return false
 }
 
 function removeAccessToken(){
