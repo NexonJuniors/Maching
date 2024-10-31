@@ -19,8 +19,11 @@ public class HomeController {
     @GetMapping("/chatroom")
     public String chatroom(){ return "chatting";}
 
-    @GetMapping("/admin")
+    @GetMapping("/machingadmin")
     public String admin() { return "admin";}
+
+    @GetMapping("/guide")
+    public String guide() { return "guide";}
 
     @GetMapping("/signInPage")
     public String signIn() {return "signIn";}

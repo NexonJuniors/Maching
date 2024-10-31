@@ -123,3 +123,13 @@ input[type="date"] {
     height: 120px;
     animation: spin 2s linear infinite;
 }
+
+.guide-image {
+    max-width: 80%; /* 반응형 크기 조절 */
+    height: auto;
+}
+
+.chat-image {
+    max-width: 50%; /* 반응형 크기 조절 */
+    height: auto;
+}

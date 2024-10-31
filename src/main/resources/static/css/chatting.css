@@ -1,3 +1,131 @@
+@media only screen and (max-width: 430px){
+    #bossName.name-container {
+        font-size: 1em!important;
+    }
+
+    #partners.partners{
+        min-width: 320px!important;
+    }
+
+    #header.header{
+        min-width: 320px!important;
+    }
+
+    #footer.footer-content{
+        min-width: 320px!important;
+    }
+
+    .chatroom-container {
+        min-width: 320px!important;
+        font-size:
+    }
+
+    .chatroom{
+        font-size: 3.2vw;
+    }
+
+    .title-img-name{
+        justify-content: center;
+    }
+
+    .flex-item .characterImageContainer {
+        width: 16.5vw;
+        height: auto;
+        min-width: auto
+    }
+
+    .flex-item .power{
+        font-size: 2.3vw !important;
+    }
+
+    .flex-item .nameLevel{
+        font-size: 2.6vw !important;
+    }
+
+    .flex-item .union{
+        font-size: 2vw !important;
+    }
+
+    .badgeContainer{
+        margin-top: 0px;
+    }
+
+    .badges{
+        width: 16px !important;
+    }
+
+    .flex-item{
+        padding: 2px;
+        flex: 1 !important
+    }
+
+    .flex-item .class{
+        font-size: 2vw !important;
+    }
+
+    .flex-item .stats-container{
+        font-size: 0.5em;
+        padding: 2px;
+    }
+
+    .btn-custom{
+        font-size: 3.3vw;
+        width: 10vw;
+        height: 10vw;
+    }
+    .user{
+        max-height: 135px !important;
+        min-width: auto !important;
+    }
+}
+
+@media only screen and (max-width: 900px){
+    #bossName.name-container {
+        font-size: 1.2em;
+    }
+
+    #div-title-btn.title-btn-container{
+        font-size: 0.7em;
+    }
+
+    .bossImg{
+        width: 3.5em;
+    }
+
+    .flex-item{
+        flex: 1 !important
+    }
+
+    .flex-item .power{
+        font-size: 1em;
+    }
+
+    .flex-item .nameLevel{
+        font-size: 0.9em;
+    }
+
+    .flex-item .union{
+        font-size: 0.6em;
+    }
+
+    .flex-item .class{
+        font-size: 0.6em;
+    }
+
+    .badges{
+        width: 30px;
+    }
+
+    .characterImageContainer{
+        min-width: 77px;
+    }
+
+    .sidebar .user{
+        max-height: 242px;
+        min-width: 173px;
+    }
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -22,6 +150,18 @@ input[type="text"] {
     width: 80%
 }
 
+#header.header{
+    min-width: 640px;
+}
+
+#partners.partners{
+    min-width: 640px;
+}
+
+#footer.footer-content{
+    min-width: 640px;
+}
+
 .chatroom-container {
     display: grid;
     grid-template-areas:
@@ -38,6 +178,8 @@ input[type="text"] {
     /*border-width: 1px;*/
     border-radius: 10px;
     background-color: var(--foreground);
+    min-width: 640px;
+    font-size: 16px;
 }
 
 .header {
@@ -76,14 +218,13 @@ input[type="text"] {
 
 .user {
     color: var(--primary);
-    flex: 1;
     border-radius: 10px;
     display: flex;
     flex-direction: column; /* 요소들을 세로로 정렬 */
     align-items: center;    /* 가로로 중앙 정렬 */
     justify-content: center; /* 세로로 중앙 정렬 */
     text-align: center;
-    max-length: 210px;
+    height: 280px;
     max-height: 280px;
 }
 
@@ -113,6 +254,10 @@ input[type="text"] {
     align-items: stretch; /* 자식 요소들의 높이를 동일하게 맞춥니다 */
 }
 
+.user .flex-container{
+    height: 100%;
+}
+
 .flex-item {
     flex: 1;
     border-radius: 10px;
@@ -127,18 +272,24 @@ input[type="text"] {
     margin: 0;
 }
 
+.user .flex-item{
+    overflow-y : auto;
+    overflow-x : hidden;
+}
+
 .characterImageContainer {
     display: flex;
     justify-content: center;  /* 가로로 가운데 정렬 */
     align-items: center;  /* 세로로 가운데 정렬 */
-    width: 120px; /* 컨테이너 너비 설정 */
-    height: 120px; /* 컨테이너 높이 설정 */
+    width: 9vw; /* 컨테이너 너비 설정 */
+    height: auto; /* 컨테이너 높이 설정 */
     overflow: hidden;
     position: relative; /* 필요 시 절대 위치 요소들을 포함할 수 있도록 설정 */
+    max-width: 125px;
 }
 
 .characterImage {
-    width: 120px;  /* 이미지 너비 설정 */
+    width: 100%;  /* 이미지 너비 설정 */
     height: auto;  /* 높이를 자동으로 조정하여 비율 유지 */
     object-fit: cover; /* 이미지가 컨테이너 크기에 맞게 자를 수 있도록 설정 */
     display: block;  /* 이미지가 블록 요소로 표시되도록 설정 */
@@ -169,11 +320,14 @@ input[type="text"] {
 .title-img-name {
     display: flex;
     position: relative;
+    height: 100%;
 }
 
 .img-container {
+    display: flex;
     flex-shrink: 0; /* 이미지 크기에 맞게 공간을 할당 */
     margin-right: 10px; /* 이미지와 이름 사이에 여백 추가 */
+    align-items: center;
 }
 
 .name-container {
@@ -184,8 +338,10 @@ input[type="text"] {
     justify-content: center;
     transform: translateX(-50%);
     white-space: nowrap; /* 텍스트가 한 줄로 나오게 함 */
-    font-size: x-large;
+    font-size: 1.5em;
     font-weight: bold;
+    width: 100%;
+    z-index: 2;
 }
 
 .title-btn-container{
@@ -194,10 +350,11 @@ input[type="text"] {
     right: 0%;
     bottom: 0%;
     justify-content: space-between;
+    font-size: 1em;
 }
 
 .title-btn{
-    margin-left: 4px;
+    margin: 2px;
 }
 
 .stats-container {
@@ -208,6 +365,8 @@ input[type="text"] {
     width: inherit;
     height: inherit;
     white-space: nowrap; /*줄바꿈 안함*/
+    overflow-y : auto;
+    overflow-x : hidden;
 }
 
 .stat-item {
@@ -285,4 +444,6 @@ input[type="text"] {
     font-weight: bold;
 }
 
-
+.bossImg{
+    max-height: 80px;
+}

@@ -398,6 +398,8 @@ yeti color {
     border-color: #282828;
     border-width: 1px;
     border-radius: 10px;
+    height: 100%;
+    width: 55px;
 }
 
 .btn-custom:hover {
@@ -570,4 +572,60 @@ yeti color {
 .levelContainer, .forceContainer {
     position: relative; /* 툴팁의 위치를 조정하기 위해 상대 위치 설정 */
     margin-bottom: 10px;
+}
+
+.right-aligned-small-text {
+    font-family: 'MaplestoryFontLight', sans-serif;
+    display: block; /* 작은 텍스트를 블록으로 만들어 좌측 정렬 */
+    text-align: right!important; /* 텍스트 좌측 정렬 */
+    margin-left: 0; /* 필요 시 좌측 마진 제거 */
+}
+
+/* 프로그레스 바 색상 및 크기 */
+.progress {
+    max-width: 40%; /* 현재 크기의 절반 */
+    margin: 0 auto; /* 가운데 정렬 */
+}
+
+.progress-modal {
+    max-width: 100%;
+    margin: 0 auto; /* 가운데 정렬 */
+    margin-top: 10px;
+}
+
+
+.progress-bar-custom {
+    width: 100%;
+}
+
+.circle {
+    display: inline-block;
+    width: 13px; /* 원의 크기 */
+    height: 13px; /* 원의 크기 */
+    border-radius: 50%; /* 둥글게 만들기 */
+}
+
+.circle-explain {
+    display: inline-block;
+    width: 10px; /* 원의 크기 */
+    height: 10px; /* 원의 크기 */
+    border-radius: 50%; /* 둥글게 만들기 */
+}
+
+.circle-half-bad {
+    display: inline-block;
+    width: 10px; /* 원의 크기 */
+    height: 10px; /* 원의 크기 */
+    border-radius: 50%; /* 둥글게 만들기 */
+    margin-right: 5px; /* 원과 설명 사이의 간격 */
+    background: linear-gradient(to right, red 50%, #ff4500 50%); /* 절반씩 색상 */
+}
+
+.circle-half-good {
+    display: inline-block;
+    width: 10px; /* 원의 크기 */
+    height: 10px; /* 원의 크기 */
+    border-radius: 50%; /* 둥글게 만들기 */
+    margin-right: 5px; /* 원과 설명 사이의 간격 */
+    background: linear-gradient(to right, #9acd32 50%, #006400 50%); /* 절반씩 색상 */
 }

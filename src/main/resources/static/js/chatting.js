@@ -2,6 +2,7 @@ document.getElementById('btnSendMessage').addEventListener('click', sendMessage)
 document.getElementById('btnExit').addEventListener('click', function(){if(confirm("채팅방을 나가겠습니까?")) location.href = '/'})
 document.getElementById('message').addEventListener('keyup', pressEnter)
 document.getElementById('outputContainer').addEventListener('scroll', scrolled)
+document.addEventListener('visibilitychange',function(){if(isMobile()) exitRoom()})
 
 const socket = new SockJS('/matching');
 const stompClient = Stomp.over(socket);
@@ -131,7 +132,7 @@ function loadPartyInfo(bossName, bossImg, maximumPeople, partyRequirementInfo){
     const partyNeedPower = partyRequirementInfo.partyNeedPower
     const partyNeedBishop = partyRequirementInfo.partyNeedBishop
 
-    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'}주기), `
+    document.getElementById('partyNeedClassMinutesInfo').innerText = `극딜 : (${partyNeedClassMinutesInfo === "free" ? "자유" : partyNeedClassMinutesInfo + '분'} 주기) , `
     document.getElementById('partyNeedPower').innerText = ` ${formatNumber(partyNeedPower)} 이상`
     document.getElementById('partyNeedBishop').innerText = `비숍 모집 : ${partyNeedBishop == 1 ? 'O' : 'X'}`
     document.getElementById('recruitmentStatus').innerText = `파티 상태 : 모집 중`
@@ -394,10 +395,21 @@ function createUserProfile(userId){
     badgeContainerDiv.className = 'badgeContainer';
     badgeContainerDiv.id = `badgeContainer${userId}`;
 
+
     // badgeContainer-item div
     const badgeContainerItemDiv = document.createElement('div');
     badgeContainerItemDiv.className = 'badgeContainer-item';
+    badgeContainerItemDiv.classList.add('tooltip-trigger');
     badgeContainerItemDiv.id = `badgeContainer-item${userId}`;
+
+    if(isMobile()){
+        badgeContainerItemDiv.addEventListener('touchstart', function(event){printTooltip(event)});
+        badgeContainerItemDiv.addEventListener('touchend', function(event){hideTooltip(event)});
+    }
+    else{
+        badgeContainerItemDiv.addEventListener('mouseover', function(event){printTooltip(event)})
+        badgeContainerItemDiv.addEventListener('mouseout', function(event){hideTooltip(event)})
+    }
 
     // tooltip div
     const tooltipDiv = document.createElement('div');
@@ -413,8 +425,18 @@ function createUserProfile(userId){
 
     const badgeContainerItem2 = document.createElement('div')
     badgeContainerItem2.className = 'badgeContainer-item';
+    badgeContainerItem2.classList.add('tooltip-trigger');
 
     addSpecialRingBadge(badgeContainerItem2, userId)
+
+    if(isMobile()){
+        badgeContainerItem2.addEventListener('touchstart', function(event){printTooltip(event)});
+        badgeContainerItem2.addEventListener('touchend', function(event){hideTooltip(event)});
+    }
+    else{
+        badgeContainerItem2.addEventListener('mouseover', function(event){printTooltip(event)})
+        badgeContainerItem2.addEventListener('mouseout', function(event){hideTooltip(event)})
+    }
 
     // Append badgeContainer-item to badgeContainer
     badgeContainerDiv.appendChild(badgeContainerItem2);
@@ -424,6 +446,8 @@ function createUserProfile(userId){
     flexItemDiv.appendChild(badgeContainerDiv);
 
     nowUser.appendChild(flexItemDiv);
+    nowUser.style.height = nowUser.clientHeight;
+    nowUser.style.maxHeight = nowUser.clientHeight;
 }
 
 // 스탯 정보 출력하는 함수
@@ -446,7 +470,12 @@ function printStat(event){
     // 기존 이벤트 핸들러 제거
     nowUser.removeEventListener('click', printStat)
 
-    nowUser.innerHTML = ''
+//    nowUser.innerHTML = ''
+    const childNodes = nowUser.childNodes;
+
+    for (let i = childNodes.length - 1; i >= 0; i--) {
+      nowUser.removeChild(childNodes[i]);
+    }
 
     const flexItem = document.createElement('div')
     flexItem.classList.add('flex-item')
@@ -599,7 +628,13 @@ function printHexa(event){
 
     // 기존 이벤트 핸들러 제거
     nowUser.removeEventListener('click', printHexa)
-    nowUser.innerHTML = ''
+//    nowUser.innerHTML = ''
+
+    const childNodes = nowUser.childNodes;
+
+    for (let i = childNodes.length - 1; i >= 0; i--) {
+      nowUser.removeChild(childNodes[i]);
+    }
 
     const flexContainer = document.createElement('div')
     flexContainer.classList.add('flex-container')
@@ -646,6 +681,7 @@ function printHexa(event){
         for(let coreName of coreNames.split('/')){
             const skillIconContainer = document.createElement('div')
             skillIconContainer.classList.add('skill-icon-container')
+            skillIconContainer.classList.add('tooltip-trigger')
 
             // 스킬 이미지 추가
             const hexaImg = document.createElement('img')
@@ -659,6 +695,15 @@ function printHexa(event){
 
             skillIconContainer.appendChild(hexaImg)
             skillIconContainer.appendChild(tooltip)
+
+            if(isMobile()){
+                skillIconContainer.addEventListener('touchstart', function(event){printTooltip(event)});
+                skillIconContainer.addEventListener('touchend', function(event){hideTooltip(event)});
+            }
+            else{
+                skillIconContainer.addEventListener('mouseover', function(event){printTooltip(event)})
+                skillIconContainer.addEventListener('mouseout', function(event){hideTooltip(event)})
+            }
 
             skillIcons.appendChild(skillIconContainer)
         }
@@ -799,6 +844,14 @@ function EnhanceDueToLevel(levelElement, bossName){
 
     const tooltip = createTooltip(`보스와의 레벨 차이: ${levelDifference}<br>데미지 비율: ${tooltipText}`);
     levelElement.appendChild(tooltip);
+    if(isMobile()){
+        levelElement.addEventListener('touchstart', function(event){printTooltip(event)});
+        levelElement.addEventListener('touchend', function(event){hideTooltip(event)});
+    }
+    else{
+        levelElement.addEventListener('mouseover', function(event){printTooltip(event)})
+        levelElement.addEventListener('mouseout', function(event){hideTooltip(event)})
+    }
 }
 
 // 포스뻥 계산, 포스 색상, 툴팁 추가하는 함수
@@ -836,13 +889,90 @@ function EnhanceDueToForce(arcane, authentic, bossName){
         force.style.color = color
         const tooltip = createTooltip(tooltipText);
         force.appendChild(tooltip);
+
+         if(isMobile()){
+            force.addEventListener('touchstart', function(event){printTooltip(event)});
+            force.addEventListener('touchend', function(event){hideTooltip(event)});
+        }
+        else{
+            force.addEventListener('mouseover', function(event){printTooltip(event)})
+            force.addEventListener('mouseout', function(event){hideTooltip(event)})
+        }
     }
     else{
         const tooltip1 = createTooltip(tooltipText);
         const tooltip2 = createTooltip(tooltipText);
         authentic.appendChild(tooltip1);
         arcane.appendChild(tooltip2);
+
+        if(isMobile()){
+            authentic.addEventListener('touchstart', function(event){printTooltip(event)});
+            authentic.addEventListener('touchend', function(event){hideTooltip(event)});
+            arcane.addEventListener('touchstart', function(event){printTooltip(event)});
+            arcane.addEventListener('touchend', function(event){hideTooltip(event)});
+        }
+        else{
+            authentic.addEventListener('mouseover', function(event){printTooltip(event)})
+            authentic.addEventListener('mouseout', function(event){hideTooltip(event)})
+            arcane.addEventListener('mouseover', function(event){printTooltip(event)})
+            arcane.addEventListener('mouseout', function(event){hideTooltip(event)})
+        }
     }
+}
+
+// 모바일 기기인지 확인
+function isMobile(){
+    // User-Agent 기반 모바일 기기 감지
+    const userAgentCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile/i.test(navigator.userAgent);
+
+    // 화면 크기 기반 추가 확인 (넓이가 767px 이하일 경우 모바일로 판단)
+//    const screenCheck = window.matchMedia("(max-width: 767px)").matches;
+
+    return userAgentCheck
+}
+
+// 툴팁 표시하는 함수
+function printTooltip(event){
+    let tooltipTrigger = event.target
+    while(!tooltipTrigger.classList.contains('tooltip-trigger')){
+        tooltipTrigger = tooltipTrigger.parentNode
+    }
+
+    const tooltip = tooltipTrigger.querySelector('div.tooltip')
+
+    const rectTooltip = tooltip.getBoundingClientRect();
+    let left = rectTooltip.left
+    if(left < 0) left = 0
+    const top = rectTooltip.top
+    const height = tooltip.offsetHeight
+
+    if(isMobile()) tooltip.style.visibility = 'visible'
+    tooltip.style.left = `${left}px`
+    tooltip.style.top = `${top}px`
+    tooltip.style.bottom = 'auto'
+    tooltip.style.transform = 'none'
+    tooltip.style.position = 'fixed'
+    tooltip.style.height = height
+}
+
+// 툴팁 숨기는 함수
+function hideTooltip(event){
+    let tooltipTrigger = event.target
+    while(!tooltipTrigger.classList.contains('tooltip-trigger')){
+        tooltipTrigger = tooltipTrigger.parentNode
+    }
+
+    const tooltip = tooltipTrigger.querySelector('div.tooltip')
+
+    const rect = tooltip.getBoundingClientRect();
+
+    if(isMobile()) tooltip.style.visibility = 'hidden'
+    tooltip.style.position = 'absolute'
+    tooltip.style.top = ''
+    tooltip.style.height = 'auto'
+    tooltip.style.transform = 'translateX(-50%)'
+    tooltip.style.left = `50%`
+    tooltip.style.bottom = `125%`
 }
 
 

@@ -40,79 +40,85 @@
             <div class="flex items-center space-x-4">
                 <button id="btnLightMode" class="p-2 rounded hover:bg-blue-600">🔆</button>
                 <button id="btnDarkMode" class="p-2 rounded hover:bg-blue-600">🌙</button>
-<!--                <button class="p-2 rounded hover:bg-blue-600">📒</button>
-                <button class="p-2 rounded hover:bg-blue-600">💰</button>-->
+                <!--                <button class="p-2 rounded hover:bg-blue-600">📒</button>
+                                <button class="p-2 rounded hover:bg-blue-600">💰</button>-->
             </div>
         </header>
 
-<!--        <nav class="text-white p-4 navbar">
-            <ul class="flex space-x-4">
-                <li><a href="#" class="hover:underline nav-item">공지사항</a></li>
-                <li><a href = "#" id = "signUp" class="hover:underline nav-item">회원가입</a></li>
-&lt;!&ndash;                &lt;!&ndash;로그인에서 회원가입도 같이 처리해도됨 &ndash;&gt;<li><a href="login" class="hover:underline nav-item">dev로그인</a></li>&ndash;&gt;
-&lt;!&ndash;    &lt;!&ndash;로그인 하면 로그인을 마이페이지로 대체, 회원가입 숨기고&ndash;&gt; <li><a href="userpage" class="hover:underline nav-item">dev마이페이지</a></li>&ndash;&gt;
-&lt;!&ndash;                &lt;!&ndash;로그인을 했는데 관리자 유저면 관리자탭 보이도록 &ndash;&gt; <li><a href="admin" class="hover:underline nav-item">dev관리자</a></li>&ndash;&gt;
-            </ul>
-        </nav>-->
+        <!--        <nav class="text-white p-4 navbar">
+                    <ul class="flex space-x-4">
+                        <li><a href="#" class="hover:underline nav-item">공지사항</a></li>
+                        <li><a href = "#" id = "signUp" class="hover:underline nav-item">회원가입</a></li>
+        &lt;!&ndash;                &lt;!&ndash;로그인에서 회원가입도 같이 처리해도됨 &ndash;&gt;<li><a href="login" class="hover:underline nav-item">dev로그인</a></li>&ndash;&gt;
+        &lt;!&ndash;    &lt;!&ndash;로그인 하면 로그인을 마이페이지로 대체, 회원가입 숨기고&ndash;&gt; <li><a href="userpage" class="hover:underline nav-item">dev마이페이지</a></li>&ndash;&gt;
+        &lt;!&ndash;                &lt;!&ndash;로그인을 했는데 관리자 유저면 관리자탭 보이도록 &ndash;&gt; <li><a href="admin" class="hover:underline nav-item">dev관리자</a></li>&ndash;&gt;
+                    </ul>
+                </nav>-->
 
         <nav class="text-white p-4 navbar">
             <ul class="flex space-x-4">
                 <li><a href="/" class="hover:underline nav-item">캐릭터검색</a></li>
                 <li><a href="guide" class="hover:underline nav-item">사이트가이드</a></li>
-                <li><a href = "/signUpPage" id = "signUp" class="hover:underline nav-item">회원가입</a></li>
-                <li><a href="/signInPage"  id = "signIn" class="hover:underline nav-item">로그인</a></li>
             </ul>
         </nav>
-
         <main class="p-4">
             <div class="search-card card">
                 <div class="card-body">
-                    <div class="flex-container">
-                        <div class="flex-item">
-                            <h5 class="card-title">
-                                내 캐릭터의<br>실시간
-                                <span class="highlighted-text">프로필</span>로<br>
-                                <span class="highlighted-text">파티 매칭</span>에 참여하세요!
-                            </h5>
-                        </div>
-                        <div class="flex-item">
-                            <div class="search-section d-flex align-items-center">
-                                <div class="input-container">
-                                    <button id="btnDate" type="button" class="btn-small">조회 날짜 선택</button>
-                                    <input type="date" id="selectedDate" name="selectedDate" placeholder="최근2주 선택" style="display:none;">
-                                </div>
-                                <div class="input-container">
-                                    <input type="text" id="characterName" name="characterName" placeholder="캐릭터명을 입력하세요" required>
-                                </div>
-                                <div>
-                                    <button id="btnSearch" type="submit" class="btn btn-custom">실시간 프로필 검색</button>
-                                </div>
-                                <div class="instructions">
-                                    - OPEN API 서버 점검 시 점검 종료 후 시도해 주세요.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="boss-card card">
-                <div class="card-body">
                     <div class="text-white p-3 bossbar card-title">
                         <div class="left-section">
-                            <button id="toggleBossList" class="btn btn-primary" style="margin-right:5px;">주간보스</button>
-                            매칭 현황
+                            1. 검색
                         </div>
                         <div class="instructions">
-                            - 캐릭터를 검색 후 보스를 클릭해보세요. <br />
-                            - 캐릭터 검색 후 매칭에 참가하거나 필요한 파티원을 구해보세요!
+                            - 전투력 조회날짜를 실시간 또는 최근 2주로 설정해보세요 <br />
+                            - 프로필과 HEXA는 실시간으로 반영됩니다!
                         </div>
                     </div>
-                    <div id="bossContainer"></div> <!--보스 매칭 현황 컨테이너-->
+                    <div class="flex-container">
+                        <h5 class="card-title">
+                            <br>내 <span class="highlighted-text"> 캐릭터</span>의 정보를
+                            <span class="highlighted-text"> 조회</span>해보세요!<br>
+                        </h5>
+                        <img src="static/image/guide/가이드검색창.png" alt="검색창 가이드" class="guide-image">
+                    </div>
+                    <br><br>
+                    <div class="text-white p-3 bossbar card-title">
+                        <div class="left-section">
+                            2. 매칭
+                        </div>
+                        <div class="instructions">
+                            - 매칭 할 보스를 선택해보세요 <br />
+                            - 프로필에서 보스에 따라 적절한 정보를 보여드려요!
+                        </div>
+                    </div>
+                    <div class="flex-container">
+                        <h5 class="card-title">
+                            <br>원하는 <span class="highlighted-text"> 보스</span>를 클릭해
+                            <span class="highlighted-text"> 정보를 확인</span>해보세요!<br>
+                        </h5>
+                        <img src="static/image/guide/가이드보스참여.png" alt="보스 참여 가이드" class="guide-image">
+                    </div>
+                    <br><br>
+                    <div class="text-white p-3 bossbar card-title">
+                        <div class="left-section">
+                            3. 채팅
+                        </div>
+                        <div class="instructions">
+                            - 실시간 채팅을 통해 보스를 잡으러 가자구요 <br />
+                            - 프로필을 클릭하여 파티원들의 추가 정보를 보여드려요!
+                        </div>
+                    </div>
+                    <div class="flex-container">
+                        <h5 class="card-title">
+                            <br>실시간 <span class="highlighted-text"> 채팅</span>을 통한
+                            <span class="highlighted-text"> 파티원</span>과 보스 트라이!<br>
+                        </h5>
+                        <img src="static/image/guide/가이드채팅1.png" alt="채팅 가이드 1" class="chat-image">
+                        <img src="static/image/guide/가이드채팅2.png" alt="채팅 가이드 2" class="chat-image">
+                    </div>
                 </div>
+                <small class="right-aligned-small-text">2024-10-08 사이트가이드 ver.1.0 메이플 매칭 드림</small>
             </div>
         </main>
-
         <footer>
             <div class="footer-content">
                 <div style="font-size:12px; text-align: center;">
@@ -136,10 +142,9 @@
 </div>
 <script src="../static/js/darkmode.js"></script>
 <script src="../static/js/tooltip.js"></script>
+<script src="../static/js/signUp.js"></script>
 <script src="../static/js/home.js"></script>
 <script src="../static/js/bossIcon.js"></script>
-<script src="../static/js/signInState.js"></script>
-<script src="../static/js/logout.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
