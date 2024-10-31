@@ -22,14 +22,17 @@ function existAccessToken(){
 
 function removeAccessToken(){
     document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT;'
+    accessToken = null
 }
 
 function signInNavBar(){
     const navSignUp = document.getElementById("signUp")
-    navSignUp.href = '/myPage'
+    navSignUp.href = '/#'
     navSignUp.innerText = '마이페이지'
+    navSignUp.id = "myPage"
 
     const navSignIn = document.getElementById("signIn")
     navSignIn.href = '/#'
     navSignIn.innerText = '로그아웃'
+    navSignIn.id = "signOut"
 }
