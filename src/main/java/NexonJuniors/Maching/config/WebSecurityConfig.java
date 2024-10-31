@@ -20,6 +20,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authHttp -> authHttp
+                                .requestMatchers("/signOut").authenticated()
                                 .anyRequest().permitAll() // 모든 URL 모든 사용자에게 허용
 
 
